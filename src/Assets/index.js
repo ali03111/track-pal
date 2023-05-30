@@ -20,6 +20,8 @@ export {default as logo} from './Images/logo.png';
 export {default as staticMap} from './Images/map.png';
 export {default as link} from './Images/link.png';
 export {default as whitebg} from './Images/whitebg.png';
+export {default as bgBlur} from './Images/imgpsh_fullsize_anim.png';
+export {default as bgBlurDone} from './Images/imgpsh_fullsize_anim1.png';
 
 // export {default as DemoProfileImage7} from './Images/profile7.png';
 

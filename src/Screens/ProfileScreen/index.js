@@ -18,7 +18,7 @@ import ProfileBtn from '../../Components/ProfileBtn';
 import {CircleImage} from '../../Components/CircleImage';
 
 const ProfileScreen = ({navigation}) => {
-  const {} = useProfileScreen(navigation);
+  const {dynamicNav} = useProfileScreen(navigation);
   return (
     <ScrollView style={styles.profileMain} showsVerticalScrollIndicator={false}>
       <CustomHeader
@@ -32,11 +32,19 @@ const ProfileScreen = ({navigation}) => {
           Jhon Doe
         </GradientText>
       </View>
-      <ProfileBtn title={'Edit Profile'} icon={userProfileIcon} />
+      <ProfileBtn
+        onPress={() => dynamicNav('EditProfileScreen')}
+        title={'Edit Profile'}
+        icon={userProfileIcon}
+      />
       <ProfileBtn title={'About TrackPal'} icon={aboutTrackpal} />
       <ProfileBtn title={'Privacy Policy'} icon={privacyPolicy} />
       <ProfileBtn title={'Terms and Conditions'} icon={TermsCondition} />
-      <ProfileBtn title={'Reset Password'} icon={lock} />
+      <ProfileBtn
+        onPress={() => dynamicNav('ResetPasswordScreen')}
+        title={'Reset Password'}
+        icon={lock}
+      />
       <ProfileBtn title={'Log Out'} icon={logout} />
     </ScrollView>
   );

@@ -1,21 +1,11 @@
-import React, {memo, useState} from 'react';
-import {View, Image, TextInput} from 'react-native';
-import {
-  DemoProfileImage1,
-  editIcon,
-  addProfileImage,
-  check,
-} from '../../Assets';
+import React, {memo} from 'react';
+import {View, Image, Pressable} from 'react-native';
+import {bgBlurDone, check} from '../../Assets';
 import {styles} from './styles';
-
-import useHomeScreen from './useHomeScreen';
 import {BlurView} from '@react-native-community/blur';
-import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
-import {CircleImage} from '../../Components/CircleImage';
-import {Touchable} from '../../Components/Touchable';
-import {TextComponent} from '../../Components/TextComponent';
 import GradientText from '../../Components/GradientText';
+
 const TripCreatedModal = ({isTripCreated, TripCreatedToggle}) => {
   return (
     <View
@@ -31,13 +21,14 @@ const TripCreatedModal = ({isTripCreated, TripCreatedToggle}) => {
         animationOutTiming={100}
         animationType="fade"
         style={styles.bottomModal}>
-        <View
+        <Pressable
+          onPress={TripCreatedToggle}
           style={{
             flex: 1,
             justifyContent: 'flex-end',
             position: 'relative',
           }}>
-          <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
+          <Image style={styles.absolute} source={bgBlurDone} />
           <View style={styles.checkedMain}>
             <Image source={check} />
             <GradientText
@@ -47,7 +38,7 @@ const TripCreatedModal = ({isTripCreated, TripCreatedToggle}) => {
               Trip Created
             </GradientText>
           </View>
-        </View>
+        </Pressable>
       </Modal>
     </View>
   );

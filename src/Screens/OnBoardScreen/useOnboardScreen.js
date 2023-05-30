@@ -16,6 +16,7 @@ const useOnboardingScreen = ({navigate, params}) => {
   };
 
   const goNext = () => {
+    if (currentIndex == 1) navigate('LoginScreen');
     setCurrentIndex(pre => pre + 1);
   };
 

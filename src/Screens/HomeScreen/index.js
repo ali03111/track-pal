@@ -33,11 +33,13 @@ const HomeScreen = () => {
   const {
     frequentTrips,
     isModalVisible,
-    toggleLocationModal,
-    StartTripToggle,
+    locationInput,
+    iscreateModal,
+    GroupInput,
     isTripModalVisible,
+    destinationInput,
     isTripCreated,
-    TripCreatedToggle,
+    updateState,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -52,19 +54,10 @@ const HomeScreen = () => {
   });
   return (
     <View style={styles.homeScreenStyle}>
-      {/* <MapView
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      /> */}
       <Image source={logo} style={styles.logo} />
       <View style={styles.mapArea}>
         <View style={styles.groupInfoMain}>
           <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
-          {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}
           <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
 
           <View style={styles.groupDesc}>
@@ -92,7 +85,7 @@ const HomeScreen = () => {
       <View style={styles.btn}>
         <ThemeButton
           title={'Create New Trip'}
-          onPress={TripCreatedToggle}
+          onPress={() => updateState({isModalVisible: true})}
           style={styles.tripBtn}
         />
         {/* <ThemeButton
@@ -100,14 +93,41 @@ const HomeScreen = () => {
           onPress={CreateGroup}
           style={styles.tripBtn}
         /> */}
-        {/* <SelectLocationModal
+        <SelectLocationModal
           {...{
             isModalVisible,
-            toggleLocationModal,
+            toggleLocationModal: () => {
+              updateState({isModalVisible: false});
+              updateState({iscreateModal: true});
+            },
           }}
-        /> */}
-        {/* <StartTripModal {...{isTripModalVisible, StartTripToggle}} /> */}
-        <TripCreatedModal {...{isTripCreated, TripCreatedToggle}} />
+        />
+        <CreateGroupModal
+          {...{
+            iscreateModal,
+            CreateGroup: () => {
+              updateState({iscreateModal: false});
+              updateState({isTripModalVisible: true});
+            },
+          }}
+        />
+        <StartTripModal
+          {...{
+            isTripModalVisible,
+            StartTripToggle: () => {
+              updateState({isTripModalVisible: false});
+              updateState({isTripCreated: true});
+            },
+          }}
+        />
+        <TripCreatedModal
+          {...{
+            isTripCreated,
+            TripCreatedToggle: () => {
+              updateState({isTripCreated: false});
+            },
+          }}
+        />
       </View>
     </View>
   );

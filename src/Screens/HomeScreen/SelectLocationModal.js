@@ -1,6 +1,6 @@
 import React, {memo, useCallback, useState} from 'react';
 import {View, Image, TextInput} from 'react-native';
-import {arrows, dotbar, dots, from, location} from '../../Assets';
+import {arrows, bgBlur, dotbar, dots, from, location} from '../../Assets';
 import {styles} from './styles';
 
 import {hp, wp} from '../../Config/responsive';
@@ -10,9 +10,16 @@ import {BlurView} from '@react-native-community/blur';
 import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import CreateGroupModal from './CreateGroupModal';
-const SelectLocationModal = ({isModalVisible, toggleLocationModal}) => {
-  const {locationInput, setLocationInput, CreateGroup, iscreateModal} =
-    useHomeScreen();
+const SelectLocationModal = ({
+  isModalVisible,
+  toggleLocationModal,
+  iscreateModal,
+  locationInput,
+  destinationInput,
+  updateState,
+}) => {
+  // const {locationInput, setLocationInput, CreateGroup, iscreateModal} =
+  //   useHomeScreen();
 
   return (
     <View
@@ -35,12 +42,7 @@ const SelectLocationModal = ({isModalVisible, toggleLocationModal}) => {
             justifyContent: 'flex-end',
             position: 'relative',
           }}>
-          <BlurView
-            style={styles.absolute}
-            blurType="light"
-            blurAmount={10}
-            // reducedTransparencyFallbackColor="white"
-          />
+          <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.modalData}>
             {/* <View style={styles.groupInfoMain}>
                   <Image source={DemoProfileImage1} style={styles.groupLogo} />
@@ -54,7 +56,7 @@ const SelectLocationModal = ({isModalVisible, toggleLocationModal}) => {
                 <Image source={location} style={styles.inputLeftImg} />
                 <TextInput
                   style={styles.input}
-                  onChangeText={setLocationInput}
+                  onChangeText={e => updateState({locationInput: e})}
                   value={locationInput}
                   placeholder="Choose Start Location"
                 />
@@ -67,7 +69,7 @@ const SelectLocationModal = ({isModalVisible, toggleLocationModal}) => {
                 <Image source={from} style={styles.inputLeftImg} />
                 <TextInput
                   style={styles.input}
-                  onChangeText={setDestinationInput}
+                  onChangeText={e => updateState({destinationInput: e})}
                   value={destinationInput}
                   placeholder="Choose Destination"
                 />
@@ -79,12 +81,6 @@ const SelectLocationModal = ({isModalVisible, toggleLocationModal}) => {
                 title={'Confirm Location'}
                 onPress={toggleLocationModal}
                 btnStyle={styles.locationBtn}
-              />
-              <CreateGroupModal
-                {...{
-                  iscreateModal,
-                  CreateGroup,
-                }}
               />
             </View>
           </View>

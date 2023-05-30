@@ -22,6 +22,10 @@ const useLogin = ({navigate, goBack}) => {
     setRemember(!remember);
   };
 
+  const onPress = () => navigate('RegisterScreen');
+
+  const loginUser = () => navigate('MybottomTabs');
+
   return {
     handleSubmit,
     errors,
@@ -34,6 +38,8 @@ const useLogin = ({navigate, goBack}) => {
     remember,
     setRemember,
     rememberValue,
+    onPress,
+    loginUser,
   };
 };
 

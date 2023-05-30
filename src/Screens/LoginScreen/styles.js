@@ -29,10 +29,11 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     height: 0,
     flex: 1,
+    backgroundColor: 'black',
   },
   logInText: {
     flex: 1,
-    fontSize: hp('2.1'),
+    fontSize: hp('2'),
     color: Colors.black,
     paddingHorizontal: wp('4'),
     justifyContent: 'center',

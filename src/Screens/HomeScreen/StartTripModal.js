@@ -3,6 +3,7 @@ import {View, Image, TextInput, Text} from 'react-native';
 import {
   DemoProfileImage1,
   arrows,
+  bgBlur,
   dotbar,
   dots,
   from,
@@ -46,12 +47,7 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible}) => {
             justifyContent: 'flex-end',
             position: 'relative',
           }}>
-          <BlurView
-            style={styles.absolute}
-            blurType="light"
-            blurAmount={10}
-            // reducedTransparencyFallbackColor="white"
-          />
+          <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.tripModalData}>
             <View style={styles.groupInfoMain}>
               {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}

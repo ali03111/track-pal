@@ -22,6 +22,8 @@ const useRegister = ({navigate, goBack}) => {
     setRemember(!remember);
   };
 
+  const loginNav = () => navigate('LoginScreen');
+
   return {
     handleSubmit,
     errors,
@@ -35,6 +37,7 @@ const useRegister = ({navigate, goBack}) => {
     setRemember,
     rememberValue,
     goBack,
+    loginNav,
   };
 };
 
