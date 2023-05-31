@@ -298,3 +298,60 @@ export const frequentTrips = [
     image: DemoProfileImage5,
   },
 ];
+
+export const msgs = [
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing lines in.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing lines in.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+];

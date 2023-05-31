@@ -15,6 +15,11 @@ const StackNavigatior = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="OnBoardScreen" component={Screens.OnBoardScreen} />
+        <Stack.Screen
+          name="MapAndChatScreen"
+          component={Screens.MapAndChatScreen}
+        />
+        <Stack.Screen name="ChatScreen" component={Screens.ChatScreen} />
         <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
         <Stack.Screen
           name="RegisterScreen"

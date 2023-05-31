@@ -8,3 +8,5 @@ export {default as ResetPasswordScreen} from './ResetPassword';
 export {default as EditProfileScreen} from './EditProfileScreen';
 export {default as NotificationTabsScreen} from './NotificationTabsScreen';
 export {default as HomeScreen} from './HomeScreen';
+export {default as MapAndChatScreen} from './MapAndChatScreen';
+export {default as ChatScreen} from './ChatScreen';
