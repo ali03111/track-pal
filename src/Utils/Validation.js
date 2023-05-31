@@ -13,7 +13,7 @@ const passwordSchema = {
   confirm_password: yup
     .string()
     .required('Confirm password is required')
-    .oneOf([yup.ref('password'), null], 'Passwords must match'),
+    .oneOf([yup.ref('password'), null], 'Password must match'),
 };
 const number = yup.object().shape({
   number: yup.string().required('Please Enter your number'),

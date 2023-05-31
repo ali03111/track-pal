@@ -14,12 +14,11 @@ import {
   whitebg,
 } from '../../Assets';
 import {styles} from './styles';
-
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {hp, wp} from '../../Config/responsive';
 import useHomeScreen from './useHomeScreen';
 import GradientText from '../../Components/GradientText';
 import {TextComponent} from '../../Components/TextComponent';
-import MapView from 'react-native-maps';
 import {Touchable} from '../../Components/Touchable';
 import {BlurView, VibrancyView} from '@react-native-community/blur';
 import ThemeButton from '../../Components/ThemeButton';
@@ -29,6 +28,7 @@ import CreateGroupModal from './CreateGroupModal';
 import {CircleImage} from '../../Components/CircleImage';
 import StartTripModal from './StartTripModal';
 import TripCreatedModal from './TripCreatedModal';
+
 const HomeScreen = () => {
   const {
     frequentTrips,
@@ -39,6 +39,7 @@ const HomeScreen = () => {
     isTripModalVisible,
     destinationInput,
     isTripCreated,
+    currentLocation,
     updateState,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
@@ -68,7 +69,16 @@ const HomeScreen = () => {
             <Image source={link} style={styles.externalLinks} />
           </Touchable>
         </View>
-        <Image source={staticMap} style={styles.staticMapImg} />
+        <MapView
+          // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.staticMapImg}
+          region={{
+            latitude: currentLocation?.coords?.latitude,
+            longitude: currentLocation?.coords?.longitude,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}></MapView>
+        {/* <Image source={staticMap} style={styles.staticMapImg} /> */}
       </View>
       <TextComponent text={'Frequent Trips'} styles={styles.TripsHeading} />
       <FlatList

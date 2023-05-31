@@ -97,6 +97,7 @@ export const styles = StyleSheet.create({
     marginTop: hp('-10'),
     zIndex: -2,
     height: hp('37'),
+    width: wp('100'),
   },
   btn: {
     marginHorizontal: wp('4'),

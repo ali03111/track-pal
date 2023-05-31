@@ -9,6 +9,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ImageBackground, LogBox} from 'react-native';
 import StackNavigatior from './src/Navigation/navigation';
 import {logoScreen} from './src/Assets';
+import {enableLatestRenderer} from 'react-native-maps';
 
 const App = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -48,6 +49,7 @@ const App = () => {
 
   return (
     <>
+      {/* {enableLatestRenderer()} */}
       {isVisible === true ? Splash_Screen : <StackNavigatior />}
       {/* <StackNavigatior />; */}
     </>
