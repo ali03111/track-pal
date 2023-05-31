@@ -61,3 +61,4 @@ export {default as dotbar} from './Icons/dotbar.png';
 export {default as editIcon} from './Icons/edit.png';
 export {default as addProfileImage} from './Icons/addProfileImage.png';
 export {default as check} from './Icons/Tick.png';
+export {default as send} from './Icons/send.png';

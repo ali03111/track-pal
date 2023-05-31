@@ -1,5 +1,5 @@
 import React, {memo, useState} from 'react';
-import {View, Image, TextInput} from 'react-native';
+import {View, Image, TextInput, Pressable} from 'react-native';
 import {
   DemoProfileImage1,
   editIcon,
@@ -31,7 +31,8 @@ const TripCreatedModal = ({isTripCreated, TripCreatedToggle}) => {
         animationOutTiming={100}
         animationType="fade"
         style={styles.bottomModal}>
-        <View
+        <Pressable
+          onPress={TripCreatedToggle}
           style={{
             flex: 1,
             justifyContent: 'flex-end',
@@ -47,7 +48,7 @@ const TripCreatedModal = ({isTripCreated, TripCreatedToggle}) => {
               Trip Created
             </GradientText>
           </View>
-        </View>
+        </Pressable>
       </Modal>
     </View>
   );
