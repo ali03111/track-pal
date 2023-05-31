@@ -44,6 +44,7 @@ const StackNavigatior = () => {
         />
         <Stack.Screen name="ProfileScreen" component={Screens.ProfileScreen} />
         <Stack.Screen name="SyncingScreen" component={Screens.SyncingScreen} />
+        <Stack.Screen name="MapScreen" component={Screens.MapScreen} />
         <Stack.Screen name="SyncScreen" component={Screens.SyncScreen} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
@@ -6,6 +6,8 @@ export const styles = StyleSheet.create({
   tabsMain: {
     paddingHorizontal: wp('3.5'),
     flex: 1,
+    marginTop: hp('2'),
+    marginBottom: hp('3'),
   },
   mainTabStyle: {
     flexDirection: 'row',
@@ -16,6 +18,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#e9e9e9',
     borderWidth: 1,
     borderColor: '#606060',
+    marginTop: Platform.OS == 'ios' ? hp('3') : 0,
+    marginBottom: hp('1'),
   },
   headerStyle: {
     paddingHorizontal: wp('0'),
@@ -40,13 +44,5 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingVertical: hp('1'),
-  },
-  inActiveItem: {
-    width: wp('42'),
-    textAlign: 'center',
-    height: hp('5'),
-    justifyContent: 'center',
-    textAlign: 'center',
-    verticalAlign: 'middle',
   },
 });

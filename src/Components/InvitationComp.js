@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     marginLeft: wp('0'),
   },
   acceptText: {
-    fontSize: hp('2.1'),
+    fontSize: hp('2'),
     fontWeight: '500',
   },
   status: {

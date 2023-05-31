@@ -355,3 +355,24 @@ export const msgs = [
     time: '3:15 PM',
   },
 ];
+
+export const trips = [
+  {
+    tripProfile: DemoProfileImage1,
+    tripName: 'Business trip',
+    member: '15 members',
+    status: 'active',
+  },
+  {
+    tripProfile: DemoProfileImage2,
+    tripName: 'Outings',
+    member: '10 members',
+    status: 'inactive',
+  },
+  {
+    tripProfile: DemoProfileImage3,
+    tripName: 'Home',
+    member: '5 members',
+    status: 'active',
+  },
+];

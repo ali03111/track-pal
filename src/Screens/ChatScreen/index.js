@@ -1,26 +1,9 @@
 import React, {memo, useCallback} from 'react';
-import {
-  View,
-  FlatList,
-  Dimensions,
-  Image,
-  ScrollView,
-  Text,
-  TextInput,
-} from 'react-native';
+import {View, FlatList, Image, TextInput} from 'react-native';
 import MessagesComp from './MessagesComp';
 import {styles} from './styles';
 import useChatScreen from './useChatScreen';
-import {wp} from '../../Config/responsive';
-// import {
-//   arrowback,
-//   moredots,
-//   search,
-//   smsedit,
-//   arrowbackwhite,
-//   whitedots,
-//   send,
-// } from '../../Assests';
+import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 import {Touchable} from '../../Components/Touchable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -44,34 +27,32 @@ const ChatScreen = () => {
         data={msgs}
         scrollEnabled
         renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingBottom: 20,
-          paddingHorizontal: wp('4'),
+          paddingBottom: hp('2'),
+          paddingHorizontal: wp('1'),
         }}
       />
-      <View style={styles.searchBar}>
-        <View style={styles.searchMain}>
-          <TextInput
-            style={styles.searchinput}
-            onChangeText={onChangeText}
-            value={text}
-            placeholder={'Type a message'}
-            placeholderTextColor={Colors.gray}
-          />
+      <View style={styles.searchMain}>
+        <TextInput
+          style={styles.searchinput}
+          onChangeText={onChangeText}
+          value={text}
+          placeholder={'Type a message'}
+          placeholderTextColor={Colors.gray}
+        />
 
-          <Touchable style={styles.sendBtnStyle}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              colors={[Colors.themeColorDark, Colors.themeColorLight]}>
-              <View style={styles.msgsRecieve}>
-                <Image source={send} style={styles.sendIcon} />
-                <TextComponent text={'Send'} styles={styles.sendTextStyle} />
-              </View>
-            </LinearGradient>
-          </Touchable>
-        </View>
+        <Touchable style={styles.sendBtnStyle}>
+          <LinearGradient
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
+            colors={[Colors.themeColorDark, Colors.themeColorLight]}>
+            <View style={styles.msgsRecieve}>
+              <Image source={send} style={styles.sendIcon} />
+              <TextComponent text={'Send'} styles={styles.sendTextStyle} />
+            </View>
+          </LinearGradient>
+        </Touchable>
       </View>
     </View>
   );

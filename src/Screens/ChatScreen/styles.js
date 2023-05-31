@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: Colors.grayBorder,
     paddingHorizontal: wp('1.8'),
-    marginHorizontal: wp('4'),
+    // marginHorizontal: wp('4'),
     marginVertical: hp('2'),
     overflow: 'hidden',
     backgroundColor: Colors.white,

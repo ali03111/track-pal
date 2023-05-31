@@ -1,8 +1,9 @@
 import React, {memo, useCallback} from 'react';
-
+import {Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import GeneralNotificationTab from './GeneralNotificationTab';
 import InvitationTab from './InvitaitionTab';
+import {hp} from '../../Config/responsive';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -16,6 +17,7 @@ const NotificationTabs = () => {
             width: 0,
             height: 0, // for iOS
           },
+          paddingTop: Platform.OS == 'ios' ? hp('4') : 0,
         },
         indicatorStyle: {
           // width: 0,

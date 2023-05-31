@@ -22,6 +22,7 @@ export {default as link} from './Images/link.png';
 export {default as whitebg} from './Images/whitebg.png';
 export {default as bgBlur} from './Images/imgpsh_fullsize_anim.png';
 export {default as bgBlurDone} from './Images/imgpsh_fullsize_anim1.png';
+export {default as leftArrow} from './Images/leftArrow.png';
 
 // export {default as DemoProfileImage7} from './Images/profile7.png';
 
@@ -64,3 +65,5 @@ export {default as editIcon} from './Icons/edit.png';
 export {default as addProfileImage} from './Icons/addProfileImage.png';
 export {default as check} from './Icons/Tick.png';
 export {default as send} from './Icons/send.png';
+export {default as trash} from './Icons/trash.png';
+export {default as cardediticon} from './Icons/editicon.png';
