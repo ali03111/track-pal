@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   centerHeading: {
-    fontSize: hp('4'),
+    fontSize: hp('3.5'),
     fontWeight: '600',
     color: 'red',
     textAlign: 'center',

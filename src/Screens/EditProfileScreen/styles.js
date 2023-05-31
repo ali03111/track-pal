@@ -90,5 +90,8 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     left: wp('55%'),
     bottom: hp('0'),
+    width: wp('14'),
+    height: hp('8'),
+    resizeMode: 'contain',
   },
 });

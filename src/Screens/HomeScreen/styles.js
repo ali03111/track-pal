@@ -1,11 +1,12 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
 export const styles = StyleSheet.create({
   homeScreenStyle: {
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
     flex: 1,
+    paddingTop: Platform.OS == 'ios' ? hp('3') : 0,
   },
   logo: {
     resizeMode: 'contain',
@@ -22,6 +23,7 @@ export const styles = StyleSheet.create({
   },
   trips: {
     paddingRight: wp('4'),
+    alignItems: 'center',
   },
   TripsHeading: {
     fontSize: hp('3'),
@@ -88,6 +90,8 @@ export const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+    width: wp('100'),
+    height: hp('100'),
   },
   staticMapImg: {
     marginTop: hp('-10'),

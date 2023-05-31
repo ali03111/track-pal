@@ -32,6 +32,8 @@ const LoginScreen = ({navigation}) => {
     setRemember,
     rememberValue,
     remember,
+    onPress,
+    loginUser,
   } = useLogin(navigation);
   return (
     <View style={styles.logInMain}>
@@ -81,7 +83,7 @@ const LoginScreen = ({navigation}) => {
         </Touchable>
         <TextComponent text={'Forgot Password'} styles={styles.forgetText} />
       </View>
-      <ThemeButton title={'Log In'} />
+      <ThemeButton onPress={loginUser} title={'Log In'} />
       <View style={styles.logInWith}>
         <Text style={styles.logInBorder}></Text>
         <Text style={styles.logInText}>or Log In With</Text>
@@ -107,7 +109,10 @@ const LoginScreen = ({navigation}) => {
       />
       <View style={styles.signUpTextMain}>
         <TextComponent text={'Don’t have an account? '} />
-        <GradientText style={styles.signUpText} GradientAlignment={0.8}>
+        <GradientText
+          onPress={onPress}
+          style={styles.signUpText}
+          GradientAlignment={0.8}>
           Sign Up
         </GradientText>
       </View>

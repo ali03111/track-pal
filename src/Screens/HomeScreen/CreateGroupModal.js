@@ -1,6 +1,11 @@
 import React, {memo, useState} from 'react';
 import {View, Image, TextInput} from 'react-native';
-import {DemoProfileImage1, editIcon, addProfileImage} from '../../Assets';
+import {
+  DemoProfileImage1,
+  editIcon,
+  addProfileImage,
+  bgBlur,
+} from '../../Assets';
 import {styles} from './styles';
 
 import useHomeScreen from './useHomeScreen';
@@ -32,7 +37,7 @@ const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
             justifyContent: 'flex-end',
             position: 'relative',
           }}>
-          <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
+          <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.modalData}>
             <View style={styles.modalInput}>
               <View style={styles.userProfileImg}>
