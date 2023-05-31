@@ -73,9 +73,9 @@ function MybottomTabs() {
         component={Screens.HomeScreen}
       />
       <Tab.Screen
-        name="FavourateScreen"
+        name="MapAndChatScreen"
         options={tabarComponent(map2, map)}
-        component={Screens.RegisterScreen}
+        component={Screens.MapAndChatScreen}
       />
       <Tab.Screen
         name="SomeComponent"

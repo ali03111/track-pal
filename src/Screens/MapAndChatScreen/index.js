@@ -9,6 +9,7 @@ import GradientText from '../../Components/GradientText';
 import {Colors} from '../../Theme/Variables';
 import LinearGradient from 'react-native-linear-gradient';
 import {hp, wp} from '../../Config/responsive';
+import * as Screens from '../index';
 
 function test() {
   return (
@@ -68,7 +69,7 @@ function MyTabBar({state, descriptors, navigation}) {
             onLongPress={onLongPress}
             style={styles.TabStyle}>
             {isFocused == false && (
-              <Text style={styles.inActiveItem}>{label}</Text>
+              <Text style={{...styles.text, color: 'black'}}>{label}</Text>
             )}
             {isFocused == true && (
               <LinearGradient
@@ -92,12 +93,12 @@ const Tab = createMaterialTopTabNavigator();
 const MapAndChatScreen = () => {
   return (
     <View style={styles.tabsMain}>
-      <CustomHeader
+      {/* <CustomHeader
         arrowBackIcon={arrowBack}
         backText={'Back'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
-      />
+      /> */}
 
       <Tab.Navigator
         tabBarOptions={{
@@ -105,13 +106,13 @@ const MapAndChatScreen = () => {
         }}
         tabBar={props => <MyTabBar {...props} />}>
         <Tab.Screen
-          name="Home"
-          component={test}
+          name="MapScreen"
+          component={Screens.MapScreen}
           options={{headerShown: false}}
         />
         <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
+          name="ChatScreen"
+          component={Screens.ChatScreen}
           options={{headerShown: false}}
         />
       </Tab.Navigator>

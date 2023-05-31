@@ -3,7 +3,7 @@ import {View, Text, FlatList} from 'react-native';
 import {styles} from './styles';
 
 import useNotificationScreen from './useNotificationScreen';
-import {wp} from '../../Config/responsive';
+import {hp, wp} from '../../Config/responsive';
 import GeneralNotification from '../../Components/GeneralNotification';
 
 const GeneralNotificationTab = () => {
@@ -32,6 +32,7 @@ const GeneralNotificationTab = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: wp('4'),
+          paddingBottom: hp('5'),
         }}
       />
     </View>
