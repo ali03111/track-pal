@@ -14,6 +14,8 @@ const Colors = {
   gray: 'rgba(45, 45, 45, 0.5)',
   grayBorder: '#D9D9D9',
   chatInputBorder: 'rgba(11, 180, 255, 1',
+  avtiveCard: '#EAF6ED',
+  inavtiveCard: '#F5E7E4',
 };
 
 /** FontSize **/
