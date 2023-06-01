@@ -9,54 +9,59 @@ import {TextComponent} from '../../Components/TextComponent';
 import ThemeButton from '../../Components/ThemeButton';
 import {trips} from '../../Utils/localDB';
 import InactiveBtn from '../../Components/InactiveBtn';
+import TripCreatedModal from '../HomeScreen/TripCreatedModal';
+import useEditTripScreen from './useEditTripScreen';
 
-const renderItem = ({item}) => {
-  return (
-    <View style={styles.activeCardMain(item.status)}>
-      <View style={styles.activeCardStyle}>
-        <View style={styles.cardLeft}>
-          <CircleImage image={item.tripProfile} style={styles.groupLogo} />
-          <View style={styles.groupDesc}>
-            <TextComponent text={item.tripName} styles={styles.groupName} />
-            <TextComponent text={item.member} styles={styles.groupMember} />
-            <TextComponent
-              text={item.status}
-              styles={styles.groupActive(item.status)}
-            />
+const EditTripScreen = ({navigation}) => {
+  const {updateState, isTripCreated, trips} = useEditTripScreen();
+
+  const renderItem = ({item}) => {
+    return (
+      <View style={styles.activeCardMain(item.status)}>
+        <View style={styles.activeCardStyle}>
+          <View style={styles.cardLeft}>
+            <CircleImage image={item.tripProfile} style={styles.groupLogo} />
+            <View style={styles.groupDesc}>
+              <TextComponent text={item.tripName} styles={styles.groupName} />
+              <TextComponent text={item.member} styles={styles.groupMember} />
+              <TextComponent
+                text={item.status}
+                styles={styles.groupActive(item.status)}
+              />
+            </View>
           </View>
+          {item.status == 'Active' ? (
+            <ThemeButton
+              title={'Start Trip'}
+              textStyle={styles.TripBtnText}
+              btnStyle={styles.TripBtn}
+              onPress={updateState}
+            />
+          ) : (
+            <InactiveBtn title={'Start Trip'} />
+          )}
         </View>
-        {item.status == 'Active' ? (
-          <ThemeButton
-            title={'Start Trip'}
-            textStyle={styles.TripBtnText}
-            btnStyle={styles.TripBtn}
-          />
-        ) : (
-          <InactiveBtn title={'Start Trip'} />
-        )}
+        <TouchableOpacity>
+          <Image source={leftArrow} />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity>
-        <Image source={leftArrow} />
+    );
+  };
+  const renderHiddenItem = (data, rowMap) => (
+    <View style={styles.rowBack}>
+      <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]}>
+        <Image source={trash} />
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]}>
+        <Image source={cardediticon} />
       </TouchableOpacity>
     </View>
   );
-};
-const renderHiddenItem = (data, rowMap) => (
-  <View style={styles.rowBack}>
-    <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]}>
-      <Image source={trash} />
-    </TouchableOpacity>
-    <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]}>
-      <Image source={cardediticon} />
-    </TouchableOpacity>
-  </View>
-);
-const onRowOpen = (rowKey, rowMap) => {
-  setTimeout(() => {
-    rowMap[rowKey]?.closeRow();
-  }, 2000);
-};
-const EditTripScreen = () => {
+  const onRowOpen = (rowKey, rowMap) => {
+    setTimeout(() => {
+      rowMap[rowKey]?.closeRow();
+    }, 2000);
+  };
   return (
     <View style={styles.tips}>
       <CustomHeader
@@ -78,17 +83,17 @@ const EditTripScreen = () => {
         previewOpenDelay={3000}
         onRowOpen={onRowOpen}
         scrollEnabled
-        // keyExtractor={keyExtractor}
         refreshing={false}
-        // onRefresh={onRefresh}
-        // ListEmptyComponent={
-        //   <EmptyComponent
-        //     title="Ooopss!"
-        //     description="Reminders"
-        //     onRefresh={onRefresh}
-        //   />
-        // }
         showsVerticalScrollIndicator={false}
+      />
+
+      <TripCreatedModal
+        title={'Trip started'}
+        isTripCreated={isTripCreated}
+        TripCreatedToggle={() => {
+          updateState();
+          navigation.navigate('MapAndChatScreen');
+        }}
       />
     </View>
   );

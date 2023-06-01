@@ -1,8 +1,9 @@
 import React, {memo, useCallback, useState} from 'react';
-import {View, Text, Image, FlatList, TextInput} from 'react-native';
+import {View, Text, Image, FlatList, TextInput, Platform} from 'react-native';
 import {
   DemoProfileImage1,
   arrows,
+  bgBlurHome,
   dotbar,
   dots,
   from,
@@ -59,7 +60,19 @@ const HomeScreen = () => {
       <Image source={logo} style={styles.logo} />
       <View style={styles.mapArea}>
         <View style={styles.groupInfoMain}>
-          <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
+          {Platform.OS == 'ios' ? (
+            <BlurView
+              style={styles.absolute}
+              blurType="light"
+              blurAmount={10}
+            />
+          ) : (
+            <Image
+              style={{...styles.absolute, opacity: 0.8}}
+              source={bgBlurHome}
+              blurRadius={0.5}
+            />
+          )}
           <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
 
           <View style={styles.groupDesc}>

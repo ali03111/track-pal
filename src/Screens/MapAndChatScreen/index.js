@@ -90,15 +90,17 @@ function MyTabBar({state, descriptors, navigation}) {
 const Tab = createMaterialTopTabNavigator();
 // const Tab = createBottomTabNavigator();
 
-const MapAndChatScreen = () => {
+const MapAndChatScreen = ({navigation}) => {
   return (
     <View style={styles.tabsMain}>
-      {/* <CustomHeader
+      <CustomHeader
         arrowBackIcon={arrowBack}
         backText={'Back'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
-      /> */}
+        headerTitle={'Business trip'}
+        goBack={navigation.goBack}
+      />
 
       <Tab.Navigator
         tabBarOptions={{

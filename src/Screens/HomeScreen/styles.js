@@ -92,6 +92,7 @@ export const styles = StyleSheet.create({
     right: 0,
     width: wp('100'),
     height: hp('100'),
+    // opacity: 0.67,
   },
   staticMapImg: {
     marginTop: hp('-10'),

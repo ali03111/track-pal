@@ -14,11 +14,11 @@ const StackNavigatior = () => {
           headerTitle: null,
           headerShown: false,
         }}>
+        <Stack.Screen name="OnBoardScreen" component={Screens.OnBoardScreen} />
         <Stack.Screen
           name="EditTripScreen"
           component={Screens.EditTripScreen}
         />
-        <Stack.Screen name="OnBoardScreen" component={Screens.OnBoardScreen} />
         <Stack.Screen
           name="MapAndChatScreen"
           component={Screens.MapAndChatScreen}

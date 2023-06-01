@@ -18,6 +18,8 @@ const useEditProfile = ({navigate, goBack}) => {
     Schemas.editProfile,
   );
 
+  const navigateToReset = () => navigate('ResetPasswordScreen');
+
   return {
     handleSubmit,
     errors,
@@ -25,6 +27,7 @@ const useEditProfile = ({navigate, goBack}) => {
     control,
     getValues,
     goBack,
+    navigateToReset,
   };
 };
 

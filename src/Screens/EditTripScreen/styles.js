@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
   backRightBtnLeft: {
     backgroundColor: '#EA4335',
     flex: 1,
-    height: hp('21.2'),
+    height: Platform.OS == 'ios' ? hp('19.2') : hp('23.1'),
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     paddingTop: hp('9.5'),
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
   backRightBtnRight: {
     backgroundColor: '#1877F2',
     flex: 1,
-    height: hp('21.2'),
+    height: Platform.OS == 'ios' ? hp('19.2') : hp('23.1'),
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     alignItems: 'flex-end',
@@ -80,6 +80,7 @@ export const styles = StyleSheet.create({
     paddingVertical: hp('.6'),
     marginBottom: hp('3'),
     borderRadius: 8,
+    // height: hp('22'),
     flexDirection: 'row',
   }),
   cardLeft: {

@@ -23,7 +23,8 @@ export const styles = StyleSheet.create({
   },
   headerStyle: {
     paddingHorizontal: wp('0'),
-    paddingBottom: hp('2'),
+    paddingBottom: Platform.OS == 'ios' ? hp('-2') : hp('2'),
+    marginTop: Platform.OS == 'ios' ? hp('4') : hp('0'),
   },
   hdTitle: {
     fontWeight: '600',

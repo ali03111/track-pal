@@ -12,7 +12,13 @@ import {useState} from 'react';
 import {trips} from '../../Utils/localDB';
 
 const useEditTripScreen = () => {
-  return {trips};
+  const [isTripCreated, setIsTripCreated] = useState(false);
+
+  const updateState = () => {
+    setIsTripCreated(!isTripCreated);
+  };
+
+  return {trips, updateState, isTripCreated};
 };
 
 export default useEditTripScreen;

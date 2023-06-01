@@ -21,8 +21,15 @@ import {CircleImage} from '../../Components/CircleImage';
 import KeyBoardWrapper from '../../Components/KeyboardWrapper';
 
 const EditProfileScreen = ({navigation}) => {
-  const {handleSubmit, errors, reset, control, getValues, goBack} =
-    useResetPassword(navigation);
+  const {
+    handleSubmit,
+    errors,
+    reset,
+    control,
+    getValues,
+    goBack,
+    navigateToReset,
+  } = useResetPassword(navigation);
   return (
     <KeyBoardWrapper>
       <ImageBackground source={editProfileBgNew} resizeMode="cover">
@@ -59,7 +66,7 @@ const EditProfileScreen = ({navigation}) => {
           }}
         />
         <TextComponent text={'Change Password'} styles={styles.inputTitle} />
-        <Touchable style={styles.passBtn}>
+        <Touchable onPress={navigateToReset} style={styles.passBtn}>
           <Text style={styles.passText}>************</Text>
           <Image style={styles.passIcon} source={arrowRightIcon} />
         </Touchable>
