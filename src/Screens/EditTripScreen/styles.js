@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
   tips: {
     paddingHorizontal: wp('3.5'),
     backgroundColor: Colors.white,
+    flex: 1,
   },
   headerStyle: {
     paddingHorizontal: wp('0'),
@@ -28,7 +29,7 @@ export const styles = StyleSheet.create({
   backRightBtnLeft: {
     backgroundColor: '#EA4335',
     flex: 1,
-    height: hp('22.4'),
+    height: hp('21.2'),
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     paddingTop: hp('9.5'),
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
   backRightBtnRight: {
     backgroundColor: '#1877F2',
     flex: 1,
-    height: hp('22.4'),
+    height: hp('21.2'),
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     alignItems: 'flex-end',
@@ -55,37 +56,37 @@ export const styles = StyleSheet.create({
     marginTop: hp('-.4'),
     color: Colors.gray,
   },
-  groupActive: {
+  groupActive: status => ({
     fontSize: hp('1.8'),
-    // marginTop: hp(''),
-    color: Colors.gray,
-  },
+    color: status == 'Active' ? Colors.gray : Colors.primaryColor,
+  }),
   groupDesc: {
     flex: 1,
     marginLeft: wp('3'),
   },
   activeCardStyle: {
     // flexDirection: 'row',
-    backgroundColor: Colors.avtiveCard,
+    // backgroundColor: Colors.avtiveCard,
     paddingHorizontal: wp('1'),
     paddingVertical: hp('.6'),
     marginBottom: hp('3'),
     borderRadius: 10,
     flex: 1,
   },
-  activeCardMain: {
-    backgroundColor: Colors.avtiveCard,
-    paddingHorizontal: wp('1'),
+  activeCardMain: status => ({
+    backgroundColor:
+      status == 'Active' ? Colors.avtiveCard : Colors.inavtiveCard,
+    paddingHorizontal: wp('1.5'),
     paddingVertical: hp('.6'),
     marginBottom: hp('3'),
     borderRadius: 8,
     flexDirection: 'row',
-  },
+  }),
   cardLeft: {
     flex: 1,
     flexDirection: 'row',
     paddingHorizontal: wp('3'),
-    paddingVertical: hp('3'),
+    paddingTop: hp('1.5'),
   },
   TripBtn: {
     width: wp('27'),

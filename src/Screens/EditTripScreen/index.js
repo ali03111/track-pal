@@ -3,32 +3,41 @@ import {View, Text, Image, TouchableOpacity, Touchable} from 'react-native';
 import {styles} from './styles';
 import CustomHeader from '../../Components/Header';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {DemoProfileImage1, cardediticon, leftArrow, trash} from '../../Assets';
+import {cardediticon, leftArrow, trash} from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
-import {Colors} from '../../Theme/Variables';
 import {TextComponent} from '../../Components/TextComponent';
-import LinearGradient from 'react-native-linear-gradient';
 import ThemeButton from '../../Components/ThemeButton';
+import {trips} from '../../Utils/localDB';
+import InactiveBtn from '../../Components/InactiveBtn';
 
-const renderItem = () => {
+const renderItem = ({item}) => {
   return (
-    <View style={styles.activeCardMain}>
+    <View style={styles.activeCardMain(item.status)}>
       <View style={styles.activeCardStyle}>
         <View style={styles.cardLeft}>
-          <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
+          <CircleImage image={item.tripProfile} style={styles.groupLogo} />
           <View style={styles.groupDesc}>
-            <Text style={styles.groupName}>Business Meets</Text>
-            <Text style={styles.groupMember}>15 members</Text>
-            <Text style={styles.groupActive}>Active</Text>
+            <TextComponent text={item.tripName} styles={styles.groupName} />
+            <TextComponent text={item.member} styles={styles.groupMember} />
+            <TextComponent
+              text={item.status}
+              styles={styles.groupActive(item.status)}
+            />
           </View>
         </View>
-        <ThemeButton
-          title={'Start Trip'}
-          textStyle={styles.TripBtnText}
-          btnStyle={styles.TripBtn}
-        />
+        {item.status == 'Active' ? (
+          <ThemeButton
+            title={'Start Trip'}
+            textStyle={styles.TripBtnText}
+            btnStyle={styles.TripBtn}
+          />
+        ) : (
+          <InactiveBtn title={'Start Trip'} />
+        )}
       </View>
-      <Image source={leftArrow} />
+      <TouchableOpacity>
+        <Image source={leftArrow} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -58,7 +67,7 @@ const EditTripScreen = () => {
 
       <SwipeListView
         useFlatList={true}
-        data={[1, 2, 3]}
+        data={trips}
         // disableRightSwipe={true}
         renderItem={renderItem}
         renderHiddenItem={renderHiddenItem}
@@ -68,6 +77,7 @@ const EditTripScreen = () => {
         previewOpenValue={0}
         previewOpenDelay={3000}
         onRowOpen={onRowOpen}
+        scrollEnabled
         // keyExtractor={keyExtractor}
         refreshing={false}
         // onRefresh={onRefresh}

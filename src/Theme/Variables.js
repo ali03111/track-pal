@@ -15,6 +15,7 @@ const Colors = {
   grayBorder: '#D9D9D9',
   chatInputBorder: 'rgba(11, 180, 255, 1',
   avtiveCard: '#EAF6ED',
+  inavtiveCard: '#F5E7E4',
 };
 
 /** FontSize **/
