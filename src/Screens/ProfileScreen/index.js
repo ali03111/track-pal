@@ -16,16 +16,13 @@ import CustomHeader from '../../Components/Header';
 import GradientText from '../../Components/GradientText';
 import ProfileBtn from '../../Components/ProfileBtn';
 import {CircleImage} from '../../Components/CircleImage';
+import {AlertDesign} from '../../Components/AlertDesign';
 
 const ProfileScreen = ({navigation}) => {
-  const {dynamicNav} = useProfileScreen(navigation);
+  const {dynamicNav, alert, onCancel} = useProfileScreen(navigation);
   return (
     <ScrollView style={styles.profileMain} showsVerticalScrollIndicator={false}>
-      <CustomHeader
-        // arrowBackIcon={arrowBack}
-        // backText={'Back'}
-        headerTitle={'Settings'}
-      />
+      <CustomHeader headerTitle={'Settings'} />
       <View style={styles.profileArea}>
         <CircleImage image={profleImg} styles={styles.profileImg} />
         <GradientText style={styles.userName} GradientAlignment={1}>
@@ -45,7 +42,15 @@ const ProfileScreen = ({navigation}) => {
         title={'Reset Password'}
         icon={lock}
       />
-      <ProfileBtn title={'Log Out'} icon={logout} />
+      <ProfileBtn onPress={onCancel} title={'Log Out'} icon={logout} />
+      <AlertDesign
+        isVisible={alert}
+        onCancel={onCancel}
+        onConfirm={onCancel}
+        title={'Log Out?'}
+        message={'Are you sure, you want to log out ?'}
+        confirmText={'Log Out'}
+      />
     </ScrollView>
   );
 };

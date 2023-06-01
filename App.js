@@ -6,7 +6,15 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, ImageBackground, LogBox} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  LogBox,
+  StatusBar,
+  Platform,
+} from 'react-native';
 import StackNavigatior from './src/Navigation/navigation';
 import {logoScreen} from './src/Assets';
 import {enableLatestRenderer} from 'react-native-maps';
@@ -22,24 +30,23 @@ const App = () => {
     return 5000;
   };
 
-  useEffect(async () => {
-    (async () => {
-      LogBox.ignoreLogs([
-        'VirtualizedLists should never be nested',
-        'ViewPropTypes will be removed from React Native',
-        'Settings is not yet supported on Android',
-        'ViewPropTypes will be removed',
-        "exported from 'deprecated-react-native-prop-types'.",
-        'Sending...',
-        'Non-serializable values were found in the navigation state',
-      ]);
-      LogBox.ignoreAllLogs(true);
-    })();
-    // await logOutFirebase();
+  const useEffectFun = () => {
+    LogBox.ignoreLogs([
+      'VirtualizedLists should never be nested',
+      'ViewPropTypes will be removed from React Native',
+      'Settings is not yet supported on Android',
+      'ViewPropTypes will be removed',
+      "exported from 'deprecated-react-native-prop-types'.",
+      'Sending...',
+      'Non-serializable values were found in the navigation state',
+    ]);
+    LogBox.ignoreAllLogs(true);
     setTimeout(function () {
       Hide_Splash_Screen();
     }, time());
-  }, []);
+  };
+
+  useEffect(useEffectFun, []);
 
   let Splash_Screen = (
     <ImageBackground
@@ -49,6 +56,11 @@ const App = () => {
 
   return (
     <>
+      <StatusBar
+        hidden={isVisible}
+        // backgroundColor={Platform.OS == 'ios' ? 'white' : 'transparent'}
+        barStyle={Platform.OS == 'ios' ? 'dark-content' : 'light-content'}
+      />
       {/* {enableLatestRenderer()} */}
       {isVisible === true ? Splash_Screen : <StackNavigatior />}
       {/* <StackNavigatior />; */}

@@ -40,6 +40,7 @@ const HomeScreen = () => {
     destinationInput,
     isTripCreated,
     currentLocation,
+    isTripStarted,
     updateState,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
@@ -107,8 +108,13 @@ const HomeScreen = () => {
           {...{
             isModalVisible,
             toggleLocationModal: () => {
-              updateState({isModalVisible: false});
-              updateState({iscreateModal: true});
+              updateState({isModalVisible: false, iscreateModal: true});
+              console.log(
+                'sfngkjbdfkffffgbdklfbgdfgdf',
+                iscreateModal,
+                isModalVisible,
+              );
+              // updateState({iscreateModal: true});
             },
           }}
         />
@@ -116,17 +122,8 @@ const HomeScreen = () => {
           {...{
             iscreateModal,
             CreateGroup: () => {
-              updateState({iscreateModal: false});
-              updateState({isTripModalVisible: true});
-            },
-          }}
-        />
-        <StartTripModal
-          {...{
-            isTripModalVisible,
-            StartTripToggle: () => {
-              updateState({isTripModalVisible: false});
-              updateState({isTripCreated: true});
+              updateState({iscreateModal: false, isTripCreated: true});
+              // updateState({isTripCreated: true});
             },
           }}
         />
@@ -134,7 +131,25 @@ const HomeScreen = () => {
           {...{
             isTripCreated,
             TripCreatedToggle: () => {
-              updateState({isTripCreated: false});
+              updateState({isTripCreated: false, isTripModalVisible: true});
+            },
+          }}
+        />
+        <StartTripModal
+          {...{
+            isTripModalVisible,
+            StartTripToggle: () => {
+              updateState({isTripModalVisible: false, isTripStarted: true});
+              // updateState({isTripStarted: true});
+            },
+          }}
+        />
+        <TripCreatedModal
+          {...{
+            isTripCreated: isTripStarted,
+            title: 'Trip Started',
+            TripCreatedToggle: () => {
+              updateState({isTripStarted: false});
             },
           }}
         />

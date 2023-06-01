@@ -2,25 +2,17 @@ import React, {memo, useCallback, useState} from 'react';
 import {View, Image, TextInput} from 'react-native';
 import {arrows, bgBlur, dotbar, dots, from, location} from '../../Assets';
 import {styles} from './styles';
-
-import {hp, wp} from '../../Config/responsive';
-import useHomeScreen from './useHomeScreen';
 import {Touchable} from '../../Components/Touchable';
-import {BlurView} from '@react-native-community/blur';
 import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
-import CreateGroupModal from './CreateGroupModal';
+
 const SelectLocationModal = ({
   isModalVisible,
   toggleLocationModal,
-  iscreateModal,
   locationInput,
   destinationInput,
   updateState,
 }) => {
-  // const {locationInput, setLocationInput, CreateGroup, iscreateModal} =
-  //   useHomeScreen();
-
   return (
     <View
       style={{
@@ -59,6 +51,7 @@ const SelectLocationModal = ({
                   onChangeText={e => updateState({locationInput: e})}
                   value={locationInput}
                   placeholder="Choose Start Location"
+                  placeholderTextColor={'gray'}
                 />
                 <Touchable>
                   <Image source={dots} style={styles.inputRightImg} />
@@ -71,6 +64,7 @@ const SelectLocationModal = ({
                   style={styles.input}
                   onChangeText={e => updateState({destinationInput: e})}
                   value={destinationInput}
+                  placeholderTextColor={'gray'}
                   placeholder="Choose Destination"
                 />
                 <Touchable>

@@ -6,7 +6,7 @@ import {BlurView} from '@react-native-community/blur';
 import Modal from 'react-native-modal';
 import GradientText from '../../Components/GradientText';
 
-const TripCreatedModal = ({isTripCreated, TripCreatedToggle}) => {
+const TripCreatedModal = ({isTripCreated, TripCreatedToggle, title}) => {
   return (
     <View
       style={{
@@ -35,7 +35,7 @@ const TripCreatedModal = ({isTripCreated, TripCreatedToggle}) => {
               GradientAlignment={0.8}
               onPress={TripCreatedToggle}
               style={styles.tripText}>
-              Trip Created
+              {title ?? 'Trip Created'}
             </GradientText>
           </View>
         </Pressable>

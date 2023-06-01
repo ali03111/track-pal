@@ -11,6 +11,7 @@ const useHomeScreen = () => {
     isTripModalVisible: false,
     iscreateModal: false,
     isTripCreated: false,
+    isTripStarted: false,
     currentLocation: {
       coords: {
         latitude: 37.78825,
@@ -28,9 +29,10 @@ const useHomeScreen = () => {
     iscreateModal,
     isTripCreated,
     currentLocation,
+    isTripStarted,
   } = homeStates;
 
-  const updateState = data => setHomeStates(prev => ({...prev, ...data}));
+  const updateState = data => setHomeStates(prev => ({...homeStates, ...data}));
   // info?.coords?.latitude, info?.coords?.longitude
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(info => {
@@ -55,6 +57,7 @@ const useHomeScreen = () => {
     isTripCreated,
     updateState,
     currentLocation,
+    isTripStarted,
   };
 };
 
