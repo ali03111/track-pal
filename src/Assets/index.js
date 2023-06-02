@@ -68,3 +68,4 @@ export {default as check} from './Icons/Tick.png';
 export {default as send} from './Icons/send.png';
 export {default as trash} from './Icons/trash.png';
 export {default as cardediticon} from './Icons/editicon.png';
+export {default as alert} from './Icons/alert.png';

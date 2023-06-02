@@ -11,22 +11,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import {hp, wp} from '../../Config/responsive';
 import * as Screens from '../index';
 
-function test() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
 function MyTabBar({state, descriptors, navigation}) {
   return (
     <View style={styles.mainTabStyle}>
@@ -108,12 +92,12 @@ const MapAndChatScreen = ({navigation}) => {
         }}
         tabBar={props => <MyTabBar {...props} />}>
         <Tab.Screen
-          name="MapScreen"
+          name="Map"
           component={Screens.MapScreen}
           options={{headerShown: false}}
         />
         <Tab.Screen
-          name="ChatScreen"
+          name="Chat"
           component={Screens.ChatScreen}
           options={{headerShown: false}}
         />

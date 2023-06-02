@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     borderColor: Colors.grayBorder,
     paddingHorizontal: wp('1.8'),
     // marginHorizontal: wp('4'),
-    marginVertical: hp('2'),
+    // marginVertical: hp('2'),
     overflow: 'hidden',
     backgroundColor: Colors.white,
   },
