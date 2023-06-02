@@ -1,5 +1,12 @@
 import React, {memo} from 'react';
-import {View, Text, Image, TouchableOpacity, Touchable} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Touchable,
+  Platform,
+} from 'react-native';
 import {styles} from './styles';
 import CustomHeader from '../../Components/Header';
 import {SwipeListView} from 'react-native-swipe-list-view';
@@ -11,6 +18,7 @@ import {trips} from '../../Utils/localDB';
 import InactiveBtn from '../../Components/InactiveBtn';
 import TripCreatedModal from '../HomeScreen/TripCreatedModal';
 import useEditTripScreen from './useEditTripScreen';
+import {hp, wp} from '../../Config/responsive';
 
 const EditTripScreen = ({navigation}) => {
   const {updateState, isTripCreated, trips} = useEditTripScreen();
@@ -42,7 +50,14 @@ const EditTripScreen = ({navigation}) => {
           )}
         </View>
         <TouchableOpacity>
-          <Image source={leftArrow} />
+          <Image
+            style={{
+              height: Platform.OS == 'ios' ? hp('18.2') : hp('22.1'),
+              width: wp('14'),
+            }}
+            resizeMode="contain"
+            source={leftArrow}
+          />
         </TouchableOpacity>
       </View>
     );
