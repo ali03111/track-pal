@@ -19,6 +19,7 @@ import {TextComponent} from '../../Components/TextComponent';
 import {Touchable} from '../../Components/Touchable';
 import {CircleImage} from '../../Components/CircleImage';
 import KeyBoardWrapper from '../../Components/KeyboardWrapper';
+import FastImage from 'react-native-fast-image';
 
 const EditProfileScreen = ({navigation}) => {
   const {
@@ -46,7 +47,7 @@ const EditProfileScreen = ({navigation}) => {
       <View style={styles.userProfileImg}>
         <CircleImage image={profleImg} styles={styles.profileEditImg} />
         <Touchable Opacity={0.8}>
-          <Image source={addProfileImage} style={styles.addImageIcon} />
+          <FastImage source={addProfileImage} style={styles.addImageIcon} />
         </Touchable>
       </View>
       <View style={styles.logInMain}>
@@ -68,7 +69,7 @@ const EditProfileScreen = ({navigation}) => {
         <TextComponent text={'Change Password'} styles={styles.inputTitle} />
         <Touchable onPress={navigateToReset} style={styles.passBtn}>
           <Text style={styles.passText}>************</Text>
-          <Image style={styles.passIcon} source={arrowRightIcon} />
+          <FastImage style={styles.passIcon} source={arrowRightIcon} />
         </Touchable>
         <TextComponent text={'Email'} styles={styles.inputTitle} />
         <InputComponent

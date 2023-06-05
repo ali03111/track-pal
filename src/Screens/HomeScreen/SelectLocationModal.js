@@ -15,6 +15,7 @@ const SelectLocationModal = ({
 }) => {
   return (
     <View
+      key={isModalVisible}
       style={{
         flex: 1,
         justifyContent: 'center',
@@ -25,6 +26,9 @@ const SelectLocationModal = ({
         hasBackdrop={false}
         animationInTiming={100}
         animationOutTiming={100}
+        hideModalContentWhileAnimating
+        useNativeDriver
+        avoidKeyboard
         animationType="fade"
         // backdropColor={'white'}
         style={styles.bottomModal}>
@@ -32,7 +36,7 @@ const SelectLocationModal = ({
           style={{
             flex: 1,
             justifyContent: 'flex-end',
-            position: 'relative',
+            // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.modalData}>

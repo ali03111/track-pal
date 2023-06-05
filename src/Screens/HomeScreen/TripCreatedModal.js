@@ -9,6 +9,7 @@ import GradientText from '../../Components/GradientText';
 const TripCreatedModal = ({isTripCreated, TripCreatedToggle, title}) => {
   return (
     <View
+      key={isTripCreated}
       style={{
         flex: 1,
         justifyContent: 'center',
@@ -16,9 +17,12 @@ const TripCreatedModal = ({isTripCreated, TripCreatedToggle, title}) => {
       }}>
       <Modal
         isVisible={isTripCreated}
-        hasBackdrop={false}
+        // hasBackdrop={false}
         animationInTiming={100}
         animationOutTiming={100}
+        hideModalContentWhileAnimating
+        useNativeDriver
+        avoidKeyboard
         animationType="fade"
         style={styles.bottomModal}>
         <Pressable
@@ -26,7 +30,7 @@ const TripCreatedModal = ({isTripCreated, TripCreatedToggle, title}) => {
           style={{
             flex: 1,
             justifyContent: 'flex-end',
-            position: 'relative',
+            // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlurDone} />
           <View style={styles.checkedMain}>

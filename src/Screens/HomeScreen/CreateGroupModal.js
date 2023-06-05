@@ -19,6 +19,7 @@ const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
 
   return (
     <View
+      key={iscreateModal}
       style={{
         flex: 1,
         justifyContent: 'center',
@@ -26,16 +27,19 @@ const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
       }}>
       <Modal
         isVisible={iscreateModal}
-        hasBackdrop={false}
+        // hasBackdrop={false}
         animationInTiming={100}
         animationOutTiming={100}
+        avoidKeyboard
         animationType="fade"
+        hideModalContentWhileAnimating
+        useNativeDriver
         style={styles.bottomModal}>
         <View
           style={{
             flex: 1,
             justifyContent: 'flex-end',
-            position: 'relative',
+            // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.modalData}>
@@ -53,9 +57,10 @@ const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
                 <Image source={editIcon} style={styles.editIcon} />
                 <TextInput
                   style={styles.eInput}
-                  onChangeText={setGroupInput}
-                  value={GroupInput}
+                  // onChangeText={setGroupInput}
+                  // value={GroupInput}
                   placeholder="Name your Trip"
+                  placeholderTextColor={'gray'}
                 />
               </View>
               <ThemeButton title={'Next'} onPress={CreateGroup} />

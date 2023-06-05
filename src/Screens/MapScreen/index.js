@@ -5,6 +5,7 @@ import {styles} from './styles';
 import {DemoProfileImage1, alert, bgBlurHome, link} from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
+import {BlurView} from '@react-native-community/blur';
 
 const MapScreen = () => {
   return (

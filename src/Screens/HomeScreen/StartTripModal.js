@@ -28,6 +28,7 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible}) => {
 
   return (
     <View
+      key={isTripModalVisible}
       style={{
         flex: 1,
         justifyContent: 'center',
@@ -35,10 +36,12 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible}) => {
       }}>
       <Modal
         isVisible={isTripModalVisible}
-        hasBackdrop={false}
+        // hasBackdrop={false}
         animationInTiming={100}
         animationOutTiming={100}
         animationType="fade"
+        useNativeDriver
+        avoidKeyboard
         // backdropColor={'white'}
         style={styles.bottomModal}>
         <View
@@ -63,9 +66,10 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible}) => {
                 <Image source={location} style={styles.inputLeftImg} />
                 <TextInput
                   style={styles.input}
-                  onChangeText={setLocationInput}
-                  value={locationInput}
+                  // onChangeText={setLocationInput}
+                  // value={locationInput}
                   placeholder="Choose Start Location"
+                  placeholderTextColor={'gray'}
                 />
                 <Touchable>
                   <Image source={dots} style={styles.inputRightImg} />
@@ -79,6 +83,7 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible}) => {
                   onChangeText={setDestinationInput}
                   value={destinationInput}
                   placeholder="Choose Destination"
+                  placeholderTextColor={'gray'}
                 />
                 <Touchable>
                   <Image source={arrows} style={styles.inputRightImg} />

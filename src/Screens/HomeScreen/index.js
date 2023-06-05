@@ -121,7 +121,11 @@ const HomeScreen = () => {
           {...{
             isModalVisible,
             toggleLocationModal: () => {
-              updateState({isModalVisible: false, iscreateModal: true});
+              // updateState({isModalVisible: false, iscreateModal: true});
+              updateState({isModalVisible: false});
+              setTimeout(() => {
+                updateState({iscreateModal: true});
+              }, 100);
               console.log(
                 'sfngkjbdfkffffgbdklfbgdfgdf',
                 iscreateModal,
@@ -135,8 +139,10 @@ const HomeScreen = () => {
           {...{
             iscreateModal,
             CreateGroup: () => {
-              updateState({iscreateModal: false, isTripCreated: true});
-              // updateState({isTripCreated: true});
+              updateState({iscreateModal: false});
+              setTimeout(() => {
+                updateState({isTripCreated: true});
+              }, 100);
             },
           }}
         />
@@ -144,7 +150,10 @@ const HomeScreen = () => {
           {...{
             isTripCreated,
             TripCreatedToggle: () => {
-              updateState({isTripCreated: false, isTripModalVisible: true});
+              updateState({isTripCreated: false});
+              setTimeout(() => {
+                updateState({isTripModalVisible: true});
+              }, 100);
             },
           }}
         />
@@ -152,8 +161,10 @@ const HomeScreen = () => {
           {...{
             isTripModalVisible,
             StartTripToggle: () => {
-              updateState({isTripModalVisible: false, isTripStarted: true});
-              // updateState({isTripStarted: true});
+              updateState({isTripModalVisible: false});
+              setTimeout(() => {
+                updateState({isTripStarted: true});
+              }, 100);
             },
           }}
         />

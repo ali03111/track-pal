@@ -32,7 +32,7 @@ const useHomeScreen = () => {
     isTripStarted,
   } = homeStates;
 
-  const updateState = data => setHomeStates(prev => ({...homeStates, ...data}));
+  const updateState = data => setHomeStates(prev => ({...prev, ...data}));
   // info?.coords?.latitude, info?.coords?.longitude
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(info => {
