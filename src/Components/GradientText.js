@@ -7,7 +7,7 @@ import {Colors} from '../Theme/Variables';
 
 const GradientText = props => {
   return (
-    <MaskedView maskElement={<Text {...props} />}>
+    <MaskedView maskElement={<Text {...props} onPress={props.onPress} />}>
       <LinearGradient
         colors={[Colors.themeColorDark, Colors.themeColorLight]}
         start={{x: 0, y: 1}}

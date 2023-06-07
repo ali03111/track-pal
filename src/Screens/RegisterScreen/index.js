@@ -121,12 +121,11 @@ const RegisterScreen = ({navigation}) => {
       <ThemeButton title={'Sign up'} btnStyle={styles.buttonStyle} />
       <View style={styles.signUpTextMain}>
         <TextComponent text={'Already have an account?  '} />
-        <GradientText
-          onPress={loginNav}
-          style={styles.signUpText}
-          GradientAlignment={0.8}>
-          Log In
-        </GradientText>
+        <Touchable onPress={loginNav}>
+          <GradientText style={styles.signUpText} GradientAlignment={0.8}>
+            Log In
+          </GradientText>
+        </Touchable>
       </View>
     </ScrollView>
   );

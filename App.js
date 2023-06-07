@@ -44,7 +44,7 @@ const App = () => {
 
   // const {isloading} = getState('isloading');
   const time = () => {
-    return 5000;
+    return 2000;
   };
 
   const useEffectFun = () => {

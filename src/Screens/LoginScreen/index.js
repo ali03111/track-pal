@@ -39,7 +39,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.logInMain}>
       <GradientText style={styles.heading} GradientAlignment={0.6}>
-        Log In to your Account
+        Log In To Your Account
       </GradientText>
 
       <TextComponent
@@ -111,12 +111,11 @@ const LoginScreen = ({navigation}) => {
       />
       <View style={styles.signUpTextMain}>
         <TextComponent text={'Don’t have an account? '} />
-        <GradientText
-          onPress={onPress}
-          style={styles.signUpText}
-          GradientAlignment={0.8}>
-          Sign Up
-        </GradientText>
+        <Touchable onPress={onPress}>
+          <GradientText style={styles.signUpText} GradientAlignment={0.8}>
+            Sign Up
+          </GradientText>
+        </Touchable>
       </View>
     </View>
   );

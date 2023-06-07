@@ -47,7 +47,7 @@ const EditProfileScreen = ({navigation}) => {
       <View style={styles.userProfileImg}>
         <CircleImage image={profleImg} styles={styles.profileEditImg} />
         <Touchable Opacity={0.8}>
-          <FastImage source={addProfileImage} style={styles.addImageIcon} />
+          <Image source={addProfileImage} style={styles.addImageIcon} />
         </Touchable>
       </View>
       <View style={styles.logInMain}>
@@ -69,7 +69,7 @@ const EditProfileScreen = ({navigation}) => {
         <TextComponent text={'Change Password'} styles={styles.inputTitle} />
         <Touchable onPress={navigateToReset} style={styles.passBtn}>
           <Text style={styles.passText}>************</Text>
-          <FastImage style={styles.passIcon} source={arrowRightIcon} />
+          <Image style={styles.passIcon} source={arrowRightIcon} />
         </Touchable>
         <TextComponent text={'Email'} styles={styles.inputTitle} />
         <InputComponent

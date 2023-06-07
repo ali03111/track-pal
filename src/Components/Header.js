@@ -62,7 +62,7 @@ const CustomHeader = ({
 const styles = StyleSheet.create({
   TopHeader: {
     flexDirection: 'row',
-    marginTop: Platform.OS == 'ios' ? hp('5') : hp('3'),
+    marginTop: Platform.OS == 'ios' ? hp('6') : hp('3'),
     paddingHorizontal: wp('5'),
     paddingBottom: hp('3'),
   },
