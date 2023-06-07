@@ -34,6 +34,7 @@ const LoginScreen = ({navigation}) => {
     remember,
     onPress,
     loginUser,
+    socialLogin,
   } = useLogin(navigation);
   return (
     <View style={styles.logInMain}>
@@ -94,6 +95,7 @@ const LoginScreen = ({navigation}) => {
         style={styles.googleBtn}
         textStyle={styles.googleBtnText}
         image={google}
+        onPress={socialLogin}
       />
       <ButtonWithIcon
         title={'Continue with Apple'}

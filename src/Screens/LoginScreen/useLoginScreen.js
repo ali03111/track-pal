@@ -9,6 +9,11 @@
 // } from '../../Utils/SocialLogin';
 // import {loginUrl} from '../../Utils/Url';
 import {useState} from 'react';
+import {
+  appleIdlogin,
+  faceBookLogin,
+  googleLogin,
+} from '../../Utils/SocialLogin';
 
 const {default: useFormHook} = require('../../Hooks/UseFormHooks');
 const {default: Schemas} = require('../../Utils/Validation');
@@ -26,6 +31,11 @@ const useLogin = ({navigate, goBack}) => {
 
   const loginUser = () => navigate('MybottomTabs');
 
+  const socialLogin = async () => {
+    const f = await appleIdlogin();
+    console.log('sdfsdf', f);
+  };
+
   return {
     handleSubmit,
     errors,
@@ -40,6 +50,7 @@ const useLogin = ({navigate, goBack}) => {
     rememberValue,
     onPress,
     loginUser,
+    socialLogin,
   };
 };
 

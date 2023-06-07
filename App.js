@@ -18,12 +18,29 @@ import {
 import StackNavigatior from './src/Navigation/navigation';
 import {logoScreen} from './src/Assets';
 import {enableLatestRenderer} from 'react-native-maps';
+import {Settings} from 'react-native-fbsdk-next';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const App = () => {
   const [isVisible, setIsVisible] = useState(true);
   const Hide_Splash_Screen = () => {
     setIsVisible(false);
   };
+
+  useEffect(() => {
+    /**
+     * Initialize the sdk
+     */
+    (function initializeSDK() {
+      Settings.initializeSDK();
+    })();
+
+    /**
+     * Set app id
+     */
+
+    Settings.setAppID('1254157088825041');
+  }, []);
 
   // const {isloading} = getState('isloading');
   const time = () => {
@@ -44,6 +61,10 @@ const App = () => {
     setTimeout(function () {
       Hide_Splash_Screen();
     }, time());
+    GoogleSignin.configure({
+      webClientId:
+        '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com',
+    });
   };
 
   useEffect(useEffectFun, []);

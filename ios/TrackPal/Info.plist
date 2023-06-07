@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string></string>
+				<string>fb1254157088825041</string>
 			</array>
 		</dict>
 		<dict>
@@ -35,7 +35,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1005053076444-v7us00ggfs8ij9gtoc9a9qrct02lmpem</string>
+				<string>com.googleusercontent.apps.1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6</string>
 			</array>
 		</dict>
 		<dict>
@@ -49,14 +49,14 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1005053076444-v7us00ggfs8ij9gtoc9a9qrct02lmpem</string>
+				<string>com.googleusercontent.apps.1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GIDClientID</key>
-	<string>1005053076444-v7us00ggfs8ij9gtoc9a9qrct02lmpem.apps.googleusercontent.com</string>
+	<string>1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -86,5 +86,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>FacebookAppID</key>
+	<string>1254157088825041</string>
+	<key>FacebookClientToken</key>
+	<string>95216d298b45ac33d8cdb9f5a62b96b8</string>
+	<key>FacebookDisplayName</key>
+	<string>Track Pal</string>
 </dict>
 </plist>
