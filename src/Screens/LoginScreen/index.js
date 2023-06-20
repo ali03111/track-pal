@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ScrollView} from 'react-native';
 import {TextComponent} from '../../Components/TextComponent';
 import {styles} from './styles';
 import {globalHeading} from '../../Config/globalStyles';
@@ -37,7 +37,7 @@ const LoginScreen = ({navigation}) => {
     socialLogin,
   } = useLogin(navigation);
   return (
-    <View style={styles.logInMain}>
+    <ScrollView style={styles.logInMain}>
       <GradientText style={styles.heading} GradientAlignment={0.6}>
         Log In To Your Account
       </GradientText>
@@ -117,7 +117,7 @@ const LoginScreen = ({navigation}) => {
           </GradientText>
         </Touchable>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 export default memo(LoginScreen);

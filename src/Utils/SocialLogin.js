@@ -59,7 +59,7 @@ export const appleIdlogin = async () => {
     fullName: {givenName, familyName},
   } = appleAuthRequestResponse;
   const token = auth.AppleAuthProvider.credential(identityToken, nonce);
-  await auth().signInWithCredential(token);
+  // await auth().signInWithCredential(token);
   return {
     token,
     name: `${givenName || ''} ${familyName || ''}`,

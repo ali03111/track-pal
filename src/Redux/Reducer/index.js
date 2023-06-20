@@ -7,8 +7,8 @@ import onboardingReducer from './onboardingReducer';
 import createSagaMiddleware from 'redux-saga';
 import mySaga from './../Sagas/index';
 import {createStore, applyMiddleware, combineReducers} from 'redux';
-import RecentLocationReducer from './RecentLocationReducer';
-import questionReducer from './questionReducer';
+// import RecentLocationReducer from './RecentLocationReducer';
+// import questionReducer from './questionReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -33,7 +33,7 @@ const LocationPersistConfig = {
 const reducers = {
   onboarding: persistReducer(onBoardPersistConfig, onboardingReducer),
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
-  recentlocation: persistReducer(LocationPersistConfig, RecentLocationReducer),
+  // recentlocation: persistReducer(LocationPersistConfig, RecentLocationReducer),
   isloading: loadingReducer,
   isQuestion: questionReducer,
   // sagas: applyMiddleware(sagaMiddleware),

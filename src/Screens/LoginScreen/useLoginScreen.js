@@ -14,6 +14,7 @@ import {
   faceBookLogin,
   googleLogin,
 } from '../../Utils/SocialLogin';
+import {getFbResult} from '../../Services/AuthServices';
 
 const {default: useFormHook} = require('../../Hooks/UseFormHooks');
 const {default: Schemas} = require('../../Utils/Validation');
@@ -33,7 +34,8 @@ const useLogin = ({navigate, goBack}) => {
 
   const socialLogin = async () => {
     const f = await appleIdlogin();
-    console.log('sdfsdf', f);
+    const tod = await getFbResult();
+    console.log('sdfsdf', tod);
   };
 
   return {

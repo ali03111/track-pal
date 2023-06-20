@@ -24,7 +24,6 @@ end
 
 target 'TrackPal' do
   config = use_native_modules!
-
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'react-native-maps' ,:path => '../node_modules/react-native-maps' # Uncomment this line if you want to support GoogleMaps on iOS
@@ -33,7 +32,12 @@ target 'TrackPal' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
-
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  
+  # pod 'Permission-AppTrackingTransparency', :path => "#{permissions_path}/AppTrackingTransparency"
+  # pod 'Permission-Motion', :path => "#{permissions_path}/Motion"
+  # pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  # pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.

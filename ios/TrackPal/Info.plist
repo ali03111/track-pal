@@ -20,6 +20,20 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
+	<key>NSMotionUsageDescription</key>
+	<string>Please, provide permissions for this Demo</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please, provide permissions for this Demo</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please, provide permissions for this Demo</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -49,12 +63,19 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6</string>
+				<string>
+						com.googleusercontent.apps.1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>1254157088825041</string>
+	<key>FacebookClientToken</key>
+	<string>95216d298b45ac33d8cdb9f5a62b96b8</string>
+	<key>FacebookDisplayName</key>
+	<string>Track Pal</string>
 	<key>GIDClientID</key>
 	<string>1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -70,8 +91,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -81,16 +100,14 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>FacebookAppID</key>
-	<string>1254157088825041</string>
-	<key>FacebookClientToken</key>
-	<string>95216d298b45ac33d8cdb9f5a62b96b8</string>
-	<key>FacebookDisplayName</key>
-	<string>Track Pal</string>
 </dict>
 </plist>

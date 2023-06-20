@@ -16,7 +16,7 @@ import {
   updateUser,
 } from '../Action/AuthAction';
 import {loadingFalse, loadingTrue} from '../Action/isloadingAction';
-import {errorMessage, successMessage} from '../../Config/NotificationMessage';
+// import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import {loginUrl} from '../../Utils/Urls';
 import {
   fcmRegService,
@@ -126,7 +126,7 @@ function* updateProfileSaga({payload: profileData}) {
     console.log('user', originalError, data);
     if (ok) {
       yield put({type: types.UpdateProfile, payload: data.data});
-      successMessage('Your profile has been updated');
+      // successMessage('Your profile has been updated');
     }
   } catch (error) {
     console.log('error ', error);

@@ -158,7 +158,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation('com.facebook.react:react-android')
-
+    implementation 'com.telematicssdk:tracking: 1.0.4'
     implementation('androidx.swiperefreshlayout:swiperefreshlayout:1.0.0')
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")

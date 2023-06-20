@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
@@ -30,20 +30,21 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center',
     // backgroundColor: 'red',
+    paddingBottom: Platform.OS == 'ios' ? hp('3') : hp('0'),
   },
   centerHeading: {
-    fontSize: hp('3.5'),
+    fontSize: Platform.OS == 'ios' ? hp('3.5') : hp('3.5'),
     fontWeight: '600',
     color: 'red',
     textAlign: 'center',
     marginTop: hp('60'),
-    paddingHorizontal: wp('10'),
+    paddingHorizontal: wp('4'),
   },
   descStyle: {
     textAlign: 'center',
     marginTop: hp('1'),
     fontSize: hp('2.1'),
-    paddingHorizontal: wp('12'),
+    paddingHorizontal: wp('10'),
     marginTop: hp('2'),
     marginBottom: hp('3'),
   },
