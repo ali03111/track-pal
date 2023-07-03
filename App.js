@@ -20,7 +20,7 @@ import StackNavigatior from './src/Navigation/navigation';
 import {logoScreen} from './src/Assets';
 import {Settings} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import TelematicsSdk from 'react-native-telematics';
+// import TelematicsSdk from 'react-native-telematics';
 import {
   check,
   request,
