@@ -29,6 +29,7 @@ import CreateGroupModal from './CreateGroupModal';
 import {CircleImage} from '../../Components/CircleImage';
 import StartTripModal from './StartTripModal';
 import TripCreatedModal from './TripCreatedModal';
+import TripTypeSelectModal from './TripTypeSelectModal';
 
 const HomeScreen = () => {
   const {
@@ -42,7 +43,10 @@ const HomeScreen = () => {
     isTripCreated,
     currentLocation,
     isTripStarted,
+    isTripSelectModal,
     updateState,
+    openNextModal,
+    openPrevModal,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -109,7 +113,7 @@ const HomeScreen = () => {
       <View style={styles.btn}>
         <ThemeButton
           title={'Create New Trip'}
-          onPress={() => updateState({isModalVisible: true})}
+          onPress={() => updateState({isTripSelectModal: true})}
           style={styles.tripBtn}
         />
         {/* <ThemeButton
@@ -117,21 +121,25 @@ const HomeScreen = () => {
           onPress={CreateGroup}
           style={styles.tripBtn}
         /> */}
+        <TripTypeSelectModal
+          {...{
+            isTripSelectModal,
+            toggleNextModal: () => {
+              openNextModal('isTripSelectModal', 'isModalVisible');
+            },
+            onBackPress: () => {
+              updateState({isTripSelectModal: false});
+            },
+          }}
+        />
         <SelectLocationModal
           {...{
             isModalVisible,
             toggleLocationModal: () => {
-              // updateState({isModalVisible: false, iscreateModal: true});
-              updateState({isModalVisible: false});
-              setTimeout(() => {
-                updateState({iscreateModal: true});
-              }, 100);
-              console.log(
-                'sfngkjbdfkffffgbdklfbgdfgdf',
-                iscreateModal,
-                isModalVisible,
-              );
-              // updateState({iscreateModal: true});
+              openNextModal('isModalVisible', 'iscreateModal');
+            },
+            onBackPress: () => {
+              openPrevModal('isModalVisible', 'isTripSelectModal');
             },
           }}
         />
@@ -139,10 +147,10 @@ const HomeScreen = () => {
           {...{
             iscreateModal,
             CreateGroup: () => {
-              updateState({iscreateModal: false});
-              setTimeout(() => {
-                updateState({isTripCreated: true});
-              }, 100);
+              openNextModal('iscreateModal', 'isTripCreated');
+            },
+            onBackPress: () => {
+              openPrevModal('iscreateModal', 'isModalVisible');
             },
           }}
         />
@@ -150,10 +158,10 @@ const HomeScreen = () => {
           {...{
             isTripCreated,
             TripCreatedToggle: () => {
-              updateState({isTripCreated: false});
-              setTimeout(() => {
-                updateState({isTripModalVisible: true});
-              }, 100);
+              openNextModal('isTripCreated', 'isTripModalVisible');
+            },
+            onBackPress: () => {
+              openPrevModal('isTripCreated', 'iscreateModal');
             },
           }}
         />
@@ -161,10 +169,10 @@ const HomeScreen = () => {
           {...{
             isTripModalVisible,
             StartTripToggle: () => {
-              updateState({isTripModalVisible: false});
-              setTimeout(() => {
-                updateState({isTripStarted: true});
-              }, 100);
+              openNextModal('isTripModalVisible', 'isTripStarted');
+            },
+            onBackPress: () => {
+              openPrevModal('isTripModalVisible', 'isTripCreated');
             },
           }}
         />
@@ -174,6 +182,9 @@ const HomeScreen = () => {
             title: 'Trip Started',
             TripCreatedToggle: () => {
               updateState({isTripStarted: false});
+            },
+            onBackPress: () => {
+              openPrevModal('isTripStarted', 'isTripModalVisible');
             },
           }}
         />

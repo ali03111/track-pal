@@ -12,6 +12,7 @@ const SelectLocationModal = ({
   locationInput,
   destinationInput,
   updateState,
+  onBackPress,
 }) => {
   return (
     <View
@@ -23,12 +24,13 @@ const SelectLocationModal = ({
       }}>
       <Modal
         isVisible={isModalVisible}
-        hasBackdrop={false}
+        hasBackdrop={true}
         animationInTiming={100}
         animationOutTiming={100}
         hideModalContentWhileAnimating
         useNativeDriver
         avoidKeyboard
+        onBackButtonPress={onBackPress}
         animationType="fade"
         // backdropColor={'white'}
         style={styles.bottomModal}>

@@ -19,19 +19,24 @@ import {loadingFalse, loadingTrue} from '../Action/isloadingAction';
 // import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import {loginUrl} from '../../Utils/Urls';
 import {
+  createTelematicUser,
   fcmRegService,
   getFbResult,
   logOutFirebase,
   loginService,
+  loginTelematicUser,
   logoutService,
   registerService,
   updateProfileServices,
 } from '../../Services/AuthServices';
+import uuid from 'react-native-uuid';
+import DeviceInfo from 'react-native-device-info';
+import {errorMessage} from '../../Config/NotificationMessage';
 
 const loginObject = {
   Google: () => googleLogin(),
   facebook: () => faceBookLogin(),
-  email: datas => emailLogin(datas),
+  email: datas => emailSignUp(datas),
   appleID: () => appleIdlogin(),
 };
 
@@ -40,26 +45,63 @@ takes an action object as an argument, destructures its `payload` property to ge
 properties, and then performs a series of asynchronous operations using the `yield` keyword. */
 const loginSaga = function* ({payload: {datas, type}}) {
   yield put(loadingTrue());
-
+  const {getUniqueId} = DeviceInfo;
+  const deviceToken = yield call(getUniqueId);
   try {
     const getLoginData = loginObject[type];
-    const result = yield call(getLoginData, datas);
-    const {socialData, ok} = {socialData: result, ok: true};
+    const resultData = yield call(getLoginData, datas);
+    const {socialData, ok} = {socialData: resultData, ok: true};
     if (ok) {
       const idTokenResult = yield call(getFbResult);
       const jwtToken = idTokenResult.token;
       if (jwtToken) {
-        const {data, ok} = yield call(loginService, {
+        if (socialData.isNewUser || type == 'email') {
+          var {result} = yield call(createTelematicUser, {
+            token: deviceToken,
+            data: datas.name ? datas : socialData,
+          });
+        }
+        const {data, ok} = yield call(registerService, {
           token: jwtToken,
-          data: socialData,
+          telematics_id: result?.Result?.DeviceToken || null,
+          name: datas?.name,
+          email: datas?.email,
+          password: datas?.password,
+          phone: datas?.number,
         });
+        console.log('data=========>>>>>>>', data);
+        yield put(loadingTrue());
         if (ok) {
-          yield put(updateAuth(data));
+          if (!socialData.isNewUser || type != 'email') {
+            const {ok, loginResult} = yield call(loginTelematicUser, {
+              token: data.user.telematics_id,
+            });
+            yield put(loadingTrue());
+            if (ok)
+              yield put(
+                updateAuth({
+                  data: {
+                    ...data,
+                    telematicToken: loginResult.Result.AccessToken.Token,
+                  },
+                }),
+              );
+          } else {
+            yield put(loadingTrue());
+            yield put(
+              updateAuth({
+                data: {
+                  ...data,
+                  telematicToken: result.Result.AccessToken.Token,
+                },
+              }),
+            );
+          }
         }
       }
     }
   } catch (error) {
-    errorMessage(error.message.split(' ').slice(1).join(' '));
+    errorMessage(error.message.split(' ').slice(1).join(' ') ?? error);
     console.log('err', error);
   } finally {
     yield put(loadingFalse());
@@ -72,25 +114,41 @@ performs a series of asynchronous operations using the `yield` keyword. */
 function* registerSaga({payload: {datas}}) {
   yield put(loadingTrue());
   try {
-    const result = yield call(emailSignUp, datas);
+    const result = yield call(emailLogin, datas);
     const {data, ok} = {data: result, ok: true};
     if (ok) {
       const idTokenResult = yield call(getFbResult);
       const jwtToken = idTokenResult.token;
       if (jwtToken) {
-        const {data, ok} = yield call(registerService, {
+        const {data, ok} = yield call(loginService, {
           token: jwtToken,
-          data: datas,
         });
+        yield put(loadingTrue());
+        console.log('sdjbfjksdbfjbsdjfbsdf', data);
         if (ok) {
-          yield call(emailLogin, datas);
-          yield put(updateAuth(data));
+          const {ok, loginResult} = yield call(loginTelematicUser, {
+            token: data.user.telematics_id,
+          });
+          yield put(loadingTrue());
+          if (ok) {
+            yield put(loadingTrue());
+            yield put(
+              updateAuth({
+                data: {
+                  ...data,
+                  telematicToken: loginResult.Result.AccessToken.Token,
+                },
+              }),
+            );
+          }
         }
       }
     }
   } catch (error) {
-    errorMessage(error.message.split(' ').slice(1).join(' '));
+    errorMessage(error.message.split(' ').slice(1).join(' ') ?? error);
+    console.log('slbklsdbbsdfkgbsdklbgs', error);
   } finally {
+    // delay(4000);
     yield put(loadingFalse());
   }
 }
@@ -101,7 +159,7 @@ asynchronous operations using the `yield` keyword. */
 function* logOutSaga(action) {
   try {
     yield put({type: types.CleanRecentLocation});
-    yield call(logoutService);
+    // yield call(logoutService);
     yield call(logOutFirebase);
     yield put({type: types.LogoutType});
     console.log('okokok');
@@ -132,6 +190,7 @@ function* updateProfileSaga({payload: profileData}) {
     console.log('error ', error);
     errorMessage(error.message.split(' ').slice(1).join(' '));
   } finally {
+    delay(2000);
     yield put(loadingFalse());
   }
 }

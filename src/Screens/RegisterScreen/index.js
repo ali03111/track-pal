@@ -26,6 +26,7 @@ const RegisterScreen = ({navigation}) => {
     remember,
     goBack,
     loginNav,
+    signUpButton,
   } = useRegister(navigation);
   return (
     <ScrollView
@@ -105,7 +106,7 @@ const RegisterScreen = ({navigation}) => {
       />
       <InputComponent
         {...{
-          name: 'confirm password',
+          name: 'confirm_password',
           handleSubmit,
           errors,
           reset,
@@ -118,7 +119,11 @@ const RegisterScreen = ({navigation}) => {
           inputIconStyle: styles.lockstyle,
         }}
       />
-      <ThemeButton title={'Sign up'} btnStyle={styles.buttonStyle} />
+      <ThemeButton
+        title={'Sign up'}
+        onPress={handleSubmit(signUpButton)}
+        btnStyle={styles.buttonStyle}
+      />
       <View style={styles.signUpTextMain}>
         <TextComponent text={'Already have an account?  '} />
         <Touchable onPress={loginNav}>

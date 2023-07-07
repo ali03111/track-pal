@@ -32,6 +32,7 @@ const MapScreen = () => {
       </View>
       <MapView
         style={styles.staticMapImg}
+        mapType="hybrid"
         region={{
           latitude: 37.78825,
           longitude: -122.4324,

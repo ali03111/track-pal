@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {frequentTrips} from '../../Utils/localDB';
+import {BackHandler} from 'react-native';
 
 const useHomeScreen = () => {
   const [homeStates, setHomeStates] = useState({
@@ -12,6 +13,7 @@ const useHomeScreen = () => {
     iscreateModal: false,
     isTripCreated: false,
     isTripStarted: false,
+    isTripSelectModal: false,
     currentLocation: {
       coords: {
         latitude: 37.78825,
@@ -30,6 +32,7 @@ const useHomeScreen = () => {
     isTripCreated,
     currentLocation,
     isTripStarted,
+    isTripSelectModal,
   } = homeStates;
 
   const updateState = data => setHomeStates(prev => ({...prev, ...data}));
@@ -40,8 +43,31 @@ const useHomeScreen = () => {
     });
   };
 
+  const errorStats = {
+    isTripSelectModal,
+    isModalVisible,
+    isTripModalVisible,
+    iscreateModal,
+    isTripCreated,
+    currentLocation,
+    isTripStarted,
+  };
+
   const useEffectFuc = () => {
     getCurrentLocation();
+  };
+
+  const openNextModal = (preVal, newVal) => {
+    updateState({[preVal]: false});
+    setTimeout(() => {
+      updateState({[newVal]: true});
+    }, 100);
+  };
+  const openPrevModal = (preVal, newVal) => {
+    updateState({[preVal]: false});
+    setTimeout(() => {
+      updateState({[newVal]: true});
+    }, 100);
   };
 
   useEffect(useEffectFuc, []);
@@ -58,6 +84,9 @@ const useHomeScreen = () => {
     updateState,
     currentLocation,
     isTripStarted,
+    isTripSelectModal,
+    openNextModal,
+    openPrevModal,
   };
 };
 

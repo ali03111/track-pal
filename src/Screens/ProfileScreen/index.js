@@ -17,11 +17,15 @@ import GradientText from '../../Components/GradientText';
 import ProfileBtn from '../../Components/ProfileBtn';
 import {CircleImage} from '../../Components/CircleImage';
 import {AlertDesign} from '../../Components/AlertDesign';
+import {hp} from '../../Config/responsive';
 
 const ProfileScreen = ({navigation}) => {
-  const {dynamicNav, alert, onCancel} = useProfileScreen(navigation);
+  const {dynamicNav, alert, onCancel, onConfirm} = useProfileScreen(navigation);
   return (
-    <ScrollView style={styles.profileMain} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.profileMain}
+      contentContainerStyle={{paddingBottom: hp('5')}}
+      showsVerticalScrollIndicator={false}>
       <CustomHeader headerTitle={'Settings'} />
       <View style={styles.profileArea}>
         <CircleImage image={profleImg} styles={styles.profileImg} />
@@ -46,7 +50,7 @@ const ProfileScreen = ({navigation}) => {
       <AlertDesign
         isVisible={alert}
         onCancel={onCancel}
-        onConfirm={onCancel}
+        onConfirm={onConfirm}
         title={'Log Out?'}
         message={'Are you sure, you want to log out ?'}
         confirmText={'Log Out'}

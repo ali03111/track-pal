@@ -19,7 +19,7 @@ import GradientText from '../../Components/GradientText';
 import {arrowRight} from '../../Assets';
 
 const OnboardScreen = ({navigation}) => {
-  const {onBoardinData, currentIndex, onSnapToItem, getStart, goNext} =
+  const {onBoardinData, currentIndex, onSnapToItem, goNext} =
     useOnboardScreen(navigation);
   const renderItem = useCallback(
     ({item, index}) => {
