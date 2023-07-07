@@ -44,6 +44,7 @@ const HomeScreen = () => {
     currentLocation,
     isTripStarted,
     isTripSelectModal,
+    selectTripType,
     updateState,
     openNextModal,
     openPrevModal,
@@ -130,6 +131,9 @@ const HomeScreen = () => {
             onBackPress: () => {
               updateState({isTripSelectModal: false});
             },
+            extraData: {
+              selectTripType,
+            },
           }}
         />
         <SelectLocationModal
@@ -140,6 +144,9 @@ const HomeScreen = () => {
             },
             onBackPress: () => {
               openPrevModal('isModalVisible', 'isTripSelectModal');
+            },
+            extraData: {
+              selectTripType,
             },
           }}
         />
@@ -152,6 +159,9 @@ const HomeScreen = () => {
             onBackPress: () => {
               openPrevModal('iscreateModal', 'isModalVisible');
             },
+            extraData: {
+              selectTripType,
+            },
           }}
         />
         <TripCreatedModal
@@ -162,6 +172,9 @@ const HomeScreen = () => {
             },
             onBackPress: () => {
               openPrevModal('isTripCreated', 'iscreateModal');
+            },
+            extraData: {
+              selectTripType,
             },
           }}
         />
@@ -174,6 +187,9 @@ const HomeScreen = () => {
             onBackPress: () => {
               openPrevModal('isTripModalVisible', 'isTripCreated');
             },
+            extraData: {
+              selectTripType,
+            },
           }}
         />
         <TripCreatedModal
@@ -185,6 +201,9 @@ const HomeScreen = () => {
             },
             onBackPress: () => {
               openPrevModal('isTripStarted', 'isTripModalVisible');
+            },
+            extraData: {
+              selectTripType,
             },
           }}
         />

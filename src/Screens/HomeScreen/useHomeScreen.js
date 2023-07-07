@@ -1,13 +1,15 @@
 import {useEffect, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import {frequentTrips} from '../../Utils/localDB';
+import {frequentTrips, tripsTypes} from '../../Utils/localDB';
 import {BackHandler} from 'react-native';
+import {errorMessage} from '../../Config/NotificationMessage';
 
 const useHomeScreen = () => {
   const [homeStates, setHomeStates] = useState({
     locationInput: '',
     destinationInput: '',
     GroupInput: '',
+    selectTripType: tripsTypes[1].id,
     isModalVisible: false,
     isTripModalVisible: false,
     iscreateModal: false,
@@ -33,6 +35,7 @@ const useHomeScreen = () => {
     currentLocation,
     isTripStarted,
     isTripSelectModal,
+    selectTripType,
   } = homeStates;
 
   const updateState = data => setHomeStates(prev => ({...prev, ...data}));
@@ -44,10 +47,23 @@ const useHomeScreen = () => {
   };
 
   const errorStats = {
-    isTripSelectModal,
-    isModalVisible,
+    isTripSelectModal: () => true,
+    isModalVisible: () => {
+      if (selectTripType == tripsTypes[0].id && locationInput == '') {
+        errorMessage('Please enter the start location');
+        return false;
+      } else if (destinationInput == '') {
+        errorMessage('Please enter the destination location');
+        return false;
+      } else return true;
+    },
     isTripModalVisible,
-    iscreateModal,
+    iscreateModal: () => {
+      if (GroupInput == '') {
+        errorMessage('Please enter the trip name ');
+        return false;
+      } else return true;
+    },
     isTripCreated,
     currentLocation,
     isTripStarted,
@@ -87,6 +103,7 @@ const useHomeScreen = () => {
     isTripSelectModal,
     openNextModal,
     openPrevModal,
+    selectTripType,
   };
 };
 

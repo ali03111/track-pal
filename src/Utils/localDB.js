@@ -394,3 +394,25 @@ export const trips = [
     status: 'Active',
   },
 ];
+
+export const tripsTypes = [
+  {
+    id: 'myTrip',
+    des: '',
+    title: 'My Trip',
+  },
+  {
+    id: 'groupTrip',
+    des: '',
+    title: 'Group Trip',
+  },
+  {
+    id: 'personalTrip',
+    des: '',
+    title: 'Personal Trip',
+  },
+];
+
+// my trip
+// group trip
+// personal trip

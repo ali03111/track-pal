@@ -5,6 +5,7 @@ import {styles} from './styles';
 import {Touchable} from '../../Components/Touchable';
 import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
+import {tripsTypes} from '../../Utils/localDB';
 
 const SelectLocationModal = ({
   isModalVisible,
@@ -13,7 +14,10 @@ const SelectLocationModal = ({
   destinationInput,
   updateState,
   onBackPress,
+  extraData,
 }) => {
+  const isTripType = Boolean(extraData.selectTripType != tripsTypes[0].id);
+
   return (
     <View
       key={isModalVisible}
@@ -41,7 +45,7 @@ const SelectLocationModal = ({
             // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlur} />
-          <View style={styles.modalData}>
+          <View style={styles.modalData(isTripType)}>
             {/* <View style={styles.groupInfoMain}>
                   <Image source={DemoProfileImage1} style={styles.groupLogo} />
                   <View style={styles.groupDesc}>
@@ -50,20 +54,24 @@ const SelectLocationModal = ({
                   </View>
                 </View> */}
             <View style={styles.modalInput}>
-              <View style={styles.inputArea}>
-                <Image source={location} style={styles.inputLeftImg} />
-                <TextInput
-                  style={styles.input}
-                  onChangeText={e => updateState({locationInput: e})}
-                  value={locationInput}
-                  placeholder="Choose Start Location"
-                  placeholderTextColor={'gray'}
-                />
-                <Touchable>
-                  <Image source={dots} style={styles.inputRightImg} />
-                </Touchable>
-              </View>
-              <Image source={dotbar} style={styles.dotbar} />
+              {isTripType && (
+                <>
+                  <View style={styles.inputArea}>
+                    <Image source={location} style={styles.inputLeftImg} />
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={e => updateState({locationInput: e})}
+                      value={locationInput}
+                      placeholder="Choose Start Location"
+                      placeholderTextColor={'gray'}
+                    />
+                    <Touchable>
+                      <Image source={dots} style={styles.inputRightImg} />
+                    </Touchable>
+                  </View>
+                  <Image source={dotbar} style={styles.dotbar} />
+                </>
+              )}
               <View style={styles.inputArea}>
                 <Image source={from} style={styles.inputLeftImg} />
                 <TextInput

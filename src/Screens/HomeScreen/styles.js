@@ -117,8 +117,8 @@ export const styles = StyleSheet.create({
     zIndex: 99,
     position: 'relative',
   },
-  modalData: {
-    height: hp('40'),
+  modalData: tripType => ({
+    height: tripType ? hp('40') : hp('30'),
     backgroundColor: '#fff',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -130,7 +130,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 3,
     shadowRadius: 7.68,
     elevation: 20,
-  },
+  }),
   checkedMain: {
     height: hp('100'),
     alignItems: 'center',

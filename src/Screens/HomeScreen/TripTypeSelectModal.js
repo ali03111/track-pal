@@ -46,7 +46,7 @@ const TripTypeSelectModal = ({
             // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlur} />
-          <View style={styles.modalData}>
+          <View style={styles.modalData(true)}>
             <View style={styles.modalInput}>
               <View style={styles.userProfileImg}>
                 <CircleImage
