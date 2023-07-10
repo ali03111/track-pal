@@ -7,29 +7,16 @@ import {
   faceBookLogin,
   googleLogin,
 } from '../../Utils/SocialLogin';
-import API from '../../Utils/helperFunc';
-import {
-  logOutAuth,
-  logOutUser,
-  loginUser,
-  updateAuth,
-  updateUser,
-} from '../Action/AuthAction';
+import {updateAuth} from '../Action/AuthAction';
 import {loadingFalse, loadingTrue} from '../Action/isloadingAction';
-// import {errorMessage, successMessage} from '../../Config/NotificationMessage';
-import {loginUrl} from '../../Utils/Urls';
 import {
-  createTelematicUser,
   fcmRegService,
   getFbResult,
   logOutFirebase,
   loginService,
-  loginTelematicUser,
-  logoutService,
   registerService,
   updateProfileServices,
 } from '../../Services/AuthServices';
-import uuid from 'react-native-uuid';
 import DeviceInfo from 'react-native-device-info';
 import {errorMessage} from '../../Config/NotificationMessage';
 
@@ -55,15 +42,15 @@ const loginSaga = function* ({payload: {datas, type}}) {
       const idTokenResult = yield call(getFbResult);
       const jwtToken = idTokenResult.token;
       if (jwtToken) {
-        if (socialData.isNewUser || type == 'email') {
-          var {result} = yield call(createTelematicUser, {
-            token: deviceToken,
-            data: datas.name ? datas : socialData,
-          });
-        }
+        console.log('jwtToken', jwtToken);
+        // if (socialData.isNewUser || type == 'email') {
+        //   var {result} = yield call(createTelematicUser, {
+        //     token: deviceToken,
+        //     data: datas.name ? datas : socialData,
+        //   });
+        // }
         const {data, ok} = yield call(registerService, {
           token: jwtToken,
-          telematics_id: result?.Result?.DeviceToken || null,
           name: datas?.name,
           email: datas?.email,
           password: datas?.password,
@@ -72,31 +59,8 @@ const loginSaga = function* ({payload: {datas, type}}) {
         console.log('data=========>>>>>>>', data);
         yield put(loadingTrue());
         if (ok) {
-          if (!socialData.isNewUser || type != 'email') {
-            const {ok, loginResult} = yield call(loginTelematicUser, {
-              token: data.user.telematics_id,
-            });
-            yield put(loadingTrue());
-            if (ok)
-              yield put(
-                updateAuth({
-                  data: {
-                    ...data,
-                    telematicToken: loginResult.Result.AccessToken.Token,
-                  },
-                }),
-              );
-          } else {
-            yield put(loadingTrue());
-            yield put(
-              updateAuth({
-                data: {
-                  ...data,
-                  telematicToken: result.Result.AccessToken.Token,
-                },
-              }),
-            );
-          }
+          yield put(loadingTrue());
+          yield put(updateAuth(data));
         }
       }
     }
@@ -126,21 +90,8 @@ function* registerSaga({payload: {datas}}) {
         yield put(loadingTrue());
         console.log('sdjbfjksdbfjbsdjfbsdf', data);
         if (ok) {
-          const {ok, loginResult} = yield call(loginTelematicUser, {
-            token: data.user.telematics_id,
-          });
           yield put(loadingTrue());
-          if (ok) {
-            yield put(loadingTrue());
-            yield put(
-              updateAuth({
-                data: {
-                  ...data,
-                  telematicToken: loginResult.Result.AccessToken.Token,
-                },
-              }),
-            );
-          }
+          yield put(updateAuth(data));
         }
       }
     }

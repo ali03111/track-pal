@@ -45,6 +45,9 @@ const HomeScreen = () => {
     isTripStarted,
     isTripSelectModal,
     selectTripType,
+    destinationInputRef,
+    updateInputState,
+    getlocation,
     updateState,
     openNextModal,
     openPrevModal,
@@ -141,12 +144,18 @@ const HomeScreen = () => {
             isModalVisible,
             toggleLocationModal: () => {
               openNextModal('isModalVisible', 'iscreateModal');
+              console.log('bdkjfbsdbfs', destinationInput);
             },
             onBackPress: () => {
               openPrevModal('isModalVisible', 'isTripSelectModal');
             },
             extraData: {
               selectTripType,
+              locationInput,
+              destinationInput,
+              getlocation,
+              updateInputState,
+              destinationInputRef,
             },
           }}
         />
@@ -158,9 +167,12 @@ const HomeScreen = () => {
             },
             onBackPress: () => {
               openPrevModal('iscreateModal', 'isModalVisible');
+              console.log('bdkjfbsdbfs', destinationInput);
             },
             extraData: {
               selectTripType,
+              GroupInput: destinationInput.description,
+              updateInputState,
             },
           }}
         />
@@ -189,6 +201,11 @@ const HomeScreen = () => {
             },
             extraData: {
               selectTripType,
+              locationInput,
+              destinationInput,
+              getlocation,
+              updateInputState,
+              destinationInputRef,
             },
           }}
         />

@@ -18,14 +18,30 @@ import {BlurView} from '@react-native-community/blur';
 import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
-const StartTripModal = ({StartTripToggle, isTripModalVisible, onBackPress}) => {
+import {tripsTypes} from '../../Utils/localDB';
+import {AutoFillGoogleComp} from '../../Components/AutoFillGoogleComp';
+import {TextComponent} from '../../Components/TextComponent';
+const StartTripModal = ({
+  StartTripToggle,
+  isTripModalVisible,
+  onBackPress,
+  extraData,
+}) => {
+  // const {
+  //   locationInput,
+  //   setLocationInput,
+  //   destinationInput,
+  //   setDestinationInput,
+  // } = useHomeScreen();
+  const isTripType = Boolean(extraData.selectTripType != tripsTypes[0].id);
+  const isTrue = Boolean(true);
   const {
     locationInput,
-    setLocationInput,
     destinationInput,
-    setDestinationInput,
-  } = useHomeScreen();
-
+    updateInputState,
+    getlocation,
+    destinationInputRef,
+  } = extraData;
   return (
     <View
       key={isTripModalVisible}
@@ -62,38 +78,60 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible, onBackPress}) => {
               </View>
             </View>
             <View style={styles.TripHeadBorder}></View>
-            <View style={styles.mainInput}>
-              <View style={styles.inputArea}>
-                <Image source={location} style={styles.inputLeftImg} />
-                <TextInput
-                  style={styles.input}
-                  // onChangeText={setLocationInput}
-                  // value={locationInput}
-                  placeholder="Choose Start Location"
-                  placeholderTextColor={'gray'}
-                />
-                <Touchable>
-                  <Image source={dots} style={styles.inputRightImg} />
-                </Touchable>
-              </View>
-              <Image source={dotbar} style={styles.dotbar} />
-              <View style={styles.inputArea}>
-                <Image source={from} style={styles.inputLeftImg} />
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setDestinationInput}
-                  value={destinationInput}
-                  placeholder="Choose Destination"
-                  placeholderTextColor={'gray'}
-                />
-                <Touchable>
-                  <Image source={arrows} style={styles.inputRightImg} />
-                </Touchable>
-              </View>
+            <View style={styles.modalInput}>
+              {isTripType && (
+                <>
+                  <View style={styles.inputArea}>
+                    <Image source={location} style={styles.inputLeftImg} />
+                    <View
+                      style={{
+                        ...styles.input,
+                        justifyContent: 'center',
+                        paddingLeft: wp('2'),
+                      }}>
+                      <TextComponent
+                        styles={{fontSize: hp('1.8')}}
+                        numberOfLines={1}
+                        text={locationInput?.description}
+                      />
+                    </View>
+                    <Touchable>
+                      <Image source={dots} style={styles.inputRightImg} />
+                    </Touchable>
+                  </View>
+                  {/* <Image source={dotbar} style={styles.dotbar} /> */}
+                </>
+              )}
+              {isTripType && <Image source={dotbar} style={styles.dotbar} />}
+              {isTrue && (
+                <View style={{...styles.inputArea}}>
+                  <Image source={from} style={styles.inputLeftImg} />
+                  <View
+                    style={{
+                      ...styles.input,
+                      justifyContent: 'center',
+                      paddingLeft: wp('2'),
+                    }}>
+                    <TextComponent
+                      styles={{fontSize: hp('1.8')}}
+                      numberOfLines={1}
+                      text={destinationInput?.description}
+                    />
+                  </View>
+                  <Touchable>
+                    <Image source={arrows} style={styles.inputRightImg} />
+                  </Touchable>
+                </View>
+              )}
+              {/* <ThemeButton
+                title={'Get Current Location'}
+                onPress={getlocation}
+                btnStyle={styles.locationBtn}
+              /> */}
               <ThemeButton
-                title={'Start Trip'}
+                title={'Confirm Location'}
                 onPress={StartTripToggle}
-                btnStyle={styles.tripModalBtn}
+                btnStyle={{...styles.locationBtn, marginBottom: hp('3')}}
               />
             </View>
           </View>

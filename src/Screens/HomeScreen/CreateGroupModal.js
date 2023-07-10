@@ -14,9 +14,14 @@ import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
-const CreateGroupModal = ({iscreateModal, CreateGroup, onBackPress}) => {
-  const {GroupInput, setGroupInput} = useHomeScreen();
-
+const CreateGroupModal = ({
+  iscreateModal,
+  CreateGroup,
+  onBackPress,
+  extraData,
+}) => {
+  // const {GroupInput, setGroupInput} = useHomeScreen();
+  const {selectTripType, GroupInput, updateInputState} = extraData;
   return (
     <View
       key={iscreateModal}
@@ -58,8 +63,10 @@ const CreateGroupModal = ({iscreateModal, CreateGroup, onBackPress}) => {
                 <Image source={editIcon} style={styles.editIcon} />
                 <TextInput
                   style={styles.eInput}
-                  // onChangeText={setGroupInput}
-                  // value={GroupInput}
+                  onChangeText={e =>
+                    updateInputState({GroupInput: {description: e}})
+                  }
+                  value={GroupInput}
                   placeholder="Name your Trip"
                   placeholderTextColor={'gray'}
                 />

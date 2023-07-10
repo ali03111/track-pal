@@ -118,7 +118,7 @@ export const styles = StyleSheet.create({
     position: 'relative',
   },
   modalData: tripType => ({
-    height: tripType ? hp('40') : hp('30'),
+    // height: tripType ? hp('40') : hp('30'),
     backgroundColor: '#fff',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -159,7 +159,7 @@ export const styles = StyleSheet.create({
   },
   modalInput: {
     paddingHorizontal: wp('4'),
-    marginTop: hp('4'),
+    marginTop: hp('1'),
   },
   mainInput: {
     paddingHorizontal: wp('4'),
@@ -171,28 +171,33 @@ export const styles = StyleSheet.create({
     marginVertical: hp('2'),
     borderWidth: 1,
     borderRadius: 7,
-    paddingHorizontal: wp('3'),
+    // paddingHorizontal: wp('3'),
     flex: 1,
     marginHorizontal: wp('3'),
   },
   inputArea: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
+    // paddingTop: hp('6'),
+    // backgroundColor: 'green',
   },
   inputLeftImg: {
     width: wp('10'),
     height: hp('5'),
     resizeMode: 'contain',
+    marginTop: hp('2.5'),
   },
   inputRightImg: {
     width: wp('8'),
     height: hp('4'),
     resizeMode: 'contain',
+    marginTop: hp('2.5'),
   },
   dotbar: {
     width: wp('10'),
     height: hp('5'),
     resizeMode: 'contain',
+    // backgroundColor: 'red',
     marginVertical: hp('-2.5'),
   },
   locationBtn: {
