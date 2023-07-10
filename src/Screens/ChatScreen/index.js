@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import {View, FlatList, Image, TextInput} from 'react-native';
 import MessagesComp from './MessagesComp';
 import {styles} from './styles';
@@ -12,7 +12,7 @@ import {send} from '../../Assets';
 
 const ChatScreen = () => {
   const {msgs, getStart} = useChatScreen();
-  const [text, onChangeText] = React.useState('');
+  const [text, onChangeText] = useState('');
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.notification}>

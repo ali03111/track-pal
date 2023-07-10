@@ -35,7 +35,7 @@ const reducers = {
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
   // recentlocation: persistReducer(LocationPersistConfig, RecentLocationReducer),
   isloading: loadingReducer,
-  isQuestion: questionReducer,
+  // isQuestion: questionReducer,
   // sagas: applyMiddleware(sagaMiddleware),
 };
 
@@ -44,17 +44,6 @@ export const store = createStore(
   applyMiddleware(sagaMiddleware),
 );
 
-// export const store = configureStore({
-//   reducer: {
-//     onboarding: persistReducer(onBoardPersistConfig, onboardingReducer),
-//     Auth: persistReducer(AuthPersistConfig, AuthReducer),
-//     isloading: loadingReducer,
-//   },
-//   middleware: {
-//     sagaMiddleware,
-//   },
-//   // sagas: applyMiddleware(sagaMiddleware),
-// });
 export const persistor = persistStore(store);
 // then run the saga
 sagaMiddleware.run(mySaga);

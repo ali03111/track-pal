@@ -14,7 +14,9 @@ import {
   faceBookLogin,
   googleLogin,
 } from '../../Utils/SocialLogin';
-import {getFbResult} from '../../Services/AuthServices';
+import {getFbResult, logOutFirebase} from '../../Services/AuthServices';
+import useReduxStore from '../../Hooks/UseReduxStore';
+import {loginUser, registerUser} from '../../Redux/Action/AuthAction';
 
 const {default: useFormHook} = require('../../Hooks/UseFormHooks');
 const {default: Schemas} = require('../../Utils/Validation');
@@ -23,19 +25,27 @@ const useLogin = ({navigate, goBack}) => {
   const {handleSubmit, errors, reset, control, getValues} = useFormHook(
     Schemas.logIn,
   );
-  const [remember, setRemember] = useState(false);
+  const {dispatch} = useReduxStore();
+  const [remember, setRemember] = useState(true);
   const rememberValue = () => {
     setRemember(!remember);
   };
 
   const onPress = () => navigate('RegisterScreen');
 
-  const loginUser = () => navigate('MybottomTabs');
+  const loginUserFun = ({email, password}) => {
+    dispatch(registerUser({datas: {email, password}}));
+  };
+  // const loginUser = () => navigate('MybottomTabs');
 
-  const socialLogin = async () => {
-    const f = await appleIdlogin();
-    const tod = await getFbResult();
-    console.log('sdfsdf', tod);
+  const googleLoginFunc = async () => {
+    dispatch(loginUser({type: 'Google', datas: {}}));
+  };
+  const facebookLoginFunc = async () => {
+    dispatch(loginUser({type: 'facebook', datas: {}}));
+  };
+  const appleIdlogin = async () => {
+    dispatch(loginUser({type: 'appleID', datas: {}}));
   };
 
   return {
@@ -44,15 +54,15 @@ const useLogin = ({navigate, goBack}) => {
     reset,
     control,
     getValues,
-    facebookLoginFunc: () => {},
-    googleLoginFunc: () => {},
+    facebookLoginFunc,
+    googleLoginFunc,
     PhoneNumberLoginFuc: () => {},
     remember,
     setRemember,
     rememberValue,
     onPress,
-    loginUser,
-    socialLogin,
+    loginUser: loginUserFun,
+    appleIdlogin,
   };
 };
 

@@ -5,7 +5,7 @@ import {Colors} from '../../Theme/Variables';
 export const styles = StyleSheet.create({
   tips: {
     paddingHorizontal: wp('3.5'),
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
     flex: 1,
   },
   headerStyle: {

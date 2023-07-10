@@ -30,6 +30,8 @@ import {
   requestMultiple,
 } from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
+import useReduxStore from './src/Hooks/UseReduxStore';
+import Overlay from './src/Components/Overlay';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -38,13 +40,18 @@ const PlatformPer = Platform.select({
     PERMISSIONS.IOS.LOCATION_ALWAYS,
     // PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY,
   ],
+  android: [
+    PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+    PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION,
+  ],
 });
 const App = () => {
   const [isVisible, setIsVisible] = useState(true);
   const Hide_Splash_Screen = () => {
     setIsVisible(false);
   };
-
+  const {getState, dispatch} = useReduxStore();
+  const {isloading} = getState('isloading');
   useEffect(() => {
     /**
      * Initialize the sdk
@@ -60,34 +67,6 @@ const App = () => {
     Settings.setAppID('1254157088825041');
   }, []);
 
-  const createTelematicUser = async token => {
-    var headers = new Headers();
-    headers.append('InstanceId', 'cf0181ae-87bb-4eda-9ca6-9cda6d773b5b');
-    headers.append('InstanceKey', '38ade545-dbbe-409a-8fba-f6f8817ffeca');
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
-    var requestOptions = {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({
-        data: {
-          UserFields: {
-            ClientId: token,
-          },
-          FirstName: 'iphone',
-          Nickname: 'iphone test',
-          LastName: 'test',
-        },
-      }),
-      redirect: 'follow',
-    };
-    const response = await fetch(
-      'https://user.telematicssdk.com/v1/Registration/create',
-      requestOptions,
-    );
-    console.log('jhadvfjhadsvfhsdvfhjsvd', response);
-  };
-
   const telematicsSDK = async () => {
     await TelematicsSdk.initialize();
     await requestMultiple(PlatformPer);
@@ -95,14 +74,14 @@ const App = () => {
     var deviceToken = await DeviceInfo.getUniqueId();
     console.log('TelematicsSdk', deviceToken);
     const isGranted = await TelematicsSdk.enable(deviceToken);
-    createTelematicUser(deviceToken);
+    // createTelematicUser(deviceToken);
     // Get all future tags
     // const result = await TelematicsSdk.addFutureTrackTag(
     //   'Future tag name',
     //   'Future tag source',
     // );
 
-    console.log('isGranted', isGranted, result);
+    console.log('isGranted', isGranted);
     // iOS specific:
     // // Get an event for low power mode enabled
     // const eventEmitter = new NativeEventEmitter(TelematicsSdk);
@@ -119,7 +98,7 @@ const App = () => {
   };
 
   const useEffectFun = () => {
-    // telematicsSDK();
+    telematicsSDK();
     LogBox.ignoreLogs([
       'VirtualizedLists should never be nested',
       'ViewPropTypes will be removed from React Native',
@@ -149,10 +128,11 @@ const App = () => {
 
   return (
     <>
+      {isloading && <Overlay />}
       <StatusBar
         hidden={isVisible}
-        // backgroundColor={Platform.OS == 'ios' ? 'white' : 'transparent'}
-        barStyle={Platform.OS == 'ios' ? 'dark-content' : 'light-content'}
+        backgroundColor={Platform.OS == 'ios' ? 'white' : '#F2F2F2'}
+        barStyle={'dark-content'}
       />
       {/* {enableLatestRenderer()} */}
       {isVisible === true ? Splash_Screen : <StackNavigatior />}

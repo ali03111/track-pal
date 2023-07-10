@@ -5,6 +5,10 @@ import {
   loginUrl,
   logoutUrl,
   registerUrl,
+  telematicsCreateUser,
+  telematicsInstanceId,
+  telematicsInstanceKey,
+  telematicsLoginUser,
   updateUserUrl,
 } from '../Utils/Urls';
 import API from '../Utils/helperFunc';
@@ -134,6 +138,60 @@ const loginWithAgora = async ({username, password}) => {
   // return data;
 };
 
+const createTelematicUser = async ({token, data}) => {
+  console.log('dataslkjnvlksnklnslbvnsfklnbs', data);
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      InstanceId: telematicsInstanceId,
+      InstanceKey: telematicsInstanceKey,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      UserFields: {ClientId: 'string'},
+      Email: data.email,
+      FirstName: data.name,
+      Nickname: data.name,
+      Phone: data.number || '',
+    }),
+  };
+
+  try {
+    const response = await fetch(telematicsCreateUser, options);
+    const data = await response.json();
+    console.log('jhadvfjhadsvfhsdvfhjsvd', response);
+    return {success: true, result: data};
+  } catch (error) {
+    return {success: false, result: error};
+  }
+};
+const loginTelematicUser = async ({token}) => {
+  console.log('tokensd jkv sd v sd vsd vsjd jsd jsd s', token);
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      InstanceId: telematicsInstanceId,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      LoginFields: {Devicetoken: token},
+      Password: telematicsInstanceKey,
+    }),
+  };
+
+  try {
+    const response = await fetch(telematicsLoginUser, options);
+    const data = await response.json();
+    console.log('jhadvfjhadsvfhsdvfhsdsdsdsdsdsjsvd', data);
+    return {ok: data.Status == 200 ? true : false, loginResult: data};
+  } catch (error) {
+    console.log('ionnnnnnnnnnnn', error);
+    return {ok: false, loginResult: error};
+  }
+};
+
 const newLoginAgora = ({username, password}) =>
   ChatClient.getInstance().loginWithAgoraToken(username, password);
 
@@ -200,4 +258,6 @@ export {
   getAllAgoraUser,
   createUserFirestore,
   updateProfileFirebase,
+  createTelematicUser,
+  loginTelematicUser,
 };

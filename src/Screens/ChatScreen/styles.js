@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     paddingRight: wp('3'),
     fontSize: hp('2'),
     flex: 1,
+    color: 'black',
   },
   sendBtnStyle: {
     borderRadius: 10,
@@ -44,5 +45,13 @@ export const styles = StyleSheet.create({
     height: hp('3.5'),
     resizeMode: 'contain',
     marginLeft: wp('-1'),
+  },
+  searchinput: {
+    // paddingHorizontal: wp(''),
+    // width: wp('65'),
+    paddingRight: wp('3'),
+    fontSize: hp('2'),
+    flex: 1,
+    color: 'black',
   },
 });

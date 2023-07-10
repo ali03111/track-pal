@@ -18,7 +18,7 @@ import {BlurView} from '@react-native-community/blur';
 import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
-const StartTripModal = ({StartTripToggle, isTripModalVisible}) => {
+const StartTripModal = ({StartTripToggle, isTripModalVisible, onBackPress}) => {
   const {
     locationInput,
     setLocationInput,
@@ -42,6 +42,7 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible}) => {
         animationType="fade"
         useNativeDriver
         avoidKeyboard
+        onBackButtonPress={onBackPress}
         // backdropColor={'white'}
         style={styles.bottomModal}>
         <View

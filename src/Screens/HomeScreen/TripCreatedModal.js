@@ -6,7 +6,12 @@ import {BlurView} from '@react-native-community/blur';
 import Modal from 'react-native-modal';
 import GradientText from '../../Components/GradientText';
 
-const TripCreatedModal = ({isTripCreated, TripCreatedToggle, title}) => {
+const TripCreatedModal = ({
+  isTripCreated,
+  TripCreatedToggle,
+  title,
+  onBackPress,
+}) => {
   return (
     <View
       key={isTripCreated}
@@ -24,6 +29,7 @@ const TripCreatedModal = ({isTripCreated, TripCreatedToggle, title}) => {
         useNativeDriver
         avoidKeyboard
         animationType="fade"
+        onBackButtonPress={onBackPress}
         style={styles.bottomModal}>
         <Pressable
           onPress={TripCreatedToggle}

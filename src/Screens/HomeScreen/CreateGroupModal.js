@@ -14,7 +14,7 @@ import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
-const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
+const CreateGroupModal = ({iscreateModal, CreateGroup, onBackPress}) => {
   const {GroupInput, setGroupInput} = useHomeScreen();
 
   return (
@@ -34,6 +34,7 @@ const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
         animationType="fade"
         hideModalContentWhileAnimating
         useNativeDriver
+        onBackButtonPress={onBackPress}
         style={styles.bottomModal}>
         <View
           style={{
@@ -42,7 +43,7 @@ const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
             // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlur} />
-          <View style={styles.modalData}>
+          <View style={styles.modalData(true)}>
             <View style={styles.modalInput}>
               <View style={styles.userProfileImg}>
                 <CircleImage

@@ -29,6 +29,8 @@ import CreateGroupModal from './CreateGroupModal';
 import {CircleImage} from '../../Components/CircleImage';
 import StartTripModal from './StartTripModal';
 import TripCreatedModal from './TripCreatedModal';
+import TripTypeSelectModal from './TripTypeSelectModal';
+import GroupMemberSelectModal from './GroupMemberSelectModal';
 
 const HomeScreen = () => {
   const {
@@ -42,7 +44,15 @@ const HomeScreen = () => {
     isTripCreated,
     currentLocation,
     isTripStarted,
+    isTripSelectModal,
+    selectTripType,
     updateState,
+    openNextModal,
+    openPrevModal,
+    isGroupMemberSelectModal,
+    remember,
+    rememberValue,
+    keyboardStatus,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -109,7 +119,7 @@ const HomeScreen = () => {
       <View style={styles.btn}>
         <ThemeButton
           title={'Create New Trip'}
-          onPress={() => updateState({isModalVisible: true})}
+          onPress={() => updateState({isTripSelectModal: true})}
           style={styles.tripBtn}
         />
         {/* <ThemeButton
@@ -117,21 +127,48 @@ const HomeScreen = () => {
           onPress={CreateGroup}
           style={styles.tripBtn}
         /> */}
+        <TripTypeSelectModal
+          {...{
+            isTripSelectModal,
+            toggleNextModal: () => {
+              openNextModal('isTripSelectModal', 'isGroupMemberSelectModal');
+            },
+            onBackPress: () => {
+              updateState({isTripSelectModal: false});
+            },
+            extraData: {
+              selectTripType,
+            },
+          }}
+        />
+        <GroupMemberSelectModal
+          {...{
+            isGroupMemberSelectModal,
+            toggleNextModal: () => {
+              openNextModal('isGroupMemberSelectModal', 'isModalVisible');
+            },
+            onBackPress: () => {
+              openPrevModal('isGroupMemberSelectModal', 'isTripSelectModal');
+            },
+            extraData: {
+              selectTripType,
+              remember,
+              rememberValue,
+              keyboardStatus,
+            },
+          }}
+        />
         <SelectLocationModal
           {...{
             isModalVisible,
             toggleLocationModal: () => {
-              // updateState({isModalVisible: false, iscreateModal: true});
-              updateState({isModalVisible: false});
-              setTimeout(() => {
-                updateState({iscreateModal: true});
-              }, 100);
-              console.log(
-                'sfngkjbdfkffffgbdklfbgdfgdf',
-                iscreateModal,
-                isModalVisible,
-              );
-              // updateState({iscreateModal: true});
+              openNextModal('isModalVisible', 'iscreateModal');
+            },
+            onBackPress: () => {
+              openPrevModal('isModalVisible', 'isGroupMemberSelectModal');
+            },
+            extraData: {
+              selectTripType,
             },
           }}
         />
@@ -139,10 +176,13 @@ const HomeScreen = () => {
           {...{
             iscreateModal,
             CreateGroup: () => {
-              updateState({iscreateModal: false});
-              setTimeout(() => {
-                updateState({isTripCreated: true});
-              }, 100);
+              openNextModal('iscreateModal', 'isTripCreated');
+            },
+            onBackPress: () => {
+              openPrevModal('iscreateModal', 'isModalVisible');
+            },
+            extraData: {
+              selectTripType,
             },
           }}
         />
@@ -150,10 +190,13 @@ const HomeScreen = () => {
           {...{
             isTripCreated,
             TripCreatedToggle: () => {
-              updateState({isTripCreated: false});
-              setTimeout(() => {
-                updateState({isTripModalVisible: true});
-              }, 100);
+              openNextModal('isTripCreated', 'isTripModalVisible');
+            },
+            onBackPress: () => {
+              openPrevModal('isTripCreated', 'iscreateModal');
+            },
+            extraData: {
+              selectTripType,
             },
           }}
         />
@@ -161,10 +204,13 @@ const HomeScreen = () => {
           {...{
             isTripModalVisible,
             StartTripToggle: () => {
-              updateState({isTripModalVisible: false});
-              setTimeout(() => {
-                updateState({isTripStarted: true});
-              }, 100);
+              openNextModal('isTripModalVisible', 'isTripStarted');
+            },
+            onBackPress: () => {
+              openPrevModal('isTripModalVisible', 'isTripCreated');
+            },
+            extraData: {
+              selectTripType,
             },
           }}
         />
@@ -174,6 +220,12 @@ const HomeScreen = () => {
             title: 'Trip Started',
             TripCreatedToggle: () => {
               updateState({isTripStarted: false});
+            },
+            onBackPress: () => {
+              openPrevModal('isTripStarted', 'isTripModalVisible');
+            },
+            extraData: {
+              selectTripType,
             },
           }}
         />

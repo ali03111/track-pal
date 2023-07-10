@@ -4,6 +4,7 @@ const initial_state = {
   userData: {},
   token: '',
   isLogin: false,
+  telematicToken: '',
 };
 
 const actionMap = {
@@ -11,6 +12,7 @@ const actionMap = {
     return {
       userData: act.payload.user,
       token: act.payload.token,
+      telematicToken: act.payload.telematicToken,
       isLogin: true,
     };
   },
