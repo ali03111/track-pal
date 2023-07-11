@@ -14,6 +14,9 @@ import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {hp} from '../../Config/responsive';
+
 const CreateGroupModal = ({iscreateModal, CreateGroup, onBackPress}) => {
   const {GroupInput, setGroupInput} = useHomeScreen();
 
@@ -45,6 +48,12 @@ const CreateGroupModal = ({iscreateModal, CreateGroup, onBackPress}) => {
           <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.modalData(true)}>
             <View style={styles.modalInput}>
+              <Ionicons
+                name="close-outline"
+                size={hp('3.5')}
+                style={styles.closeIcon}
+                onPress={onBackPress}
+              />
               <View style={styles.userProfileImg}>
                 <CircleImage
                   image={DemoProfileImage1}

@@ -47,3 +47,5 @@ export const deviceIdUrl = 'auth/update-device-id/';
 export const notifyUserUrl = 'buyer-interested/';
 export const getAllNotificationUrl = 'get-user-notifications/';
 export const getAgoraTokenUrl = 'getAccessToken/';
+export const userTrips = '/user-trips';
+export const changeUserTripStatus = '/change-user-trip-status';

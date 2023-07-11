@@ -16,9 +16,10 @@ import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
 import {RadioButton} from 'react-native-paper';
 import {tripsTypes} from '../../Utils/localDB';
-import {wp} from '../../Config/responsive';
+import {hp, wp} from '../../Config/responsive';
 import GradientText from '../../Components/GradientText';
 import {TextComponent} from '../../Components/TextComponent';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const TripTypeSelectModal = ({
   isTripSelectModal,
@@ -73,6 +74,12 @@ const TripTypeSelectModal = ({
           <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.modalData(true)}>
             <View style={styles.SelectTripModal}>
+              <Ionicons
+                name="close-outline"
+                size={hp('3.5')}
+                style={styles.closeIcon}
+                onPress={onBackPress}
+              />
               <GradientText GradientAlignment={0.8} style={styles.selectTrip}>
                 {'Select A Trip Type'}
               </GradientText>

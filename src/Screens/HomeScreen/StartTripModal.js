@@ -18,6 +18,8 @@ import {BlurView} from '@react-native-community/blur';
 import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const StartTripModal = ({StartTripToggle, isTripModalVisible, onBackPress}) => {
   const {
     locationInput,
@@ -53,6 +55,12 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible, onBackPress}) => {
           }}>
           <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.tripModalData}>
+            <Ionicons
+              name="close-outline"
+              size={hp('3.5')}
+              style={styles.tripCloseIcon}
+              onPress={onBackPress}
+            />
             <View style={styles.groupInfoMain}>
               {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}
               <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />

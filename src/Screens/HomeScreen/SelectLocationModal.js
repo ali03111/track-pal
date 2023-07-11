@@ -7,6 +7,7 @@ import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {tripsTypes} from '../../Utils/localDB';
 import {hp} from '../../Config/responsive';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const SelectLocationModal = ({
   isModalVisible,
@@ -57,6 +58,12 @@ const SelectLocationModal = ({
             <View style={styles.modalInput}>
               {isTripType && (
                 <>
+                  <Ionicons
+                    name="close-outline"
+                    size={hp('3.5')}
+                    style={styles.closeIcon}
+                    onPress={onBackPress}
+                  />
                   <View style={styles.inputArea}>
                     <Image source={location} style={styles.inputLeftImg} />
                     <TextInput

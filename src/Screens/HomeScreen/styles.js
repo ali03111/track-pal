@@ -164,7 +164,7 @@ export const styles = StyleSheet.create({
   },
   SelectTripModal: {
     paddingHorizontal: wp('4'),
-    marginTop: hp('4'),
+    marginTop: hp('2.5'),
   },
   mainInput: {
     paddingHorizontal: wp('4'),
@@ -338,5 +338,16 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: Colors.white,
     marginBottom: hp('2'),
+  },
+  closeIcon: {
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-end',
+    marginBottom: hp('-1'),
+  },
+  tripCloseIcon: {
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-end',
+    marginBottom: hp('-1'),
+    marginRight: wp('4'),
   },
 });

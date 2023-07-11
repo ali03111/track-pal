@@ -3,6 +3,8 @@ import Geolocation from '@react-native-community/geolocation';
 import {frequentTrips, tripsTypes} from '../../Utils/localDB';
 import {BackHandler, Keyboard} from 'react-native';
 import {errorMessage} from '../../Config/NotificationMessage';
+import {userTrips} from '../../Utils/Urls';
+import API from '../../Utils/helperFunc';
 
 const useHomeScreen = () => {
   const [homeStates, setHomeStates] = useState({
@@ -48,6 +50,14 @@ const useHomeScreen = () => {
     });
   };
 
+  const getUserTrips = async () => {
+    const {ok, data} = await API.get(userTrips);
+    console.log(data, 'test');
+    if (ok) {
+      console.log(data);
+    }
+  };
+
   const errorStats = {
     isTripSelectModal: () => true,
     isModalVisible: () => {
@@ -73,6 +83,7 @@ const useHomeScreen = () => {
 
   const useEffectFuc = () => {
     getCurrentLocation();
+    getUserTrips();
   };
 
   const openNextModal = (preVal, newVal) => {
