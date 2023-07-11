@@ -32,6 +32,7 @@ const useEditProfile = ({navigate, goBack}) => {
     getValues,
     goBack,
     navigateToReset,
+    userData,
   };
 };
 

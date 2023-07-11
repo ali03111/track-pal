@@ -5,8 +5,12 @@ import {BackHandler, Keyboard} from 'react-native';
 import {errorMessage} from '../../Config/NotificationMessage';
 import API from '../../Utils/helperFunc';
 import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
+import useReduxStore from '../../Hooks/UseReduxStore';
+import {loadingTrue} from '../../Redux/Action/isloadingAction';
 
 const useHomeScreen = () => {
+  const {dispatch} = useReduxStore();
+
   const [homeStates, setHomeStates] = useState({
     selectTripType: tripsTypes[0].id,
     isModalVisible: false,
@@ -93,17 +97,63 @@ const useHomeScreen = () => {
     });
   };
 
-  const createTripFun = async () => {
-    const body = {
+  const bodyKey = {
+    [tripsTypes[0].id]: {
       name: GroupInput,
-      start_destination: locationInput,
       end_destination: destinationInput,
       user_ids: groupMembers,
+      type: selectTripType,
       // 'image' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    };
+    },
+    [tripsTypes[1].id]: {
+      start_destination: locationInput,
+      name: GroupInput,
+      end_destination: destinationInput,
+      user_ids: groupMembers,
+      type: selectTripType,
+    },
+    [tripsTypes[2].id]: {
+      start_destination: locationInput,
+      name: GroupInput,
+      end_destination: destinationInput,
+      user_ids: groupMembers,
+      type: selectTripType,
+    },
+  };
+
+  const createTripFun = async () => {
+    dispatch(loadingTrue());
+    const body = bodyKey[selectTripType];
     console.log('vhjsdjksdvkjvsdjbjsdbfjksbd', body);
     const {ok, data, originalError} = await API.post(CreateTripUrl, body);
-    if (ok) console.log('datadata data data darta ', data);
+    if (ok) {
+      openNextModal('isTripModalVisible', 'isTripStarted');
+      updateInputState({
+        destinationInput: {
+          description: '',
+          coords: {
+            latitude: 37.78825,
+            longitude: -122.4324,
+          },
+        },
+        locationInput: {
+          description: '',
+          coords: {
+            latitude: 37.78825,
+            longitude: -122.4324,
+          },
+        },
+        GroupInput: '',
+      });
+      updateState({
+        groupMembers: [],
+        selectTripType: tripsTypes[0].id,
+      });
+      setTimeout(() => {
+        updateState({isTripStarted: false});
+      }, 1000);
+      console.log('datadata data data darta ', data);
+    }
     console.log('erororororororororororo', data, originalError);
   };
 
@@ -193,7 +243,6 @@ const useHomeScreen = () => {
 
   const openNextModal = (preVal, newVal) => {
     const errorHandler = errorStats[preVal]();
-    console.log('errorhandklw', errorHandler);
     if (errorHandler) {
       updateState({[preVal]: false});
       setTimeout(() => {
@@ -203,7 +252,6 @@ const useHomeScreen = () => {
       errorMessage('ksdbvlksdlbsdlb', {...{position: 'absolute', zIndex: 999}});
   };
   const openPrevModal = (preVal, newVal) => {
-    console.log('inpyutStataea', inputFeilds);
     updateState({[preVal]: false});
     setTimeout(() => {
       updateState({[newVal]: true});

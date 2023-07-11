@@ -30,6 +30,7 @@ const EditProfileScreen = ({navigation}) => {
     getValues,
     goBack,
     navigateToReset,
+    userData,
   } = useResetPassword(navigation);
   return (
     <KeyBoardWrapper>
@@ -81,7 +82,7 @@ const EditProfileScreen = ({navigation}) => {
             control,
             getValues,
             placeholder: 'Email',
-            defaultValue: 'jhondoe@gmail.com',
+            defaultValue: userData.email,
             textStyle: styles.inputStyle,
             viewStyle: styles.mainStyle,
           }}

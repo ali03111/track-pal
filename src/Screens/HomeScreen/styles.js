@@ -251,6 +251,7 @@ export const styles = StyleSheet.create({
   userProfileImg: {
     backgroundColor: Colors.white,
     position: 'relative',
+    marginTop: hp('2'),
   },
   addImageIcon: {
     alignSelf: 'center',
@@ -320,7 +321,7 @@ export const styles = StyleSheet.create({
   },
   groupBtn: {
     marginTop: hp('1'),
-    marginBottom: hp('1'),
+    marginBottom: Platform.OS == 'ios' ? hp('4') : hp('1'),
   },
   tickIcon: {
     resizeMode: 'contain',

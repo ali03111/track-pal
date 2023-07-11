@@ -14,6 +14,7 @@ import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
+import {hp} from '../../Config/responsive';
 const CreateGroupModal = ({
   iscreateModal,
   CreateGroup,
@@ -48,7 +49,7 @@ const CreateGroupModal = ({
             // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlur} />
-          <View style={styles.modalData(true)}>
+          <View style={{...styles.modalData(true), paddingBottom: hp('2')}}>
             <View style={styles.modalInput}>
               <View style={styles.userProfileImg}>
                 <CircleImage

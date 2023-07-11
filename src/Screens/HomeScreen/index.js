@@ -199,7 +199,18 @@ const HomeScreen = () => {
           {...{
             iscreateModal,
             CreateGroup: () => {
-              openNextModal('iscreateModal', 'isTripCreated');
+              openNextModal(
+                'iscreateModal',
+                'isTripCreated',
+                // {
+                //   openNextModal,
+                //   "isTripCreated",
+                //   "isTripModalVisible"
+                // }
+              );
+              // setTimeout(() => {
+              //   openNextModal('isTripCreated', 'isTripModalVisible');
+              // }, 1000);
             },
             onBackPress: () => {
               openPrevModal('iscreateModal', 'isModalVisible');
@@ -231,10 +242,10 @@ const HomeScreen = () => {
           {...{
             isTripModalVisible,
             StartTripToggle: () => {
-              openNextModal('isTripModalVisible', 'isTripStarted');
+              createTripFun();
             },
             onBackPress: () => {
-              openPrevModal('isTripModalVisible', 'isTripCreated');
+              openPrevModal('isTripModalVisible', 'iscreateModal');
             },
             extraData: {
               selectTripType,
@@ -255,11 +266,8 @@ const HomeScreen = () => {
             title: 'Trip Started',
             TripCreatedToggle: () => {
               updateState({isTripStarted: false});
-              createTripFun();
             },
-            onBackPress: () => {
-              openPrevModal('isTripStarted', 'isTripModalVisible');
-            },
+            onBackPress: () => {},
             extraData: {
               selectTripType,
               message: updateError,
