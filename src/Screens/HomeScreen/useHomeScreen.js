@@ -7,6 +7,7 @@ import API from '../../Utils/helperFunc';
 import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingTrue} from '../../Redux/Action/isloadingAction';
+import {createTripObj} from '../../Services/FireBaseRealTImeServices';
 
 const useHomeScreen = () => {
   const {dispatch} = useReduxStore();
@@ -121,12 +122,41 @@ const useHomeScreen = () => {
     },
   };
 
+  const firebaseDataType = {
+    [tripsTypes[0].id]: {
+      TripName: GroupInput,
+      destination: destinationInput,
+      tripType: selectTripType,
+      startPoint: null,
+      // 'tripId' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    },
+    [tripsTypes[1].id]: {
+      startPoint: locationInput,
+      TripName: GroupInput,
+      destination: destinationInput,
+      tripType: selectTripType,
+    },
+    [tripsTypes[2].id]: {
+      start_destination: locationInput,
+      name: GroupInput,
+      end_destination: destinationInput,
+      type: selectTripType,
+    },
+  };
+
   const createTripFun = async () => {
     dispatch(loadingTrue());
     const body = bodyKey[selectTripType];
     console.log('vhjsdjksdvkjvsdjbjsdbfjksbd', body);
     const {ok, data, originalError} = await API.post(CreateTripUrl, body);
     if (ok) {
+      console.log('data.usersdata.usersdata.usersdata.users', data.users);
+      // tripId, members, destination, startPoint, tripType
+      createTripObj({
+        ...firebaseDataType[selectTripType],
+        tripId: data.trip_id,
+        members: data.users,
+      });
       openNextModal('isTripModalVisible', 'isTripStarted');
       updateInputState({
         destinationInput: {
@@ -248,8 +278,7 @@ const useHomeScreen = () => {
       setTimeout(() => {
         updateState({[newVal]: true});
       }, 0);
-    } else
-      errorMessage('ksdbvlksdlbsdlb', {...{position: 'absolute', zIndex: 999}});
+    }
   };
   const openPrevModal = (preVal, newVal) => {
     updateState({[preVal]: false});
