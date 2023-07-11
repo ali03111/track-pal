@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0xo-nU-0eh" userLabel="ContainerView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="SplashScreenBackground" translatesAutoresizingMaskIntoConstraints="NO" id="bK4-aW-cSR" userLabel="SplashScreenBackground">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="yYs-ku-rVa" userLabel="SplashScreen">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="OUR-ZP-dA4"/>
+                        <constraints>
+                            <constraint firstItem="yYs-ku-rVa" firstAttribute="leading" secondItem="0xo-nU-0eh" secondAttribute="leading" id="1j8-Js-62A"/>
+                            <constraint firstItem="bK4-aW-cSR" firstAttribute="bottom" secondItem="0xo-nU-0eh" secondAttribute="bottom" id="7cA-tK-k2Q"/>
+                            <constraint firstItem="bK4-aW-cSR" firstAttribute="leading" secondItem="0xo-nU-0eh" secondAttribute="leading" id="Fzf-Od-NSw"/>
+                            <constraint firstItem="yYs-ku-rVa" firstAttribute="trailing" secondItem="0xo-nU-0eh" secondAttribute="trailing" id="Jsi-Qh-yzS"/>
+                            <constraint firstItem="yYs-ku-rVa" firstAttribute="top" secondItem="0xo-nU-0eh" secondAttribute="top" id="Xb5-Jq-5Ii"/>
+                            <constraint firstItem="bK4-aW-cSR" firstAttribute="top" secondItem="0xo-nU-0eh" secondAttribute="top" id="bbc-IB-A25"/>
+                            <constraint firstItem="yYs-ku-rVa" firstAttribute="bottom" secondItem="0xo-nU-0eh" secondAttribute="bottom" id="hx0-J0-eGu"/>
+                            <constraint firstItem="bK4-aW-cSR" firstAttribute="trailing" secondItem="0xo-nU-0eh" secondAttribute="trailing" id="pkQ-sO-L2J"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="SplashScreen" width="414" height="896"/>
+        <image name="SplashScreenBackground" width="414" height="896"/>
+    </resources>
+</document>

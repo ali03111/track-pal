@@ -1,4 +1,4 @@
-package com.trackpal;
+package com.codment.trackpal;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

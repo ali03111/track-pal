@@ -1,5 +1,6 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+rn_maps_path = '../node_modules/react-native-maps'
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
@@ -23,10 +24,20 @@ end
 
 target 'TrackPal' do
   config = use_native_modules!
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
+  pod 'react-native-maps' ,:path => '../node_modules/react-native-maps' # Uncomment this line if you want to support GoogleMaps on iOS
+  pod 'GoogleMaps'  # Uncomment this line if you want to support GoogleMaps on iOS
+  pod 'Google-Maps-iOS-Utils' # Uncomment this line if you want to support GoogleMaps on iOS
 
   # Flags change depending on the env values.
   flags = get_default_flags()
-
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  
+  # pod 'Permission-AppTrackingTransparency', :path => "#{permissions_path}/AppTrackingTransparency"
+  # pod 'Permission-Motion', :path => "#{permissions_path}/Motion"
+  # pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  # pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
@@ -42,6 +53,12 @@ target 'TrackPal' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'GTMSessionFetcher', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
 
   target 'TrackPalTests' do
     inherit! :complete

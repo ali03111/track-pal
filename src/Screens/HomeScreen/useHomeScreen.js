@@ -99,39 +99,11 @@ const useHomeScreen = () => {
       start_destination: locationInput,
       end_destination: destinationInput,
       user_ids: groupMembers,
-      type: selectTripType,
       // 'image' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     };
     console.log('vhjsdjksdvkjvsdjbjsdbfjksbd', body);
     const {ok, data, originalError} = await API.post(CreateTripUrl, body);
-    if (ok) {
-      openNextModal('isTripModalVisible', 'isTripStarted');
-      updateInputState({
-        destinationInput: {
-          description: '',
-          coords: {
-            latitude: 37.78825,
-            longitude: -122.4324,
-          },
-        },
-        locationInput: {
-          description: '',
-          coords: {
-            latitude: 37.78825,
-            longitude: -122.4324,
-          },
-        },
-        GroupInput: '',
-      });
-      updateState({
-        groupMembers: [],
-        selectTripType: tripsTypes[0].id,
-      });
-      setTimeout(() => {
-        updateState({isTripStarted: false});
-      }, 1000);
-      console.log('datadata data data darta ', data);
-    }
+    if (ok) console.log('datadata data data darta ', data);
     console.log('erororororororororororo', data, originalError);
   };
 
