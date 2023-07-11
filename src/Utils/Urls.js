@@ -38,3 +38,5 @@ export const loginUrl = 'firebase-login';
 export const logoutUrl = 'auth/logout';
 export const fcmToken = 'add-fcm-token';
 export const getAgoraTokenUrl = 'getAccessToken/';
+export const getAllUser = 'users';
+export const CreateTripUrl = '/create-trip';

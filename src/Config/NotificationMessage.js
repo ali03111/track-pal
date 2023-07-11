@@ -1,7 +1,7 @@
 import {showMessage} from 'react-native-flash-message';
 import {Colors} from '../Theme/Variables';
 
-export const errorMessage = description => {
+export const errorMessage = (description, continerStyle) => {
   showMessage({
     type: 'danger',
     icon: 'auto',
@@ -9,11 +9,11 @@ export const errorMessage = description => {
     description: description,
     floating: true,
     backgroundColor: Colors.themeRed,
-    style: {alignItems: 'center'},
+    style: {alignItems: 'center', ...continerStyle},
   });
 };
 
-export const successMessage = description => {
+export const successMessage = (description, continerStyle) => {
   showMessage({
     type: 'success',
     icon: 'auto',
@@ -21,6 +21,6 @@ export const successMessage = description => {
     description: description,
     floating: true,
     backgroundColor: Colors.primaryColor,
-    style: {alignItems: 'center'},
+    style: {alignItems: 'center', ...continerStyle},
   });
 };

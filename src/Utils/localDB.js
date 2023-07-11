@@ -398,17 +398,17 @@ export const trips = [
 export const tripsTypes = [
   {
     id: 'myTrip',
-    des: '',
+    des: 'Lorem Ipsum is simply dummy text of the printing',
     title: 'My Trip',
   },
   {
     id: 'groupTrip',
-    des: '',
+    des: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
     title: 'Group Trip',
   },
   {
     id: 'personalTrip',
-    des: '',
+    des: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     title: 'Personal Trip',
   },
 ];

@@ -30,6 +30,7 @@ import {CircleImage} from '../../Components/CircleImage';
 import StartTripModal from './StartTripModal';
 import TripCreatedModal from './TripCreatedModal';
 import TripTypeSelectModal from './TripTypeSelectModal';
+import GroupMemberSelectModal from './GroupMemberSelectModal';
 
 const HomeScreen = () => {
   const {
@@ -46,11 +47,20 @@ const HomeScreen = () => {
     isTripSelectModal,
     selectTripType,
     destinationInputRef,
+    allUser,
+    groupMembers,
+    addMembersToGroup,
     updateInputState,
     getlocation,
     updateState,
     openNextModal,
     openPrevModal,
+    isGroupMemberSelectModal,
+    remember,
+    rememberValue,
+    keyboardStatus,
+    updateError,
+    createTripFun,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -129,13 +139,35 @@ const HomeScreen = () => {
           {...{
             isTripSelectModal,
             toggleNextModal: () => {
-              openNextModal('isTripSelectModal', 'isModalVisible');
+              openNextModal('isTripSelectModal', 'isGroupMemberSelectModal');
             },
             onBackPress: () => {
               updateState({isTripSelectModal: false});
             },
             extraData: {
               selectTripType,
+              updateState,
+            },
+          }}
+        />
+        <GroupMemberSelectModal
+          {...{
+            isGroupMemberSelectModal,
+            toggleNextModal: () => {
+              openNextModal('isGroupMemberSelectModal', 'isModalVisible');
+            },
+            onBackPress: () => {
+              openPrevModal('isGroupMemberSelectModal', 'isTripSelectModal');
+            },
+            extraData: {
+              selectTripType,
+              remember,
+              rememberValue,
+              keyboardStatus,
+              allUser,
+              addMembersToGroup,
+              groupMembers,
+              message: updateError,
             },
           }}
         />
@@ -147,7 +179,10 @@ const HomeScreen = () => {
               console.log('bdkjfbsdbfs', destinationInput);
             },
             onBackPress: () => {
-              openPrevModal('isModalVisible', 'isTripSelectModal');
+              openPrevModal('isModalVisible', 'isGroupMemberSelectModal');
+            },
+            extraData: {
+              selectTripType,
             },
             extraData: {
               selectTripType,
@@ -156,6 +191,7 @@ const HomeScreen = () => {
               getlocation,
               updateInputState,
               destinationInputRef,
+              message: updateError,
             },
           }}
         />
@@ -171,7 +207,7 @@ const HomeScreen = () => {
             },
             extraData: {
               selectTripType,
-              GroupInput: destinationInput.description,
+              GroupInput,
               updateInputState,
             },
           }}
@@ -187,6 +223,7 @@ const HomeScreen = () => {
             },
             extraData: {
               selectTripType,
+              message: updateError,
             },
           }}
         />
@@ -206,6 +243,9 @@ const HomeScreen = () => {
               getlocation,
               updateInputState,
               destinationInputRef,
+              message: updateError,
+              groupMembers,
+              GroupInput,
             },
           }}
         />
@@ -215,12 +255,14 @@ const HomeScreen = () => {
             title: 'Trip Started',
             TripCreatedToggle: () => {
               updateState({isTripStarted: false});
+              createTripFun();
             },
             onBackPress: () => {
               openPrevModal('isTripStarted', 'isTripModalVisible');
             },
             extraData: {
               selectTripType,
+              message: updateError,
             },
           }}
         />

@@ -63,9 +63,7 @@ const CreateGroupModal = ({
                 <Image source={editIcon} style={styles.editIcon} />
                 <TextInput
                   style={styles.eInput}
-                  onChangeText={e =>
-                    updateInputState({GroupInput: {description: e}})
-                  }
+                  onChangeText={e => updateInputState({GroupInput: e})}
                   value={GroupInput}
                   placeholder="Name your Trip"
                   placeholderTextColor={'gray'}

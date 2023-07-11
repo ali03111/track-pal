@@ -1,5 +1,5 @@
-import React, {memo, useState} from 'react';
-import {View, Image, TextInput} from 'react-native';
+import React, {memo, useCallback, useState} from 'react';
+import {View, Image, TextInput, FlatList, Text} from 'react-native';
 import {
   DemoProfileImage1,
   editIcon,
@@ -14,12 +14,40 @@ import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
+import {RadioButton} from 'react-native-paper';
+import {tripsTypes} from '../../Utils/localDB';
+import {wp} from '../../Config/responsive';
+import GradientText from '../../Components/GradientText';
+import {TextComponent} from '../../Components/TextComponent';
 
 const TripTypeSelectModal = ({
   isTripSelectModal,
   toggleNextModal,
   onBackPress,
+  extraData,
 }) => {
+  const {selectTripType, updateState} = extraData;
+  const renderItem = useCallback(({item, index}) => {
+    return (
+      <Touchable
+        onPress={() => updateState({selectTripType: item?.id})}
+        style={styles.radioMain}>
+        <RadioButton.Group
+          onValueChange={newValue => updateState({selectTripType: newValue})}
+          value={selectTripType}>
+          <View style={styles.radio}>
+            <View style={styles.radioTitle}>
+              <RadioButton value={item?.id} color="#EE2A7B" />
+            </View>
+            <View style={{flex: 1}}>
+              <TextComponent text={item?.title} styles={styles.radioText} />
+              <TextComponent text={item?.des} styles={styles.radioDes} />
+            </View>
+          </View>
+        </RadioButton.Group>
+      </Touchable>
+    );
+  });
   return (
     <View
       key={isTripSelectModal}
@@ -47,27 +75,28 @@ const TripTypeSelectModal = ({
           }}>
           <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.modalData(true)}>
-            <View style={styles.modalInput}>
-              <View style={styles.userProfileImg}>
-                <CircleImage
-                  image={DemoProfileImage1}
-                  styles={styles.profileEditImg}
-                />
-                <Touchable Opacity={0.8}>
-                  <Image source={addProfileImage} style={styles.addImageIcon} />
-                </Touchable>
-              </View>
-              <View style={styles.editInput}>
-                <Image source={editIcon} style={styles.editIcon} />
-                <TextInput
-                  style={styles.eInput}
-                  // onChangeText={setGroupInput}
-                  // value={GroupInput}
-                  placeholder="Name your Trip"
-                  placeholderTextColor={'gray'}
-                />
-              </View>
-              <ThemeButton title={'Next'} onPress={toggleNextModal} />
+            <View style={styles.SelectTripModal}>
+              <GradientText GradientAlignment={0.8} style={styles.selectTrip}>
+                {'Select A Trip Type'}
+              </GradientText>
+              <FlatList
+                refreshing={false}
+                data={tripsTypes}
+                renderItem={renderItem}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                horizontal={false}
+                contentContainerStyle={{
+                  paddingRight: wp('2'),
+                  paddingLeft: wp('0'),
+                }}
+              />
+
+              <ThemeButton
+                title={'Next'}
+                onPress={toggleNextModal}
+                btnStyle={styles.btnstyle}
+              />
             </View>
           </View>
         </View>

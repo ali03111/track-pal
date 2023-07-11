@@ -110,9 +110,11 @@ const SelectLocationModal = ({
                   placeholderTextColor={'gray'}
                   placeholder="Choose Destination"
                 /> */}
-                <Touchable>
-                  <Image source={arrows} style={styles.inputRightImg} />
-                </Touchable>
+                {isTripType && (
+                  <Touchable>
+                    <Image source={arrows} style={styles.inputRightImg} />
+                  </Touchable>
+                )}
               </View>
               <ThemeButton
                 title={'Get Current Location'}

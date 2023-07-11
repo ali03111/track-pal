@@ -95,8 +95,16 @@ export const AutoFillGoogleComp = ({
       //       style={{marginLeft: 10}}
       //     />
       //   )}
-      onPress={(data, details) => {
-        handleButtonClick(data);
+      onPress={(data, details = null) => {
+        const {lat, lng} = details.geometry.location;
+        handleButtonClick({
+          ...data,
+          coords: {
+            latitude: lat,
+            longitude: lng,
+          },
+        });
+        // handleButtonClick(data,{ lat, lng });
       }}
       query={{
         key: 'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE',

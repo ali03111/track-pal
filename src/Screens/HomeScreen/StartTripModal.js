@@ -41,6 +41,8 @@ const StartTripModal = ({
     updateInputState,
     getlocation,
     destinationInputRef,
+    groupMembers,
+    GroupInput,
   } = extraData;
   return (
     <View
@@ -73,8 +75,10 @@ const StartTripModal = ({
               {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}
               <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
               <View style={styles.groupDesc}>
-                <Text style={styles.groupName}>Business Meets</Text>
-                <Text style={styles.groupMember}>15 members</Text>
+                <Text style={styles.groupName}>{GroupInput}</Text>
+                <Text style={styles.groupMember}>
+                  {groupMembers.length} members
+                </Text>
               </View>
             </View>
             <View style={styles.TripHeadBorder}></View>
@@ -118,9 +122,11 @@ const StartTripModal = ({
                       text={destinationInput?.description}
                     />
                   </View>
-                  <Touchable>
-                    <Image source={arrows} style={styles.inputRightImg} />
-                  </Touchable>
+                  {isTripType && (
+                    <Touchable>
+                      <Image source={arrows} style={styles.inputRightImg} />
+                    </Touchable>
+                  )}
                 </View>
               )}
               {/* <ThemeButton

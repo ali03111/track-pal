@@ -46,4 +46,12 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginLeft: wp('-1'),
   },
+  searchinput: {
+    // paddingHorizontal: wp(''),
+    // width: wp('65'),
+    paddingRight: wp('3'),
+    fontSize: hp('2'),
+    flex: 1,
+    color: 'black',
+  },
 });

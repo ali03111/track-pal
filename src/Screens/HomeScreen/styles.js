@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
     marginTop: hp('3'),
   },
   tripModalData: {
-    height: hp('50'),
+    // height: hp('50'),
     backgroundColor: '#fff',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -160,6 +160,10 @@ export const styles = StyleSheet.create({
   modalInput: {
     paddingHorizontal: wp('4'),
     marginTop: hp('1'),
+  },
+  SelectTripModal: {
+    paddingHorizontal: wp('4'),
+    marginTop: hp('4'),
   },
   mainInput: {
     paddingHorizontal: wp('4'),
@@ -257,5 +261,87 @@ export const styles = StyleSheet.create({
     width: wp('12'),
     height: hp('6'),
     resizeMode: 'contain',
+  },
+  radio: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+
+  btnstyle: {
+    marginBottom: hp('3'),
+  },
+  radiobtn: {
+    flex: 0.1,
+    backgroundColor: 'red',
+  },
+  radioTitle: {
+    flexDirection: 'row',
+    // alignItems: 'center',
+  },
+  radioDes: {
+    marginTop: hp('.5'),
+    marginBottom: hp('2'),
+    paddingBottom: hp('2'),
+    borderBottomWidth: 0.5,
+    borderColor: Colors.themeColorLight,
+    fontSize: hp('1.5'),
+  },
+  radioText: {
+    fontSize: hp('1.8'),
+    fontWeight: '600',
+    marginTop: hp('.5'),
+  },
+  selectTrip: {
+    fontWeight: '600',
+    fontSize: hp('3'),
+    color: Colors.primaryColor,
+    marginBottom: hp('2'),
+    textAlign: 'center',
+  },
+  memberPic: {
+    width: Dimensions.get('window').width * 0.1,
+    height: Dimensions.get('window').width * 0.1,
+  },
+  groupMembers: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: hp('3'),
+  },
+  modalScroll: keyboardStatus => ({
+    // position: 'relative',
+    // height: hp('50'),
+    maxHeight: keyboardStatus ? hp('30') : hp('65'),
+  }),
+  groupTitle: {
+    fontSize: hp('1.8'),
+    fontWeight: '600',
+    marginLeft: wp('2'),
+    flex: 1,
+  },
+  groupBtn: {
+    marginTop: hp('1'),
+    marginBottom: hp('1'),
+  },
+  tickIcon: {
+    resizeMode: 'contain',
+    height: hp('3'),
+    width: wp('5'),
+  },
+  searchinput: {
+    fontSize: hp('2'),
+    color: 'black',
+    flex: 1,
+  },
+  searchMain: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    height: hp('6'),
+    borderRadius: 10,
+    borderColor: Colors.themeColorLight,
+    paddingHorizontal: wp('1.8'),
+    overflow: 'hidden',
+    backgroundColor: Colors.white,
+    marginBottom: hp('2'),
   },
 });

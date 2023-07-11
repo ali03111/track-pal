@@ -1,18 +1,21 @@
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {frequentTrips, tripsTypes} from '../../Utils/localDB';
-import {BackHandler} from 'react-native';
+import {BackHandler, Keyboard} from 'react-native';
 import {errorMessage} from '../../Config/NotificationMessage';
+import API from '../../Utils/helperFunc';
+import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
 
 const useHomeScreen = () => {
   const [homeStates, setHomeStates] = useState({
-    selectTripType: tripsTypes[1].id,
+    selectTripType: tripsTypes[0].id,
     isModalVisible: false,
     isTripModalVisible: false,
     iscreateModal: false,
     isTripCreated: false,
     isTripStarted: false,
     isTripSelectModal: false,
+    isGroupMemberSelectModal: false,
     currentLocation: {
       coords: {
         latitude: 37.78825,
@@ -21,11 +24,24 @@ const useHomeScreen = () => {
       des: '',
     },
     groupMembers: [],
+    allUser: [],
   });
 
   const [inputFeilds, setInputFeilds] = useState({
-    destinationInput: {description: ''},
-    locationInput: {description: ''},
+    destinationInput: {
+      description: '',
+      coords: {
+        latitude: 37.78825,
+        longitude: -122.4324,
+      },
+    },
+    locationInput: {
+      description: '',
+      coords: {
+        latitude: 37.78825,
+        longitude: -122.4324,
+      },
+    },
     GroupInput: '',
   });
 
@@ -42,7 +58,12 @@ const useHomeScreen = () => {
     isTripStarted,
     isTripSelectModal,
     selectTripType,
+    isGroupMemberSelectModal,
+    allUser,
+    groupMembers,
   } = homeStates;
+
+  const [updateError, setUpdateError] = useState('');
 
   const updateState = data => setHomeStates(prev => ({...prev, ...data}));
   const updateInputState = data => {
@@ -53,40 +74,68 @@ const useHomeScreen = () => {
 
   const locationFun = stateName => {
     // var location;
+    console.log('testagucbiuvbsdbvisdbvjksdbvkjsbjsbj');
     Geolocation.getCurrentPosition(async info => {
       const locationName = await getLocationName(
         info.coords.latitude,
         info.coords.longitude,
       );
-      updateState({
+      console.log('klsndksnknsdnfsdnfs', locationName);
+      updateInputState({
         [stateName]: {
           coords: {
             latitude: info.coords.latitude,
             longitude: info.coords.longitude,
           },
-          des: locationName,
+          description: locationName,
         },
       });
     });
   };
 
+  const createTripFun = async () => {
+    const body = {
+      name: GroupInput,
+      start_destination: locationInput,
+      end_destination: destinationInput,
+      user_ids: groupMembers,
+      // 'image' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    };
+    console.log('vhjsdjksdvkjvsdjbjsdbfjksbd', body);
+    const {ok, data, originalError} = await API.post(CreateTripUrl, body);
+    if (ok) console.log('datadata data data darta ', data);
+    console.log('erororororororororororo', data, originalError);
+  };
+
   const getLocationName = async (latitude, longitude) => {
-    const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBWU9HrMQUigxX7_ry_HpHNvEdn_Vve4DI`;
+    const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE`;
 
     // Replace "YOUR_API_KEY" with your actual Google Maps Geocoding API key
 
     const res = await fetch(geocodingAPI);
-    const response = res.json();
-
+    const response = await res.json();
+    console.log(
+      'kjbjbdjkbjdfbkbdfbkdbfjgbdfkgbdfbgdjkfbgkjfbkdfbbdf',
+      response,
+    );
     if (response.results.length > 0) {
       const locationName = response.results[0].formatted_address;
+      console.log('namenamennmamaen', locationName);
       return locationName;
     }
   };
 
   const getlocation = async () => {
-    // locationFun();
     if (selectTripType == tripsTypes[0].id) {
+      locationFun('destinationInput');
+      // locationFun('destinationInputRef');
+      setTimeout(() => {
+        console.log(
+          'lkdnvksbdvbsdbvbsdvbsdjkbvkjsdbvjksbjkvbsdjkbvsjdv',
+          destinationInput,
+          destinationInputRef.current,
+        );
+      }, 1000);
       // updateState({destinationInput:currentLocation.})
     }
   };
@@ -98,26 +147,48 @@ const useHomeScreen = () => {
         selectTripType != tripsTypes[0].id &&
         locationInput.description == ''
       ) {
-        errorMessage('Please enter the start location');
+        setUpdateError('Please enter the start location');
         return false;
       } else if (destinationInput.description == '') {
-        errorMessage('Please enter the destination location');
+        setUpdateError('Please enter the destination location');
         return false;
       } else return true;
     },
     isTripModalVisible: () => true,
     iscreateModal: () => {
       if (GroupInput == '') {
-        errorMessage('Please enter the trip name ');
+        setUpdateError('Please enter the trip name ');
         return false;
       } else return true;
     },
     isTripCreated: () => true,
     isTripStarted: () => true,
+    isGroupMemberSelectModal: () => {
+      if (groupMembers.length > 0) {
+        return true;
+      } else {
+        setUpdateError('Please select at least one memeber');
+        return false;
+      }
+    },
+  };
+
+  const getUser = async () => {
+    const {ok, data} = await API.get(getAllUser);
+    if (ok) updateState({allUser: data});
   };
 
   const useEffectFuc = () => {
+    getUser();
     locationFun(currentLocation);
+  };
+
+  const addMembersToGroup = ids => {
+    if (groupMembers.includes(ids)) {
+      updateState({groupMembers: groupMembers.filter(res => res != ids)});
+    } else {
+      updateState({groupMembers: [...groupMembers, ids]});
+    }
   };
 
   const openNextModal = (preVal, newVal) => {
@@ -128,7 +199,8 @@ const useHomeScreen = () => {
       setTimeout(() => {
         updateState({[newVal]: true});
       }, 0);
-    } else errorMessage('ksdbvlksdlbsdlb');
+    } else
+      errorMessage('ksdbvlksdlbsdlb', {...{position: 'absolute', zIndex: 999}});
   };
   const openPrevModal = (preVal, newVal) => {
     console.log('inpyutStataea', inputFeilds);
@@ -137,6 +209,27 @@ const useHomeScreen = () => {
       updateState({[newVal]: true});
     }, 0);
   };
+
+  const [remember, setRemember] = useState(true);
+  const rememberValue = () => {
+    setRemember(!remember);
+  };
+
+  const [keyboardStatus, setKeyboardStatus] = useState('');
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardStatus(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardStatus(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   useEffect(useEffectFuc, []);
 
@@ -159,6 +252,15 @@ const useHomeScreen = () => {
     getlocation,
     updateInputState,
     destinationInputRef,
+    isGroupMemberSelectModal,
+    remember,
+    rememberValue,
+    keyboardStatus,
+    allUser,
+    addMembersToGroup,
+    groupMembers,
+    updateError,
+    createTripFun,
   };
 };
 
