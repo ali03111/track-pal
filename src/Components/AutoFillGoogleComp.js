@@ -13,7 +13,6 @@ export const AutoFillGoogleComp = ({
   key,
   defaultValue,
 }) => {
-  console.log('inputValinputValinputValinputValinputVal', inputVal);
   return (
     <GooglePlacesAutocomplete
       textInputProps={{

@@ -72,20 +72,16 @@ const useHomeScreen = () => {
 
   const updateState = data => setHomeStates(prev => ({...prev, ...data}));
   const updateInputState = data => {
-    console.log('lsdnvsndovbnsdvbnsdbnvosdbnvoisdnbvlsndlkvnsdvsd', data);
     setInputFeilds(() => ({...inputFeilds, ...data}));
   };
   // info?.coords?.latitude, info?.coords?.longitude
 
   const locationFun = stateName => {
-    // var location;
-    console.log('testagucbiuvbsdbvisdbvjksdbvkjsbjsbj');
     Geolocation.getCurrentPosition(async info => {
       const locationName = await getLocationName(
         info.coords.latitude,
         info.coords.longitude,
       );
-      console.log('klsndksnknsdnfsdnfs', locationName);
       updateInputState({
         [stateName]: {
           coords: {
@@ -137,21 +133,18 @@ const useHomeScreen = () => {
       tripType: selectTripType,
     },
     [tripsTypes[2].id]: {
-      start_destination: locationInput,
-      name: GroupInput,
-      end_destination: destinationInput,
-      type: selectTripType,
+      startPoint: locationInput,
+      TripName: GroupInput,
+      destination: destinationInput,
+      tripType: selectTripType,
     },
   };
 
   const createTripFun = async () => {
     dispatch(loadingTrue());
     const body = bodyKey[selectTripType];
-    console.log('vhjsdjksdvkjvsdjbjsdbfjksbd', body);
     const {ok, data, originalError} = await API.post(CreateTripUrl, body);
     if (ok) {
-      console.log('data.usersdata.usersdata.usersdata.users', data.users);
-      // tripId, members, destination, startPoint, tripType
       createTripObj({
         ...firebaseDataType[selectTripType],
         tripId: data.trip_id,
@@ -182,7 +175,6 @@ const useHomeScreen = () => {
       setTimeout(() => {
         updateState({isTripStarted: false});
       }, 1000);
-      console.log('datadata data data darta ', data);
     }
     console.log('erororororororororororo', data, originalError);
   };
@@ -194,13 +186,9 @@ const useHomeScreen = () => {
 
     const res = await fetch(geocodingAPI);
     const response = await res.json();
-    console.log(
-      'kjbjbdjkbjdfbkbdfbkdbfjgbdfkgbdfbgdjkfbgkjfbkdfbbdf',
-      response,
-    );
+
     if (response.results.length > 0) {
       const locationName = response.results[0].formatted_address;
-      console.log('namenamennmamaen', locationName);
       return locationName;
     }
   };
@@ -208,15 +196,8 @@ const useHomeScreen = () => {
   const getlocation = async () => {
     if (selectTripType == tripsTypes[0].id) {
       locationFun('destinationInput');
-      // locationFun('destinationInputRef');
-      setTimeout(() => {
-        console.log(
-          'lkdnvksbdvbsdbvbsdvbsdjkbvkjsdbvjksbjkvbsdjkbvsjdv',
-          destinationInput,
-          destinationInputRef.current,
-        );
-      }, 1000);
-      // updateState({destinationInput:currentLocation.})
+    } else {
+      locationFun('locationInput');
     }
   };
 

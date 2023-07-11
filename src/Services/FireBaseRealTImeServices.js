@@ -3,12 +3,10 @@ import {firebaseDataBaseURL} from '../Utils/Urls';
 import {successMessage} from '../Config/NotificationMessage';
 import {store} from '../Redux/Reducer';
 
-const {
-  Auth: {userData},
-} = store.getState('Auth');
-
 const createTripObj = async data => {
-  console.log('userDatauserDatauserDatauserDatauserData', userData);
+  const {
+    Auth: {userData},
+  } = store.getState('Auth');
   const {tripId, members, destination, startPoint, tripType, TripName} = data;
   try {
     const membersData = members.map(res => ({
@@ -43,7 +41,6 @@ const createTripObj = async data => {
       TripName,
       members: membersData,
     });
-    // successMessage()
   } catch (error) {
     console.log('Error creating trip:', error);
   }

@@ -109,10 +109,9 @@ action object as an argument, but it is not used in the function. The function p
 asynchronous operations using the `yield` keyword. */
 function* logOutSaga(action) {
   try {
-    yield put({type: types.CleanRecentLocation});
     // yield call(logoutService);
-    yield call(logOutFirebase);
     yield put({type: types.LogoutType});
+    yield call(logOutFirebase);
     console.log('okokok');
   } catch (error) {
     errorMessage(error.message.split(' ').slice(1).join(' '));

@@ -23,7 +23,6 @@ const SelectLocationModal = ({
     getlocation,
     destinationInputRef,
   } = extraData;
-  console.log('locationInput', extraData);
   return (
     <View
       key={isModalVisible}
