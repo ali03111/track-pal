@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ScrollView} from 'react-native';
 import {TextComponent} from '../../Components/TextComponent';
 import {styles} from './styles';
 import {globalHeading} from '../../Config/globalStyles';
@@ -32,11 +32,16 @@ const LoginScreen = ({navigation}) => {
     setRemember,
     rememberValue,
     remember,
+    onPress,
+    loginUser,
+    appleIdlogin,
+    googleLoginFunc,
+    facebookLoginFunc,
   } = useLogin(navigation);
   return (
-    <View style={styles.logInMain}>
+    <ScrollView style={styles.logInMain}>
       <GradientText style={styles.heading} GradientAlignment={0.6}>
-        Log In to your Account
+        Log In To Your Account
       </GradientText>
 
       <TextComponent
@@ -81,7 +86,7 @@ const LoginScreen = ({navigation}) => {
         </Touchable>
         <TextComponent text={'Forgot Password'} styles={styles.forgetText} />
       </View>
-      <ThemeButton title={'Log In'} />
+      <ThemeButton onPress={handleSubmit(loginUser)} title={'Log In'} />
       <View style={styles.logInWith}>
         <Text style={styles.logInBorder}></Text>
         <Text style={styles.logInText}>or Log In With</Text>
@@ -92,26 +97,31 @@ const LoginScreen = ({navigation}) => {
         style={styles.googleBtn}
         textStyle={styles.googleBtnText}
         image={google}
+        onPress={googleLoginFunc}
       />
       <ButtonWithIcon
         title={'Continue with Apple'}
         style={styles.appleBtn}
         textStyle={styles.appleBtnText}
         image={apple}
+        onPress={appleIdlogin}
       />
       <ButtonWithIcon
         title={'Continue with Facebook'}
         style={styles.facebookBtn}
         textStyle={styles.facebookBtnText}
         image={facebook}
+        onPress={facebookLoginFunc}
       />
       <View style={styles.signUpTextMain}>
         <TextComponent text={'Don’t have an account? '} />
-        <GradientText style={styles.signUpText} GradientAlignment={0.8}>
-          Sign Up
-        </GradientText>
+        <Touchable onPress={onPress}>
+          <GradientText style={styles.signUpText} GradientAlignment={0.8}>
+            Sign Up
+          </GradientText>
+        </Touchable>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 export default memo(LoginScreen);

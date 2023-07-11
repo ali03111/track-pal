@@ -39,7 +39,8 @@ function MybottomTabs() {
     <Tab.Navigator
       initialRouteName="HomeScreen"
       screenOptions={({route}) => ({
-        tabBarActiveTintColor: Colors.white,
+        tabBarActiveTintColor: 'yellow',
+        // tabBarActiveTintColor: Colors.white,
         tabBarInactiveTintColor: 'transparent',
         headerShown: false,
         tabBarActiveBackgroundColor: 'white',
@@ -52,12 +53,12 @@ function MybottomTabs() {
           width: 'auto',
         },
         tabBarStyle: {
-          height: hp('8'),
+          height: isIOS ? hp('10') : hp('8'),
+          // height: hp('8'),
           borderTopWidth: 0,
           width: wp('100'),
           alignSelf: 'center',
-          backgroundColor: 'transparent',
-          backfaceVisibility: 'hidden',
+          backgroundColor: 'white',
           borderWidth: 0,
           elevation: 0,
           shadowOpacity: 0,
@@ -72,9 +73,9 @@ function MybottomTabs() {
         component={Screens.HomeScreen}
       />
       <Tab.Screen
-        name="FavourateScreen"
+        name="EditTripScreen"
         options={tabarComponent(map2, map)}
-        component={Screens.RegisterScreen}
+        component={Screens.EditTripScreen}
       />
       <Tab.Screen
         name="SomeComponent"

@@ -1,8 +1,9 @@
 import React, {memo, useCallback, useState} from 'react';
-import {View, Text, Image, FlatList, TextInput} from 'react-native';
+import {View, Text, Image, FlatList, TextInput, Platform} from 'react-native';
 import {
   DemoProfileImage1,
   arrows,
+  bgBlurHome,
   dotbar,
   dots,
   from,
@@ -14,12 +15,11 @@ import {
   whitebg,
 } from '../../Assets';
 import {styles} from './styles';
-
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {hp, wp} from '../../Config/responsive';
 import useHomeScreen from './useHomeScreen';
 import GradientText from '../../Components/GradientText';
 import {TextComponent} from '../../Components/TextComponent';
-import MapView from 'react-native-maps';
 import {Touchable} from '../../Components/Touchable';
 import {BlurView, VibrancyView} from '@react-native-community/blur';
 import ThemeButton from '../../Components/ThemeButton';
@@ -29,15 +29,38 @@ import CreateGroupModal from './CreateGroupModal';
 import {CircleImage} from '../../Components/CircleImage';
 import StartTripModal from './StartTripModal';
 import TripCreatedModal from './TripCreatedModal';
+import TripTypeSelectModal from './TripTypeSelectModal';
+import GroupMemberSelectModal from './GroupMemberSelectModal';
+
 const HomeScreen = () => {
   const {
     frequentTrips,
     isModalVisible,
-    toggleLocationModal,
-    StartTripToggle,
+    locationInput,
+    iscreateModal,
+    GroupInput,
     isTripModalVisible,
+    destinationInput,
     isTripCreated,
-    TripCreatedToggle,
+    currentLocation,
+    isTripStarted,
+    isTripSelectModal,
+    selectTripType,
+    destinationInputRef,
+    allUser,
+    groupMembers,
+    addMembersToGroup,
+    updateInputState,
+    getlocation,
+    updateState,
+    openNextModal,
+    openPrevModal,
+    isGroupMemberSelectModal,
+    remember,
+    rememberValue,
+    keyboardStatus,
+    updateError,
+    createTripFun,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -52,19 +75,22 @@ const HomeScreen = () => {
   });
   return (
     <View style={styles.homeScreenStyle}>
-      {/* <MapView
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      /> */}
       <Image source={logo} style={styles.logo} />
       <View style={styles.mapArea}>
         <View style={styles.groupInfoMain}>
-          <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
-          {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}
+          {Platform.OS == 'ios' ? (
+            <BlurView
+              style={styles.absolute}
+              blurType="light"
+              blurAmount={10}
+            />
+          ) : (
+            <Image
+              style={{...styles.absolute, opacity: 0.8}}
+              source={bgBlurHome}
+              blurRadius={0.5}
+            />
+          )}
           <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
 
           <View style={styles.groupDesc}>
@@ -75,7 +101,16 @@ const HomeScreen = () => {
             <Image source={link} style={styles.externalLinks} />
           </Touchable>
         </View>
-        <Image source={staticMap} style={styles.staticMapImg} />
+        <MapView
+          // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.staticMapImg}
+          region={{
+            latitude: currentLocation?.coords?.latitude,
+            longitude: currentLocation?.coords?.longitude,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}></MapView>
+        {/* <Image source={staticMap} style={styles.staticMapImg} /> */}
       </View>
       <TextComponent text={'Frequent Trips'} styles={styles.TripsHeading} />
       <FlatList
@@ -92,7 +127,7 @@ const HomeScreen = () => {
       <View style={styles.btn}>
         <ThemeButton
           title={'Create New Trip'}
-          onPress={TripCreatedToggle}
+          onPress={() => updateState({isTripSelectModal: true})}
           style={styles.tripBtn}
         />
         {/* <ThemeButton
@@ -100,14 +135,133 @@ const HomeScreen = () => {
           onPress={CreateGroup}
           style={styles.tripBtn}
         /> */}
-        {/* <SelectLocationModal
+        <TripTypeSelectModal
+          {...{
+            isTripSelectModal,
+            toggleNextModal: () => {
+              openNextModal('isTripSelectModal', 'isGroupMemberSelectModal');
+            },
+            onBackPress: () => {
+              updateState({isTripSelectModal: false});
+            },
+            extraData: {
+              selectTripType,
+              updateState,
+            },
+          }}
+        />
+        <GroupMemberSelectModal
+          {...{
+            isGroupMemberSelectModal,
+            toggleNextModal: () => {
+              openNextModal('isGroupMemberSelectModal', 'isModalVisible');
+            },
+            onBackPress: () => {
+              openPrevModal('isGroupMemberSelectModal', 'isTripSelectModal');
+            },
+            extraData: {
+              selectTripType,
+              remember,
+              rememberValue,
+              keyboardStatus,
+              allUser,
+              addMembersToGroup,
+              groupMembers,
+              message: updateError,
+            },
+          }}
+        />
+        <SelectLocationModal
           {...{
             isModalVisible,
-            toggleLocationModal,
+            toggleLocationModal: () => {
+              openNextModal('isModalVisible', 'iscreateModal');
+              console.log('bdkjfbsdbfs', destinationInput);
+            },
+            onBackPress: () => {
+              openPrevModal('isModalVisible', 'isGroupMemberSelectModal');
+            },
+            extraData: {
+              selectTripType,
+            },
+            extraData: {
+              selectTripType,
+              locationInput,
+              destinationInput,
+              getlocation,
+              updateInputState,
+              destinationInputRef,
+              message: updateError,
+            },
           }}
-        /> */}
-        {/* <StartTripModal {...{isTripModalVisible, StartTripToggle}} /> */}
-        <TripCreatedModal {...{isTripCreated, TripCreatedToggle}} />
+        />
+        <CreateGroupModal
+          {...{
+            iscreateModal,
+            CreateGroup: () => {
+              openNextModal('iscreateModal', 'isTripCreated');
+              setTimeout(() => {
+                openNextModal('isTripCreated', 'isTripModalVisible');
+              }, 1000);
+            },
+            onBackPress: () => {
+              openPrevModal('iscreateModal', 'isModalVisible');
+              console.log('bdkjfbsdbfs', destinationInput);
+            },
+            extraData: {
+              selectTripType,
+              GroupInput,
+              updateInputState,
+            },
+          }}
+        />
+        <TripCreatedModal
+          {...{
+            isTripCreated,
+            TripCreatedToggle: () => {},
+            onBackPress: () => {},
+            extraData: {
+              selectTripType,
+              message: updateError,
+            },
+          }}
+        />
+        <StartTripModal
+          {...{
+            isTripModalVisible,
+            StartTripToggle: () => {
+              createTripFun();
+            },
+            onBackPress: () => {
+              openPrevModal('isTripModalVisible', 'iscreateModal');
+            },
+            extraData: {
+              selectTripType,
+              locationInput,
+              destinationInput,
+              getlocation,
+              updateInputState,
+              destinationInputRef,
+              message: updateError,
+              groupMembers,
+              GroupInput,
+            },
+          }}
+        />
+        <TripCreatedModal
+          {...{
+            isTripCreated: isTripStarted,
+            title: 'Trip Started',
+            TripCreatedToggle: () => {
+              updateState({isTripStarted: false});
+            },
+            onBackPress: () => {},
+            extraData: {
+              selectTripType,
+              message: updateError,
+            },
+          }}
+        />
       </View>
     </View>
   );

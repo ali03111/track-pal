@@ -3,7 +3,7 @@ import {View, Text, FlatList} from 'react-native';
 import {styles} from './styles';
 
 import useNotificationScreen from './useNotificationScreen';
-import {wp} from '../../Config/responsive';
+import {hp, wp} from '../../Config/responsive';
 import InvitationComp from '../../Components/InvitationComp';
 
 const InvitationTab = () => {
@@ -33,6 +33,7 @@ const InvitationTab = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: wp('4'),
+          paddingBottom: hp('5'),
         }}
       />
     </View>

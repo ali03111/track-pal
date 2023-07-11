@@ -18,12 +18,21 @@ import CustomHeader from '../../Components/Header';
 import {TextComponent} from '../../Components/TextComponent';
 import {Touchable} from '../../Components/Touchable';
 import {CircleImage} from '../../Components/CircleImage';
+import KeyBoardWrapper from '../../Components/KeyboardWrapper';
+import FastImage from 'react-native-fast-image';
 
 const EditProfileScreen = ({navigation}) => {
-  const {handleSubmit, errors, reset, control, getValues, goBack} =
-    useResetPassword(navigation);
+  const {
+    handleSubmit,
+    errors,
+    reset,
+    control,
+    getValues,
+    goBack,
+    navigateToReset,
+  } = useResetPassword(navigation);
   return (
-    <>
+    <KeyBoardWrapper>
       <ImageBackground source={editProfileBgNew} resizeMode="cover">
         <CustomHeader
           arrowBackIcon={whiteArrowBack}
@@ -32,6 +41,7 @@ const EditProfileScreen = ({navigation}) => {
           style={styles.headerStyle}
           titleStyle={styles.hdTitle}
           backTextStyle={styles.back}
+          goBack={goBack}
         />
       </ImageBackground>
       <View style={styles.userProfileImg}>
@@ -57,7 +67,7 @@ const EditProfileScreen = ({navigation}) => {
           }}
         />
         <TextComponent text={'Change Password'} styles={styles.inputTitle} />
-        <Touchable style={styles.passBtn}>
+        <Touchable onPress={navigateToReset} style={styles.passBtn}>
           <Text style={styles.passText}>************</Text>
           <Image style={styles.passIcon} source={arrowRightIcon} />
         </Touchable>
@@ -93,7 +103,7 @@ const EditProfileScreen = ({navigation}) => {
         />
         <ThemeButton title={'Save'} btnStyle={styles.buttonStyle} />
       </View>
-    </>
+    </KeyBoardWrapper>
   );
 };
 export default memo(EditProfileScreen);

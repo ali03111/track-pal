@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
@@ -19,12 +19,6 @@ export const styles = StyleSheet.create({
   // },
   getStart: {
     width: wp('15'),
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // height: hp('6.5'),
-    // borderRadius: 60,
-    // marginTop: hp('3'),
-    // marginBottom: hp('5'),
     alignSelf: 'center',
     borderWidth: 0,
     backgroundColor: 'transparent',
@@ -35,22 +29,24 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     textAlign: 'center',
+    // backgroundColor: 'red',
+    paddingBottom: Platform.OS == 'ios' ? hp('3') : hp('0'),
   },
   centerHeading: {
-    fontSize: hp('4'),
+    fontSize: Platform.OS == 'ios' ? hp('3.5') : hp('3.5'),
     fontWeight: '600',
     color: 'red',
     textAlign: 'center',
-    marginTop: hp('58.5'),
-    paddingHorizontal: wp('13'),
+    marginTop: hp('60'),
+    paddingHorizontal: wp('4'),
   },
   descStyle: {
     textAlign: 'center',
     marginTop: hp('1'),
     fontSize: hp('2.1'),
-    paddingHorizontal: wp('16'),
+    paddingHorizontal: wp('10'),
     marginTop: hp('2'),
-    marginBottom: hp('5'),
+    marginBottom: hp('3'),
   },
   // centerDes: {
   //   fontSize: hp('2'),
@@ -71,7 +67,7 @@ export const styles = StyleSheet.create({
   //   borderWidth: currentIndex == index ? 0 : 1,
   // }),
   bannerImg: {
-    height: hp('90'),
+    height: Dimensions.get('window').height,
     width: wp('100'),
     // backgroundColor: 'red',
   },

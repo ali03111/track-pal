@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   error: {
-    color: Colors.redFade,
+    color: Colors.themeRed,
   },
   inputIcon: {
     // marginLeft: hp('2'),

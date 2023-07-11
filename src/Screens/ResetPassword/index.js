@@ -26,6 +26,7 @@ const ResetPasswordScreen = ({navigation}) => {
         headerTitle={'Change Password'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
+        goBack={goBack}
       />
       <InputComponent
         {...{

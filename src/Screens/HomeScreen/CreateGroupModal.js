@@ -1,6 +1,11 @@
 import React, {memo, useState} from 'react';
 import {View, Image, TextInput} from 'react-native';
-import {DemoProfileImage1, editIcon, addProfileImage} from '../../Assets';
+import {
+  DemoProfileImage1,
+  editIcon,
+  addProfileImage,
+  bgBlur,
+} from '../../Assets';
 import {styles} from './styles';
 
 import useHomeScreen from './useHomeScreen';
@@ -9,11 +14,17 @@ import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
-const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
-  const {GroupInput, setGroupInput} = useHomeScreen();
-
+const CreateGroupModal = ({
+  iscreateModal,
+  CreateGroup,
+  onBackPress,
+  extraData,
+}) => {
+  // const {GroupInput, setGroupInput} = useHomeScreen();
+  const {selectTripType, GroupInput, updateInputState} = extraData;
   return (
     <View
+      key={iscreateModal}
       style={{
         flex: 1,
         justifyContent: 'center',
@@ -21,19 +32,23 @@ const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
       }}>
       <Modal
         isVisible={iscreateModal}
-        hasBackdrop={false}
+        // hasBackdrop={false}
         animationInTiming={100}
         animationOutTiming={100}
+        avoidKeyboard
         animationType="fade"
+        hideModalContentWhileAnimating
+        useNativeDriver
+        onBackButtonPress={onBackPress}
         style={styles.bottomModal}>
         <View
           style={{
             flex: 1,
             justifyContent: 'flex-end',
-            position: 'relative',
+            // position: 'relative',
           }}>
-          <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
-          <View style={styles.modalData}>
+          <Image style={styles.absolute} source={bgBlur} />
+          <View style={styles.modalData(true)}>
             <View style={styles.modalInput}>
               <View style={styles.userProfileImg}>
                 <CircleImage
@@ -48,9 +63,10 @@ const CreateGroupModal = ({iscreateModal, CreateGroup}) => {
                 <Image source={editIcon} style={styles.editIcon} />
                 <TextInput
                   style={styles.eInput}
-                  onChangeText={setGroupInput}
+                  onChangeText={e => updateInputState({GroupInput: e})}
                   value={GroupInput}
                   placeholder="Name your Trip"
+                  placeholderTextColor={'gray'}
                 />
               </View>
               <ThemeButton title={'Next'} onPress={CreateGroup} />

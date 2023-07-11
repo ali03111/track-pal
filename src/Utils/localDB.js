@@ -298,3 +298,121 @@ export const frequentTrips = [
     image: DemoProfileImage5,
   },
 ];
+
+export const msgs = [
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing lines in.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing lines in.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+];
+
+export const trips = [
+  {
+    tripProfile: DemoProfileImage1,
+    tripName: 'Business trip',
+    member: '15 members',
+    status: 'Active',
+  },
+  {
+    tripProfile: DemoProfileImage2,
+    tripName: 'Outings',
+    member: '10 members',
+    status: 'Inactive',
+  },
+  {
+    tripProfile: DemoProfileImage3,
+    tripName: 'Home',
+    member: '5 members',
+    status: 'Active',
+  },
+  {
+    tripProfile: DemoProfileImage1,
+    tripName: 'Business trip',
+    member: '15 members',
+    status: 'Active',
+  },
+  {
+    tripProfile: DemoProfileImage2,
+    tripName: 'Outings',
+    member: '10 members',
+    status: 'Inactive',
+  },
+  {
+    tripProfile: DemoProfileImage3,
+    tripName: 'Home',
+    member: '5 members',
+    status: 'Active',
+  },
+];
+
+export const tripsTypes = [
+  {
+    id: 'myTrip',
+    des: 'Lorem Ipsum is simply dummy text of the printing',
+    title: 'My Trip',
+  },
+  {
+    id: 'groupTrip',
+    des: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+    title: 'Group Trip',
+  },
+  {
+    id: 'personalTrip',
+    des: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    title: 'Personal Trip',
+  },
+];
+
+// my trip
+// group trip
+// personal trip

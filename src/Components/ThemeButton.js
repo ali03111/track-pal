@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     fontSize: hp('2'),
     color: Colors.white,
     textAlign: 'center',
-    marginLeft: wp('3'),
+    // marginLeft: wp('3'),
     fontWeight: 500,
   },
   linearGradient: {

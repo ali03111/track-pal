@@ -4,7 +4,10 @@ import {Colors} from '../../Theme/Variables';
 
 export const styles = StyleSheet.create({
   logInMain: {
+    flexGrow: 1,
     paddingHorizontal: wp('3.5'),
+    paddingTop: hp('3'),
+    paddingBottom: hp('6'),
   },
   backMain: {
     alignItems: 'center',
