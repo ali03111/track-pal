@@ -33,6 +33,9 @@ export const telematicsCreateUser =
 export const telematicsLoginUser =
   'https://user.telematicssdk.com/v1/Auth/Login';
 
+export const firebaseDataBaseURL =
+  'https://track-pal-e4e07-default-rtdb.firebaseio.com/';
+
 export const registerUrl = 'firebase-signup';
 export const loginUrl = 'firebase-login';
 export const logoutUrl = 'auth/logout';

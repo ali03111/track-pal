@@ -13,14 +13,15 @@ const useNotificationScreen = () => {
     const {ok, data} = await API.get(userTrips);
     if (ok) {
       setTripNotification(data);
-      console.log('test', data);
+      // console.log('test', data);
     }
   };
 
-  const tripStatus = async () => {
-    const {ok, data} = await API.post(changeUserTripStatus);
+  const tripStatus = async (status, id) => {
+    const {ok, data} = await API.post(changeUserTripStatus, {status, id});
     if (ok) {
-      console.log('test', data);
+      setTripNotification(data.trips);
+      console.log('response', data);
     }
   };
 
@@ -34,6 +35,8 @@ const useNotificationScreen = () => {
     ChatData,
     Invitation,
     tripNotification,
+    tripStatus,
+    getUserTrips,
   };
 };
 export default useNotificationScreen;

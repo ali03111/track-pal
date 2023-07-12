@@ -11,7 +11,6 @@ export const AutoFillGoogleCompdes = ({
   inputVal,
   onChangeText,
 }) => {
-  console.log('inputValinputValinputValinputValinputVal', inputVal);
   return (
     <GooglePlacesAutocomplete
       textInputProps={{

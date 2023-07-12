@@ -7,6 +7,7 @@ import API from '../../Utils/helperFunc';
 import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingTrue} from '../../Redux/Action/isloadingAction';
+import {createTripObj} from '../../Services/FireBaseRealTImeServices';
 
 const useHomeScreen = () => {
   const {dispatch} = useReduxStore();
@@ -71,20 +72,16 @@ const useHomeScreen = () => {
 
   const updateState = data => setHomeStates(prev => ({...prev, ...data}));
   const updateInputState = data => {
-    console.log('lsdnvsndovbnsdvbnsdbnvosdbnvoisdnbvlsndlkvnsdvsd', data);
     setInputFeilds(() => ({...inputFeilds, ...data}));
   };
   // info?.coords?.latitude, info?.coords?.longitude
 
   const locationFun = stateName => {
-    // var location;
-    console.log('testagucbiuvbsdbvisdbvjksdbvkjsbjsbj');
     Geolocation.getCurrentPosition(async info => {
       const locationName = await getLocationName(
         info.coords.latitude,
         info.coords.longitude,
       );
-      console.log('klsndksnknsdnfsdnfs', locationName);
       updateInputState({
         [stateName]: {
           coords: {
@@ -121,12 +118,38 @@ const useHomeScreen = () => {
     },
   };
 
+  const firebaseDataType = {
+    [tripsTypes[0].id]: {
+      TripName: GroupInput,
+      destination: destinationInput,
+      tripType: selectTripType,
+      startPoint: null,
+      // 'tripId' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    },
+    [tripsTypes[1].id]: {
+      startPoint: locationInput,
+      TripName: GroupInput,
+      destination: destinationInput,
+      tripType: selectTripType,
+    },
+    [tripsTypes[2].id]: {
+      startPoint: locationInput,
+      TripName: GroupInput,
+      destination: destinationInput,
+      tripType: selectTripType,
+    },
+  };
+
   const createTripFun = async () => {
     dispatch(loadingTrue());
     const body = bodyKey[selectTripType];
-    console.log('vhjsdjksdvkjvsdjbjsdbfjksbd', body);
     const {ok, data, originalError} = await API.post(CreateTripUrl, body);
     if (ok) {
+      createTripObj({
+        ...firebaseDataType[selectTripType],
+        tripId: data.trip_id,
+        members: data.users,
+      });
       openNextModal('isTripModalVisible', 'isTripStarted');
       updateInputState({
         destinationInput: {
@@ -152,7 +175,6 @@ const useHomeScreen = () => {
       setTimeout(() => {
         updateState({isTripStarted: false});
       }, 1000);
-      console.log('datadata data data darta ', data);
     }
     console.log('erororororororororororo', data, originalError);
   };
@@ -164,13 +186,9 @@ const useHomeScreen = () => {
 
     const res = await fetch(geocodingAPI);
     const response = await res.json();
-    console.log(
-      'kjbjbdjkbjdfbkbdfbkdbfjgbdfkgbdfbgdjkfbgkjfbkdfbbdf',
-      response,
-    );
+
     if (response.results.length > 0) {
       const locationName = response.results[0].formatted_address;
-      console.log('namenamennmamaen', locationName);
       return locationName;
     }
   };
@@ -178,15 +196,8 @@ const useHomeScreen = () => {
   const getlocation = async () => {
     if (selectTripType == tripsTypes[0].id) {
       locationFun('destinationInput');
-      // locationFun('destinationInputRef');
-      setTimeout(() => {
-        console.log(
-          'lkdnvksbdvbsdbvbsdvbsdjkbvkjsdbvjksbjkvbsdjkbvsjdv',
-          destinationInput,
-          destinationInputRef.current,
-        );
-      }, 1000);
-      // updateState({destinationInput:currentLocation.})
+    } else {
+      locationFun('locationInput');
     }
   };
 
@@ -248,8 +259,7 @@ const useHomeScreen = () => {
       setTimeout(() => {
         updateState({[newVal]: true});
       }, 0);
-    } else
-      errorMessage('ksdbvlksdlbsdlb', {...{position: 'absolute', zIndex: 999}});
+    }
   };
   const openPrevModal = (preVal, newVal) => {
     updateState({[preVal]: false});

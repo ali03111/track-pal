@@ -7,7 +7,8 @@ import {hp, wp} from '../../Config/responsive';
 import InvitationComp from '../../Components/InvitationComp';
 
 const InvitationTab = () => {
-  const {Invitation, tripNotification} = useNotificationScreen();
+  const {Invitation, tripNotification, tripStatus, getUserTrips} =
+    useNotificationScreen();
   const renderItem = useCallback(({item, index}) => {
     let text = item?.trip_owner.name;
     let letter = text?.charAt(0).toUpperCase();
@@ -23,7 +24,9 @@ const InvitationTab = () => {
           groupName={item?.name}
           messages={item?.messages}
           status={item?.pivot.trip_status}
+          tripId={item?.pivot.trip_id}
           letterStyles={styles.bg}
+          onPress={tripStatus}
         />
       </View>
     );
@@ -31,6 +34,7 @@ const InvitationTab = () => {
   return (
     <View>
       <FlatList
+        onRefresh={getUserTrips}
         refreshing={false}
         data={tripNotification}
         renderItem={renderItem}

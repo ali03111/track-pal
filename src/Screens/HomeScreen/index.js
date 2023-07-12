@@ -176,7 +176,6 @@ const HomeScreen = () => {
             isModalVisible,
             toggleLocationModal: () => {
               openNextModal('isModalVisible', 'iscreateModal');
-              console.log('bdkjfbsdbfs', destinationInput);
             },
             onBackPress: () => {
               openPrevModal('isModalVisible', 'isGroupMemberSelectModal');
@@ -214,7 +213,6 @@ const HomeScreen = () => {
             },
             onBackPress: () => {
               openPrevModal('iscreateModal', 'isModalVisible');
-              console.log('bdkjfbsdbfs', destinationInput);
             },
             extraData: {
               selectTripType,

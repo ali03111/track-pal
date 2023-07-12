@@ -47,7 +47,6 @@ const GroupMemberSelectModal = ({
     message,
     ErrorMessageHandler,
   } = extraData;
-  console.log('allUser', allUser);
   const [text, setText] = useState('');
   const [filterData, setFilterData] = useState([]);
   function searchFun(e) {
@@ -68,7 +67,6 @@ const GroupMemberSelectModal = ({
       setText(text);
     }
   }
-  console.log('emssaguebaubd', message, keyboardStatus);
   // useCallback(() => {
   //   errorMessage(message);
   // }, [message]);

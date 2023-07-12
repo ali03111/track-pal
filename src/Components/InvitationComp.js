@@ -31,6 +31,7 @@ const InvitationComp = ({
   onPress,
   firstLetter,
   letterStyles,
+  tripId,
 }) => {
   const generateColor = () => {
     profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
@@ -39,7 +40,7 @@ const InvitationComp = ({
   };
   return (
     <View style={styles.invitationStyle}>
-      <Touchable style={styles.notificationMian} onPress={onPress}>
+      <View style={styles.notificationMian}>
         <View style={styles.mainBannerImg}>
           {image ? (
             <CircleImage image={image} />
@@ -70,22 +71,24 @@ const InvitationComp = ({
             {/* <TextComponent text={groupName} styles={styles.groupName} /> */}
           </View>
         </View>
-      </Touchable>
-      {status == 'pending' && (
+      </View>
+      {status == '0' && (
         <View style={styles.invitationBtn}>
           <TransparentBtn
             title={'Decline'}
             btnStyle={styles.whiteBtn}
             textStyle={styles.whiteBtnText}
+            onPress={() => onPress(3, tripId)}
           />
           <ThemeButton
             title={'Accept'}
             btnStyle={styles.acceptBtn}
             textStyle={styles.btnText}
+            onPress={() => onPress(1, tripId)}
           />
         </View>
       )}
-      {status == 'accepted' && (
+      {status == '1' && (
         <View style={styles.status}>
           <Image source={checked} style={styles.statusImg} />
           <GradientText style={styles.acceptText} GradientAlignment={0.7}>
@@ -94,7 +97,7 @@ const InvitationComp = ({
         </View>
       )}
 
-      {status == 'rejected' && (
+      {status == '3' && (
         <View style={styles.status}>
           <Image source={uncheck} style={styles.statusImg} />
           <TextComponent
