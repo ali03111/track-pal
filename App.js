@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,12 +15,12 @@ import {
   StatusBar,
   Platform,
   NativeEventEmitter,
+  AppState,
 } from 'react-native';
 import StackNavigatior from './src/Navigation/navigation';
 import {logoScreen} from './src/Assets';
 import {Settings} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-// import TelematicsSdk from 'react-native-telematics';
 import {
   check,
   request,
@@ -32,6 +32,8 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import useReduxStore from './src/Hooks/UseReduxStore';
 import Overlay from './src/Components/Overlay';
+import {fcmService} from './src/Services/Notifications';
+import {fcmRegister} from './src/Redux/Action/AuthAction';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -52,6 +54,10 @@ const App = () => {
   };
   const {getState, dispatch} = useReduxStore();
   const {isloading} = getState('isloading');
+  const {isLogin} = getState('Auth');
+
+  const appState = useRef(AppState.currentState);
+
   useEffect(() => {
     /**
      * Initialize the sdk
@@ -67,38 +73,31 @@ const App = () => {
     Settings.setAppID('1254157088825041');
   }, []);
 
-  const telematicsSDK = async () => {
-    await TelematicsSdk.initialize();
-    await requestMultiple(PlatformPer);
-    await checkMultiple(PlatformPer);
-    var deviceToken = await DeviceInfo.getUniqueId();
-    console.log('TelematicsSdk', deviceToken);
-    const isGranted = await TelematicsSdk.enable(deviceToken);
-    // createTelematicUser(deviceToken);
-    // Get all future tags
-    // const result = await TelematicsSdk.addFutureTrackTag(
-    //   'Future tag name',
-    //   'Future tag source',
-    // );
-
-    console.log('isGranted', isGranted);
-    // iOS specific:
-    // // Get an event for low power mode enabled
-    // const eventEmitter = new NativeEventEmitter(TelematicsSdk);
-    // const emitter = eventEmitter.addListener('onLowPowerModeEnabled', () => {
-    //   console.log('Low power enabled');
-    // });
-    // // Don't forget to remove listener
-    // emitter.remove();
-    // const status = await TelematicsSdk.getStatus();
+  useEffect(() => {
+    /* It's a function that registers the device to receive push notifications. */
+    if (isLogin)
+      setTimeout(() => {
+        fcmService.register(onRegister, onOpenNotification, appState.current);
+      }, 5000);
+    return () => {
+      /* It's a function that unregisters the device from receiving push notifications. */
+      if (isLogin) fcmService.unRegister();
+    };
+  }, [isLogin]);
+  const onRegister = fcm_token => {
+    console.log('fcm_token', Platform.OS, fcm_token);
+    dispatch(fcmRegister(fcm_token));
   };
-  // const {isloading} = getState('isloading');
+
+  const onOpenNotification = notify => {
+    console.log('notify', notify);
+  };
+
   const time = () => {
     return 2000;
   };
 
   const useEffectFun = () => {
-    telematicsSDK();
     LogBox.ignoreLogs([
       'VirtualizedLists should never be nested',
       'ViewPropTypes will be removed from React Native',

@@ -1,5 +1,5 @@
 import {create} from 'apisauce';
-import {baseURL, notifyUserUrl} from './Urls';
+import {baseURL, fcmToken, getAllUser, notifyUserUrl} from './Urls';
 import {store} from '../Redux/Reducer';
 import {loadingFalse, loadingTrue} from '../Redux/Action/isloadingAction';
 import {Platform} from 'react-native';
@@ -12,7 +12,7 @@ const API = create({
   //   timeoutErrorMessage: 'Please try Again...',
 });
 
-const hideLoaderAPIs = [notifyUserUrl];
+const hideLoaderAPIs = [notifyUserUrl, getAllUser, fcmToken];
 // const hideLoaderAPIs = ['/playcount', '/playlist', '/home-content'];
 
 API.addRequestTransform(config => {

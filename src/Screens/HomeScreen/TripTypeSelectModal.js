@@ -25,17 +25,20 @@ const TripTypeSelectModal = ({
   isTripSelectModal,
   toggleNextModal,
   onBackPress,
+  extraData,
 }) => {
-  const [value, setValue] = React.useState('first');
+  const {selectTripType, updateState} = extraData;
   const renderItem = useCallback(({item, index}) => {
     return (
-      <View style={styles.radioMain}>
+      <Touchable
+        onPress={() => updateState({selectTripType: item?.id})}
+        style={styles.radioMain}>
         <RadioButton.Group
-          onValueChange={newValue => setValue(newValue)}
-          value={value}>
+          onValueChange={newValue => updateState({selectTripType: newValue})}
+          value={selectTripType}>
           <View style={styles.radio}>
             <View style={styles.radioTitle}>
-              <RadioButton value="first" color="#EE2A7B" />
+              <RadioButton value={item?.id} color="#EE2A7B" />
             </View>
             <View style={{flex: 1}}>
               <TextComponent text={item?.title} styles={styles.radioText} />
@@ -43,7 +46,7 @@ const TripTypeSelectModal = ({
             </View>
           </View>
         </RadioButton.Group>
-      </View>
+      </Touchable>
     );
   });
   return (

@@ -46,6 +46,12 @@ const HomeScreen = () => {
     isTripStarted,
     isTripSelectModal,
     selectTripType,
+    destinationInputRef,
+    allUser,
+    groupMembers,
+    addMembersToGroup,
+    updateInputState,
+    getlocation,
     updateState,
     openNextModal,
     openPrevModal,
@@ -53,6 +59,8 @@ const HomeScreen = () => {
     remember,
     rememberValue,
     keyboardStatus,
+    updateError,
+    createTripFun,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -138,6 +146,7 @@ const HomeScreen = () => {
             },
             extraData: {
               selectTripType,
+              updateState,
             },
           }}
         />
@@ -155,6 +164,10 @@ const HomeScreen = () => {
               remember,
               rememberValue,
               keyboardStatus,
+              allUser,
+              addMembersToGroup,
+              groupMembers,
+              message: updateError,
             },
           }}
         />
@@ -163,6 +176,7 @@ const HomeScreen = () => {
             isModalVisible,
             toggleLocationModal: () => {
               openNextModal('isModalVisible', 'iscreateModal');
+              console.log('bdkjfbsdbfs', destinationInput);
             },
             onBackPress: () => {
               openPrevModal('isModalVisible', 'isGroupMemberSelectModal');
@@ -170,19 +184,42 @@ const HomeScreen = () => {
             extraData: {
               selectTripType,
             },
+            extraData: {
+              selectTripType,
+              locationInput,
+              destinationInput,
+              getlocation,
+              updateInputState,
+              destinationInputRef,
+              message: updateError,
+            },
           }}
         />
         <CreateGroupModal
           {...{
             iscreateModal,
             CreateGroup: () => {
-              openNextModal('iscreateModal', 'isTripCreated');
+              openNextModal(
+                'iscreateModal',
+                'isTripCreated',
+                // {
+                //   openNextModal,
+                //   "isTripCreated",
+                //   "isTripModalVisible"
+                // }
+              );
+              // setTimeout(() => {
+              //   openNextModal('isTripCreated', 'isTripModalVisible');
+              // }, 1000);
             },
             onBackPress: () => {
               openPrevModal('iscreateModal', 'isModalVisible');
+              console.log('bdkjfbsdbfs', destinationInput);
             },
             extraData: {
               selectTripType,
+              GroupInput,
+              updateInputState,
             },
           }}
         />
@@ -197,6 +234,7 @@ const HomeScreen = () => {
             },
             extraData: {
               selectTripType,
+              message: updateError,
             },
           }}
         />
@@ -204,13 +242,21 @@ const HomeScreen = () => {
           {...{
             isTripModalVisible,
             StartTripToggle: () => {
-              openNextModal('isTripModalVisible', 'isTripStarted');
+              createTripFun();
             },
             onBackPress: () => {
-              openPrevModal('isTripModalVisible', 'isTripCreated');
+              openPrevModal('isTripModalVisible', 'iscreateModal');
             },
             extraData: {
               selectTripType,
+              locationInput,
+              destinationInput,
+              getlocation,
+              updateInputState,
+              destinationInputRef,
+              message: updateError,
+              groupMembers,
+              GroupInput,
             },
           }}
         />
@@ -221,11 +267,10 @@ const HomeScreen = () => {
             TripCreatedToggle: () => {
               updateState({isTripStarted: false});
             },
-            onBackPress: () => {
-              openPrevModal('isTripStarted', 'isTripModalVisible');
-            },
+            onBackPress: () => {},
             extraData: {
               selectTripType,
+              message: updateError,
             },
           }}
         />

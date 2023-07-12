@@ -19,15 +19,33 @@ import ThemeButton from '../../Components/ThemeButton';
 import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {tripsTypes} from '../../Utils/localDB';
+import {AutoFillGoogleComp} from '../../Components/AutoFillGoogleComp';
+import {TextComponent} from '../../Components/TextComponent';
 
-const StartTripModal = ({StartTripToggle, isTripModalVisible, onBackPress}) => {
+const StartTripModal = ({
+  StartTripToggle,
+  isTripModalVisible,
+  onBackPress,
+  extraData,
+}) => {
+  // const {
+  //   locationInput,
+  //   setLocationInput,
+  //   destinationInput,
+  //   setDestinationInput,
+  // } = useHomeScreen();
+  const isTripType = Boolean(extraData.selectTripType != tripsTypes[0].id);
+  const isTrue = Boolean(true);
   const {
     locationInput,
-    setLocationInput,
     destinationInput,
-    setDestinationInput,
-  } = useHomeScreen();
-
+    updateInputState,
+    getlocation,
+    destinationInputRef,
+    groupMembers,
+    GroupInput,
+  } = extraData;
   return (
     <View
       key={isTripModalVisible}
@@ -65,43 +83,69 @@ const StartTripModal = ({StartTripToggle, isTripModalVisible, onBackPress}) => {
               {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}
               <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
               <View style={styles.groupDesc}>
-                <Text style={styles.groupName}>Business Meets</Text>
-                <Text style={styles.groupMember}>15 members</Text>
+                <Text style={styles.groupName}>{GroupInput}</Text>
+                <Text style={styles.groupMember}>
+                  {groupMembers.length} members
+                </Text>
               </View>
             </View>
             <View style={styles.TripHeadBorder}></View>
-            <View style={styles.mainInput}>
-              <View style={styles.inputArea}>
-                <Image source={location} style={styles.inputLeftImg} />
-                <TextInput
-                  style={styles.input}
-                  // onChangeText={setLocationInput}
-                  // value={locationInput}
-                  placeholder="Choose Start Location"
-                  placeholderTextColor={'gray'}
-                />
-                <Touchable>
-                  <Image source={dots} style={styles.inputRightImg} />
-                </Touchable>
-              </View>
-              <Image source={dotbar} style={styles.dotbar} />
-              <View style={styles.inputArea}>
-                <Image source={from} style={styles.inputLeftImg} />
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setDestinationInput}
-                  value={destinationInput}
-                  placeholder="Choose Destination"
-                  placeholderTextColor={'gray'}
-                />
-                <Touchable>
-                  <Image source={arrows} style={styles.inputRightImg} />
-                </Touchable>
-              </View>
+            <View style={styles.modalInput}>
+              {isTripType && (
+                <>
+                  <View style={styles.inputArea}>
+                    <Image source={location} style={styles.inputLeftImg} />
+                    <View
+                      style={{
+                        ...styles.input,
+                        justifyContent: 'center',
+                        paddingLeft: wp('2'),
+                      }}>
+                      <TextComponent
+                        styles={{fontSize: hp('1.8')}}
+                        numberOfLines={1}
+                        text={locationInput?.description}
+                      />
+                    </View>
+                    <Touchable>
+                      <Image source={dots} style={styles.inputRightImg} />
+                    </Touchable>
+                  </View>
+                  {/* <Image source={dotbar} style={styles.dotbar} /> */}
+                </>
+              )}
+              {isTripType && <Image source={dotbar} style={styles.dotbar} />}
+              {isTrue && (
+                <View style={{...styles.inputArea}}>
+                  <Image source={from} style={styles.inputLeftImg} />
+                  <View
+                    style={{
+                      ...styles.input,
+                      justifyContent: 'center',
+                      paddingLeft: wp('2'),
+                    }}>
+                    <TextComponent
+                      styles={{fontSize: hp('1.8')}}
+                      numberOfLines={1}
+                      text={destinationInput?.description}
+                    />
+                  </View>
+                  {isTripType && (
+                    <Touchable>
+                      <Image source={arrows} style={styles.inputRightImg} />
+                    </Touchable>
+                  )}
+                </View>
+              )}
+              {/* <ThemeButton
+                title={'Get Current Location'}
+                onPress={getlocation}
+                btnStyle={styles.locationBtn}
+              /> */}
               <ThemeButton
-                title={'Start Trip'}
+                title={'Confirm Location'}
                 onPress={StartTripToggle}
-                btnStyle={styles.tripModalBtn}
+                btnStyle={{...styles.locationBtn, marginBottom: hp('3')}}
               />
             </View>
           </View>

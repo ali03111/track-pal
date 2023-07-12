@@ -1,12 +1,39 @@
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 
 import {ChatData} from '../../Utils/localDB';
 import {Invitation} from '../../Utils/localDB';
+import {changeUserTripStatus, userTrips} from '../../Utils/Urls';
+import API from '../../Utils/helperFunc';
 
 const useNotificationScreen = () => {
+  const [tripNotification, setTripNotification] = useState([]);
+  const [tripTime, setTripTime] = useState('');
+
+  const getUserTrips = async () => {
+    const {ok, data} = await API.get(userTrips);
+    if (ok) {
+      setTripNotification(data);
+      console.log('test', data);
+    }
+  };
+
+  const tripStatus = async () => {
+    const {ok, data} = await API.post(changeUserTripStatus);
+    if (ok) {
+      console.log('test', data);
+    }
+  };
+
+  const useEffectFuc = () => {
+    getUserTrips();
+  };
+
+  useEffect(useEffectFuc, []);
+
   return {
     ChatData,
     Invitation,
+    tripNotification,
   };
 };
 export default useNotificationScreen;

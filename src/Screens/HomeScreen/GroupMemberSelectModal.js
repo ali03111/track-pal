@@ -31,6 +31,7 @@ import GradientText from '../../Components/GradientText';
 import {TextComponent} from '../../Components/TextComponent';
 import {Colors} from '../../Theme/Variables';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {errorMessage} from '../../Config/NotificationMessage';
 
 const GroupMemberSelectModal = ({
   isGroupMemberSelectModal,
@@ -38,21 +39,58 @@ const GroupMemberSelectModal = ({
   onBackPress,
   extraData,
 }) => {
-  const {keyboardStatus} = extraData;
-  const [text, onChangeText] = useState('');
+  const {
+    keyboardStatus,
+    allUser,
+    addMembersToGroup,
+    groupMembers,
+    message,
+    ErrorMessageHandler,
+  } = extraData;
+  console.log('allUser', allUser);
+  const [text, setText] = useState('');
+  const [filterData, setFilterData] = useState([]);
+  function searchFun(e) {
+    var text = e;
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource and update FilteredDataSource
+      const newData = allUser.filter(function (item) {
+        // Applying filter for the inserted text in search bar
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilterData(newData);
+      setText(text);
+    } else {
+      setFilterData(allUser);
+      setText(text);
+    }
+  }
+  console.log('emssaguebaubd', message, keyboardStatus);
+  // useCallback(() => {
+  //   errorMessage(message);
+  // }, [message]);
 
+  // errorMessageHandler
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.radioMain}>
         <Touchable
           style={styles.rememberInner}
-          onPress={extraData.rememberValue}>
+          onPress={() => addMembersToGroup(item.id)}>
           <View style={styles.radio}>
             <View style={styles.groupMembers}>
-              <CircleImage image={item?.image} styles={styles.memberPic} />
-              <TextComponent text={item?.name} styles={styles.groupTitle} />
+              <CircleImage
+                image={frequentTrips[0].image}
+                styles={styles.memberPic}
+              />
+              <TextComponent text={item?.email} styles={styles.groupTitle} />
               <Image
-                source={extraData.remember ? rememberImg : rememberEmpty}
+                source={
+                  groupMembers.includes(item.id) ? rememberImg : rememberEmpty
+                }
                 style={styles.tickIcon}
               />
             </View>
@@ -96,7 +134,7 @@ const GroupMemberSelectModal = ({
               <View style={styles.searchMain}>
                 <TextInput
                   style={styles.searchinput}
-                  onChangeText={onChangeText}
+                  onChangeText={e => searchFun(e)}
                   value={text}
                   placeholder={'Search Members'}
                   placeholderTextColor={Colors.gray}
@@ -108,7 +146,10 @@ const GroupMemberSelectModal = ({
                 showsHorizontalScrollIndicator={false}>
                 <FlatList
                   refreshing={false}
-                  data={frequentTrips}
+                  data={
+                    // filterData
+                    filterData.length >= 0 && text != '' ? filterData : allUser
+                  }
                   renderItem={renderItem}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}

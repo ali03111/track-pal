@@ -8,18 +8,23 @@ import Modal from 'react-native-modal';
 import {tripsTypes} from '../../Utils/localDB';
 import {hp} from '../../Config/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {AutoFillGoogleComp} from '../../Components/AutoFillGoogleComp';
 
 const SelectLocationModal = ({
   isModalVisible,
   toggleLocationModal,
-  locationInput,
-  destinationInput,
-  updateState,
   onBackPress,
   extraData,
 }) => {
   const isTripType = Boolean(extraData.selectTripType != tripsTypes[0].id);
-
+  const {
+    locationInput,
+    destinationInput,
+    updateInputState,
+    getlocation,
+    destinationInputRef,
+  } = extraData;
+  console.log('locationInput', extraData);
   return (
     <View
       key={isModalVisible}
@@ -30,12 +35,11 @@ const SelectLocationModal = ({
       }}>
       <Modal
         isVisible={isModalVisible}
-        hasBackdrop={true}
         animationInTiming={100}
         animationOutTiming={100}
-        hideModalContentWhileAnimating
-        useNativeDriver
-        avoidKeyboard
+        // hideModalContentWhileAnimating
+        // useNativeDriver
+        // avoidKeyboard
         onBackButtonPress={onBackPress}
         animationType="fade"
         // backdropColor={'white'}
@@ -47,7 +51,7 @@ const SelectLocationModal = ({
             // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlur} />
-          <View style={styles.modalData(isTripType)}>
+          <View style={{...styles.modalData(isTripType)}}>
             {/* <View style={styles.groupInfoMain}>
                   <Image source={DemoProfileImage1} style={styles.groupLogo} />
                   <View style={styles.groupDesc}>
@@ -66,36 +70,62 @@ const SelectLocationModal = ({
                   />
                   <View style={styles.inputArea}>
                     <Image source={location} style={styles.inputLeftImg} />
-                    <TextInput
-                      style={styles.input}
-                      onChangeText={e => updateState({locationInput: e})}
-                      value={locationInput}
-                      placeholder="Choose Start Location"
-                      placeholderTextColor={'gray'}
+                    <AutoFillGoogleComp
+                      handleButtonClick={e =>
+                        updateInputState({locationInput: e})
+                      }
+                      key={0}
+                      inputContainerStyle={styles.input}
+                      inputPlaceHolder="Choose Start Location"
+                      inputVal={locationInput.description}
+                      defaultValue={locationInput.description}
+                      onChangeText={text =>
+                        updateInputState({locationInput: {description: text}})
+                      }
                     />
                     <Touchable>
                       <Image source={dots} style={styles.inputRightImg} />
                     </Touchable>
                   </View>
-                  <Image source={dotbar} style={styles.dotbar} />
+                  {/* <Image source={dotbar} style={styles.dotbar} /> */}
                 </>
               )}
-              <View style={styles.inputArea}>
+              {isTripType && <Image source={dotbar} style={styles.dotbar} />}
+              <View style={{...styles.inputArea}}>
                 <Image source={from} style={styles.inputLeftImg} />
-                <TextInput
+                <AutoFillGoogleComp
+                  handleButtonClick={e => {
+                    updateInputState({destinationInput: e});
+                    destinationInputRef.current = e;
+                  }}
+                  key={1}
+                  inputContainerStyle={styles.input}
+                  inputPlaceHolder="Choose End Location"
+                  inputVal={destinationInput.description}
+                  defaultValue={destinationInput.description}
+                  onChangeText={text => {
+                    updateInputState({destinationInput: {description: text}});
+                    destinationInputRef.current = {description: text};
+                  }}
+                />
+                {/* <TextInput
                   style={styles.input}
-                  onChangeText={e => updateState({destinationInput: e})}
-                  value={destinationInput}
+                  onChangeText={e =>
+                    updateInputState({destinationInput: {description: e}})
+                  }
+                  value={destinationInput.description }
                   placeholderTextColor={'gray'}
                   placeholder="Choose Destination"
-                />
-                <Touchable>
-                  <Image source={arrows} style={styles.inputRightImg} />
-                </Touchable>
+                /> */}
+                {isTripType && (
+                  <Touchable>
+                    <Image source={arrows} style={styles.inputRightImg} />
+                  </Touchable>
+                )}
               </View>
               <ThemeButton
                 title={'Get Current Location'}
-                onPress={toggleLocationModal}
+                onPress={getlocation}
                 btnStyle={styles.locationBtn}
               />
               <ThemeButton

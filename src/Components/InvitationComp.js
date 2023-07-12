@@ -16,6 +16,9 @@ import ThemeButton from './ThemeButton';
 import TransparentBtn from './TransparentBtn';
 import {checked, uncheck} from '../Assets';
 import GradientText from './GradientText';
+import {TextComponentTripInvite} from './TextComponentTripInvite';
+import moment from 'moment';
+import {tripProfileColors} from '../Utils/localDB';
 
 const InvitationComp = ({
   image,
@@ -26,23 +29,45 @@ const InvitationComp = ({
   messages,
   status,
   onPress,
+  firstLetter,
+  letterStyles,
 }) => {
+  const generateColor = () => {
+    profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
+    console.log(Math.floor(Math.random() * 10));
+    return profileBgColor;
+  };
   return (
     <View style={styles.invitationStyle}>
       <Touchable style={styles.notificationMian} onPress={onPress}>
         <View style={styles.mainBannerImg}>
-          <CircleImage image={image} />
+          {image ? (
+            <CircleImage image={image} />
+          ) : (
+            <View style={{backgroundColor: generateColor(), ...letterStyles}}>
+              <Text style={styles.letterSt}>{firstLetter}</Text>
+            </View>
+          )}
+
           {/* <CircleImageComp styles={styles.bannerImg}  image={image} /> */}
         </View>
         <View style={styles.nameDescriptionMain}>
           <View style={styles.namestyle}>
             <TextComponent text={name} styles={styles.username} />
-            <TextComponent text={time} styles={styles.timing} />
+            <TextComponent
+              text={moment(time).calendar()}
+              styles={styles.timing}
+            />
           </View>
           <View style={styles.descmain}>
-            <TextComponent text={description} styles={styles.description} />
-            <TextComponent text={' '} />
-            <TextComponent text={groupName} styles={styles.groupName} />
+            <TextComponentTripInvite
+              text={name + ' has invited you to become a member of his'}
+              tripName={groupName}
+              styles={styles.description}
+              tripStyles={styles.groupName}
+            />
+            {/* <TextComponent text={' '} /> */}
+            {/* <TextComponent text={groupName} styles={styles.groupName} /> */}
           </View>
         </View>
       </Touchable>
@@ -118,6 +143,8 @@ const styles = StyleSheet.create({
   description: {
     fontSize: Platform.OS == 'ios' ? hp('1.5') : hp('1.8'),
     color: Colors.gray,
+    // backgroundColor: 'red',
+    display: 'flex',
   },
 
   timing: {
@@ -176,6 +203,12 @@ const styles = StyleSheet.create({
   statusRejectText: {
     fontSize: hp('2.1'),
     fontWeight: '500',
+  },
+
+  letterSt: {
+    color: Colors.white,
+    fontSize: hp('3'),
+    fontWeight: '700',
   },
 });
 

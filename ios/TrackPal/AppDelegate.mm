@@ -5,7 +5,6 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <RNGoogleSignin/RNGoogleSignin.h>
 #import <React/RCTBundleURLProvider.h>
-#import <RaxelPulse/RaxelPulse.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-swift.h> // <- Add This Import
 #import <React/RCTLinkingManager.h> // <- Add This Import
 
@@ -15,8 +14,6 @@
 {
   [FIRApp configure];
   [GMSServices provideAPIKey:@"AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE"]; // add this line using the api key obtained from Google Console
-  [RPEntry initializeWithRequestingPermissions:NO];
-  [RPEntry application:application didFinishLaunchingWithOptions:launchOptions];
   self.moduleName = @"TrackPal";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
@@ -25,31 +22,7 @@
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
-- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(nonnull NSString *)identifier completionHandler:(nonnull void (^)(void))completionHandler {
-    [RPEntry application:application handleEventsForBackgroundURLSession:identifier completionHandler:completionHandler];
-}
 
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    [RPEntry applicationDidReceiveMemoryWarning:application];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    [RPEntry applicationWillTerminate:application];
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    [RPEntry applicationDidEnterBackground:application];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    [RPEntry applicationDidBecomeActive:application];
-}
-
-- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [RPEntry application:application performFetchWithCompletionHandler:^{
-        completionHandler(UIBackgroundFetchResultNewData);
-    }];
-}
 
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

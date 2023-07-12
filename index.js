@@ -13,8 +13,8 @@ import FlashMessage from 'react-native-flash-message';
 const TrackPal = () => (
   <Provider store={store}>
     <PersistGate persistor={persistor} loading={null}>
-      <App />
       <FlashMessage position="top" />
+      <App />
     </PersistGate>
   </Provider>
 );

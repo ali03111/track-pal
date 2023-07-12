@@ -17,9 +17,14 @@ import {Touchable} from '../../Components/Touchable';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {hp} from '../../Config/responsive';
 
-const CreateGroupModal = ({iscreateModal, CreateGroup, onBackPress}) => {
-  const {GroupInput, setGroupInput} = useHomeScreen();
-
+const CreateGroupModal = ({
+  iscreateModal,
+  CreateGroup,
+  onBackPress,
+  extraData,
+}) => {
+  // const {GroupInput, setGroupInput} = useHomeScreen();
+  const {selectTripType, GroupInput, updateInputState} = extraData;
   return (
     <View
       key={iscreateModal}
@@ -46,7 +51,7 @@ const CreateGroupModal = ({iscreateModal, CreateGroup, onBackPress}) => {
             // position: 'relative',
           }}>
           <Image style={styles.absolute} source={bgBlur} />
-          <View style={styles.modalData(true)}>
+          <View style={{...styles.modalData(true), paddingBottom: hp('2')}}>
             <View style={styles.modalInput}>
               <Ionicons
                 name="close-outline"
@@ -67,8 +72,8 @@ const CreateGroupModal = ({iscreateModal, CreateGroup, onBackPress}) => {
                 <Image source={editIcon} style={styles.editIcon} />
                 <TextInput
                   style={styles.eInput}
-                  // onChangeText={setGroupInput}
-                  // value={GroupInput}
+                  onChangeText={e => updateInputState({GroupInput: e})}
+                  value={GroupInput}
                   placeholder="Name your Trip"
                   placeholderTextColor={'gray'}
                 />

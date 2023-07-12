@@ -119,7 +119,6 @@ export const styles = StyleSheet.create({
   },
   modalData: tripType => ({
     // height: tripType ? hp('40') : hp('30'),
-
     backgroundColor: '#fff',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -144,7 +143,7 @@ export const styles = StyleSheet.create({
     marginTop: hp('3'),
   },
   tripModalData: {
-    height: hp('50'),
+    // height: hp('50'),
     backgroundColor: '#fff',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -160,7 +159,7 @@ export const styles = StyleSheet.create({
   },
   modalInput: {
     paddingHorizontal: wp('4'),
-    marginTop: hp('4'),
+    marginTop: hp('1'),
   },
   SelectTripModal: {
     paddingHorizontal: wp('4'),
@@ -176,28 +175,33 @@ export const styles = StyleSheet.create({
     marginVertical: hp('2'),
     borderWidth: 1,
     borderRadius: 7,
-    paddingHorizontal: wp('3'),
+    // paddingHorizontal: wp('3'),
     flex: 1,
     marginHorizontal: wp('3'),
   },
   inputArea: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
+    // paddingTop: hp('6'),
+    // backgroundColor: 'green',
   },
   inputLeftImg: {
     width: wp('10'),
     height: hp('5'),
     resizeMode: 'contain',
+    marginTop: hp('2.5'),
   },
   inputRightImg: {
     width: wp('8'),
     height: hp('4'),
     resizeMode: 'contain',
+    marginTop: hp('2.5'),
   },
   dotbar: {
     width: wp('10'),
     height: hp('5'),
     resizeMode: 'contain',
+    // backgroundColor: 'red',
     marginVertical: hp('-2.5'),
   },
   locationBtn: {
@@ -247,6 +251,7 @@ export const styles = StyleSheet.create({
   userProfileImg: {
     backgroundColor: Colors.white,
     position: 'relative',
+    marginTop: hp('2'),
   },
   addImageIcon: {
     alignSelf: 'center',
@@ -316,7 +321,7 @@ export const styles = StyleSheet.create({
   },
   groupBtn: {
     marginTop: hp('1'),
-    marginBottom: hp('1'),
+    marginBottom: Platform.OS == 'ios' ? hp('4') : hp('1'),
   },
   tickIcon: {
     resizeMode: 'contain',
@@ -326,6 +331,7 @@ export const styles = StyleSheet.create({
   searchinput: {
     fontSize: hp('2'),
     color: 'black',
+    flex: 1,
   },
   searchMain: {
     flexDirection: 'row',
