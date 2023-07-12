@@ -21,6 +21,9 @@ import {CircleImage} from '../../Components/CircleImage';
 import {tripsTypes} from '../../Utils/localDB';
 import {AutoFillGoogleComp} from '../../Components/AutoFillGoogleComp';
 import {TextComponent} from '../../Components/TextComponent';
+import useReduxStore from '../../Hooks/UseReduxStore';
+import Overlay from '../../Components/Overlay';
+
 const StartTripModal = ({
   StartTripToggle,
   isTripModalVisible,
@@ -35,6 +38,8 @@ const StartTripModal = ({
   // } = useHomeScreen();
   const isTripType = Boolean(extraData.selectTripType != tripsTypes[0].id);
   const isTrue = Boolean(true);
+  const {getState} = useReduxStore();
+  const {isloading} = getState('isloading');
   const {
     locationInput,
     destinationInput,
@@ -69,6 +74,7 @@ const StartTripModal = ({
             justifyContent: 'flex-end',
             position: 'relative',
           }}>
+          {isloading && <Overlay />}
           <Image style={styles.absolute} source={bgBlur} />
           <View style={styles.tripModalData}>
             <View style={styles.groupInfoMain}>
