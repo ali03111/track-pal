@@ -7,8 +7,6 @@ import onboardingReducer from './onboardingReducer';
 import createSagaMiddleware from 'redux-saga';
 import mySaga from './../Sagas/index';
 import {createStore, applyMiddleware, combineReducers} from 'redux';
-// import RecentLocationReducer from './RecentLocationReducer';
-// import questionReducer from './questionReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 

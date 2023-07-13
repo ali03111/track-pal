@@ -5,7 +5,8 @@ import {logOutUser} from '../../Redux/Action/AuthAction';
 const useProfileScreen = ({navigate}) => {
   const dynamicNav = path => navigate(path);
   const [alert, setAlert] = useState(false);
-  const {dispatch} = useReduxStore();
+  const {dispatch, getState} = useReduxStore();
+  const {userData} = getState('Auth');
   const onCancel = () => {
     setAlert(!alert);
   };
@@ -17,7 +18,7 @@ const useProfileScreen = ({navigate}) => {
     }, 1);
   };
 
-  return {dynamicNav, alert, onCancel, onConfirm};
+  return {dynamicNav, alert, onCancel, onConfirm, userData};
 };
 
 export default useProfileScreen;

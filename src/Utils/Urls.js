@@ -2,13 +2,13 @@ const getCredentials = () => {
   if (__DEV__)
     return {
       baseURL: 'https://virtualrealitycreators.com/trackpal/api/',
-      imageURL: 'https://virtualrealitycreators.com/stound/',
+      imageURL: 'https://virtualrealitycreators.com/trackpal/',
     };
   else {
     console.log = () => {};
     return {
       baseURL: 'https://virtualrealitycreators.com/trackpal/api/',
-      imageURL: 'https://virtualrealitycreators.com/stound/',
+      imageURL: 'https://virtualrealitycreators.com/trackpal/',
     };
   }
 };
@@ -40,3 +40,4 @@ export const fcmToken = 'add-fcm-token';
 export const getAgoraTokenUrl = 'getAccessToken/';
 export const getAllUser = 'users';
 export const CreateTripUrl = '/create-trip';
+export const UpdateProfileUrl = 'update-profile';

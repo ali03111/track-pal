@@ -155,5 +155,9 @@
 		<string>Proxima-Nova-Alt-Light.otf</string>
 		<string>Proxima-Nova-Alt-Bold.otf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Want this permission update profile picture</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Want this permission update profile picture</string>
 </dict>
 </plist>
