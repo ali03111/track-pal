@@ -1,4 +1,4 @@
-import {Platform, StyleSheet} from 'react-native';
+import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
@@ -100,5 +100,19 @@ export const styles = StyleSheet.create({
   },
   TripBtnText: {
     fontWeight: '400',
+  },
+  letterSt: {
+    color: Colors.white,
+    fontSize: hp('3'),
+    fontWeight: '700',
+  },
+  letterStyle: {
+    borderRadius: Math.round(
+      Dimensions.get('window').width + Dimensions.get('window').height,
+    ),
+    width: Dimensions.get('window').width * 0.13,
+    height: Dimensions.get('window').width * 0.13,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

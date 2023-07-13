@@ -21,7 +21,7 @@ const useNotificationScreen = () => {
     const {ok, data} = await API.post(changeUserTripStatus, {status, id});
     if (ok) {
       setTripNotification(data.trips);
-      console.log('response', data);
+      // console.log('response', data);
     }
   };
 

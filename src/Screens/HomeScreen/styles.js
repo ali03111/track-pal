@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   logo: {
     resizeMode: 'contain',
-    width: wp('37'),
+    width: wp('40'),
     alignSelf: 'center',
     paddingVertical: hp('5'),
   },

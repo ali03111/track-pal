@@ -10,6 +10,7 @@ import {
   link,
   location,
   logo,
+  logo1,
   map,
   staticMap,
   whitebg,
@@ -75,7 +76,7 @@ const HomeScreen = () => {
   });
   return (
     <View style={styles.homeScreenStyle}>
-      <Image source={logo} style={styles.logo} />
+      <Image source={logo1} style={styles.logo} />
       <View style={styles.mapArea}>
         <View style={styles.groupInfoMain}>
           {Platform.OS == 'ios' ? (

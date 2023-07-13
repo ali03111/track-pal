@@ -14,31 +14,51 @@ import {cardediticon, leftArrow, trash} from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
 import {TextComponent} from '../../Components/TextComponent';
 import ThemeButton from '../../Components/ThemeButton';
-import {trips} from '../../Utils/localDB';
+import {tripProfileColors, trips} from '../../Utils/localDB';
 import InactiveBtn from '../../Components/InactiveBtn';
 import TripCreatedModal from '../HomeScreen/TripCreatedModal';
 import useEditTripScreen from './useEditTripScreen';
 import {hp, wp} from '../../Config/responsive';
+import {getSingleCharacter} from '../../Utils/globalFunctions';
 
-const EditTripScreen = ({navigation}) => {
-  const {updateState, isTripCreated, trips} = useEditTripScreen();
+const EditTripScreen = ({navigation, letterStyles}) => {
+  const {updateState, isTripCreated, tripCardData} = useEditTripScreen();
 
   const renderItem = ({item}) => {
+    const generateColor = () => {
+      profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
+      return profileBgColor;
+    };
     return (
-      <View style={styles.activeCardMain(item.status)}>
+      <View style={styles.activeCardMain(item?.status)}>
         <View style={styles.activeCardStyle}>
           <View style={styles.cardLeft}>
-            <CircleImage image={item.tripProfile} style={styles.groupLogo} />
+            {item?.image ? (
+              <CircleImage image={item?.image} style={styles.groupLogo} />
+            ) : (
+              <View
+                style={{
+                  backgroundColor: generateColor(),
+                  ...styles.letterStyle,
+                }}>
+                <Text style={styles.letterSt}>
+                  {getSingleCharacter(item?.name)}
+                </Text>
+              </View>
+            )}
             <View style={styles.groupDesc}>
-              <TextComponent text={item.tripName} styles={styles.groupName} />
-              <TextComponent text={item.member} styles={styles.groupMember} />
+              <TextComponent text={item?.name} styles={styles.groupName} />
               <TextComponent
-                text={item.status}
-                styles={styles.groupActive(item.status)}
+                text={item?.total_members + ' members'}
+                styles={styles.groupMember}
+              />
+              <TextComponent
+                text={item?.status}
+                styles={styles.groupActive(item?.status)}
               />
             </View>
           </View>
-          {item.status == 'Active' ? (
+          {item?.status == 'Active' ? (
             <ThemeButton
               title={'Start Trip'}
               textStyle={styles.TripBtnText}
@@ -87,7 +107,7 @@ const EditTripScreen = ({navigation}) => {
 
       <SwipeListView
         useFlatList={true}
-        data={trips}
+        data={tripCardData}
         // disableRightSwipe={true}
         renderItem={renderItem}
         renderHiddenItem={renderHiddenItem}

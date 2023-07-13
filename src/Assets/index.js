@@ -17,6 +17,7 @@ export {default as DemoProfileImage6} from './Images/profile6.png';
 export {default as checked} from './Images/checked.png';
 export {default as uncheck} from './Images/uncheck.png';
 export {default as logo} from './Images/logo.png';
+export {default as logo1} from './Images/logo1.png';
 export {default as staticMap} from './Images/map.png';
 export {default as link} from './Images/link.png';
 export {default as whitebg} from './Images/whitebg.png';

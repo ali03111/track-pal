@@ -45,3 +45,4 @@ export const userTrips = '/user-trips';
 export const changeUserTripStatus = '/change-user-trip-status';
 export const getAllUser = 'users';
 export const CreateTripUrl = '/create-trip';
+export const tripsData = '/owner-trips';

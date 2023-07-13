@@ -10,14 +10,10 @@ const InvitationTab = () => {
   const {Invitation, tripNotification, tripStatus, getUserTrips} =
     useNotificationScreen();
   const renderItem = useCallback(({item, index}) => {
-    let text = item?.trip_owner.name;
-    let letter = text?.charAt(0).toUpperCase();
-
     return (
       <View style={styles.notification}>
         <InvitationComp
           image={item?.image}
-          firstLetter={letter}
           name={item?.trip_owner.name}
           description={item?.description}
           time={item?.created_at}
