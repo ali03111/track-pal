@@ -32,10 +32,10 @@ const InvitationComp = ({
   firstLetter,
   letterStyles,
   tripId,
+  tripOwner,
 }) => {
   const generateColor = () => {
     profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
-    console.log(Math.floor(Math.random() * 10));
     return profileBgColor;
   };
   return (
@@ -78,13 +78,13 @@ const InvitationComp = ({
             title={'Decline'}
             btnStyle={styles.whiteBtn}
             textStyle={styles.whiteBtnText}
-            onPress={() => onPress(3, tripId)}
+            onPress={() => onPress(3, tripId, tripOwner.id)}
           />
           <ThemeButton
             title={'Accept'}
             btnStyle={styles.acceptBtn}
             textStyle={styles.btnText}
-            onPress={() => onPress(1, tripId)}
+            onPress={() => onPress(1, tripId, tripOwner.id)}
           />
         </View>
       )}

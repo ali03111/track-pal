@@ -4,6 +4,8 @@ import {ChatData} from '../../Utils/localDB';
 import {Invitation} from '../../Utils/localDB';
 import {changeUserTripStatus, userTrips} from '../../Utils/Urls';
 import API from '../../Utils/helperFunc';
+import {updateDataFirebase} from '../../Services/FireBaseRealTImeServices';
+import {errorMessage} from '../../Config/NotificationMessage';
 
 const useNotificationScreen = () => {
   const [tripNotification, setTripNotification] = useState([]);
@@ -13,16 +15,22 @@ const useNotificationScreen = () => {
     const {ok, data} = await API.get(userTrips);
     if (ok) {
       setTripNotification(data);
-      // console.log('test', data);
-    }
+    } else errorMessage('some error wentn');
   };
 
-  const tripStatus = async (status, id) => {
+  const tripStatus = async (status, id, tripOnnwerID) => {
     const {ok, data} = await API.post(changeUserTripStatus, {status, id});
     if (ok) {
-      setTripNotification(data.trips);
-      console.log('response', data);
-    }
+      if (status == 1) {
+        const {ok} = await updateDataFirebase({
+          tripId: id,
+          tripOnnwerID,
+        });
+        if (ok) {
+          setTripNotification(data.trips);
+        }
+      } else setTripNotification(data.trips);
+    } else errorMessage('lkbdvlkbsdlvbsldb');
   };
 
   const useEffectFuc = () => {
