@@ -25,7 +25,7 @@ const useEditTripScreen = () => {
   const tripsCard = async () => {
     const {ok, data} = await API.get(tripsData);
     if (ok) {
-      console.log('asdasdasd', data);
+      // console.log('asdasdasd', data);
       setTripCardData(data.invitation_trips);
     }
   };

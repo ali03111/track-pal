@@ -201,7 +201,7 @@ const HomeScreen = () => {
             CreateGroup: () => {
               openNextModal(
                 'iscreateModal',
-                'isTripCreated',
+                'isTripModalVisible',
                 // {
                 //   openNextModal,
                 //   "isTripCreated",
@@ -222,7 +222,7 @@ const HomeScreen = () => {
             },
           }}
         />
-        <TripCreatedModal
+        {/* <TripCreatedModal
           {...{
             isTripCreated,
             TripCreatedToggle: () => {
@@ -236,7 +236,7 @@ const HomeScreen = () => {
               message: updateError,
             },
           }}
-        />
+        /> */}
         <StartTripModal
           {...{
             isTripModalVisible,
@@ -262,7 +262,7 @@ const HomeScreen = () => {
         <TripCreatedModal
           {...{
             isTripCreated: isTripStarted,
-            title: 'Trip Started',
+            title: 'Trip Created',
             TripCreatedToggle: () => {
               updateState({isTripStarted: false});
             },

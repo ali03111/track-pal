@@ -155,7 +155,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 3,
     shadowRadius: 7.68,
     elevation: 20,
-    paddingTop: hp('4'),
+    paddingTop: hp('1'),
   },
   modalInput: {
     paddingHorizontal: wp('4'),

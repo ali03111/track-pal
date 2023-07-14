@@ -20,6 +20,7 @@ import TripCreatedModal from '../HomeScreen/TripCreatedModal';
 import useEditTripScreen from './useEditTripScreen';
 import {hp, wp} from '../../Config/responsive';
 import {getSingleCharacter} from '../../Utils/globalFunctions';
+import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 
 const EditTripScreen = ({navigation, letterStyles}) => {
   const {updateState, isTripCreated, tripCardData} = useEditTripScreen();
@@ -36,15 +37,16 @@ const EditTripScreen = ({navigation, letterStyles}) => {
             {item?.image ? (
               <CircleImage image={item?.image} style={styles.groupLogo} />
             ) : (
-              <View
-                style={{
-                  backgroundColor: generateColor(),
-                  ...styles.letterStyle,
-                }}>
-                <Text style={styles.letterSt}>
-                  {getSingleCharacter(item?.name)}
-                </Text>
-              </View>
+              // <View
+              //   style={{
+              //     backgroundColor: generateColor(),
+              //     ...styles.letterStyle,
+              //   }}>
+              //   <Text style={styles.letterSt}>
+              //     {getSingleCharacter(item?.name)}
+              //   </Text>
+              // </View>
+              <FirstCharacterComponent text={item?.name} />
             )}
             <View style={styles.groupDesc}>
               <TextComponent text={item?.name} styles={styles.groupName} />
