@@ -36,8 +36,8 @@ const EditTripScreen = ({navigation}) => {
           backgroundColor: '#b531b1',
         },
       }}>
-      <Tab.Screen name="MyTrips" component={MyTrips} />
-      <Tab.Screen name="InvitedTrips" component={InvitedTrips} />
+      <Tab.Screen name="My Trips" component={MyTrips} />
+      <Tab.Screen name="Invited Trips" component={InvitedTrips} />
     </Tab.Navigator>
 
     //   <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} />
