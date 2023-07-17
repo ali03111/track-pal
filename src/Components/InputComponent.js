@@ -30,7 +30,7 @@ export const InputComponent = ({
 }) => {
   const [show, setShow] = useState(!isSecure);
   const handleClick = () => setShow(!show);
-  const keyboardType = ['number', 'reset_code'].includes(name)
+  const keyboardType = ['number', 'reset_code', 'phone'].includes(name)
     ? 'phone-pad'
     : 'default';
   return (

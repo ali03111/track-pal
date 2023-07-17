@@ -19,7 +19,7 @@ import {TextComponent} from '../../Components/TextComponent';
 import {Touchable} from '../../Components/Touchable';
 import {CircleImage} from '../../Components/CircleImage';
 import KeyBoardWrapper from '../../Components/KeyboardWrapper';
-import FastImage from 'react-native-fast-image';
+import {imageUrl} from '../../Utils/Urls';
 
 const EditProfileScreen = ({navigation}) => {
   const {
@@ -30,6 +30,9 @@ const EditProfileScreen = ({navigation}) => {
     getValues,
     goBack,
     navigateToReset,
+    updateProfileFunction,
+    uploadFromGalary,
+    profileData,
     userData,
   } = useResetPassword(navigation);
   return (
@@ -46,8 +49,12 @@ const EditProfileScreen = ({navigation}) => {
         />
       </ImageBackground>
       <View style={styles.userProfileImg}>
-        <CircleImage image={profleImg} styles={styles.profileEditImg} />
-        <Touchable Opacity={0.8}>
+        <CircleImage
+          uri={profileData ? false : true}
+          image={profileData || imageUrl(userData?.profile_image)}
+          styles={styles.profileEditImg}
+        />
+        <Touchable onPress={uploadFromGalary} Opacity={0.8}>
           <Image source={addProfileImage} style={styles.addImageIcon} />
         </Touchable>
       </View>
@@ -62,7 +69,9 @@ const EditProfileScreen = ({navigation}) => {
             control,
             getValues,
             placeholder: 'Full Name',
-            defaultValue: 'Jhon Doe',
+            // defaultValue: 'Jhon Doe',
+            defaultValue: userData?.name,
+
             textStyle: styles.inputStyle,
             viewStyle: styles.mainStyle,
           }}
@@ -82,27 +91,36 @@ const EditProfileScreen = ({navigation}) => {
             control,
             getValues,
             placeholder: 'Email',
-            defaultValue: userData.email,
+            // defaultValue: 'jhondoe@gmail.com',
+            defaultValue: userData?.email,
+
             textStyle: styles.inputStyle,
             viewStyle: styles.mainStyle,
+            editable: false,
           }}
         />
         <TextComponent text={'Phone Number'} styles={styles.inputTitle} />
         <InputComponent
           {...{
-            name: 'number',
+            name: 'phone',
             handleSubmit,
             errors,
             reset,
             control,
             getValues,
             placeholder: 'Phone Number',
-            defaultValue: '+12 3456 789',
+            // defaultValue: '+12 3456 789',
+            defaultValue: userData?.phone,
             textStyle: styles.inputStyle,
             viewStyle: styles.mainStyle,
           }}
         />
-        <ThemeButton title={'Save'} btnStyle={styles.buttonStyle} />
+        {console.log('userData?.phone ', userData?.phone)}
+        <ThemeButton
+          onPress={handleSubmit(updateProfileFunction)}
+          title={'Save'}
+          btnStyle={styles.buttonStyle}
+        />
       </View>
     </KeyBoardWrapper>
   );

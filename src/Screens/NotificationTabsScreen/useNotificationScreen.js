@@ -6,11 +6,13 @@ import {changeUserTripStatus, userTrips} from '../../Utils/Urls';
 import API from '../../Utils/helperFunc';
 import {updateDataFirebase} from '../../Services/FireBaseRealTImeServices';
 import {errorMessage} from '../../Config/NotificationMessage';
+import useReduxStore from '../../Hooks/UseReduxStore';
+import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 
 const useNotificationScreen = () => {
   const [tripNotification, setTripNotification] = useState([]);
   const [tripTime, setTripTime] = useState('');
-
+  const {dispatch} = useReduxStore();
   const getUserTrips = async () => {
     const {ok, data} = await API.get(userTrips);
     if (ok) {
@@ -21,6 +23,7 @@ const useNotificationScreen = () => {
   const tripStatus = async (status, id, tripOnnwerID) => {
     const {ok, data} = await API.post(changeUserTripStatus, {status, id});
     if (ok) {
+      dispatch(loadingTrue());
       if (status == 1) {
         const {ok} = await updateDataFirebase({
           tripId: id,
@@ -29,8 +32,15 @@ const useNotificationScreen = () => {
         if (ok) {
           setTripNotification(data.trips);
         }
-      } else setTripNotification(data.trips);
-    } else errorMessage('lkbdvlkbsdlvbsldb');
+        dispatch(loadingFalse());
+      } else {
+        setTripNotification(data.trips);
+        dispatch(loadingFalse());
+      }
+    } else {
+      dispatch(loadingFalse());
+      errorMessage('some thing is wrong');
+    }
   };
 
   const useEffectFuc = () => {

@@ -38,7 +38,7 @@ const SelectLocationModal = ({
         animationOutTiming={100}
         // hideModalContentWhileAnimating
         // useNativeDriver
-        // avoidKeyboard
+        avoidKeyboard
         onBackButtonPress={onBackPress}
         animationType="fade"
         // backdropColor={'white'}
@@ -59,14 +59,14 @@ const SelectLocationModal = ({
                   </View>
                 </View> */}
             <View style={styles.modalInput}>
+              <Ionicons
+                name="close-outline"
+                size={hp('3.5')}
+                style={styles.closeIcon}
+                onPress={onBackPress}
+              />
               {isTripType && (
                 <>
-                  <Ionicons
-                    name="close-outline"
-                    size={hp('3.5')}
-                    style={styles.closeIcon}
-                    onPress={onBackPress}
-                  />
                   <View style={styles.inputArea}>
                     <Image source={location} style={styles.inputLeftImg} />
                     <AutoFillGoogleComp

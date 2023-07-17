@@ -16,6 +16,7 @@ const Colors = {
   chatInputBorder: 'rgba(11, 180, 255, 1',
   avtiveCard: '#EAF6ED',
   inavtiveCard: '#F5E7E4',
+  primaryColorFade: 'rgba(146,39,143,0.5)',
 };
 
 /** FontSize **/

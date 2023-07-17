@@ -4,6 +4,7 @@ import {successMessage} from '../Config/NotificationMessage';
 import {store} from '../Redux/Reducer';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
+import {loadingFalse, loadingTrue} from '../Redux/Action/isloadingAction';
 
 const reference = firestore().collection('Trips');
 
@@ -79,6 +80,106 @@ const updateDataFirebase = async data => {
   }
 };
 
+const getLocationName = async (latitude, longitude) => {
+  const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE`;
+
+  // Replace "YOUR_API_KEY" with your actual Google Maps Geocoding API key
+
+  const res = await fetch(geocodingAPI);
+  const response = await res.json();
+
+  if (response.results.length > 0) {
+    const locationName = response.results[0].formatted_address;
+    return locationName;
+  }
+};
+var locationData;
+
+const getCurrentLocation = async () => {
+  Geolocation.getCurrentPosition(async info => {
+    const locationName = await getLocationName(
+      info.coords.latitude,
+      info.coords.longitude,
+    );
+    locationData = {
+      coords: {
+        latitude: info.coords.latitude,
+        longitude: info.coords.longitude,
+      },
+      description: locationName,
+    };
+    console.log('sjkbvjksbvjbsvsd', locationData);
+  });
+  // const coords = Geolocation.getCurrentPosition();
+  // console.lg('jksbjksbdjkbsd', coords);
+  // const locationName = await getLocationName(coords.latitude, coords.longitude);
+  // return {
+  //   coords: {
+  //     latitude,
+  //     longitude,
+  //   },
+  //   description: locationName,
+  // };
+};
+
+const updateLocationONfire = async data => {
+  const {
+    Auth: {userData},
+  } = store.getState('Auth');
+  const {tripId, tripOnnwerID} = data;
+
+  try {
+    await getCurrentLocation();
+    // const locationData = await getCurrentLocation();
+    setTimeout(async () => {
+      const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+      const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+      const wholeObj = firebaseGet.data();
+
+      // Find the index of the object with id 6 in the members array
+      const index = wholeObj.members.findIndex(
+        member => member.id == userData.id,
+      );
+      wholeObj.members[index] = {...wholeObj.members[index], ...locationData};
+
+      await fire.doc(`${tripOnnwerID}`).update(wholeObj);
+      console.log(
+        'locationDatalocationDatalocationDatalocationData',
+        locationData,
+      );
+    }, 1000);
+
+    return {ok: true, result: null};
+  } catch (error) {
+    console.log('Error creating trip:', error);
+    return {ok: false, result: error};
+  }
+};
+
+const getFirebaseData = async data => {
+  store.dispatch(loadingTrue());
+  const {tripId, tripOnnwerID} = data;
+  try {
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+    const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+    const wholeObj = firebaseGet.data();
+
+    console.log('wholeObjwholeObjwholeObjwholeObj', wholeObj);
+    // Find the index of the object with id 6 in the members array
+    const filterData = wholeObj.members.filter(member => member.status == true);
+    store.dispatch(loadingFalse());
+    // wholeObj.members[index] = {...wholeObj.members[index], status: true};
+    return {ok: true, data: filterData};
+  } catch (error) {
+    store.dispatch(loadingFalse());
+    return {ok: false, data: error};
+  }
+};
+
 // const updateDataFirebase = async data => {
 //   const {
 //     Auth: {userData},
@@ -139,4 +240,11 @@ const firebaseSubON = async data => {
   }
 };
 
-export {createTripObj, updateDataFirebase, firebaseSubON};
+export {
+  createTripObj,
+  updateDataFirebase,
+  firebaseSubON,
+  updateLocationONfire,
+  getFirebaseData,
+  getCurrentLocation,
+};

@@ -19,6 +19,7 @@ import GradientText from './GradientText';
 import {TextComponentTripInvite} from './TextComponentTripInvite';
 import moment from 'moment';
 import {tripProfileColors} from '../Utils/localDB';
+import {getSingleCharacter} from '../Utils/globalFunctions';
 
 const InvitationComp = ({
   image,
@@ -29,7 +30,6 @@ const InvitationComp = ({
   messages,
   status,
   onPress,
-  firstLetter,
   letterStyles,
   tripId,
   tripOwner,
@@ -46,10 +46,9 @@ const InvitationComp = ({
             <CircleImage image={image} />
           ) : (
             <View style={{backgroundColor: generateColor(), ...letterStyles}}>
-              <Text style={styles.letterSt}>{firstLetter}</Text>
+              <Text style={styles.letterSt}>{getSingleCharacter(name)}</Text>
             </View>
           )}
-
           {/* <CircleImageComp styles={styles.bannerImg}  image={image} /> */}
         </View>
         <View style={styles.nameDescriptionMain}>
