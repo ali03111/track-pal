@@ -46,3 +46,6 @@ export const changeUserTripStatus = '/change-user-trip-status';
 export const getAllUser = 'users';
 export const CreateTripUrl = '/create-trip';
 export const tripsData = '/owner-trips';
+export const changeOwnerStatusUrl = '/change-owner-status';
+export const changeMemberStatusUrl = '/change-member-status';
+export const UpdateProfileUrl = 'update-profile';

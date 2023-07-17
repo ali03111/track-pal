@@ -38,7 +38,7 @@ const SelectLocationModal = ({
         animationOutTiming={100}
         // hideModalContentWhileAnimating
         // useNativeDriver
-        // avoidKeyboard
+        avoidKeyboard
         onBackButtonPress={onBackPress}
         animationType="fade"
         // backdropColor={'white'}

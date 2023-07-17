@@ -4,8 +4,9 @@ import {Colors} from '../../Theme/Variables';
 
 export const styles = StyleSheet.create({
   tips: {
-    paddingHorizontal: wp('3.5'),
+    // paddingHorizontal: wp('3.5'),
     // backgroundColor: Colors.white,
+    // paddingTop: hp('3'),
     flex: 1,
   },
   headerStyle: {
@@ -21,6 +22,7 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'space-between',
     flexDirection: 'row',
+    marginHorizontal: wp('3.5'),
   },
   backRightBtn: {
     // textAlign: 'left',
@@ -74,6 +76,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   activeCardMain: status => ({
+    flex: 1,
     backgroundColor:
       status == 'Active' ? Colors.avtiveCard : Colors.inavtiveCard,
     paddingHorizontal: wp('1.5'),
@@ -82,6 +85,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     // height: hp('22'),
     flexDirection: 'row',
+    marginHorizontal: wp('3.5'),
   }),
   cardLeft: {
     flex: 1,
@@ -114,5 +118,13 @@ export const styles = StyleSheet.create({
     height: Dimensions.get('window').width * 0.13,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  trachIcon: {
+    width: wp('6'),
+    resizeMode: 'contain',
+  },
+  editIcon: {
+    width: wp('6'),
+    resizeMode: 'contain',
   },
 });

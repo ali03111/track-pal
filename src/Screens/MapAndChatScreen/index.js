@@ -74,7 +74,7 @@ function MyTabBar({state, descriptors, navigation}) {
 const Tab = createMaterialTopTabNavigator();
 // const Tab = createBottomTabNavigator();
 
-const MapAndChatScreen = ({navigation}) => {
+const MapAndChatScreen = ({navigation, route}) => {
   return (
     <View style={styles.tabsMain}>
       <CustomHeader
@@ -95,11 +95,13 @@ const MapAndChatScreen = ({navigation}) => {
           name="Map"
           component={Screens.MapScreen}
           options={{headerShown: false}}
+          initialParams={route}
         />
         <Tab.Screen
           name="Chat"
           component={Screens.ChatScreen}
           options={{headerShown: false}}
+          initialParams={route}
         />
       </Tab.Navigator>
     </View>

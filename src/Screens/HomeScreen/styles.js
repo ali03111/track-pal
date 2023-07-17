@@ -239,6 +239,7 @@ export const styles = StyleSheet.create({
   eInput: {
     height: hp('6'),
     paddingHorizontal: wp('3'),
+    color: Colors.black,
   },
   profileEditImg: {
     alignSelf: 'center',

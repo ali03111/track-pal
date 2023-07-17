@@ -47,40 +47,109 @@ API.get = async (url, params, axiosConfig) => {
   // }
 };
 
-const formDataFunc = (url, body) => {
-  const {Auth} = store.getState();
+// const formDataFunc = (url, body) => {
+//   const {Auth} = store.getState();
 
+//   var myHeaders = new Headers();
+//   myHeaders.append('Accept', 'application/json');
+//   myHeaders.append('Authorization', `Bearer ${Auth.token}`);
+//   myHeaders.append('Content-Type', 'multipart/form-data');
+
+//   // const formData = new FormData();
+//   // Object.entries(body).forEach(([key, val]) => {
+//   //   if (key === 'photos' && Array.isArray(val)) {
+//   //     val.forEach((res, index) => {
+//   //       formData.append(`photos`, {
+//   //         name: res?.fileName,
+//   //         type: res?.type,
+//   //         uri:
+//   //           Platform.OS == 'ios' ? res?.uri.replace('file://', '') : res?.uri,
+//   //       });
+//   //     });
+//   //   } else {
+//   //     formData.append(key, val);
+//   //   }
+//   // });
+//   var requestOptions = {
+//     method: 'POST',
+//     headers: myHeaders,
+//     body: body,
+//     redirect: 'follow',
+//   };
+
+//   return fetch(url, requestOptions)
+//     .then(res => res.json())
+//     .then(res => res)
+//     .catch(err => err);
+// };
+
+// export {formDataFunc};
+const formDataFunc = (url, body, imageKey, isArray) => {
+  const {Auth} = store.getState();
+  console.log(
+    'bjdv dv hj hj dhjs dshj bdh∫√ dhjksbvsdhj',
+    url,
+    body,
+    imageKey,
+    isArray,
+  );
   var myHeaders = new Headers();
   myHeaders.append('Accept', 'application/json');
   myHeaders.append('Authorization', `Bearer ${Auth.token}`);
   myHeaders.append('Content-Type', 'multipart/form-data');
 
   const formData = new FormData();
-  Object.entries(body).forEach(([key, val]) => {
-    if (key === 'photos' && Array.isArray(val)) {
-      val.forEach((res, index) => {
-        formData.append(`photos`, {
-          name: res?.fileName,
-          type: res?.type,
-          uri:
-            Platform.OS == 'ios' ? res?.uri.replace('file://', '') : res?.uri,
-        });
+  Object.entries(body).forEach(([key, value]) => {
+    if (body?.profileData?.type) {
+      formData.append(imageKey, {
+        uri: body?.profileData.uri,
+        type: body?.profileData.type,
+        name: body?.profileData.fileName,
       });
-    } else {
-      formData.append(key, val);
     }
+    formData.append(key, value);
   });
+  // Object.entries(body).forEach(([key, val]) => {
+  //   if (key == imageKey) {
+  //     isArray
+  //       ? val.forEach((res, index) => {
+  //           formData.append(imageKey, {
+  //             name: res?.fileName,
+  //             type: res?.type,
+  //             uri:
+  //               Platform.OS == 'ios'
+  //                 ? res?.uri.replace('file://', '')
+  //                 : res?.uri,
+  //           });
+  //         })
+  //       : formData.append(imageKey, {
+  //           name: body[imageKey]?.fileName,
+  //           type: body[imageKey]?.type,
+  //           uri:
+  //             Platform.OS == 'ios'
+  //               ? body[imageKey]?.uri.replace('file://', '')
+  //               : body[imageKey]?.uri,
+  //         });
+  //   } else {
+  //     formData.append(key, val);
+  //   }
+  // });
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formData,
     redirect: 'follow',
   };
-
-  return fetch(url, requestOptions)
+  let newUrl = baseURL + url;
+  console.log(newUrl, 'aasdas');
+  return fetch(newUrl, requestOptions)
     .then(res => res.json())
-    .then(res => res)
-    .catch(err => err);
+    .then(res => {
+      return {data: res, ok: true};
+    })
+    .catch(err => {
+      return {data: err, ok: false};
+    });
 };
 
 export {formDataFunc};

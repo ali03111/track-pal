@@ -23,6 +23,7 @@ const InvitationTab = () => {
           tripId={item?.pivot.trip_id}
           letterStyles={styles.bg}
           onPress={tripStatus}
+          tripOwner={item?.trip_owner}
         />
       </View>
     );
