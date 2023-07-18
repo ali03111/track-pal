@@ -17,6 +17,7 @@ import {types} from '../../Redux/types';
 import {updateUser} from '../../Redux/Action/AuthAction';
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import {Platform} from 'react-native';
+import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 const {default: useFormHook} = require('../../Hooks/UseFormHooks');
 const {default: Schemas} = require('../../Utils/Validation');
 const useEditProfile = ({navigate, goBack}) => {
@@ -62,10 +63,8 @@ const useEditProfile = ({navigate, goBack}) => {
     //   formdata.append(key, value);
     // });
     try {
-      // const {ok, data, originalError} = await API.post(
-      //   UpdateProfileUrl,
-      //   formdata,
-      // );
+      dispatch(loadingTrue());
+
       const {ok, data} = await formDataFunc(
         UpdateProfileUrl,
         {...currentValue, profileData},
@@ -73,10 +72,14 @@ const useEditProfile = ({navigate, goBack}) => {
       );
       console.log(ok, data, 'uueueue');
       if (ok) {
+        dispatch(loadingFalse());
+
         successMessage(data.message);
         dispatch({type: types.UpdateProfile, payload: data.user});
       }
     } catch (e) {
+      dispatch(loadingFalse());
+
       errorMessage(e.message.split(' ').slice(1).join(' ') ?? e);
     }
   };

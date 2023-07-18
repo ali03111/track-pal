@@ -8,6 +8,10 @@ export const styles = StyleSheet.create({
     paddingHorizontal: wp('3.5'),
     flex: 1,
   },
+  ProfileImage: {
+    height: hp('15'),
+    aspectRatio: 1,
+  },
   profileImg: {
     alignSelf: 'center',
     marginTop: hp('2'),

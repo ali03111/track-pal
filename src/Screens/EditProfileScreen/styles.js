@@ -72,9 +72,13 @@ export const styles = StyleSheet.create({
     flex: 0.06,
     resizeMode: 'contain',
   },
+  ProfileImage: {
+    // width: wp('20'),
+    height: hp('15'),
+    aspectRatio: 1,
+  },
   profileEditImg: {
     alignSelf: 'center',
-    marginTop: hp('-9'),
     borderRadius: Math.round(
       Dimensions.get('window').width + Dimensions.get('window').height,
     ),
@@ -83,7 +87,6 @@ export const styles = StyleSheet.create({
   },
   userProfileImg: {
     backgroundColor: Colors.white,
-    position: 'relative',
   },
   addImageIcon: {
     alignSelf: 'center',

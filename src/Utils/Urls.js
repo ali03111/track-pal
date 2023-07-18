@@ -20,9 +20,8 @@ export const apendUrl = url => {
 };
 export const imageUrl = url => {
   console.log(url, 'sdfksdfl;jlsdkj');
-  return url
-    ? imageURL + url
-    : 'https://res.cloudinary.com/dd6tdswt5/image/upload/v1684830799/UserImages/mhysa2zj0sbmvnw69b35.jpg';
+  return url ? imageURL + url : '';
+  // : 'https://res.cloudinary.com/dd6tdswt5/image/upload/v1684830799/UserImages/mhysa2zj0sbmvnw69b35.jpg';
 };
 
 export const telematicsInstanceId = 'cf0181ae-87bb-4eda-9ca6-9cda6d773b5b';
