@@ -35,10 +35,6 @@ const InvitedTrip = ({navigation, letterStyles}) => {
   } = useEditTripScreen(navigation);
 
   const renderItem = ({item, index}) => {
-    const generateColor = () => {
-      profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
-      return profileBgColor;
-    };
     const status = {
       0: 'Pendding',
       1: 'Active',

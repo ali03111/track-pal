@@ -7,9 +7,11 @@ import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
 import {BlurView} from '@react-native-community/blur';
 import useMapScreen from './useMapScreen';
+import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 
 const MapScreen = ({route, navigation}) => {
   const {allMember, destination, tripData} = useMapScreen(navigation, route);
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.groupInfoMain}>
@@ -22,7 +24,13 @@ const MapScreen = ({route, navigation}) => {
             blurRadius={0.5}
           />
         )}
-        <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
+        {/* <CircleImage image={DemoProfileImage1} style={styles.groupLogo} /> */}
+
+        {tripData.image ? (
+          <CircleImage image={tripData.image} style={styles.groupLogo} />
+        ) : (
+          <FirstCharacterComponent text={tripData.name} />
+        )}
 
         <View style={styles.groupDesc}>
           <Text style={styles.groupName}>{tripData.name}</Text>
