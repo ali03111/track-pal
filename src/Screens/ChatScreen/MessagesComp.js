@@ -12,13 +12,17 @@ import {TextComponent} from '../../Components/TextComponent';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 import LinearGradient from 'react-native-linear-gradient';
+import GradientText from '../../Components/GradientText';
 
-const MessagesComp = ({msg, time, user}) => {
+const MessagesComp = ({msg, time, user, userEmail}) => {
   return (
     <View style={styles.msgMain}>
       {user == 'sender' ? (
         <View style={styles.msgsSenderMain}>
           <View style={styles.msgs}>
+            <GradientText style={styles.userName} GradientAlignment={0.6}>
+              {userEmail}
+            </GradientText>
             <TextComponent text={msg} styles={styles.userMsg} />
           </View>
           <View style={styles.mainTime}>
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
     borderColor: '#rgba(11, 180, 255, 0.1)',
     paddingVertical: hp('1.5'),
     paddingHorizontal: wp('3'),
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: hp('1'),
     // flex: 0.7,
     backgroundColor: 'white',
@@ -145,6 +149,13 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: hp('1.8'),
     lineHeight: 22,
+  },
+  userName: {
+    fontSize: hp('1.8'),
+    fontWeight: '600',
+    color: 'red',
+    textAlign: 'left',
+    marginBottom: hp('.3'),
   },
 });
 

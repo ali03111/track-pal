@@ -16,7 +16,12 @@ const ChatScreen = () => {
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.notification}>
-        <MessagesComp user={item?.user} time={item?.time} msg={item?.msg} />
+        <MessagesComp
+          user={item?.user}
+          time={item?.time}
+          msg={item?.msg}
+          userEmail={item?.userEmail}
+        />
       </View>
     );
   });
