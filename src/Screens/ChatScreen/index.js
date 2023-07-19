@@ -9,14 +9,21 @@ import {Touchable} from '../../Components/Touchable';
 import LinearGradient from 'react-native-linear-gradient';
 import {TextComponent} from '../../Components/TextComponent';
 import {send} from '../../Assets';
+import KeyBoardWrapper from '../../Components/KeyboardWrapper';
+import {GiftedChat} from 'react-native-gifted-chat';
 
-const ChatScreen = () => {
-  const {msgs, getStart} = useChatScreen();
-  const [text, onChangeText] = useState('');
+const ChatScreen = ({navigation, route}) => {
+  const {msgs, getStart, userData, onChangeText, text, sendDataToFIrebase} =
+    useChatScreen(navigation, route);
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.notification}>
-        <MessagesComp user={item?.user} time={item?.time} msg={item?.msg} />
+        <MessagesComp
+          user={userData.id == item?.userId ? true : false}
+          time={item?.timeStamp}
+          msg={item?.msg}
+          email={item.email}
+        />
       </View>
     );
   });
@@ -42,7 +49,7 @@ const ChatScreen = () => {
           placeholderTextColor={Colors.gray}
         />
 
-        <Touchable style={styles.sendBtnStyle}>
+        <Touchable onPress={sendDataToFIrebase} style={styles.sendBtnStyle}>
           <LinearGradient
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}

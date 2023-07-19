@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   backBtn: {
     marginLeft: wp('3'),
-    color: Colors.gray2,
+    color: Colors.gray,
     fontSize: hp('2'),
   },
   HeaderTitle: {

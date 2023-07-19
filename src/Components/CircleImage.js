@@ -3,7 +3,6 @@ import {Image, Dimensions} from 'react-native';
 
 export const CircleImage = props => {
   const {styles} = props;
-  console.log('props?.image', props?.image);
   return (
     <Image
       source={props?.uri ? {uri: props?.image} : props?.image}

@@ -12,23 +12,19 @@ import {TextComponent} from '../../Components/TextComponent';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 import LinearGradient from 'react-native-linear-gradient';
+import moment from 'moment/moment';
+import GradientText from '../../Components/GradientText';
 
-const MessagesComp = ({msg, time, user}) => {
+const MessagesComp = ({msg, time, user, email}) => {
   return (
     <View style={styles.msgMain}>
-      {user == 'sender' ? (
-        <View style={styles.msgsSenderMain}>
-          <View style={styles.msgs}>
-            <TextComponent text={msg} styles={styles.userMsg} />
-          </View>
-          <View style={styles.mainTime}>
-            <TextComponent text={time} styles={styles.timing} />
-          </View>
-        </View>
-      ) : (
+      {user ? (
         <View style={styles.msgsRecieveMain}>
           <View style={styles.mainTimeRecieve}>
-            <TextComponent text={time} styles={styles.timingRecieve} />
+            <TextComponent
+              text={moment(time).format('LT')}
+              styles={styles.timingRecieve}
+            />
           </View>
 
           <LinearGradient
@@ -38,6 +34,21 @@ const MessagesComp = ({msg, time, user}) => {
             style={styles.msgsRecieve}>
             <TextComponent text={msg} styles={styles.userMsgRecieve} />
           </LinearGradient>
+        </View>
+      ) : (
+        <View style={styles.msgsSenderMain}>
+          <View style={styles.msgs}>
+            <GradientText style={styles.userName} GradientAlignment={0.6}>
+              {email}
+            </GradientText>
+            <TextComponent text={msg} styles={styles.userMsg} />
+          </View>
+          <View style={styles.mainTime}>
+            <TextComponent
+              text={moment(time).format('LT')}
+              styles={styles.timing}
+            />
+          </View>
         </View>
       )}
     </View>
@@ -59,7 +70,7 @@ const styles = StyleSheet.create({
     borderColor: '#rgba(11, 180, 255, 0.1)',
     paddingVertical: hp('1.5'),
     paddingHorizontal: wp('3'),
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: hp('1'),
     // flex: 0.7,
     backgroundColor: 'white',
@@ -145,6 +156,13 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: hp('1.8'),
     lineHeight: 22,
+  },
+  userName: {
+    fontSize: hp('1.8'),
+    fontWeight: '600',
+    color: 'red',
+    textAlign: 'left',
+    marginBottom: hp('.3'),
   },
 });
 

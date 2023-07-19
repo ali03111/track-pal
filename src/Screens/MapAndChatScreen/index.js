@@ -82,7 +82,7 @@ const MapAndChatScreen = ({navigation, route}) => {
         backText={'Back'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
-        headerTitle={'Business trip'}
+        headerTitle={route.params.item.name}
         goBack={navigation.goBack}
       />
 

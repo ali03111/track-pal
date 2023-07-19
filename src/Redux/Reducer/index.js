@@ -3,6 +3,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import {persistStore, persistReducer} from 'redux-persist';
 import AuthReducer from './AuthReducer';
 import loadingReducer from './loadingReducer';
+import ShareLocationReducer from './ShareLocationReducer';
 import onboardingReducer from './onboardingReducer';
 import createSagaMiddleware from 'redux-saga';
 import mySaga from './../Sagas/index';
@@ -23,15 +24,15 @@ const AuthPersistConfig = {
 };
 
 const LocationPersistConfig = {
-  key: 'recentlocation',
+  key: 'islocationShare',
   storage: AsyncStorage,
-  whitelist: 'recentLocation',
+  whitelist: ['islocationShare', 'tripId', 'tripOwnerID'],
 };
 
 const reducers = {
   onboarding: persistReducer(onBoardPersistConfig, onboardingReducer),
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
-  // recentlocation: persistReducer(LocationPersistConfig, RecentLocationReducer),
+  islocationShare: persistReducer(LocationPersistConfig, ShareLocationReducer),
   isloading: loadingReducer,
   // isQuestion: questionReducer,
   // sagas: applyMiddleware(sagaMiddleware),

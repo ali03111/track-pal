@@ -5,8 +5,9 @@ import {store} from '../Redux/Reducer';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
 import {loadingFalse, loadingTrue} from '../Redux/Action/isloadingAction';
+import {types} from '../Redux/types';
 
-const reference = firestore().collection('Trips');
+export const reference = firestore().collection('Trips');
 
 const createTripObj = async data => {
   const {
@@ -122,6 +123,18 @@ const getCurrentLocation = async () => {
   // };
 };
 
+const shareLocationFirebase = async () => {
+  const {
+    islocationShare: {islocationShare, tripId, tripOwnerID},
+  } = store.getState('islocationShare');
+
+  if (islocationShare) {
+    await firebaseSubON({tripId, tripOnnwerID: tripOwnerID});
+  }
+};
+
+// shareLocationFirebase();
+
 const updateLocationONfire = async data => {
   const {
     Auth: {userData},
@@ -129,6 +142,14 @@ const updateLocationONfire = async data => {
   const {tripId, tripOnnwerID} = data;
 
   try {
+    store.dispatch({
+      type: types.isLocationTrue,
+      payload: {
+        tripId,
+        tripOwnerID: tripOnnwerID,
+      },
+    });
+
     await getCurrentLocation();
     // const locationData = await getCurrentLocation();
     setTimeout(async () => {
@@ -170,7 +191,9 @@ const getFirebaseData = async data => {
 
     console.log('wholeObjwholeObjwholeObjwholeObj', wholeObj);
     // Find the index of the object with id 6 in the members array
-    const filterData = wholeObj.members.filter(member => member.status == true);
+    const filterData = wholeObj.members.filter(
+      member => member.status == true && member?.coords != null && true,
+    );
     store.dispatch(loadingFalse());
     // wholeObj.members[index] = {...wholeObj.members[index], status: true};
     return {ok: true, data: filterData};
@@ -179,6 +202,41 @@ const getFirebaseData = async data => {
     return {ok: false, data: error};
   }
 };
+
+const sendDataToFIrebase = async data => {
+  const {tripOnnwerID, tripId, msgObj, userData} = data;
+  console.log('uyserSTchvschv sc', userData);
+  try {
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+    const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+    const wholeObj = firebaseGet.data();
+
+    // Find the index of the object with id 6 in the members array
+    const index = wholeObj.members.findIndex(
+      member => member.id == userData.id,
+    );
+
+    console.log(
+      'wholeObj.member[index].chatwholeObj.member[index].chatwholeObj.member[index].chatwholeObj.member[index].chat',
+      wholeObj.members,
+    );
+
+    wholeObj.members[index] = {
+      ...wholeObj.members[index],
+      chat: [...wholeObj.members[index].chat, msgObj],
+    };
+
+    await fire.doc(`${tripOnnwerID}`).update(wholeObj);
+
+    return {ok: true, data: null};
+  } catch (error) {
+    return {ok: false, data: error};
+  }
+};
+
+// Geolocation.watchPosition
 
 // const updateDataFirebase = async data => {
 //   const {
@@ -205,37 +263,93 @@ const getFirebaseData = async data => {
 //   }
 // };
 
+var filte = [];
+
+const getFirebaseUpdatedData = async data => {
+  const {tripId, tripOnnwerID} = data;
+
+  try {
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+    fire.onSnapshot(snapshot => {
+      console.log('snapshotsnapshotsnapshotsnapshotsnapshot', snapshot);
+      const allMsg = snapshot.docs.map(item => {
+        return {...item._data};
+      });
+      // setMessages(allMsg);
+      // const wholeObj = snapshot.data();
+
+      console.log('wholesdfsdfsdfsdfdsfdsdsObj', allMsg);
+
+      if (allMsg.length > 0) {
+        filte = allMsg?.members?.filter(
+          member => member.status === true && member.coords != null && true,
+        );
+        // console.log('filterData', filterData);
+
+        // Do whatever you need with the filtered data
+
+        // Example: Update state or call a function with the filtered data
+        // updateState(filterData);
+        // processFilteredData(filterData);
+      }
+    });
+
+    // Return a result or handle success
+
+    return {ok: true, data: filte};
+  } catch (error) {
+    // Handle error
+    return {ok: false, data: error};
+  }
+};
+
 const firebaseSubON = async data => {
   const {
     Auth: {userData},
   } = store.getState('Auth');
   const {tripId, tripOnnwerID} = data;
   try {
-    const fire = reference.ref(`Trips/${tripOnnwerID}/${tripId}/members/`);
-    fire.child(`"${userData.id}"`).on('value', async snapshot => {
-      try {
-        let existingObject = snapshot.val();
-        console.log('existingObject', snapshot.val());
-        // let value = {status: true};
-        let value = Object.values(snapshot.val())[0];
-        Geolocation.watchPosition(
-          async position => {
-            const {latitude, longitude} = position.coords;
-            await fire.set({...value, coords: {latitude, longitude}});
-            console.log('Updated location:', latitude, longitude);
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+    const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+    const wholeObj = firebaseGet.data();
+
+    // Find the index of the object with id 6 in the members array
+    const index = wholeObj.members.findIndex(
+      member => member.id == userData.id,
+    );
+    console.log('wholeObjwholeObjwholeObjwholeObjwholeObjwholeObj', wholeObj);
+    Geolocation.watchPosition(
+      async position => {
+        const {latitude, longitude} = position.coords;
+
+        wholeObj.members[index] = {
+          ...wholeObj.members[index],
+          coords: {
+            latitude,
+            longitude,
           },
-          error => {
-            return {ok: false, data: error};
-          },
-          {enableHighAccuracy: true, distanceFilter: 10},
+        };
+
+        await fire.doc(`${tripOnnwerID}`).update(wholeObj);
+
+        console.log(
+          'Error creating tripsssssssssssssssss:',
+          latitude,
+          longitude,
         );
-      } catch (error) {
-        console.log('djkbvjksbdkj bksjd ', error);
-      }
-    });
+      },
+      error => {
+        return {ok: false, data: error};
+      },
+      {enableHighAccuracy: true},
+    );
+
     return {ok: true, data: null};
   } catch (error) {
-    console.log('Error creating trip:', error);
+    console.log('Error creating trip: firebaseSubON', error);
     return {ok: false, data: error};
   }
 };
@@ -247,4 +361,7 @@ export {
   updateLocationONfire,
   getFirebaseData,
   getCurrentLocation,
+  getFirebaseUpdatedData,
+  shareLocationFirebase,
+  sendDataToFIrebase,
 };

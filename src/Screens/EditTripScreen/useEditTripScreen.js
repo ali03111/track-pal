@@ -35,11 +35,13 @@ const useEditTripScreen = ({addListener, navigate}) => {
     if (ok) {
       tripsCard();
       if (status == 1) {
-        // setIsTripCreated(!isTripCreated);
-        // setTimeout(() => {
-        //   setIsTripCreated(!isTripCreated);
-        //   // navigate('MapAndChatScreen', {item: tripCardData[index]});
-        // }, 1000);
+        setIsTripCreated(true);
+        setTimeout(() => {
+          setIsTripCreated(false);
+          navigate('MapAndChatScreen', {
+            item: {...tripCardData[index], owner: true},
+          });
+        }, 1000);
       }
       // updateLocationONfire({tripId:id})
       // status == 1 && setIsTripCreated(!isTripCreated);
@@ -63,13 +65,13 @@ const useEditTripScreen = ({addListener, navigate}) => {
       if (status == 1) {
         await updateLocationONfire({tripId: id, tripOnnwerID});
         setTimeout(() => {
-          setIsTripCreated(!isTripCreated);
+          setIsTripCreated(true);
           dispatch(loadingFalse());
           setTimeout(() => {
-            setIsTripCreated(!isTripCreated);
+            setIsTripCreated(false);
             navigate('MapAndChatScreen', {item: invitedTrips[index]});
           }, 1000);
-        }, 1000);
+        }, 2000);
         dispatch(loadingFalse());
       }
     } else errorMessage('somfkle n');
@@ -78,7 +80,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
   const tripsCard = async () => {
     const {ok, data} = await API.get(tripsData);
     if (ok) {
-      // console.log('asdasdasd', data);
+      console.log('asdasdasd', data);
       setTripCardData(data.my_trips);
       setInvitedTrip(data.invitation_trips);
     }

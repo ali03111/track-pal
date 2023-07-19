@@ -31,6 +31,7 @@ import {
 import GradientText from '../../Components/GradientText';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {keyExtractor} from '../../Utils';
+import Geolocation from '@react-native-community/geolocation';
 
 const EditTripScreen = ({navigation, letterStyles}) => {
   const {
@@ -106,7 +107,9 @@ const EditTripScreen = ({navigation, letterStyles}) => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            navigate('MapAndChatScreen', {item: invitedTrips[index]});
+            navigation.navigate('MapAndChatScreen', {
+              item: invitedTrips[index],
+            });
           }}>
           <Image
             style={{
@@ -179,14 +182,17 @@ const EditTripScreen = ({navigation, letterStyles}) => {
               title={'End Trip'}
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
-              onPress={() => updateState(2, item.id, index)}
+              onPress={() => {
+                Geolocation.clearWatch();
+                updateState(2, item.id, index);
+              }}
             />
           )}
         </View>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('MapAndChatScreen', {
-              item: invitedTrips[index],
+              item: {...tripCardData[index], owner: true},
             })
           }>
           <Image

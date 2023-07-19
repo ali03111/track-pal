@@ -1,15 +1,19 @@
 import React, {memo} from 'react';
 import {View, Text, Image} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, Polyline} from 'react-native-maps';
 import {styles} from './styles';
 import {DemoProfileImage1, alert, bgBlurHome, link} from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
 import {BlurView} from '@react-native-community/blur';
 import useMapScreen from './useMapScreen';
+import MapViewDirections from 'react-native-maps-directions';
 
 const MapScreen = ({route, navigation}) => {
-  const {allMember, destination, tripData} = useMapScreen(navigation, route);
+  const {allMember, destination, tripData, currentUser} = useMapScreen(
+    navigation,
+    route,
+  );
   return (
     <View style={{flex: 1}}>
       <View style={styles.groupInfoMain}>
@@ -36,8 +40,12 @@ const MapScreen = ({route, navigation}) => {
         style={styles.staticMapImg}
         mapType="hybrid"
         region={{
-          latitude: 24.8323181,
-          longitude: 67.0730434,
+          latitude: tripData.owner
+            ? destination.latitude
+            : currentUser.coords.latitude,
+          longitude: tripData.owner
+            ? destination.longitude
+            : currentUser.coords.longitude,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         }}>
@@ -47,11 +55,45 @@ const MapScreen = ({route, navigation}) => {
             longitude: destination.longitude,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
-          }}
-          style={{
-            backgroundColor: 'green',
-          }}
-        />
+          }}>
+          <View style={{backgroundColor: 'yellow', padding: 10}}>
+            <Text>destination</Text>
+          </View>
+        </Marker>
+
+        {currentUser?.status && !tripData.owner && (
+          <>
+            <MapViewDirections
+              origin={{
+                latitude: currentUser.coords.latitude,
+                longitude: currentUser.coords.longitude,
+              }}
+              precision="high"
+              destination={{
+                latitude: destination.latitude,
+                longitude: destination.longitude,
+              }}
+              mode="DRIVING"
+              // optimizeWaypoints={true}
+              strokeColor={'red'}
+              strokeWidth={4}
+              apikey={'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE'}
+              // strokeColors={['red']}
+            />
+            <Marker
+              coordinate={{
+                latitude: currentUser.coords.latitude,
+                longitude: currentUser.coords.longitude,
+                // latitudeDelta: 0.015,
+                // longitudeDelta: 0.0121,
+              }}>
+              <View style={{backgroundColor: 'blue', padding: 10}}>
+                <Text>{currentUser.details.email}</Text>
+              </View>
+            </Marker>
+          </>
+          // console.log('jksbdjkbsdjkbvjsdb vsdjv sdj jdjdjd', currentUser)
+        )}
         {allMember.length > 0 &&
           allMember.map(res => {
             console.log('sjdbvjsbjvb sdjkvsd', res);
@@ -60,10 +102,13 @@ const MapScreen = ({route, navigation}) => {
                 coordinate={{
                   latitude: res.coords.latitude,
                   longitude: res.coords.longitude,
-                  latitudeDelta: 0.015,
-                  longitudeDelta: 0.0121,
-                }}
-              />
+                  // latitudeDelta: 0.015,
+                  // longitudeDelta: 0.0121,
+                }}>
+                <View style={{backgroundColor: 'red', padding: 10}}>
+                  <Text>{res.details.email}</Text>
+                </View>
+              </Marker>
             );
           })}
       </MapView>

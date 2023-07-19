@@ -108,7 +108,7 @@ export const AutoFillGoogleComp = ({
       query={{
         key: 'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE',
         language: 'en',
-        components: 'country:us',
+        // components: 'country:us',
       }}
     />
   );
