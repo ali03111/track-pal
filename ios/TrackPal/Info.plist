@@ -29,7 +29,7 @@
 	<key>NSMotionUsageDescription</key>
 	<string>Please, provide permissions for this Demo</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Please, provide the permissions </string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Please, provide permissions for this Demo</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
