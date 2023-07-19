@@ -8,6 +8,7 @@ import {Touchable} from '../../Components/Touchable';
 import {BlurView} from '@react-native-community/blur';
 import useMapScreen from './useMapScreen';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
+import {TextComponent} from '../../Components/TextComponent';
 
 const MapScreen = ({route, navigation}) => {
   const {allMember, destination, tripData} = useMapScreen(navigation, route);
@@ -33,8 +34,16 @@ const MapScreen = ({route, navigation}) => {
         )}
 
         <View style={styles.groupDesc}>
-          <Text style={styles.groupName}>{tripData.name}</Text>
-          <Text style={styles.groupMember}>{allMember.length} members</Text>
+          <TextComponent
+            styles={styles.groupName}
+            text={tripData.name}
+            numberOfLines={1}
+          />
+          <TextComponent
+            styles={styles.groupMember}
+            text={allMember.length}
+            members
+          />
         </View>
         <Touchable style={styles.groupLink}>
           <Image source={alert} style={styles.externalLinks} />

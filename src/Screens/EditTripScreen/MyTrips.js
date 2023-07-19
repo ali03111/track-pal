@@ -48,7 +48,11 @@ const MyTrips = ({navigation}) => {
               <FirstCharacterComponent text={item?.name} />
             )}
             <View style={styles.groupDesc}>
-              <TextComponent text={item?.name} styles={styles.groupName} />
+              <TextComponent
+                numberOfLines={1}
+                text={item?.name}
+                styles={styles.groupName}
+              />
               <TextComponent
                 text={item?.total_members + ' members'}
                 styles={styles.groupMember}
