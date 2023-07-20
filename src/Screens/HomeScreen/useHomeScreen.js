@@ -10,8 +10,8 @@ import {loadingTrue} from '../../Redux/Action/isloadingAction';
 import {createTripObj} from '../../Services/FireBaseRealTImeServices';
 
 const useHomeScreen = () => {
-  const {dispatch} = useReduxStore();
-
+  const {dispatch, getState} = useReduxStore();
+  const {userData} = getState('Auth');
   const [homeStates, setHomeStates] = useState({
     selectTripType: tripsTypes[0].id,
     isModalVisible: false,
@@ -106,7 +106,7 @@ const useHomeScreen = () => {
       start_destination: locationInput,
       name: GroupInput,
       end_destination: destinationInput,
-      user_ids: groupMembers,
+      user_ids: [...groupMembers, userData.id],
       type: selectTripType,
     },
     [tripsTypes[2].id]: {

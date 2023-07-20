@@ -26,6 +26,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
 
   const [tripCardData, setTripCardData] = useState([]);
   const [invitedTrips, setInvitedTrip] = useState([]);
+  const [groupTrips, setGroupTrip] = useState([]);
 
   const updateState = async (status, id, index) => {
     const {ok, data} = await API.post(changeOwnerStatusUrl, {
@@ -83,12 +84,14 @@ const useEditTripScreen = ({addListener, navigate}) => {
       console.log('asdasdasd', data);
       setTripCardData(data.my_trips);
       setInvitedTrip(data.invitation_trips);
+      setGroupTrip(data.group_trips);
     }
   };
 
   const useEffectFuc = () => {
-    const event = addListener('focus', tripsCard);
-    return event;
+    tripsCard();
+    // const event = addListener('focus', tripsCard);
+    // return event;
   };
 
   useEffect(useEffectFuc, []);
@@ -103,6 +106,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
     invitedTrips,
     tripsCard,
     changeMemberStatus,
+    groupTrips,
   };
 };
 

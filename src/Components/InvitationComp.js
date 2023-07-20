@@ -20,6 +20,7 @@ import {TextComponentTripInvite} from './TextComponentTripInvite';
 import moment from 'moment';
 import {tripProfileColors} from '../Utils/localDB';
 import {getSingleCharacter} from '../Utils/globalFunctions';
+import {FirstCharacterComponent} from './FirstCharacterComponent';
 
 const InvitationComp = ({
   image,
@@ -34,10 +35,6 @@ const InvitationComp = ({
   tripId,
   tripOwner,
 }) => {
-  const generateColor = () => {
-    profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
-    return profileBgColor;
-  };
   return (
     <View style={styles.invitationStyle}>
       <View style={styles.notificationMian}>
@@ -45,9 +42,7 @@ const InvitationComp = ({
           {image ? (
             <CircleImage image={image} />
           ) : (
-            <View style={{backgroundColor: generateColor(), ...letterStyles}}>
-              <Text style={styles.letterSt}>{getSingleCharacter(name)}</Text>
-            </View>
+            <FirstCharacterComponent text={getSingleCharacter(name)} />
           )}
           {/* <CircleImageComp styles={styles.bannerImg}  image={image} /> */}
         </View>
