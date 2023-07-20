@@ -17,7 +17,7 @@ const useNotificationScreen = () => {
     const {ok, data} = await API.get(userTrips);
     if (ok) {
       setTripNotification(data);
-    } else errorMessage('some error wentn');
+    } else errorMessage('an error occured');
   };
 
   const tripStatus = async (status, id, tripOnnwerID) => {

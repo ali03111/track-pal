@@ -5,7 +5,7 @@ import {Colors} from '../Theme/Variables';
 import {tripProfileColors} from '../Utils/localDB';
 import {getSingleCharacter} from '../Utils/globalFunctions';
 
-export const FirstCharacterComponent = ({text}) => {
+export const FirstCharacterComponent = ({text, extraStyle}) => {
   const generateColor = () => {
     profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
     return profileBgColor;
@@ -15,6 +15,7 @@ export const FirstCharacterComponent = ({text}) => {
       style={{
         backgroundColor: generateColor(),
         ...styles.letterStyle,
+        ...extraStyle,
       }}>
       <Text style={styles.letterSt}>{getSingleCharacter(text)}</Text>
     </View>

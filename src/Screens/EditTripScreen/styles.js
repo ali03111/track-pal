@@ -127,4 +127,5 @@ export const styles = StyleSheet.create({
     width: wp('6'),
     resizeMode: 'contain',
   },
+  refStyle: {},
 });

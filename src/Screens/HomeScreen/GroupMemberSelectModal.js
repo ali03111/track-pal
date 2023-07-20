@@ -32,6 +32,8 @@ import {TextComponent} from '../../Components/TextComponent';
 import {Colors} from '../../Theme/Variables';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {errorMessage} from '../../Config/NotificationMessage';
+import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
+import {imageUrl} from '../../Utils/Urls';
 
 const GroupMemberSelectModal = ({
   isGroupMemberSelectModal,
@@ -73,6 +75,7 @@ const GroupMemberSelectModal = ({
 
   // errorMessageHandler
   const renderItem = useCallback(({item, index}) => {
+    console.log('asdasd', item);
     return (
       <View style={styles.radioMain}>
         <Touchable
@@ -80,10 +83,19 @@ const GroupMemberSelectModal = ({
           onPress={() => addMembersToGroup(item.id)}>
           <View style={styles.radio}>
             <View style={styles.groupMembers}>
-              <CircleImage
-                image={frequentTrips[0].image}
-                styles={styles.memberPic}
-              />
+              {item.profile_image ? (
+                <CircleImage
+                  uri={true}
+                  image={imageUrl(item?.profile_image)}
+                  styles={styles.memberPic}
+                />
+              ) : (
+                <FirstCharacterComponent
+                  extraStyle={styles.firstLetterStyle}
+                  text={item?.name}
+                />
+              )}
+
               <TextComponent text={item?.email} styles={styles.groupTitle} />
               <Image
                 source={

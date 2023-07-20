@@ -7,7 +7,7 @@ import {TextComponent} from './TextComponent';
 import {Touchable} from './Touchable';
 import ThemeButton from './ThemeButton';
 
-export const EmptyViewComp = ({onRefresh}) => {
+export const EmptyViewComp = ({onRefresh, refreshStyle}) => {
   return (
     <View
       style={{
@@ -18,6 +18,7 @@ export const EmptyViewComp = ({onRefresh}) => {
         alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 10,
+        ...refreshStyle,
       }}>
       <MaterialIcons
         name="search-off"

@@ -121,9 +121,20 @@ const InvitedTrip = ({navigation, letterStyles}) => {
       rowMap[rowKey]?.closeRow();
     }, 2000);
   };
-
+  const noData = Boolean(invitedTrips.length == 0)
+    ? {
+        alignItems: 'center',
+        justifyContent: 'center',
+      }
+    : {};
   return (
-    <View style={{marginTop: hp('3')}}>
+    <View
+      style={{
+        marginTop: hp('3'),
+        flex: 1,
+        height: '100%',
+        ...noData,
+      }}>
       {invitedTrips.length > 0 ? (
         <SwipeListView
           useFlatList={true}
@@ -141,9 +152,10 @@ const InvitedTrip = ({navigation, letterStyles}) => {
           refreshing={false}
           onRefresh={tripsCard}
           showsVerticalScrollIndicator={false}
+          style={{height: '100%'}}
         />
       ) : (
-        <EmptyViewComp onRefresh={tripsCard} />
+        <EmptyViewComp onRefresh={tripsCard} refreshStyle={styles.refStyle} />
       )}
 
       <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} />
