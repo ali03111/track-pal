@@ -5,6 +5,7 @@ import {styles} from './styles';
 import useNotificationScreen from './useNotificationScreen';
 import {hp, wp} from '../../Config/responsive';
 import InvitationComp from '../../Components/InvitationComp';
+import {EmptyViewComp} from '../../Components/EmptyViewComp';
 
 const InvitationTab = () => {
   const {Invitation, tripNotification, tripStatus, getUserTrips} =
@@ -28,20 +29,34 @@ const InvitationTab = () => {
       </View>
     );
   });
+  const noData = Boolean(tripNotification.length == 0)
+    ? {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }
+    : {};
   return (
-    <View>
-      <FlatList
-        onRefresh={getUserTrips}
-        refreshing={false}
-        data={tripNotification}
-        renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingHorizontal: wp('4'),
-          paddingBottom: hp('5'),
-        }}
-      />
+    <View style={{...noData}}>
+      {tripNotification.length > 0 ? (
+        <FlatList
+          onRefresh={getUserTrips}
+          refreshing={false}
+          data={tripNotification}
+          renderItem={renderItem}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingHorizontal: wp('4'),
+            paddingBottom: hp('5'),
+          }}
+        />
+      ) : (
+        <EmptyViewComp
+          onRefresh={getUserTrips}
+          refreshStyle={styles.refStyle}
+        />
+      )}
     </View>
   );
 };

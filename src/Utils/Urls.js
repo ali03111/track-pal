@@ -2,13 +2,13 @@ const getCredentials = () => {
   if (__DEV__)
     return {
       baseURL: 'https://virtualrealitycreators.com/trackpal/api/',
-      imageURL: 'https://virtualrealitycreators.com/stound/',
+      imageURL: 'https://virtualrealitycreators.com/trackpal/public/',
     };
   else {
     console.log = () => {};
     return {
       baseURL: 'https://virtualrealitycreators.com/trackpal/api/',
-      imageURL: 'https://virtualrealitycreators.com/stound/',
+      imageURL: 'https://virtualrealitycreators.com/trackpal/public/',
     };
   }
 };

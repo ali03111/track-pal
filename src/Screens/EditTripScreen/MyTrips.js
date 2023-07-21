@@ -114,9 +114,20 @@ const MyTrips = ({navigation}) => {
       rowMap[rowKey]?.closeRow();
     }, 2000);
   };
-
+  const noData = Boolean(tripCardData.length == 0)
+    ? {
+        alignItems: 'center',
+        justifyContent: 'center',
+      }
+    : {};
   return (
-    <View style={{marginTop: hp('3'), height: '100%', flex: 1}}>
+    <View
+      style={{
+        marginTop: hp('3'),
+        height: '100%',
+        flex: 1,
+        ...noData,
+      }}>
       {tripCardData.length > 0 ? (
         <SwipeListView
           useFlatList={true}

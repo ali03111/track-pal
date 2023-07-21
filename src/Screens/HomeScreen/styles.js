@@ -357,4 +357,8 @@ export const styles = StyleSheet.create({
     marginBottom: hp('-1'),
     marginRight: wp('4'),
   },
+  firstLetterStyle: {
+    width: Dimensions.get('window').width * 0.1,
+    height: Dimensions.get('window').width * 0.1,
+  },
 });
