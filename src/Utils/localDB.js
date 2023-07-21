@@ -305,6 +305,7 @@ export const msgs = [
     name: 'William James',
     msg: 'Lorem Ipsum is simply dummy text of the printing.',
     time: '3:15 PM',
+    userEmail: 'abc@gmail.com',
   },
   {
     user: 'reciever',
@@ -317,6 +318,7 @@ export const msgs = [
     name: 'William James',
     msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing.',
     time: '3:15 PM',
+    userEmail: 'abc@gmail.com',
   },
   {
     user: 'reciever',
@@ -329,6 +331,7 @@ export const msgs = [
     name: 'William James',
     msg: 'Lorem Ipsum is simply dummy text of the printing.',
     time: '3:15 PM',
+    userEmail: 'abc@gmail.com',
   },
   {
     user: 'reciever',
@@ -347,6 +350,7 @@ export const msgs = [
     name: 'William James',
     msg: 'Lorem Ipsum is simply dummy text of the printing.',
     time: '3:15 PM',
+    userEmail: 'abc@gmail.com',
   },
   {
     user: 'reciever',
