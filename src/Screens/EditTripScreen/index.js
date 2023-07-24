@@ -54,7 +54,7 @@ const EditTripScreen = ({navigation}) => {
       <Tab.Screen name="Group Trips" component={GroupTrips} />
     </Tab.Navigator>
 
-    //   <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} />
+    // <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} />
     // </View>
   );
 };

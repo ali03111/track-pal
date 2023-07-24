@@ -2,7 +2,15 @@ import React, {memo} from 'react';
 import {View, Text, Image} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import {styles} from './styles';
-import {DemoProfileImage1, alert, bgBlurHome, link} from '../../Assets';
+import {
+  DemoProfileImage1,
+  alert,
+  bgBlurHome,
+  currentUserLottie,
+  destinationLottie,
+  link,
+  userWithOutPicLottie,
+} from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
 import {BlurView} from '@react-native-community/blur';
@@ -10,6 +18,8 @@ import useMapScreen from './useMapScreen';
 import MapViewDirections from 'react-native-maps-directions';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {TextComponent} from '../../Components/TextComponent';
+import Lottie from 'lottie-react-native';
+import {Colors} from '../../Theme/Variables';
 
 const MapScreen = ({route, navigation}) => {
   const {allMember, destination, tripData, currentUser} = useMapScreen(
@@ -44,7 +54,7 @@ const MapScreen = ({route, navigation}) => {
           />
           <TextComponent
             styles={styles.groupMember}
-            text={allMember.length}
+            text={allMember.length + 1}
             members
           />
         </View>
@@ -56,12 +66,14 @@ const MapScreen = ({route, navigation}) => {
         style={styles.staticMapImg}
         mapType="hybrid"
         region={{
-          latitude: tripData.owner
-            ? destination.latitude
-            : currentUser.coords.latitude,
-          longitude: tripData.owner
-            ? destination.longitude
-            : currentUser.coords.longitude,
+          latitude: destination.latitude,
+          longitude: destination.longitude,
+          // latitude: tripData.owner
+          //   ? destination.latitude
+          //   : currentUser.coords.latitude,
+          // longitude: tripData.owner
+          //   ? destination.longitude
+          //   : currentUser.coords.longitude,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         }}>
@@ -72,9 +84,7 @@ const MapScreen = ({route, navigation}) => {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}>
-          <View style={{backgroundColor: 'yellow', padding: 10}}>
-            <Text>destination</Text>
-          </View>
+          <Lottie autoSize source={destinationLottie} autoPlay loop />
         </Marker>
 
         {currentUser?.status && !tripData.owner && (
@@ -90,9 +100,13 @@ const MapScreen = ({route, navigation}) => {
                 longitude: destination.longitude,
               }}
               mode="DRIVING"
-              // optimizeWaypoints={true}
-              strokeColor={'red'}
+              optimizeWaypoints={true}
+              // strokeColor={'red'}
+              // start={{x: 0, y: 0}}
+              // end={{x: 1, y: 0}}
               strokeWidth={4}
+              strokeColors={['#92278F', '#EE2A7B']}
+              // strokeColors={[Colors.themeColorDark, Colors.themeColorLight]}
               apikey={'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE'}
               // strokeColors={['red']}
             />
@@ -103,9 +117,9 @@ const MapScreen = ({route, navigation}) => {
                 // latitudeDelta: 0.015,
                 // longitudeDelta: 0.0121,
               }}>
-              <View style={{backgroundColor: 'blue', padding: 10}}>
-                <Text>{currentUser.details.email}</Text>
-              </View>
+              {/* <Lottie source={userWithOutPicLottie} autoPlay loop /> */}
+
+              <Lottie autoSize source={currentUserLottie} autoPlay loop />
             </Marker>
           </>
           // console.log('jksbdjkbsdjkbvjsdb vsdjv sdj jdjdjd', currentUser)
@@ -121,9 +135,7 @@ const MapScreen = ({route, navigation}) => {
                   // latitudeDelta: 0.015,
                   // longitudeDelta: 0.0121,
                 }}>
-                <View style={{backgroundColor: 'red', padding: 10}}>
-                  <Text>{res.details.email}</Text>
-                </View>
+                <Lottie autoSize source={userWithOutPicLottie} autoPlay loop />
               </Marker>
             );
           })}

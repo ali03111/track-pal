@@ -13,8 +13,16 @@ import KeyBoardWrapper from '../../Components/KeyboardWrapper';
 import {GiftedChat} from 'react-native-gifted-chat';
 
 const ChatScreen = ({navigation, route}) => {
-  const {msgs, getStart, userData, onChangeText, text, sendDataToFIrebase} =
-    useChatScreen(navigation, route);
+  const {
+    msgs,
+    getStart,
+    userData,
+    onChangeText,
+    text,
+    sendDataToFIrebase,
+    handleAutoScroll,
+    scrollViewRef,
+  } = useChatScreen(navigation, route);
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.notification}>
@@ -33,8 +41,11 @@ const ChatScreen = ({navigation, route}) => {
         refreshing={false}
         data={msgs}
         scrollEnabled
+        ref={scrollViewRef}
         renderItem={renderItem}
+        onContentSizeChange={handleAutoScroll}
         showsVerticalScrollIndicator={false}
+        onLayout={handleAutoScroll}
         contentContainerStyle={{
           paddingBottom: hp('2'),
           paddingHorizontal: wp('1'),

@@ -70,3 +70,9 @@ export {default as send} from './Icons/send.png';
 export {default as trash} from './Icons/trash.png';
 export {default as cardediticon} from './Icons/editicon.png';
 export {default as alert} from './Icons/alert.png';
+
+// Lotties files
+
+export {default as currentUserLottie} from './Lotties/currentUser.json';
+export {default as destinationLottie} from './Lotties/destination.json';
+export {default as userWithOutPicLottie} from './Lotties/userWithOutPic.json';

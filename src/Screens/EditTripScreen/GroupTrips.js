@@ -87,7 +87,7 @@ const GroupTrips = ({navigation, letterStyles}) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('MapAndChatScreen', {
-              item: invitedTrips[index],
+              item: groupTrips[index],
             });
           }}>
           <Image
@@ -124,9 +124,23 @@ const GroupTrips = ({navigation, letterStyles}) => {
       rowMap[rowKey]?.closeRow();
     }, 2000);
   };
+  const noData = Boolean(groupTrips.length == 0)
+    ? {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: hp('0'),
 
+        // backgroundColor: 'red',
+      }
+    : {};
   return (
-    <View style={{marginTop: hp('3')}}>
+    <View
+      style={{
+        marginTop: hp('3'),
+        height: '100%',
+        flex: 1,
+        ...noData,
+      }}>
       {groupTrips.length > 0 ? (
         <SwipeListView
           useFlatList={true}
@@ -149,7 +163,7 @@ const GroupTrips = ({navigation, letterStyles}) => {
         <EmptyViewComp onRefresh={tripsCard} />
       )}
 
-      <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} />
+      {/* <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} /> */}
     </View>
   );
 };

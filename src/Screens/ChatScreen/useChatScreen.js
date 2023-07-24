@@ -1,5 +1,5 @@
 // import useNotificationScreen from '.';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {msgs} from '../../Utils/localDB';
 import {
   reference,
@@ -16,6 +16,13 @@ const useChatScreen = ({navigate}, {params}) => {
   const {userData} = getState('Auth');
   const [chatArry, setChatArry] = useState([]);
   const [text, onChangeText] = useState('');
+  const scrollViewRef = useRef();
+
+  const handleAutoScroll = () => {
+    if (scrollViewRef.current && chatArry.length > 0) {
+      scrollViewRef.current.scrollToEnd({animated: true});
+    }
+  };
 
   const onSend = async () => {
     const msgBoj = {
@@ -25,6 +32,8 @@ const useChatScreen = ({navigate}, {params}) => {
       userName: userData.name,
       email: userData.email,
     };
+    onChangeText('');
+
     console.log('sdvns dhvsdjhvbsd', item);
     const {data} = await sendDataToFIrebase({
       tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
@@ -32,9 +41,12 @@ const useChatScreen = ({navigate}, {params}) => {
       msgObj: msgBoj,
       userData,
     });
-    onChangeText('');
     console.log('message DAta', data);
   };
+
+  useEffect(() => {
+    handleAutoScroll();
+  }, [chatArry]);
 
   useEffect(() => {
     const fire = reference
@@ -98,6 +110,8 @@ const useChatScreen = ({navigate}, {params}) => {
     text,
     onChangeText,
     sendDataToFIrebase: onSend,
+    handleAutoScroll,
+    scrollViewRef,
   };
 };
 export default useChatScreen;

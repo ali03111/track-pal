@@ -75,6 +75,7 @@ const Tab = createMaterialTopTabNavigator();
 // const Tab = createBottomTabNavigator();
 
 const MapAndChatScreen = ({navigation, route}) => {
+  console.log('{route?.params?.item?', route?.params?.item);
   return (
     <View style={styles.tabsMain}>
       <CustomHeader
@@ -82,7 +83,7 @@ const MapAndChatScreen = ({navigation, route}) => {
         backText={'Back'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
-        headerTitle={route.params.item.name}
+        headerTitle={route?.params?.item?.name}
         goBack={navigation.goBack}
       />
 

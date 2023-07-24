@@ -26,7 +26,8 @@ import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 const MyTrips = ({navigation}) => {
-  const {updateState, tripCardData, tripsCard} = useEditTripScreen(navigation);
+  const {updateState, tripCardData, tripsCard, isTripCreated} =
+    useEditTripScreen(navigation);
 
   const renderOwnerItem = ({item, index}) => {
     const generateColor = () => {
@@ -118,6 +119,7 @@ const MyTrips = ({navigation}) => {
     ? {
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: hp('0'),
       }
     : {};
   return (
@@ -129,24 +131,30 @@ const MyTrips = ({navigation}) => {
         ...noData,
       }}>
       {tripCardData.length > 0 ? (
-        <SwipeListView
-          useFlatList={true}
-          data={tripCardData}
-          // disableRightSwipe={true}
-          renderItem={renderOwnerItem}
-          renderHiddenItem={renderHiddenItem}
-          leftOpenValue={70}
-          rightOpenValue={-70}
-          previewRowKey={'0'}
-          previewOpenValue={0}
-          previewOpenDelay={3000}
-          onRowOpen={onRowOpen}
-          scrollEnabled
-          refreshing={false}
-          onRefresh={tripsCard}
-          showsVerticalScrollIndicator={false}
-          style={{height: '100%'}}
-        />
+        <>
+          <SwipeListView
+            useFlatList={true}
+            data={tripCardData}
+            // disableRightSwipe={true}
+            renderItem={renderOwnerItem}
+            renderHiddenItem={renderHiddenItem}
+            leftOpenValue={70}
+            rightOpenValue={-70}
+            previewRowKey={'0'}
+            previewOpenValue={0}
+            previewOpenDelay={3000}
+            onRowOpen={onRowOpen}
+            scrollEnabled
+            refreshing={false}
+            onRefresh={tripsCard}
+            showsVerticalScrollIndicator={false}
+            style={{height: '100%'}}
+          />
+          <TripCreatedModal
+            title={'Trip started'}
+            isTripCreated={isTripCreated}
+          />
+        </>
       ) : (
         <EmptyViewComp onRefresh={tripsCard} />
       )}

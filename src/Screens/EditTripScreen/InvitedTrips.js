@@ -127,6 +127,7 @@ const InvitedTrip = ({navigation, letterStyles}) => {
     ? {
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: hp('0'),
       }
     : {};
   return (
@@ -160,7 +161,7 @@ const InvitedTrip = ({navigation, letterStyles}) => {
         <EmptyViewComp onRefresh={tripsCard} refreshStyle={styles.refStyle} />
       )}
 
-      <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} />
+      {/* <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} /> */}
     </View>
   );
 };

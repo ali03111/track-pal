@@ -22,7 +22,7 @@ const useMapScreen = ({navigate}, {params}) => {
   const [destination, setDestination] = useState(
     JSON.parse(item.end_destination),
   );
-  //   console.log('jabdjabvdjkbcvsjkdcvjsd', item);
+  console.log('jabdjabvdjkbcvsjkdcvjsd', item);
   const {getState} = useReduxStore();
   const {userData} = getState('Auth');
   const getMembers = async () => {
