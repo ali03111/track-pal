@@ -24,6 +24,7 @@ import {AutoFillGoogleComp} from '../../Components/AutoFillGoogleComp';
 import {TextComponent} from '../../Components/TextComponent';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import Overlay from '../../Components/Overlay';
+import {Colors} from '../../Theme/Variables';
 
 const StartTripModal = ({
   StartTripToggle,
@@ -83,6 +84,7 @@ const StartTripModal = ({
               size={hp('3.5')}
               style={styles.tripCloseIcon}
               onPress={onBackPress}
+              color={Colors.gray}
             />
             <View style={styles.groupInfoMain}>
               {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}

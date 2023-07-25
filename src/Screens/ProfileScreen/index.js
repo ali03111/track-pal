@@ -18,9 +18,12 @@ import ProfileBtn from '../../Components/ProfileBtn';
 import {CircleImage} from '../../Components/CircleImage';
 import {AlertDesign} from '../../Components/AlertDesign';
 import {hp} from '../../Config/responsive';
+import {imageUrl} from '../../Utils/Urls';
+import BlurImage from '../../Components/BlurImage';
 
 const ProfileScreen = ({navigation}) => {
-  const {dynamicNav, alert, onCancel, onConfirm} = useProfileScreen(navigation);
+  const {dynamicNav, alert, onCancel, onConfirm, userData} =
+    useProfileScreen(navigation);
   return (
     <ScrollView
       style={styles.profileMain}
@@ -28,9 +31,25 @@ const ProfileScreen = ({navigation}) => {
       showsVerticalScrollIndicator={false}>
       <CustomHeader headerTitle={'Settings'} />
       <View style={styles.profileArea}>
-        <CircleImage image={profleImg} styles={styles.profileImg} />
+        {/* <CircleImage
+          uri={true}
+          image={imageUrl(userData?.profile_image)}
+          styles={styles.profileImg}
+        /> */}
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <BlurImage
+            blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
+            radius={75}
+            styles={styles.ProfileImage}
+            uri={imageUrl(userData?.profile_image)}
+          />
+        </View>
         <GradientText style={styles.userName} GradientAlignment={1}>
-          Jhon Doe
+          {userData?.name}
         </GradientText>
       </View>
       <ProfileBtn

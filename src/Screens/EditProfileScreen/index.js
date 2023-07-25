@@ -20,6 +20,8 @@ import {Touchable} from '../../Components/Touchable';
 import {CircleImage} from '../../Components/CircleImage';
 import KeyBoardWrapper from '../../Components/KeyboardWrapper';
 import {imageUrl} from '../../Utils/Urls';
+import BlurImage from '../../Components/BlurImage';
+import {hp, wp} from '../../Config/responsive';
 
 const EditProfileScreen = ({navigation}) => {
   const {
@@ -49,12 +51,32 @@ const EditProfileScreen = ({navigation}) => {
         />
       </ImageBackground>
       <View style={styles.userProfileImg}>
-        <CircleImage
+        {/* <CircleImage
           uri={profileData ? false : true}
           image={profileData || imageUrl(userData?.profile_image)}
           styles={styles.profileEditImg}
-        />
-        <Touchable onPress={uploadFromGalary} Opacity={0.8}>
+        /> */}
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: -65,
+          }}>
+          <BlurImage
+            blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
+            radius={75}
+            styles={styles.ProfileImage}
+            uri={profileData?.uri || imageUrl(userData.profile_image)}
+          />
+        </View>
+        <Touchable
+          onPress={uploadFromGalary}
+          style={{
+            position: 'absolute',
+            left: wp('55%'),
+            bottom: hp('0'),
+          }}
+          Opacity={0.8}>
           <Image source={addProfileImage} style={styles.addImageIcon} />
         </Touchable>
       </View>

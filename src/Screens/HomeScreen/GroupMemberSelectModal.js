@@ -137,6 +137,7 @@ const GroupMemberSelectModal = ({
                 size={hp('3.5')}
                 style={styles.closeIcon}
                 onPress={onBackPress}
+                color={Colors.gray}
               />
               <GradientText GradientAlignment={0.8} style={styles.selectTrip}>
                 {'Select Group Members'}

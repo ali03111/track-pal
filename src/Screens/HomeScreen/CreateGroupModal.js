@@ -16,6 +16,7 @@ import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {hp} from '../../Config/responsive';
+import {Colors} from '../../Theme/Variables';
 
 const CreateGroupModal = ({
   iscreateModal,
@@ -58,6 +59,7 @@ const CreateGroupModal = ({
                 size={hp('3.5')}
                 style={styles.closeIcon}
                 onPress={onBackPress}
+                color={Colors.gray}
               />
               <View style={styles.userProfileImg}>
                 <CircleImage

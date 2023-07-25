@@ -78,6 +78,8 @@ const useEditTripScreen = ({addListener, navigate}) => {
     } else errorMessage('somfkle n');
   };
 
+  const checkTripOwner = () => {};
+
   const tripsCard = async () => {
     const {ok, data} = await API.get(tripsData);
     if (ok) {

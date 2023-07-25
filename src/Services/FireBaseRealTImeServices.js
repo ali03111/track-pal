@@ -221,6 +221,7 @@ const sendDataToFIrebase = async data => {
     console.log(
       'wholeObj.member[index].chatwholeObj.member[index].chatwholeObj.member[index].chatwholeObj.member[index].chat',
       wholeObj.members,
+      index,
     );
 
     wholeObj.members[index] = {

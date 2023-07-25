@@ -20,6 +20,7 @@ import {hp, wp} from '../../Config/responsive';
 import GradientText from '../../Components/GradientText';
 import {TextComponent} from '../../Components/TextComponent';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Colors} from '../../Theme/Variables';
 
 const TripTypeSelectModal = ({
   isTripSelectModal,
@@ -82,6 +83,7 @@ const TripTypeSelectModal = ({
                 size={hp('3.5')}
                 style={styles.closeIcon}
                 onPress={onBackPress}
+                color={Colors.gray}
               />
               <GradientText GradientAlignment={0.8} style={styles.selectTrip}>
                 {'Select A Trip Type'}

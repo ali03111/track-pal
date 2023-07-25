@@ -146,6 +146,7 @@ const GroupTrips = ({navigation, letterStyles}) => {
           useFlatList={true}
           data={groupTrips}
           // disableRightSwipe={true}
+          // disableLeftSwipe={true}
           renderItem={renderItem}
           renderHiddenItem={renderHiddenItem}
           leftOpenValue={70}

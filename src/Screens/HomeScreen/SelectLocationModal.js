@@ -9,6 +9,7 @@ import {tripsTypes} from '../../Utils/localDB';
 import {hp} from '../../Config/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {AutoFillGoogleComp} from '../../Components/AutoFillGoogleComp';
+import {Colors} from '../../Theme/Variables';
 
 const SelectLocationModal = ({
   isModalVisible,
@@ -64,6 +65,7 @@ const SelectLocationModal = ({
                 size={hp('3.5')}
                 style={styles.closeIcon}
                 onPress={onBackPress}
+                color={Colors.gray}
               />
               {isTripType && (
                 <>

@@ -51,23 +51,8 @@ const useEditProfile = ({navigate, goBack}) => {
 
   //UPDATE PROFILE
   const updateProfileFunction = async currentValue => {
-    dispatch(loadingTrue());
-    // const formdata = new FormData();
-    // Object.entries(currentValue).forEach(([key, value]) => {
-    //   if (profileData?.type) {
-    //     formdata.append('profile_image', {
-    //       uri: profileData.uri,
-    //       type: profileData.type,
-    //       name: profileData.fileName,
-    //     });
-    //   }
-    //   formdata.append(key, value);
-    // });
     try {
-      // const {ok, data, originalError} = await API.post(
-      //   UpdateProfileUrl,
-      //   formdata,
-      // );
+      dispatch(loadingTrue());
       const {ok, data} = await formDataFunc(
         UpdateProfileUrl,
         {...currentValue, profileData},
@@ -75,9 +60,9 @@ const useEditProfile = ({navigate, goBack}) => {
       );
       console.log(ok, data, 'uueueue');
       if (ok) {
+        dispatch(loadingFalse());
         successMessage(data.message);
         dispatch({type: types.UpdateProfile, payload: data.user});
-        dispatch(loadingFalse());
       }
     } catch (e) {
       dispatch(loadingFalse());

@@ -16,8 +16,15 @@ import useResetPassword from './useResetPassword';
 import CustomHeader from '../../Components/Header';
 
 const ResetPasswordScreen = ({navigation}) => {
-  const {handleSubmit, errors, reset, control, getValues, goBack} =
-    useResetPassword(navigation);
+  const {
+    handleSubmit,
+    errors,
+    reset,
+    control,
+    getValues,
+    goBack,
+    changePassword,
+  } = useResetPassword(navigation);
   return (
     <View style={styles.logInMain}>
       <CustomHeader
@@ -70,7 +77,11 @@ const ResetPasswordScreen = ({navigation}) => {
           inputIconStyle: styles.lockstyle,
         }}
       />
-      <ThemeButton title={'Save'} btnStyle={styles.buttonStyle} />
+      <ThemeButton
+        onPress={handleSubmit(changePassword)}
+        title={'Save'}
+        btnStyle={styles.buttonStyle}
+      />
     </View>
   );
 };
