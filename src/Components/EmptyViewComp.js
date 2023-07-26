@@ -13,7 +13,7 @@ export const EmptyViewComp = ({onRefresh, refreshStyle}) => {
       style={{
         width: wp('70'),
         height: hp('30'),
-        backgroundColor: Colors.primaryColorFade,
+        backgroundColor: Colors.themeExtraLight,
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',

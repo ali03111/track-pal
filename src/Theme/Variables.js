@@ -17,6 +17,7 @@ const Colors = {
   avtiveCard: '#EAF6ED',
   inavtiveCard: '#F5E7E4',
   primaryColorFade: 'rgba(146,39,143,0.5)',
+  themeExtraLight: '#e7bde6',
 };
 
 /** FontSize **/
