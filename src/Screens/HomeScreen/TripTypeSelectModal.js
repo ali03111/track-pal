@@ -86,7 +86,7 @@ const TripTypeSelectModal = ({
                 color={Colors.gray}
               />
               <GradientText GradientAlignment={0.8} style={styles.selectTrip}>
-                {'Select A Trip Type'}
+                {'Select A Trip'}
               </GradientText>
               <FlatList
                 refreshing={false}

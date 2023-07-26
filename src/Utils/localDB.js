@@ -402,18 +402,18 @@ export const trips = [
 export const tripsTypes = [
   {
     id: 'myTrip',
-    des: 'Lorem Ipsum is simply dummy text of the printing',
-    title: 'My Trip',
+    des: 'Track where your loved ones are - keep them safe!',
+    title: 'Keep A Track',
   },
   {
     id: 'groupTrip',
-    des: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-    title: 'Group Trip',
+    des: 'Track each other across every mile by location sharing',
+    title: 'Mutual Tracking',
   },
   {
     id: 'personalTrip',
-    des: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    title: 'Personal Trip',
+    des: 'Stay safe, stay connected! Share your real-time location with just a tap.',
+    title: 'Share Location',
   },
 ];
 

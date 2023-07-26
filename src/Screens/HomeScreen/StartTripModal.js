@@ -25,6 +25,7 @@ import {TextComponent} from '../../Components/TextComponent';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import Overlay from '../../Components/Overlay';
 import {Colors} from '../../Theme/Variables';
+import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 
 const StartTripModal = ({
   StartTripToggle,
@@ -88,7 +89,9 @@ const StartTripModal = ({
             />
             <View style={styles.groupInfoMain}>
               {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}
-              <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
+
+              <FirstCharacterComponent text={GroupInput} />
+
               <View style={styles.groupDesc}>
                 <Text style={styles.groupName}>{GroupInput}</Text>
                 <Text style={styles.groupMember}>
