@@ -17,9 +17,14 @@ import {
 } from '../../Utils/Urls';
 import API from '../../Utils/helperFunc';
 import {errorMessage} from '../../Config/NotificationMessage';
-import {updateLocationONfire} from '../../Services/FireBaseRealTImeServices';
+import {
+  onEndTrip,
+  updateDataFirebase,
+  updateLocationONfire,
+} from '../../Services/FireBaseRealTImeServices';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
+import Geolocation from '@react-native-community/geolocation';
 
 const useEditTripScreen = ({addListener, navigate}) => {
   const [isTripCreated, setIsTripCreated] = useState(false);
@@ -27,6 +32,10 @@ const useEditTripScreen = ({addListener, navigate}) => {
   const [tripCardData, setTripCardData] = useState([]);
   const [invitedTrips, setInvitedTrip] = useState([]);
   const [groupTrips, setGroupTrip] = useState([]);
+
+  const {dispatch, getState} = useReduxStore();
+
+  const {userData} = getState('Auth');
 
   const updateState = async (status, id, index) => {
     const {ok, data} = await API.post(changeOwnerStatusUrl, {
@@ -43,10 +52,12 @@ const useEditTripScreen = ({addListener, navigate}) => {
             item: {...tripCardData[index], owner: true},
           });
         }, 1000);
+      } else if (status == 2) {
+        Geolocation.clearWatch();
       }
       // updateLocationONfire({tripId:id})
       // status == 1 && setIsTripCreated(!isTripCreated);
-    } else errorMessage('somfkle n');
+    } else console.log('datadatadatadata', data);
   };
 
   const [activeSessionHelp, setActiveSessionHelp] = useState([]);
@@ -54,7 +65,6 @@ const useEditTripScreen = ({addListener, navigate}) => {
   const updateSectionsHelp = e => {
     setActiveSessionHelp(e);
   };
-  const {dispatch} = useReduxStore();
   const changeMemberStatus = async (status, id, tripOnnwerID, index) => {
     const {ok, data} = await API.post(changeMemberStatusUrl, {
       status,
@@ -78,12 +88,35 @@ const useEditTripScreen = ({addListener, navigate}) => {
     } else errorMessage('somfkle n');
   };
 
-  const checkTripOwner = () => {};
+  const changeMemberStatusGroup = async (status, id, tripOnnwerID, index) => {
+    const {ok, data} = await API.post(changeMemberStatusUrl, {
+      status,
+      id,
+    });
+    console.log('datadatadatadatadatadatadatadata', data, status, id);
+    if (ok) {
+      tripsCard();
+      dispatch(loadingTrue());
+      if (status == 1) {
+        tripOnnwerID == userData.id &&
+          (await updateDataFirebase({tripId: id, tripOnnwerID}));
+        await updateLocationONfire({tripId: id, tripOnnwerID});
+        setTimeout(() => {
+          setIsTripCreated(true);
+          dispatch(loadingFalse());
+          setTimeout(() => {
+            setIsTripCreated(false);
+            navigate('MapAndChatScreen', {item: groupTrips[index]});
+          }, 1000);
+        }, 2000);
+        dispatch(loadingFalse());
+      } else if (status == 2) onEndTrip({tripId: id, tripOnnwerID, userData});
+    } else errorMessage('somfkle n');
+  };
 
   const tripsCard = async () => {
     const {ok, data} = await API.get(tripsData);
     if (ok) {
-      console.log('asdasdasd', data);
       setTripCardData(data.my_trips);
       setInvitedTrip(data.invitation_trips);
       setGroupTrip(data.group_trips);
@@ -109,6 +142,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
     tripsCard,
     changeMemberStatus,
     groupTrips,
+    changeMemberStatusGroup,
   };
 };
 

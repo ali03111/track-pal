@@ -75,7 +75,6 @@ const GroupMemberSelectModal = ({
 
   // errorMessageHandler
   const renderItem = useCallback(({item, index}) => {
-    console.log('asdasd', item);
     return (
       <View style={styles.radioMain}>
         <Touchable

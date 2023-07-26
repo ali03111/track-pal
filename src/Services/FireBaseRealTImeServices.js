@@ -203,6 +203,32 @@ const getFirebaseData = async data => {
   }
 };
 
+const onEndTrip = async data => {
+  store.dispatch(loadingTrue());
+  const {tripId, tripOnnwerID, userData} = data;
+  try {
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+    const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+    const wholeObj = firebaseGet.data();
+
+    console.log('wholeObjwholeObjwholeObjwholeObj', wholeObj);
+    // Find the index of the object with id 6 in the members array
+    const index = wholeObj.members.findIndex(
+      member => member.id == userData.id,
+    );
+
+    store.dispatch(loadingFalse());
+    wholeObj.members[index] = {...wholeObj.members[index], coords: null};
+    await fire.doc(`${tripOnnwerID}`).update(wholeObj);
+    return {ok: true, data: null};
+  } catch (error) {
+    store.dispatch(loadingFalse());
+    return {ok: false, data: error};
+  }
+};
+
 const sendDataToFIrebase = async data => {
   const {tripOnnwerID, tripId, msgObj, userData} = data;
   console.log('uyserSTchvschv sc', userData);
@@ -365,4 +391,5 @@ export {
   getFirebaseUpdatedData,
   shareLocationFirebase,
   sendDataToFIrebase,
+  onEndTrip,
 };

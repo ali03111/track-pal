@@ -22,10 +22,14 @@ import Lottie from 'lottie-react-native';
 import {Colors} from '../../Theme/Variables';
 
 const MapScreen = ({route, navigation}) => {
-  const {allMember, destination, tripData, currentUser} = useMapScreen(
-    navigation,
-    route,
-  );
+  const {
+    allMember,
+    destination,
+    tripData,
+    currentUser,
+    laongituteDalta,
+    latitudeDelta,
+  } = useMapScreen(navigation, route);
   return (
     <View style={{flex: 1}}>
       <View style={styles.groupInfoMain}>
@@ -54,8 +58,7 @@ const MapScreen = ({route, navigation}) => {
           />
           <TextComponent
             styles={styles.groupMember}
-            text={allMember.length + 1}
-            members
+            text={allMember.length + 1 + ' members'}
           />
         </View>
         <Touchable style={styles.groupLink}>
@@ -64,31 +67,32 @@ const MapScreen = ({route, navigation}) => {
       </View>
       <MapView
         style={styles.staticMapImg}
-        mapType="hybrid"
+        // mapType="hybrid"
         region={{
-          latitude: destination.latitude,
-          longitude: destination.longitude,
-          // latitude: tripData.owner
-          //   ? destination.latitude
-          //   : currentUser.coords.latitude,
-          // longitude: tripData.owner
-          //   ? destination.longitude
-          //   : currentUser.coords.longitude,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
+          // latitude: destination.latitude,
+          // longitude: destination.longitude,
+          latitude: tripData.owner
+            ? destination.latitude
+            : currentUser.coords.latitude,
+          longitude: tripData.owner
+            ? destination.longitude
+            : currentUser.coords.longitude,
+          latitudeDelta,
+          longitudeDelta: laongituteDalta,
         }}>
         <Marker
           coordinate={{
             latitude: destination.latitude,
             longitude: destination.longitude,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
+            latitudeDelta,
+            longitudeDelta: laongituteDalta,
           }}>
           <Lottie autoSize source={destinationLottie} autoPlay loop />
         </Marker>
 
-        {currentUser?.status && !tripData.owner && (
+        {currentUser.status && !tripData.owner && (
           <>
+            {console.log('jkadbcjksdbvjksbdjkvsdvsdnvks')}
             <MapViewDirections
               origin={{
                 latitude: currentUser.coords.latitude,
@@ -114,8 +118,8 @@ const MapScreen = ({route, navigation}) => {
               coordinate={{
                 latitude: currentUser.coords.latitude,
                 longitude: currentUser.coords.longitude,
-                // latitudeDelta: 0.015,
-                // longitudeDelta: 0.0121,
+                latitudeDelta,
+                longitudeDelta: laongituteDalta,
               }}>
               {/* <Lottie source={userWithOutPicLottie} autoPlay loop /> */}
 
@@ -132,8 +136,8 @@ const MapScreen = ({route, navigation}) => {
                 coordinate={{
                   latitude: res.coords.latitude,
                   longitude: res.coords.longitude,
-                  // latitudeDelta: 0.015,
-                  // longitudeDelta: 0.0121,
+                  latitudeDelta,
+                  longitudeDelta: laongituteDalta,
                 }}>
                 <Lottie autoSize source={userWithOutPicLottie} autoPlay loop />
               </Marker>

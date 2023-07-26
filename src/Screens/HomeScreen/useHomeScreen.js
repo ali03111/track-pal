@@ -98,7 +98,7 @@ const useHomeScreen = () => {
     [tripsTypes[0].id]: {
       name: GroupInput,
       end_destination: destinationInput,
-      user_ids: groupMembers,
+      user_ids: [...groupMembers, userData.id],
       type: selectTripType,
       // 'image' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     },
@@ -113,7 +113,7 @@ const useHomeScreen = () => {
       start_destination: locationInput,
       name: GroupInput,
       end_destination: destinationInput,
-      user_ids: groupMembers,
+      user_ids: [...groupMembers, userData.id],
       type: selectTripType,
     },
   };
