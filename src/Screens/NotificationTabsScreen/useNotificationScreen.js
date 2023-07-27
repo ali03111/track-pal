@@ -2,7 +2,11 @@ import React, {memo, useCallback, useEffect, useState} from 'react';
 
 import {ChatData} from '../../Utils/localDB';
 import {Invitation} from '../../Utils/localDB';
-import {changeUserTripStatus, userTrips} from '../../Utils/Urls';
+import {
+  changeUserTripStatus,
+  notificationUrl,
+  userTrips,
+} from '../../Utils/Urls';
 import API from '../../Utils/helperFunc';
 import {updateDataFirebase} from '../../Services/FireBaseRealTImeServices';
 import {errorMessage} from '../../Config/NotificationMessage';
@@ -11,12 +15,20 @@ import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 
 const useNotificationScreen = ({params}, {navigate}) => {
   const [tripNotification, setTripNotification] = useState([]);
-  const [tripTime, setTripTime] = useState('');
+  const [notifications, setNotification] = useState([]);
+
   const {dispatch} = useReduxStore();
   const getUserTrips = async () => {
     const {ok, data} = await API.get(userTrips);
     if (ok) {
       setTripNotification(data);
+    } else errorMessage('an error occured');
+  };
+  const getUserNotification = async () => {
+    const {ok, data} = await API.get(notificationUrl);
+    console.log('setNotificationsetNotificationsetNotification', data);
+    if (ok) {
+      setNotification(data);
     } else errorMessage('an error occured');
   };
 
@@ -45,6 +57,7 @@ const useNotificationScreen = ({params}, {navigate}) => {
 
   const useEffectFuc = () => {
     getUserTrips();
+    getUserNotification();
     console.log('paramsparamsparamsparamsparamsparams', params);
     setTimeout(() => {
       params?.sendTo && navigate(params?.sendTo);
@@ -60,6 +73,8 @@ const useNotificationScreen = ({params}, {navigate}) => {
     tripNotification,
     tripStatus,
     getUserTrips,
+    notifications,
+    getUserNotification,
   };
 };
 export default useNotificationScreen;

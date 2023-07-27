@@ -41,6 +41,7 @@ export const logoutUrl = 'auth/logout';
 export const fcmToken = 'add-fcm-token';
 export const getAgoraTokenUrl = 'getAccessToken/';
 export const userTrips = '/user-trips';
+export const notificationUrl = '/notifications';
 export const changeUserTripStatus = '/change-user-trip-status';
 export const getAllUser = 'users';
 export const CreateTripUrl = '/create-trip';

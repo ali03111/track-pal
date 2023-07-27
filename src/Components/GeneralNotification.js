@@ -12,6 +12,9 @@ import {hp, wp} from '../Config/responsive';
 import {Colors} from '../Theme/Variables';
 import {CircleImage} from './CircleImage';
 import {Touchable} from './Touchable';
+import {FirstCharacterComponent} from './FirstCharacterComponent';
+import {imageURL, imageUrl} from '../Utils/Urls';
+import moment from 'moment';
 
 const GeneralNotification = ({
   image,
@@ -25,18 +28,25 @@ const GeneralNotification = ({
   return (
     <Touchable style={styles.notificationMian} onPress={onPress}>
       <View style={styles.mainBannerImg}>
-        <CircleImage image={image} />
+        {image ? (
+          <CircleImage image={imageUrl(image)} uri={true} />
+        ) : (
+          <FirstCharacterComponent text={name} />
+        )}
         {/* <CircleImageComp styles={styles.bannerImg}  image={image} /> */}
       </View>
       <View style={styles.nameDescriptionMain}>
         <View style={styles.namestyle}>
           <TextComponent text={name} styles={styles.username} />
-          <TextComponent text={time} styles={styles.timing} />
+          <TextComponent
+            text={moment(time).calendar()}
+            styles={styles.timing}
+          />
         </View>
         <View style={styles.descmain}>
-          <TextComponent text={description} styles={styles.description} />
-          <TextComponent text={' '} />
-          <TextComponent text={groupName} styles={styles.groupName} />
+          <TextComponent text={messages} styles={styles.description} />
+          {/* <TextComponent text={' '} />
+          <TextComponent text={groupName} styles={styles.groupName} /> */}
         </View>
       </View>
       <View style={styles.mainTime}></View>
