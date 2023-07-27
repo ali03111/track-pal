@@ -6,8 +6,54 @@ import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
 import {loadingFalse, loadingTrue} from '../Redux/Action/isloadingAction';
 import {types} from '../Redux/types';
+import {
+  requestLocationAccuracy,
+  LocationAccuracy,
+  checkLocationAccuracy,
+  PERMISSIONS,
+  check,
+  request,
+  openSettings,
+} from 'react-native-permissions';
+import {Alert, Platform} from 'react-native';
+
+const perSKU = Platform.select({
+  android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+  ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
+});
 
 export const reference = firestore().collection('Trips');
+export const referenceChat = firestore().collection('Chats');
+
+const requestPermission = async () => {
+  const status = await check(perSKU);
+  console.log('sssssss', status);
+  // const {status} = await requestLocationAccuracy();
+  if (status == 'granted') return true;
+  else {
+    Alert.alert(
+      'Warning',
+      `Please allow you location permission to track you real-time location..`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {
+          text: 'Open Setting',
+          onPress: () => {
+            openSettings().catch(() => console.warn('Cannot open settings'));
+          },
+        },
+      ],
+      {
+        userInterfaceStyle: 'light',
+      },
+    );
+    return false;
+  }
+};
 
 const createTripObj = async data => {
   const {
@@ -30,8 +76,8 @@ const createTripObj = async data => {
       .doc(`${userData.id}`)
       .collection(`"${tripId}"`)
       .doc(`${userData.id}`);
-    // .doc();
-    // const fire = reference.doc(`/Trips/${userData.id}/${tripId}`);
+
+    const fireChat = referenceChat.doc(`"${tripId}"`);
 
     await fire.set({
       tripCreator: {
@@ -48,6 +94,37 @@ const createTripObj = async data => {
       TripName,
       members: membersData,
     });
+    await fireChat.set({chat: []});
+  } catch (error) {
+    console.log('Error creating trip:', error);
+  }
+};
+
+const creaetChatObj = async data => {
+  const {
+    Auth: {userData},
+  } = store.getState('Auth');
+  const {tripId} = data;
+  // console.log('membersmembersmembersmembersmembersmembers', members);
+  try {
+    // const membersData = members.map(res => ({
+    //   id: res.id,
+    //   details: {id: res.id, email: res.email},
+    //   location: {
+    //     coords: {},
+    //     description: '',
+    //   },
+    //   chat: [],
+    // }));
+
+    const fire = referenceChat
+      .doc(`${userData.id}`)
+      .collection(`"${tripId}"`)
+      .doc(`${userData.id}`);
+    // .doc();
+    // const fire = reference.doc(`/Trips/${userData.id}/${tripId}`);
+
+    await fire.set({chat: []});
   } catch (error) {
     console.log('Error creating trip:', error);
   }
@@ -60,6 +137,7 @@ const updateDataFirebase = async data => {
   const {tripId, tripOnnwerID} = data;
 
   try {
+    store.dispatch(loadingTrue());
     const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
 
     const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
@@ -76,7 +154,7 @@ const updateDataFirebase = async data => {
 
     return {ok: true, result: null};
   } catch (error) {
-    console.log('Error creating trip:', error);
+    console.log('Error creating trip:=======>>>>>>>', error);
     return {ok: false, result: error};
   }
 };
@@ -140,7 +218,7 @@ const updateLocationONfire = async data => {
     Auth: {userData},
   } = store.getState('Auth');
   const {tripId, tripOnnwerID} = data;
-
+  store.dispatch(loadingTrue());
   try {
     store.dispatch({
       type: types.isLocationTrue,
@@ -192,7 +270,7 @@ const getFirebaseData = async data => {
     console.log('wholeObjwholeObjwholeObjwholeObj', wholeObj);
     // Find the index of the object with id 6 in the members array
     const filterData = wholeObj.members.filter(
-      member => member.status == true && member?.coords != null && true,
+      member => member?.coords != null && true,
     );
     store.dispatch(loadingFalse());
     // wholeObj.members[index] = {...wholeObj.members[index], status: true};
@@ -233,29 +311,12 @@ const sendDataToFIrebase = async data => {
   const {tripOnnwerID, tripId, msgObj, userData} = data;
   console.log('uyserSTchvschv sc', userData);
   try {
-    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+    const fire = referenceChat.doc(`"${tripId}"`);
+    const fireGet = await fire.get();
 
-    const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+    const firebaseGet = await fireGet._data.chat;
 
-    const wholeObj = firebaseGet.data();
-
-    // Find the index of the object with id 6 in the members array
-    const index = wholeObj.members.findIndex(
-      member => member.id == userData.id,
-    );
-
-    console.log(
-      'wholeObj.member[index].chatwholeObj.member[index].chatwholeObj.member[index].chatwholeObj.member[index].chat',
-      wholeObj.members,
-      index,
-    );
-
-    wholeObj.members[index] = {
-      ...wholeObj.members[index],
-      chat: [...wholeObj.members[index].chat, msgObj],
-    };
-
-    await fire.doc(`${tripOnnwerID}`).update(wholeObj);
+    await fire.update({chat: [...firebaseGet, msgObj]});
 
     return {ok: true, data: null};
   } catch (error) {
@@ -392,4 +453,6 @@ export {
   shareLocationFirebase,
   sendDataToFIrebase,
   onEndTrip,
+  requestPermission,
+  creaetChatObj,
 };

@@ -4,10 +4,12 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import GeneralNotificationTab from './GeneralNotificationTab';
 import InvitationTab from './InvitaitionTab';
 import {hp} from '../../Config/responsive';
+import useNotificationScreen from './useNotificationScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
-const NotificationTabs = () => {
+const NotificationTabs = ({route, navigation}) => {
+  useNotificationScreen(route, navigation);
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -26,8 +28,20 @@ const NotificationTabs = () => {
           backgroundColor: '#b531b1',
         },
       }}>
-      <Tab.Screen name="General" component={GeneralNotificationTab} />
-      <Tab.Screen name="Invitation" component={InvitationTab} />
+      <Tab.Screen
+        name="GeneralNotificationTab"
+        component={GeneralNotificationTab}
+        options={{
+          title: 'General',
+        }}
+      />
+      <Tab.Screen
+        name="InvitationTab"
+        component={InvitationTab}
+        options={{
+          title: 'Invitation',
+        }}
+      />
     </Tab.Navigator>
   );
 };

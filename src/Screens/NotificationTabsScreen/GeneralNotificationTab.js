@@ -6,8 +6,8 @@ import useNotificationScreen from './useNotificationScreen';
 import {hp, wp} from '../../Config/responsive';
 import GeneralNotification from '../../Components/GeneralNotification';
 
-const GeneralNotificationTab = () => {
-  const {ChatData} = useNotificationScreen();
+const GeneralNotificationTab = ({route, navigation}) => {
+  const {ChatData} = useNotificationScreen(route, navigation);
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.notification}>

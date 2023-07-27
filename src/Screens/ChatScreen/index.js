@@ -64,19 +64,23 @@ const ChatScreen = ({navigation, route}) => {
           value={text}
           placeholder={'Type a message'}
           placeholderTextColor={Colors.gray}
+          multiline
+          // numberOfLines={5}
         />
 
-        <Touchable onPress={sendDataToFIrebase} style={styles.sendBtnStyle}>
-          <LinearGradient
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
-            colors={[Colors.themeColorDark, Colors.themeColorLight]}>
-            <View style={styles.msgsRecieve}>
-              <Image source={send} style={styles.sendIcon} />
-              <TextComponent text={'Send'} styles={styles.sendTextStyle} />
-            </View>
-          </LinearGradient>
-        </Touchable>
+        {text != null && text != '' && (
+          <Touchable onPress={sendDataToFIrebase} style={styles.sendBtnStyle}>
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              colors={[Colors.themeColorDark, Colors.themeColorLight]}>
+              <View style={styles.msgsRecieve}>
+                <Image source={send} style={styles.sendIcon} />
+                <TextComponent text={'Send'} styles={styles.sendTextStyle} />
+              </View>
+            </LinearGradient>
+          </Touchable>
+        )}
       </View>
     </ScrollView>
   );

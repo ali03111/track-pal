@@ -23,6 +23,7 @@ import {hp, wp} from '../../Config/responsive';
 import {getSingleCharacter} from '../../Utils/globalFunctions';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
+import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 
 const GroupTrips = ({navigation, letterStyles}) => {
   const {
@@ -72,18 +73,30 @@ const GroupTrips = ({navigation, letterStyles}) => {
               title={'Start Trip'}
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
-              onPress={() =>
-                changeMemberStatusGroup(1, item.id, item?.trip_owner?.id, index)
-              }
+              onPress={async () => {
+                const result = await requestPermission();
+                if (result)
+                  changeMemberStatusGroup(
+                    1,
+                    item.id,
+                    item?.trip_owner?.id,
+                    index,
+                  );
+              }}
             />
           ) : (
             <ThemeButton
               title={'End Trip'}
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
-              onPress={() =>
-                changeMemberStatusGroup(2, item.id, item?.trip_owner?.id, index)
-              }
+              onPress={() => {
+                changeMemberStatusGroup(
+                  2,
+                  item.id,
+                  item?.trip_owner?.id,
+                  index,
+                );
+              }}
             />
           )}
         </View>

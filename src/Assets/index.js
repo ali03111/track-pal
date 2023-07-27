@@ -75,4 +75,4 @@ export {default as alert} from './Icons/alert.png';
 
 export {default as currentUserLottie} from './Lotties/currentUser.json';
 export {default as destinationLottie} from './Lotties/destination.json';
-export {default as userWithOutPicLottie} from './Lotties/userWithOutPic.json';
+export {default as userWithOutPicLottie} from './Lotties/userWithOutPic2.json';

@@ -7,9 +7,9 @@ import {hp, wp} from '../../Config/responsive';
 import InvitationComp from '../../Components/InvitationComp';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 
-const InvitationTab = () => {
+const InvitationTab = ({route, navigation}) => {
   const {Invitation, tripNotification, tripStatus, getUserTrips} =
-    useNotificationScreen();
+    useNotificationScreen(route, navigation);
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.notification}>

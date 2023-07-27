@@ -30,6 +30,9 @@ const MapScreen = ({route, navigation}) => {
     laongituteDalta,
     latitudeDelta,
   } = useMapScreen(navigation, route);
+
+  console.log('currentUsercurrentUsercurrentUser', currentUser);
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.groupInfoMain}>
@@ -67,10 +70,7 @@ const MapScreen = ({route, navigation}) => {
       </View>
       <MapView
         style={styles.staticMapImg}
-        // mapType="hybrid"
         region={{
-          // latitude: destination.latitude,
-          // longitude: destination.longitude,
           latitude: tripData.owner
             ? destination.latitude
             : currentUser.coords.latitude,

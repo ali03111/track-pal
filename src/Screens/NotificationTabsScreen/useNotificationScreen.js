@@ -9,7 +9,7 @@ import {errorMessage} from '../../Config/NotificationMessage';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 
-const useNotificationScreen = () => {
+const useNotificationScreen = ({params}, {navigate}) => {
   const [tripNotification, setTripNotification] = useState([]);
   const [tripTime, setTripTime] = useState('');
   const {dispatch} = useReduxStore();
@@ -31,8 +31,8 @@ const useNotificationScreen = () => {
         });
         if (ok) {
           setTripNotification(data.trips);
-        }
-        dispatch(loadingFalse());
+          dispatch(loadingFalse());
+        } else dispatch(loadingFalse());
       } else {
         setTripNotification(data.trips);
         dispatch(loadingFalse());
@@ -45,6 +45,11 @@ const useNotificationScreen = () => {
 
   const useEffectFuc = () => {
     getUserTrips();
+    console.log('paramsparamsparamsparamsparamsparams', params);
+    setTimeout(() => {
+      params?.sendTo && navigate(params?.sendTo);
+    }, 1000);
+    // params?.sendTo && navigate(params?.sendTo);
   };
 
   useEffect(useEffectFuc, []);

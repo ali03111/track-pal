@@ -12,3 +12,5 @@ export {default as MapAndChatScreen} from './MapAndChatScreen';
 export {default as ChatScreen} from './ChatScreen';
 export {default as EditTripScreen} from './EditTripScreen';
 export {default as MapScreen} from './MapScreen';
+export {default as GeneralNotificationTab} from './NotificationTabsScreen/GeneralNotificationTab';
+export {default as InvitaitionTab} from './NotificationTabsScreen/InvitaitionTab';

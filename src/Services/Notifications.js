@@ -5,11 +5,13 @@ import notifee, {
   AndroidLaunchActivityFlag,
 } from '@notifee/react-native';
 import {requestNotifications, openSettings} from 'react-native-permissions';
+import {useNavigation} from '@react-navigation/native';
 // import NavigationService from './NavigationService';
 // import useRouteName from '@/hooks/useRouteName';
 
 const sound = Platform.select({ios: 'interval.wav', android: 'interval.mp3'});
 const onNotificationNotiFee = async (data, appState) => {
+  const navigation = useNavigation();
   const channelId = await notifee.createChannel({
     id: 'default',
     name: 'Default Channel',
@@ -32,6 +34,7 @@ const onNotificationNotiFee = async (data, appState) => {
     ios: {sound},
   });
   console.log('data=>>>>>>>', data);
+  // navigation.navigate('Invitation');
   // const isActive = Boolean(NavigationService.ref && appState == 'active');
   // const notificationObj = JSON.parse(data.data.payload);
   // const getNameFunc = NavigationService.getCurrentRoute();
@@ -114,6 +117,7 @@ class FCMService {
     // Triggered  when a particular  notification  has been recevied in foreground
     this.notificationListener = messaging().onMessage(
       data => onNotificationNotiFee(data, appState),
+      console.log('notifynotifynotifynotifynotifynotify'),
       // {
       //   if (NavigationService.ref && appState == 'active') {
       //     NavigationService.navigate(

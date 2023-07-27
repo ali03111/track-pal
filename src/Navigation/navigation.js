@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MybottomTabs from './bottomNavigation';
 import useReduxStore from '../Hooks/UseReduxStore';
+import NavigationService from '../Services/NavigationService';
 
 const Stack = createNativeStackNavigator();
 const StackNavigatior = () => {
@@ -11,7 +12,11 @@ const StackNavigatior = () => {
   const {onboarding} = getState('onboarding');
   const {isLogin} = getState('Auth');
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={ref => {
+        NavigationService.setRef(ref);
+        // const p = NavigationService.getCurrentRoute(ref.getCurrentRoute());
+      }}>
       <Stack.Navigator
         screenOptions={{
           headerTransparent: true,
@@ -66,6 +71,10 @@ const StackNavigatior = () => {
               component={Screens.SyncingScreen}
             />
             <Stack.Screen name="MapScreen" component={Screens.MapScreen} />
+            {/* <Stack.Screen
+              name="InvitaitionTab"
+              component={Screens.InvitaitionTab}
+            /> */}
             <Stack.Screen name="SyncScreen" component={Screens.SyncScreen} />
           </>
         )}

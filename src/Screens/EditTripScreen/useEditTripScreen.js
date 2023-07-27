@@ -42,10 +42,12 @@ const useEditTripScreen = ({addListener, navigate}) => {
       status,
       id,
     });
+    dispatch(loadingTrue());
     if (ok) {
       tripsCard();
       if (status == 1) {
         setIsTripCreated(true);
+        dispatch(loadingFalse());
         setTimeout(() => {
           setIsTripCreated(false);
           navigate('MapAndChatScreen', {
@@ -54,10 +56,14 @@ const useEditTripScreen = ({addListener, navigate}) => {
         }, 1000);
       } else if (status == 2) {
         Geolocation.clearWatch();
+        dispatch(loadingFalse());
       }
       // updateLocationONfire({tripId:id})
       // status == 1 && setIsTripCreated(!isTripCreated);
-    } else console.log('datadatadatadata', data);
+    } else {
+      dispatch(loadingFalse());
+      console.log('datadatadatadata', data);
+    }
   };
 
   const [activeSessionHelp, setActiveSessionHelp] = useState([]);
@@ -66,26 +72,41 @@ const useEditTripScreen = ({addListener, navigate}) => {
     setActiveSessionHelp(e);
   };
   const changeMemberStatus = async (status, id, tripOnnwerID, index) => {
-    const {ok, data} = await API.post(changeMemberStatusUrl, {
-      status,
-      id,
-    });
-    if (ok) {
-      tripsCard();
+    try {
+      const {ok, data} = await API.post(changeMemberStatusUrl, {
+        status,
+        id,
+      });
+
       dispatch(loadingTrue());
-      if (status == 1) {
-        await updateLocationONfire({tripId: id, tripOnnwerID});
-        setTimeout(() => {
-          setIsTripCreated(true);
-          dispatch(loadingFalse());
+
+      if (ok) {
+        tripsCard();
+        dispatch(loadingTrue());
+        if (status == 1) {
+          await updateLocationONfire({tripId: id, tripOnnwerID});
           setTimeout(() => {
-            setIsTripCreated(false);
-            navigate('MapAndChatScreen', {item: invitedTrips[index]});
-          }, 1000);
-        }, 2000);
+            setIsTripCreated(true);
+            dispatch(loadingFalse());
+            setTimeout(() => {
+              setIsTripCreated(false);
+              navigate('MapAndChatScreen', {item: invitedTrips[index]});
+            }, 1000);
+          }, 2000);
+        } else if (status == 2) {
+          onEndTrip({tripId: id, tripOnnwerID, userData});
+          dispatch(loadingFalse());
+        }
+      } else {
         dispatch(loadingFalse());
+        errorMessage('some thing went wrong');
       }
-    } else errorMessage('somfkle n');
+    } catch (error) {
+      // Handle the error here
+      console.error('An error occurred:', error);
+      dispatch(loadingFalse());
+      errorMessage('An error occurred: ' + error.message);
+    }
   };
 
   const changeMemberStatusGroup = async (status, id, tripOnnwerID, index) => {
@@ -93,10 +114,9 @@ const useEditTripScreen = ({addListener, navigate}) => {
       status,
       id,
     });
-    console.log('datadatadatadatadatadatadatadata', data, status, id);
+    dispatch(loadingTrue());
     if (ok) {
       tripsCard();
-      dispatch(loadingTrue());
       if (status == 1) {
         tripOnnwerID == userData.id &&
           (await updateDataFirebase({tripId: id, tripOnnwerID}));
@@ -110,8 +130,14 @@ const useEditTripScreen = ({addListener, navigate}) => {
           }, 1000);
         }, 2000);
         dispatch(loadingFalse());
-      } else if (status == 2) onEndTrip({tripId: id, tripOnnwerID, userData});
-    } else errorMessage('somfkle n');
+      } else if (status == 2) {
+        onEndTrip({tripId: id, tripOnnwerID, userData});
+        dispatch(loadingFalse());
+      }
+    } else {
+      errorMessage('somfkle n');
+      dispatch(loadingFalse());
+    }
   };
 
   const tripsCard = async () => {

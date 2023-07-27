@@ -17,6 +17,7 @@ const CustomHeader = ({
   goBack,
   backTextStyle,
   titleStyle,
+  numberOfLines,
 }) => {
   return (
     <View style={[styles.TopHeader, {...style}]}>
@@ -38,6 +39,7 @@ const CustomHeader = ({
       <View style={styles.HeaderCenter}>
         <TextComponent
           text={headerTitle}
+          numberOfLines={numberOfLines ?? 1}
           styles={{...styles.HeaderTitle, ...titleStyle}}
         />
       </View>

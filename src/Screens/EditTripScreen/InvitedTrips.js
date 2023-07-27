@@ -23,6 +23,7 @@ import {hp, wp} from '../../Config/responsive';
 import {getSingleCharacter} from '../../Utils/globalFunctions';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
+import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 
 const InvitedTrip = ({navigation, letterStyles}) => {
   const {
@@ -50,7 +51,11 @@ const InvitedTrip = ({navigation, letterStyles}) => {
               <FirstCharacterComponent text={item?.name} />
             )}
             <View style={styles.groupDesc}>
-              <TextComponent text={item?.name} styles={styles.groupName} />
+              <TextComponent
+                numberOfLines={1}
+                text={item?.name}
+                styles={styles.groupName}
+              />
               <TextComponent
                 text={item?.total_members + ' members'}
                 styles={styles.groupMember}
@@ -61,42 +66,51 @@ const InvitedTrip = ({navigation, letterStyles}) => {
               />
             </View>
           </View>
-          {item?.owner_running_status == 0 ? (
+          {item?.owner_running_status == 0 ||
+          item?.owner_running_status == 2 ? (
             <InactiveBtn style={{width: wp('36')}} title={'Trip on Pending'} />
-          ) : item?.pivot.member_running_status == 0 ? (
+          ) : item?.pivot.member_running_status == 0 ||
+            item?.pivot.member_running_status == 2 ? (
             <ThemeButton
               title={'Start Trip'}
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
-              onPress={() =>
-                changeMemberStatus(1, item.id, item?.trip_owner?.id, index)
-              }
+              onPress={async () => {
+                const result = await requestPermission();
+                if (result)
+                  changeMemberStatus(1, item.id, item?.trip_owner?.id, index);
+              }}
             />
           ) : (
             <ThemeButton
               title={'End Trip'}
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
-              onPress={() =>
-                changeMemberStatus(2, item.id, item?.trip_owner?.id, index)
-              }
+              onPress={() => {
+                changeMemberStatus(2, item.id, item?.trip_owner?.id, index);
+              }}
             />
           )}
         </View>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('MapAndChatScreen', {
-              item: invitedTrips[index],
-            });
+            item?.owner_running_status == 0 || item?.owner_running_status == 2
+              ? 0
+              : item?.pivot.member_running_status == 1
+              ? navigation.navigate('MapAndChatScreen', {
+                  item: invitedTrips[index],
+                })
+              : 0;
           }}>
           <Image
             style={{
               height: Platform.OS == 'ios' ? hp('18.2') : hp('22.1'),
               width: wp('14'),
               opacity:
-                item?.owner_running_status == 0
+                item?.owner_running_status == 0 ||
+                item?.owner_running_status == 2
                   ? 0
-                  : item?.pivot.member_running_status != 0
+                  : item?.pivot.member_running_status == 1
                   ? 1
                   : 0,
             }}

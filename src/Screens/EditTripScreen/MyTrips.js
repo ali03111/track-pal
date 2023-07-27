@@ -24,6 +24,7 @@ import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent'
 
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 
 const MyTrips = ({navigation}) => {
   const {updateState, tripCardData, tripsCard, isTripCreated} =
@@ -70,19 +71,25 @@ const MyTrips = ({navigation}) => {
               title={'Start Trip'}
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
-              onPress={() => updateState(1, item.id, index)}
+              onPress={async () => {
+                const result = await requestPermission();
+                if (result) updateState(1, item.id, index);
+              }}
             />
           ) : (
             <ThemeButton
               title={'End Trip'}
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
-              onPress={() => updateState(2, item.id, index)}
+              onPress={() => {
+                updateState(2, item.id, index);
+              }}
             />
           )}
         </View>
         <TouchableOpacity
           onPress={() =>
+            item?.owner_running_status == 1 &&
             navigation.navigate('MapAndChatScreen', {
               item: {...tripCardData[index], owner: true},
             })

@@ -25,23 +25,25 @@ const useMapScreen = ({navigate}, {params}) => {
       latitude: log.latitude,
       longitude: log.longitude,
     },
-    status: false,
+    status: true,
   });
-  const [destination, setDestination] = useState(
-    JSON.parse(item.end_destination),
-  );
+
   const {getState} = useReduxStore();
   const {userData} = getState('Auth');
+
   const getMembers = async () => {
     const {ok, data} = await getFirebaseData({
       tripId: item.id,
       tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
     });
     if (ok) {
-      console.log('jbcjksbdjkvbsdkjvbsdjbvjsd', data);
       if (!item.owner) {
         setAllMembers(() => data.filter(res => res.id != userData.id));
-        setCurrentUser(() => data.filter(res => res.id == userData.id)[0]);
+        setCurrentUser(prev => {
+          const user = data.filter(res => res.id == userData.id);
+          if (user.length == 0) return user[0];
+          else return prev;
+        });
       } else if (item.owner) {
         setAllMembers(data);
       }
@@ -70,9 +72,11 @@ const useMapScreen = ({navigate}, {params}) => {
 
       if (!item.owner) {
         setAllMembers(() => filterData.filter(res => res.id != userData.id));
-        setCurrentUser(
-          () => filterData.filter(res => res.id == userData.id)[0],
-        );
+        setCurrentUser(prev => {
+          const user = filterData.filter(res => res.id == userData.id);
+          if (user.length == 0) return user[0];
+          else return prev;
+        });
       } else if (item.owner) {
         setAllMembers(filterData);
       }

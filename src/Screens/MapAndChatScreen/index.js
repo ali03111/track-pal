@@ -85,6 +85,7 @@ const MapAndChatScreen = ({navigation, route}) => {
         titleStyle={styles.hdTitle}
         headerTitle={route?.params?.item?.name}
         goBack={navigation.goBack}
+        numberOfLines={1}
       />
 
       <Tab.Navigator

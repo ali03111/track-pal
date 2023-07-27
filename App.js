@@ -34,6 +34,7 @@ import useReduxStore from './src/Hooks/UseReduxStore';
 import Overlay from './src/Components/Overlay';
 import {fcmService} from './src/Services/Notifications';
 import {fcmRegister} from './src/Redux/Action/AuthAction';
+import NavigationService from './src/Services/NavigationService';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -90,7 +91,10 @@ const App = () => {
   };
 
   const onOpenNotification = notify => {
-    console.log('notify', notify);
+    const screenRoute = JSON.parse(notify.data.payload);
+    NavigationService.navigate('NotificationTabsScreen', {
+      sendTo: screenRoute.route,
+    });
   };
 
   const time = () => {
