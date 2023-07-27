@@ -20,6 +20,7 @@ import {Colors} from '../../Theme/Variables';
 import BlurImage from '../../Components/BlurImage';
 import {Text} from 'react-native-paper';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
+import {ModalFirstLetterComp} from '../../Components/ModalFirstLetterComp';
 
 const CreateGroupModal = ({
   iscreateModal,
@@ -87,7 +88,8 @@ const CreateGroupModal = ({
                     uri={tripImage?.uri}
                   />
                 </View> */}
-                <FirstCharacterComponent text={GroupInput ? GroupInput : 'T'} />
+                {/* <FirstCharacterComponent text={GroupInput ? GroupInput : 'T'} /> */}
+                <ModalFirstLetterComp text={GroupInput ? GroupInput : 'T'} />
 
                 {/* <Touchable onPress={uploadFromGalary} Opacity={0.8}>
                   <Image source={addProfileImage} style={styles.addImageIcon} />
