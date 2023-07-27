@@ -62,6 +62,8 @@ const HomeScreen = () => {
     keyboardStatus,
     updateError,
     createTripFun,
+    uploadFromGalary,
+    tripImage,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -219,6 +221,8 @@ const HomeScreen = () => {
               selectTripType,
               GroupInput,
               updateInputState,
+              uploadFromGalary,
+              tripImage,
             },
           }}
         />

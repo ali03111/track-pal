@@ -17,6 +17,9 @@ import {Touchable} from '../../Components/Touchable';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {hp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
+import BlurImage from '../../Components/BlurImage';
+import {Text} from 'react-native-paper';
+import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 
 const CreateGroupModal = ({
   iscreateModal,
@@ -25,7 +28,13 @@ const CreateGroupModal = ({
   extraData,
 }) => {
   // const {GroupInput, setGroupInput} = useHomeScreen();
-  const {selectTripType, GroupInput, updateInputState} = extraData;
+  const {
+    selectTripType,
+    GroupInput,
+    updateInputState,
+    uploadFromGalary,
+    tripImage,
+  } = extraData;
   return (
     <View
       key={iscreateModal}
@@ -62,13 +71,27 @@ const CreateGroupModal = ({
                 color={Colors.gray}
               />
               <View style={styles.userProfileImg}>
-                <CircleImage
+                {/* <CircleImage
                   image={DemoProfileImage1}
                   styles={styles.profileEditImg}
-                />
-                <Touchable Opacity={0.8}>
+                /> */}
+                {/* <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <BlurImage
+                    blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
+                    radius={75}
+                    styles={styles.ProfileImage}
+                    uri={tripImage?.uri}
+                  />
+                </View> */}
+                <FirstCharacterComponent text={GroupInput ? GroupInput : 'T'} />
+
+                {/* <Touchable onPress={uploadFromGalary} Opacity={0.8}>
                   <Image source={addProfileImage} style={styles.addImageIcon} />
-                </Touchable>
+                </Touchable> */}
               </View>
               <View style={styles.editInput}>
                 <Image source={editIcon} style={styles.editIcon} />

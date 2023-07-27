@@ -64,7 +64,8 @@ const MyTrips = ({navigation}) => {
               />
             </View>
           </View>
-          {item?.owner_running_status == 0 ? (
+          {item?.owner_running_status == 0 ||
+          item?.owner_running_status == 2 ? (
             <ThemeButton
               title={'Start Trip'}
               textStyle={styles.TripBtnText}
@@ -90,7 +91,7 @@ const MyTrips = ({navigation}) => {
             style={{
               height: Platform.OS == 'ios' ? hp('18.2') : hp('22.1'),
               width: wp('14'),
-              opacity: item?.owner_running_status != 0 ? 1 : 0,
+              opacity: item?.owner_running_status == 1 ? 1 : 0,
             }}
             resizeMode="contain"
             source={leftArrow}

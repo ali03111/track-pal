@@ -253,6 +253,8 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     position: 'relative',
     marginTop: hp('2'),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   addImageIcon: {
     alignSelf: 'center',
@@ -360,5 +362,10 @@ export const styles = StyleSheet.create({
   firstLetterStyle: {
     width: Dimensions.get('window').width * 0.1,
     height: Dimensions.get('window').width * 0.1,
+  },
+  ProfileImage: {
+    // width: wp('20'),
+    height: hp('9'),
+    aspectRatio: 1,
   },
 });

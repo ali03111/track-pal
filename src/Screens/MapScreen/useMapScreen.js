@@ -7,11 +7,19 @@ import {
   shareLocationFirebase,
 } from '../../Services/FireBaseRealTImeServices';
 import useReduxStore from '../../Hooks/UseReduxStore';
+import {Dimensions} from 'react-native';
 
 const useMapScreen = ({navigate}, {params}) => {
   const {item} = params.params;
+  console.log('jabdjabvdjkbcvsjkdcvjsd', item);
   const [allMember, setAllMembers] = useState([]);
   const log = JSON.parse(item.end_destination);
+
+  const {width, height} = Dimensions.get('window');
+  const ACPT_RATIO = width / height;
+  const latitudeDelta = 0.02;
+  const laongituteDalta = latitudeDelta * ACPT_RATIO;
+
   const [currentUser, setCurrentUser] = useState({
     coords: {
       latitude: log.latitude,
@@ -22,7 +30,6 @@ const useMapScreen = ({navigate}, {params}) => {
   const [destination, setDestination] = useState(
     JSON.parse(item.end_destination),
   );
-  console.log('jabdjabvdjkbcvsjkdcvjsd', item);
   const {getState} = useReduxStore();
   const {userData} = getState('Auth');
   const getMembers = async () => {
@@ -69,13 +76,6 @@ const useMapScreen = ({navigate}, {params}) => {
       } else if (item.owner) {
         setAllMembers(filterData);
       }
-
-      // setAllMembers(() => filterData.filter(res => res.id != userData.id));
-      // setCurrentUser(() => filterData.filter(res => res.id == userData.id)[0]);
-      // console.log(
-      //   'shdvhjksdvkjsdkjvsdj,v,',
-      //   allMsg['0'].members.filter(res => res.id == userData.id)[0],
-      // );
     });
     return () => subscriber();
   };
@@ -87,6 +87,8 @@ const useMapScreen = ({navigate}, {params}) => {
     destination: JSON.parse(item.end_destination),
     tripData: item,
     currentUser,
+    latitudeDelta,
+    laongituteDalta,
   };
 };
 

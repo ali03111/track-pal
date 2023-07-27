@@ -8,6 +8,7 @@ import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingTrue} from '../../Redux/Action/isloadingAction';
 import {createTripObj} from '../../Services/FireBaseRealTImeServices';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const useHomeScreen = () => {
   const {dispatch, getState} = useReduxStore();
@@ -98,7 +99,7 @@ const useHomeScreen = () => {
     [tripsTypes[0].id]: {
       name: GroupInput,
       end_destination: destinationInput,
-      user_ids: groupMembers,
+      user_ids: [...groupMembers, userData.id],
       type: selectTripType,
       // 'image' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     },
@@ -113,7 +114,7 @@ const useHomeScreen = () => {
       start_destination: locationInput,
       name: GroupInput,
       end_destination: destinationInput,
-      user_ids: groupMembers,
+      user_ids: [...groupMembers, userData.id],
       type: selectTripType,
     },
   };
@@ -291,6 +292,24 @@ const useHomeScreen = () => {
 
   useEffect(useEffectFuc, []);
 
+  const [tripImage, setTripImage] = useState(null);
+  const uploadFromGalary = () => {
+    launchImageLibrary(
+      {
+        selectionLimit: 1,
+        mediaType: 'photo',
+        maxWidth: 300,
+        maxHeight: 300,
+      },
+      res => {
+        if (!res?.didCancel) {
+          console.log('imag222e', res.assets);
+          setTripImage(res?.assets[0]);
+        }
+      },
+    );
+  };
+
   return {
     frequentTrips,
     isModalVisible,
@@ -319,6 +338,8 @@ const useHomeScreen = () => {
     groupMembers,
     updateError,
     createTripFun,
+    uploadFromGalary,
+    tripImage,
   };
 };
 

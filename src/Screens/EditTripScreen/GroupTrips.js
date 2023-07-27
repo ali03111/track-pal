@@ -33,6 +33,7 @@ const GroupTrips = ({navigation, letterStyles}) => {
     changeMemberStatus,
     invitedTrips,
     groupTrips,
+    changeMemberStatusGroup,
   } = useEditTripScreen(navigation);
 
   const renderItem = ({item, index}) => {
@@ -62,15 +63,17 @@ const GroupTrips = ({navigation, letterStyles}) => {
               />
             </View>
           </View>
-          {item?.owner_running_status == 0 ? (
+          {item?.owner_running_status == 0 ||
+          item?.owner_running_status == 2 ? (
             <InactiveBtn style={{width: wp('36')}} title={'Trip on Pending'} />
-          ) : item?.pivot.member_running_status == 0 ? (
+          ) : item?.pivot.member_running_status == 0 ||
+            item?.pivot?.member_running_status == 2 ? (
             <ThemeButton
               title={'Start Trip'}
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
               onPress={() =>
-                changeMemberStatus(1, item.id, item?.trip_owner?.id, index)
+                changeMemberStatusGroup(1, item.id, item?.trip_owner?.id, index)
               }
             />
           ) : (
@@ -79,7 +82,7 @@ const GroupTrips = ({navigation, letterStyles}) => {
               textStyle={styles.TripBtnText}
               btnStyle={styles.TripBtn}
               onPress={() =>
-                changeMemberStatus(2, item.id, item?.trip_owner?.id, index)
+                changeMemberStatusGroup(2, item.id, item?.trip_owner?.id, index)
               }
             />
           )}
@@ -95,9 +98,10 @@ const GroupTrips = ({navigation, letterStyles}) => {
               height: Platform.OS == 'ios' ? hp('18.2') : hp('22.1'),
               width: wp('14'),
               opacity:
-                item?.owner_running_status == 0
+                item?.owner_running_status == 0 ||
+                item?.owner_running_status == 2
                   ? 0
-                  : item?.pivot.member_running_status != 0
+                  : item?.pivot.member_running_status == 1
                   ? 1
                   : 0,
             }}

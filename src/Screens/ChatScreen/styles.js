@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     // marginVertical: hp('2'),
     overflow: 'hidden',
     backgroundColor: Colors.white,
+    marginBottom: Platform.OS == 'ios' ? hp('1') : hp('0'),
   },
   searchinput: {
     // paddingHorizontal: wp(''),
@@ -53,5 +54,6 @@ export const styles = StyleSheet.create({
     fontSize: hp('2'),
     flex: 1,
     color: 'black',
+    height: hp('5'),
   },
 });
