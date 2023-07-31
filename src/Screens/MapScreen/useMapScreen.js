@@ -14,16 +14,19 @@ const useMapScreen = ({navigate}, {params}) => {
   console.log('jabdjabvdjkbcvsjkdcvjsd', item);
   const [allMember, setAllMembers] = useState([]);
   const log = JSON.parse(item.end_destination);
-
+  // const mapRef = useRef(null);
   const {width, height} = Dimensions.get('window');
   const ACPT_RATIO = width / height;
   const latitudeDelta = 0.02;
   const laongituteDalta = latitudeDelta * ACPT_RATIO;
-
+  console.log(
+    'JSON.parse(item.end_destination)JSON.parse(item.end_destination)JSON.parse(item.end_destination)',
+    JSON.parse(item.end_destination),
+  );
   const [currentUser, setCurrentUser] = useState({
     coords: {
-      latitude: log.latitude,
-      longitude: log.longitude,
+      longitude: null,
+      latitude: null,
     },
     status: true,
   });
@@ -41,9 +44,13 @@ const useMapScreen = ({navigate}, {params}) => {
         setAllMembers(() => data.filter(res => res.id != userData.id));
         setCurrentUser(prev => {
           const user = data.filter(res => res.id == userData.id);
-          if (user.length == 0) return user[0];
+          console.log('useruseruseruseruseruseruseruseruser', user);
+          if (user.length > 0) return user[0];
           else return prev;
         });
+        setTimeout(() => {
+          console.log('jksbdvjkbskvbsjdbvsbdvbsdjvbsbvjsbd', currentUser);
+        }, 2000);
       } else if (item.owner) {
         setAllMembers(data);
       }
@@ -74,8 +81,9 @@ const useMapScreen = ({navigate}, {params}) => {
         setAllMembers(() => filterData.filter(res => res.id != userData.id));
         setCurrentUser(prev => {
           const user = filterData.filter(res => res.id == userData.id);
-          if (user.length == 0) return user[0];
-          else return prev;
+          if (user.length > 0) {
+            return user[0];
+          } else return prev;
         });
       } else if (item.owner) {
         setAllMembers(filterData);

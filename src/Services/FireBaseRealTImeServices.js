@@ -432,7 +432,7 @@ const firebaseSubON = async data => {
       error => {
         return {ok: false, data: error};
       },
-      {enableHighAccuracy: true},
+      {enableHighAccuracy: true, fastestInterval: 1, distanceFilter: 1},
     );
 
     return {ok: true, data: null};

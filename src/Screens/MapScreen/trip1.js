@@ -9,7 +9,6 @@ import {
   currentUserLottie,
   destinationLottie,
   link,
-  profile,
   userWithOutPicLottie,
 } from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
@@ -21,10 +20,8 @@ import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent'
 import {TextComponent} from '../../Components/TextComponent';
 import Lottie from 'lottie-react-native';
 import {Colors} from '../../Theme/Variables';
-// import ImageAsset from 'lottie-react-native/lib/js/components/ImageAsset';
-import {hp, wp} from '../../Config/responsive';
 
-const MapScreen = ({route, navigation}) => {
+const TripOne = ({route, navigation}) => {
   const {
     allMember,
     destination,
@@ -76,12 +73,10 @@ const MapScreen = ({route, navigation}) => {
         region={{
           latitude: tripData.owner
             ? destination.latitude
-            : currentUser.coords.latitude ?? destination.latitude,
+            : currentUser.coords.latitude,
           longitude: tripData.owner
             ? destination.longitude
-            : currentUser.coords.longitude ?? destination.longitude,
-          // latitude: destination.latitude,
-          // longitude: destination.longitude,
+            : currentUser.coords.longitude,
           latitudeDelta,
           longitudeDelta: laongituteDalta,
         }}>
@@ -92,31 +87,27 @@ const MapScreen = ({route, navigation}) => {
             latitudeDelta,
             longitudeDelta: laongituteDalta,
           }}>
-          {/* <Text
-            style={{width: wp('20'), height: hp('30'), backgroundColor: 'red'}}>
-            hsvdhjsdkjbskvsjdv
-          </Text> */}
           <Lottie autoSize source={destinationLottie} autoPlay loop />
         </Marker>
 
-        {currentUser.coords.latitude != null && !tripData.owner && (
+        {!tripData.owner && (
           <>
             {console.log('jkadbcjksdbvjksbdjkvsdvsdnvks')}
             <MapViewDirections
               origin={{
                 // 24.907937434853988, 67.02333317832343
-                // latitude: ' 24.907937434853988',
-                // longitude: '67.02333317832343',
-                latitude: currentUser.coords.latitude,
-                longitude: currentUser.coords.longitude,
+                latitude: ' 24.907937434853988',
+                longitude: '67.02333317832343',
+                // latitude: currentUser.coords.latitude,
+                // longitude: currentUser.coords.longitude,
               }}
               precision="high"
               destination={{
                 // 24.909454807683705, 66.9879688334235
-                // latitude: '24.909454807683705',
-                // longitude: '66.9879688334235',
-                latitude: destination.latitude,
-                longitude: destination.longitude,
+                latitude: '24.909454807683705',
+                longitude: '66.9879688334235',
+                // latitude: destination.latitude,
+                // longitude: destination.longitude,
               }}
               mode="DRIVING"
               // optimizeWaypoints={true}
@@ -132,7 +123,6 @@ const MapScreen = ({route, navigation}) => {
               // strokeColors={['red']}
             />
             <Marker
-              focusable
               coordinate={{
                 latitude: currentUser.coords.latitude,
                 longitude: currentUser.coords.longitude,
@@ -151,9 +141,6 @@ const MapScreen = ({route, navigation}) => {
             console.log('sjdbvjsbjvb sdjkvsd', res);
             return (
               <Marker
-                focusable
-                tracksInfoWindowChanges
-                tracksViewChanges
                 coordinate={{
                   latitude: res.coords.latitude,
                   longitude: res.coords.longitude,
@@ -169,4 +156,4 @@ const MapScreen = ({route, navigation}) => {
   );
 };
 
-export default memo(MapScreen);
+export default memo(TripOne);

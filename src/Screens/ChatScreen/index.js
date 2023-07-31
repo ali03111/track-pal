@@ -1,5 +1,13 @@
 import React, {memo, useCallback, useState} from 'react';
-import {View, FlatList, Image, TextInput, ScrollView} from 'react-native';
+import {
+  View,
+  FlatList,
+  Image,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import MessagesComp from './MessagesComp';
 import {styles} from './styles';
 import useChatScreen from './useChatScreen';
@@ -36,12 +44,10 @@ const ChatScreen = ({navigation, route}) => {
     );
   });
   return (
-    <ScrollView
-      scrollEnabled={false}
-      nestedScrollEnabled
-      automaticallyAdjustKeyboardInsets
-      keyboardShouldPersistTaps="always"
-      contentContainerStyle={{flex: 1}}>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? hp('20') : 0}>
       <FlatList
         refreshing={false}
         data={msgs}
@@ -54,6 +60,7 @@ const ChatScreen = ({navigation, route}) => {
         contentContainerStyle={{
           paddingBottom: hp('2'),
           paddingHorizontal: wp('1'),
+          // height: hp('75'),
         }}
       />
       <View style={styles.searchMain}>
@@ -82,7 +89,7 @@ const ChatScreen = ({navigation, route}) => {
           </Touchable>
         )}
       </View>
-    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

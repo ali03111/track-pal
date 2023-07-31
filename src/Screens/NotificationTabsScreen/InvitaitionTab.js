@@ -29,7 +29,7 @@ const InvitationTab = ({route, navigation}) => {
       </View>
     );
   });
-  const noData = Boolean(tripNotification.length > 0)
+  const noData = Boolean(tripNotification.length == 0)
     ? {
         flex: 1,
         alignItems: 'center',
@@ -40,12 +40,11 @@ const InvitationTab = ({route, navigation}) => {
       };
   return (
     <View style={{...noData}}>
-      {tripNotification.length == 0 ? (
+      {tripNotification.length > 0 ? (
         <FlatList
           onRefresh={getUserTrips}
           refreshing={false}
-          data={[]}
-          // data={tripNotification}
+          data={tripNotification}
           renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

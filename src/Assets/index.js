@@ -25,6 +25,7 @@ export {default as bgBlur} from './Images/imgpsh_fullsize_anim.png';
 export {default as bgBlurDone} from './Images/imgpsh_fullsize_anim1.png';
 export {default as leftArrow} from './Images/leftArrow.png';
 export {default as bgBlurHome} from './Images/bgBlurHome.png';
+export {default as profile} from './Images/profile.png';
 
 // export {default as DemoProfileImage7} from './Images/profile7.png';
 

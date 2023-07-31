@@ -17,9 +17,8 @@ export const styles = StyleSheet.create({
     // marginHorizontal: wp('4'),
     // marginVertical: hp('2'),
     overflow: 'hidden',
+    marginBottom: Platform.OS == 'ios' ? hp('1') : hp('0'), // justifyContent: 'center',
     backgroundColor: Colors.white,
-    marginBottom: Platform.OS == 'ios' ? hp('1') : hp('0'),
-    // justifyContent: 'center',
   },
   searchinput: {
     // paddingHorizontal: wp(''),
@@ -61,7 +60,10 @@ export const styles = StyleSheet.create({
     maxHeight: hp('13'),
     width: wp('63'),
     justifyContent: 'center',
-    paddingVertical: hp('2'),
+    // paddingVertical: hp('2'),
+    // backgroundColor: 'rsed',
+    textAlignVertical: 'center',
+    paddingTop: hp('1.5'),
     // height: 'auto',
   },
 });

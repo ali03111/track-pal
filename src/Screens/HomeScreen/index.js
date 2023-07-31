@@ -63,6 +63,7 @@ const HomeScreen = () => {
     updateError,
     createTripFun,
     uploadFromGalary,
+    getUser,
     tripImage,
   } = useHomeScreen();
   const renderItem = useCallback(({item, index}) => {
@@ -171,6 +172,7 @@ const HomeScreen = () => {
               addMembersToGroup,
               groupMembers,
               message: updateError,
+              getUser,
             },
           }}
         />

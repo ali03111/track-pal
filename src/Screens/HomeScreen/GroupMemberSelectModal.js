@@ -48,6 +48,7 @@ const GroupMemberSelectModal = ({
     groupMembers,
     message,
     ErrorMessageHandler,
+    getUser,
   } = extraData;
   const [text, setText] = useState('');
   const [filterData, setFilterData] = useState([]);
@@ -150,10 +151,10 @@ const GroupMemberSelectModal = ({
                   placeholderTextColor={Colors.gray}
                 />
               </View>
-              <ScrollView
+              <View
                 style={styles.modalScroll(keyboardStatus)}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}>
+                // scrollEnabled={false}
+              >
                 <FlatList
                   refreshing={false}
                   data={
@@ -161,15 +162,15 @@ const GroupMemberSelectModal = ({
                     filterData.length >= 0 && text != '' ? filterData : allUser
                   }
                   renderItem={renderItem}
+                  onRefresh={() => getUser()}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
-                  horizontal={false}
                   contentContainerStyle={{
                     paddingRight: wp('2'),
                     paddingLeft: wp('0'),
                   }}
                 />
-              </ScrollView>
+              </View>
               <ThemeButton
                 title={'Next'}
                 onPress={toggleNextModal}

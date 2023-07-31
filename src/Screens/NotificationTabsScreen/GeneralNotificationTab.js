@@ -31,7 +31,6 @@ const GeneralNotificationTab = ({route, navigation}) => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'red',
       }
     : {
         flex: 1,

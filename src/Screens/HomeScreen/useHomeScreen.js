@@ -340,6 +340,7 @@ const useHomeScreen = () => {
     createTripFun,
     uploadFromGalary,
     tripImage,
+    getUser,
   };
 };
 
