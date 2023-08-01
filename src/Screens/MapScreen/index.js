@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {View, Text, Image} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import {styles} from './styles';
@@ -32,9 +32,19 @@ const MapScreen = ({route, navigation}) => {
     currentUser,
     laongituteDalta,
     latitudeDelta,
+    kiloMeterRef,
   } = useMapScreen(navigation, route);
 
   console.log('currentUsercurrentUsercurrentUser', currentUser);
+
+  const KiloMeterView = useCallback(() => {
+    return (
+      <TextComponent
+        styles={styles.kiloMeterText}
+        text={kiloMeterRef.current + ' KM away' ?? 0 + ' KM away'}
+      />
+    );
+  }, [kiloMeterRef]);
 
   return (
     <View style={{flex: 1}}>
@@ -71,107 +81,126 @@ const MapScreen = ({route, navigation}) => {
           <Image source={alert} style={styles.externalLinks} />
         </Touchable>
       </View>
-      <MapView
-        style={styles.staticMapImg}
-        region={{
-          latitude: tripData.owner
-            ? destination.latitude
-            : currentUser.coords.latitude ?? destination.latitude,
-          longitude: tripData.owner
-            ? destination.longitude
-            : currentUser.coords.longitude ?? destination.longitude,
-          // latitude: destination.latitude,
-          // longitude: destination.longitude,
-          latitudeDelta,
-          longitudeDelta: laongituteDalta,
-        }}>
-        <Marker
-          coordinate={{
-            latitude: destination.latitude,
-            longitude: destination.longitude,
+      <View style={styles.staticMapImg}>
+        <MapView
+          style={styles.staticMapImg}
+          region={{
+            latitude: tripData.owner
+              ? destination.latitude
+              : currentUser.coords.latitude ?? destination.latitude,
+            longitude: tripData.owner
+              ? destination.longitude
+              : currentUser.coords.longitude ?? destination.longitude,
+            // latitude: destination.latitude,
+            // longitude: destination.longitude,
             latitudeDelta,
             longitudeDelta: laongituteDalta,
           }}>
-          {/* <Text
+          <Marker
+            coordinate={{
+              latitude: destination.latitude,
+              longitude: destination.longitude,
+              latitudeDelta,
+              longitudeDelta: laongituteDalta,
+            }}>
+            {/* <Text
             style={{width: wp('20'), height: hp('30'), backgroundColor: 'red'}}>
             hsvdhjsdkjbskvsjdv
           </Text> */}
-          <Lottie autoSize source={destinationLottie} autoPlay loop />
-        </Marker>
-
-        {currentUser.coords.latitude != null && !tripData.owner && (
-          <>
-            {console.log('jkadbcjksdbvjksbdjkvsdvsdnvks')}
-            <MapViewDirections
-              origin={{
-                // 24.907937434853988, 67.02333317832343
-                // latitude: ' 24.907937434853988',
-                // longitude: '67.02333317832343',
-                latitude: currentUser.coords.latitude,
-                longitude: currentUser.coords.longitude,
-              }}
-              precision="high"
-              destination={{
-                // 24.909454807683705, 66.9879688334235
-                // latitude: '24.909454807683705',
-                // longitude: '66.9879688334235',
-                latitude: destination.latitude,
-                longitude: destination.longitude,
-              }}
-              mode="DRIVING"
-              // optimizeWaypoints={true}
-              // tappable
-              // strokeColor={'red'}
-              // start={{x: 0, y: 0}}
-              // end={{x: 1, y: 0}}
-              strokeWidth={4}
-              strokeColors={['#92278F', '#EE2A7B']}
-              // strokeColors={[Colors.themeColorDark, Colors.themeColorLight]}
-              apikey={'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U'} // android
-              // apikey={'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE'}
-              // strokeColors={['red']}
+            <Lottie
+              style={{height: hp('8'), width: wp('4')}}
+              resizeMode="contain"
+              source={destinationLottie}
+              autoPlay
+              loop
             />
-            <Marker
-              focusable
-              coordinate={{
-                latitude: currentUser.coords.latitude,
-                longitude: currentUser.coords.longitude,
-                latitudeDelta,
-                longitudeDelta: laongituteDalta,
-              }}>
-              {/* <Lottie source={userWithOutPicLottie} autoPlay loop /> */}
-
-              <Lottie autoSize source={currentUserLottie} autoPlay loop />
-            </Marker>
-          </>
-          // console.log('jksbdjkbsdjkbvjsdb vsdjv sdj jdjdjd', currentUser)
-        )}
-        {allMember.length > 0 &&
-          allMember.map(res => {
-            console.log('sjdbvjsbjvb sdjkvsd', res);
-            return (
+          </Marker>
+          {currentUser.coords.latitude != null && !tripData.owner && (
+            <>
+              {console.log('jkadbcjksdbvjksbdjkvsdvsdnvks')}
+              <MapViewDirections
+                origin={{
+                  // 24.907937434853988, 67.02333317832343
+                  // latitude: ' 24.907937434853988',
+                  // longitude: '67.02333317832343',
+                  latitude: currentUser.coords.latitude,
+                  longitude: currentUser.coords.longitude,
+                }}
+                precision="high"
+                destination={{
+                  // 24.909454807683705, 66.9879688334235
+                  // latitude: '24.909454807683705',
+                  // longitude: '66.9879688334235',
+                  latitude: destination.latitude,
+                  longitude: destination.longitude,
+                }}
+                mode="DRIVING"
+                // optimizeWaypoints={true}
+                // tappable
+                // strokeColor={'red'}
+                // start={{x: 0, y: 0}}
+                // end={{x: 1, y: 0}}
+                strokeWidth={4}
+                strokeColors={['#92278F', '#EE2A7B']}
+                // strokeColors={[Colors.themeColorDark, Colors.themeColorLight]}
+                apikey={'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U'} // android
+                // apikey={'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE'}
+                // strokeColors={['red']}
+              />
               <Marker
                 focusable
-                tracksInfoWindowChanges
-                tracksViewChanges
                 coordinate={{
-                  latitude: res.coords.latitude,
-                  longitude: res.coords.longitude,
+                  latitude: currentUser.coords.latitude,
+                  longitude: currentUser.coords.longitude,
                   latitudeDelta,
                   longitudeDelta: laongituteDalta,
                 }}>
-                <FirstCharacterComponent
-                  text={'ssdsd'}
-                  extraStyle={{
-                    poition: 'absolute',
-                    bottom: hp('-5'),
-                  }}
+                {/* <Lottie source={userWithOutPicLottie} autoPlay loop /> */}
+
+                <Lottie
+                  style={{height: hp('8'), width: wp('4')}}
+                  resizeMode="contain"
+                  source={currentUserLottie}
+                  autoPlay
+                  loop
                 />
-                <Lottie autoSize source={userWithOutPicLottie} autoPlay loop />
               </Marker>
-            );
-          })}
-      </MapView>
+            </>
+            // console.log('jksbdjkbsdjkbvjsdb vsdjv sdj jdjdjd', currentUser)
+          )}
+          {allMember.length > 0 &&
+            allMember.map(res => {
+              return (
+                <Marker
+                  focusable
+                  tracksInfoWindowChanges
+                  tracksViewChanges
+                  coordinate={{
+                    latitude: res.coords.latitude,
+                    longitude: res.coords.longitude,
+                    latitudeDelta,
+                    longitudeDelta: laongituteDalta,
+                  }}>
+                  <FirstCharacterComponent
+                    text={'ssdsd'}
+                    extraStyle={{
+                      poition: 'absolute',
+                      bottom: hp('-5'),
+                    }}
+                  />
+                  <Lottie
+                    source={userWithOutPicLottie}
+                    autoPlay
+                    loop
+                    style={{height: hp('8'), width: wp('4')}}
+                    resizeMode="contain"
+                  />
+                </Marker>
+              );
+            })}
+        </MapView>
+        <KiloMeterView />
+      </View>
     </View>
   );
 };

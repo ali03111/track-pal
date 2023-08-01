@@ -77,9 +77,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
         status,
         id,
       });
-
       dispatch(loadingTrue());
-
       if (ok) {
         tripsCard();
         dispatch(loadingTrue());

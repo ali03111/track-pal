@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
   getFirebaseData,
   getCurrentLocation,
@@ -8,13 +8,17 @@ import {
 } from '../../Services/FireBaseRealTImeServices';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {Dimensions} from 'react-native';
+import Geolib from 'geolib';
+import getDistance from 'geolib/es/getPreciseDistance';
 
 const useMapScreen = ({navigate}, {params}) => {
   const {item} = params.params;
-  console.log('jabdjabvdjkbcvsjkdcvjsd', item);
+  var distance = 0;
+
   const [allMember, setAllMembers] = useState([]);
+
   const log = JSON.parse(item.end_destination);
-  // const mapRef = useRef(null);
+  const kiloMeterRef = useRef(0.0);
   const {width, height} = Dimensions.get('window');
   const ACPT_RATIO = width / height;
   const latitudeDelta = 0.02;
@@ -44,13 +48,9 @@ const useMapScreen = ({navigate}, {params}) => {
         setAllMembers(() => data.filter(res => res.id != userData.id));
         setCurrentUser(prev => {
           const user = data.filter(res => res.id == userData.id);
-          console.log('useruseruseruseruseruseruseruseruser', user);
           if (user.length > 0) return user[0];
           else return prev;
         });
-        setTimeout(() => {
-          console.log('jksbdvjkbskvbsjdbvsbdvbsdjvbsbvjsbd', currentUser);
-        }, 2000);
       } else if (item.owner) {
         setAllMembers(data);
       }
@@ -79,12 +79,24 @@ const useMapScreen = ({navigate}, {params}) => {
 
       if (!item.owner) {
         setAllMembers(() => filterData.filter(res => res.id != userData.id));
+        const user = filterData.filter(res => res.id == userData.id);
+        const checkLength = Boolean(user.length > 0);
         setCurrentUser(prev => {
-          const user = filterData.filter(res => res.id == userData.id);
-          if (user.length > 0) {
+          if (checkLength) {
             return user[0];
           } else return prev;
         });
+        if (checkLength) {
+          distance = getDistance(
+            {
+              latitude: user[0].coords.latitude,
+              longitude: user[0].coords.longitude,
+            },
+            {latitude: log.latitude, longitude: log.longitude},
+          );
+          const kiloMeter = distance / 1000;
+          kiloMeterRef.current = kiloMeter.toFixed(2);
+        }
       } else if (item.owner) {
         setAllMembers(filterData);
       }
@@ -101,6 +113,7 @@ const useMapScreen = ({navigate}, {params}) => {
     currentUser,
     latitudeDelta,
     laongituteDalta,
+    kiloMeterRef,
   };
 };
 

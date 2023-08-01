@@ -62,4 +62,14 @@ export const styles = StyleSheet.create({
     height: hp('10'),
     resizeMode: 'contain',
   },
+  kiloMeterText: {
+    position: 'absolute',
+    left: wp('2'),
+    top: hp('1'),
+    padding: 5,
+    backgroundColor: Colors.gray,
+    color: Colors.white,
+    borderRadius: 10,
+    paddingHorizontal: wp('3'),
+  },
 });

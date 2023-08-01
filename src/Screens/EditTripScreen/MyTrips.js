@@ -21,7 +21,6 @@ import TripCreatedModal from '../HomeScreen/TripCreatedModal';
 import useEditTripScreen from './useEditTripScreen';
 import {hp, wp} from '../../Config/responsive';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
-
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';

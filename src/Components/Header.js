@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS == 'ios' ? hp('6') : hp('3'),
     paddingHorizontal: wp('5'),
     paddingBottom: hp('3'),
+    // backgroundColor: 'white',
   },
 
   backMain: {

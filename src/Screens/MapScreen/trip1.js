@@ -31,8 +31,6 @@ const TripOne = ({route, navigation}) => {
     latitudeDelta,
   } = useMapScreen(navigation, route);
 
-  console.log('currentUsercurrentUsercurrentUser', currentUser);
-
   return (
     <View style={{flex: 1}}>
       <View style={styles.groupInfoMain}>

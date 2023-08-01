@@ -19,7 +19,7 @@ import {Alert, Platform} from 'react-native';
 
 const perSKU = Platform.select({
   android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-  ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
+  ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
 });
 
 export const reference = firestore().collection('Trips');
@@ -64,12 +64,11 @@ const createTripObj = async data => {
   try {
     const membersData = members.map(res => ({
       id: res.id,
-      details: {id: res.id, email: res.email},
+      details: res,
       location: {
         coords: {},
         description: '',
       },
-      chat: [],
     }));
 
     const fire = reference
@@ -422,12 +421,6 @@ const firebaseSubON = async data => {
         };
 
         await fire.doc(`${tripOnnwerID}`).update(wholeObj);
-
-        console.log(
-          'Error creating tripsssssssssssssssss:',
-          latitude,
-          longitude,
-        );
       },
       error => {
         return {ok: false, data: error};

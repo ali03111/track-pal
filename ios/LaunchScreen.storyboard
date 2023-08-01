@@ -18,6 +18,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="SplashScreenBackground" translatesAutoresizingMaskIntoConstraints="NO" id="bK4-aW-cSR" userLabel="SplashScreenBackground">
                                 <rect key="frame" x="0.0" y="0.0" width="820" height="1180"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="SplashIpad" translatesAutoresizingMaskIntoConstraints="NO" id="boy-ai-uLx">
+                                <rect key="frame" x="0.0" y="0.0" width="820" height="1180"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashScreen" highlightedImage="SplashScreen" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yYs-ku-rVa" userLabel="SplashScreen">
                                 <rect key="frame" x="0.0" y="0.0" width="820" height="1180"/>
                             </imageView>
@@ -41,6 +45,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="SplashIpad" width="1024" height="1366"/>
         <image name="SplashScreen" width="414" height="896"/>
         <image name="SplashScreenBackground" width="414" height="896"/>
     </resources>
