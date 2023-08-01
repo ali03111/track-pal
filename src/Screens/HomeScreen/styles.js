@@ -368,4 +368,10 @@ export const styles = StyleSheet.create({
     height: hp('9'),
     aspectRatio: 1,
   },
+  view: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    // marginVertical: 50,
+  },
 });

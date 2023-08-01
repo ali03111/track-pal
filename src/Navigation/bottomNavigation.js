@@ -88,12 +88,12 @@ function MybottomTabs() {
             height: hp('12'),
           }),
         )}
-        component={Screens.ProfileScreen}
+        component={Screens.GeneralNotification}
       />
       <Tab.Screen
         name="ChatScreen"
         options={tabarComponent(notification2, notification)}
-        component={Screens.NotificationTabsScreen}
+        component={Screens.InvitationScreen}
       />
       <Tab.Screen
         name="AccountScreen"

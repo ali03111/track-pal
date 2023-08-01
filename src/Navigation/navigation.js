@@ -50,10 +50,10 @@ const StackNavigatior = () => {
               component={Screens.MapAndChatScreen}
             />
             <Stack.Screen name="ChatScreen" component={Screens.ChatScreen} />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="NotificationTabsScreen"
               component={Screens.NotificationTabsScreen}
-            />
+            /> */}
             <Stack.Screen
               name="EditProfileScreen"
               component={Screens.EditProfileScreen}
