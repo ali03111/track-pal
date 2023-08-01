@@ -1,5 +1,15 @@
 import React, {memo, useCallback, useState} from 'react';
-import {View, Text, Image, FlatList, TextInput, Platform} from 'react-native';
+import {
+  View,
+  Image,
+  FlatList,
+  TextInput,
+  Platform,
+  TouchableOpacity,
+  StatusBar,
+  Text,
+} from 'react-native';
+
 import {
   DemoProfileImage1,
   arrows,
@@ -66,6 +76,8 @@ const HomeScreen = () => {
     getUser,
     tripImage,
   } = useHomeScreen();
+  const [showTip, setTip] = useState(false);
+
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.trips}>
@@ -116,6 +128,12 @@ const HomeScreen = () => {
           }}></MapView>
         {/* <Image source={staticMap} style={styles.staticMapImg} /> */}
       </View>
+      {/* <Tooltip
+        popover={<Text>Change here</Text>}
+        withOverlay={false}
+        skipAndroidStatusBar={true}>
+        <Text>asd</Text>
+      </Tooltip> */}
       <TextComponent text={'Frequent Trips'} styles={styles.TripsHeading} />
       <FlatList
         refreshing={false}
