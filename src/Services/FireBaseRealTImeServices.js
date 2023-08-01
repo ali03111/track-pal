@@ -64,12 +64,11 @@ const createTripObj = async data => {
   try {
     const membersData = members.map(res => ({
       id: res.id,
-      details: {id: res.id, email: res.email},
+      details: res,
       location: {
         coords: {},
         description: '',
       },
-      chat: [],
     }));
 
     const fire = reference

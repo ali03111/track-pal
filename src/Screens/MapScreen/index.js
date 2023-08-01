@@ -160,6 +160,20 @@ const MapScreen = ({route, navigation}) => {
                   latitudeDelta,
                   longitudeDelta: laongituteDalta,
                 }}>
+                {res?.details.profile_image ? (
+                  <CircleImage
+                    uri={true}
+                    image={res?.details.profile_image}
+                    // style={styles.pImage}
+                    styles={styles.pImage}
+                  />
+                ) : (
+                  <FirstCharacterComponent
+                    text={res?.details.name}
+                    extraStyle={styles.firstCharStyle}
+                    textStyle={styles.firstTextStyle}
+                  />
+                )}
                 <Lottie autoSize source={userWithOutPicLottie} autoPlay loop />
               </Marker>
             );

@@ -56,8 +56,8 @@ const InvitationComp = ({
           </View>
           <View style={styles.descmain}>
             <TextComponentTripInvite
-              text={name + ' has invited you to become a member of his'}
-              tripName={groupName}
+              text={name + ' has invited you to become a member of '}
+              tripName={groupName + ' Trip'}
               styles={styles.description}
               tripStyles={styles.groupName}
             />

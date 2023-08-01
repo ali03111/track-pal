@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
@@ -61,5 +61,28 @@ export const styles = StyleSheet.create({
     width: wp('10'),
     height: hp('10'),
     resizeMode: 'contain',
+  },
+  firstCharStyle: {
+    zIndex: 999,
+    position: 'relative',
+    poition: 'absolute',
+    bottom: hp('-3.6'),
+    width: Dimensions.get('window').width * 0.06,
+    height: Dimensions.get('window').width * 0.06,
+    left: wp('3.6'),
+    backgroundColor: Colors.white,
+  },
+  firstTextStyle: {
+    fontSize: hp('1.8'),
+    color: Colors.primaryColor,
+  },
+  pImage: {
+    zIndex: 999,
+    position: 'relative',
+    poition: 'absolute',
+    bottom: hp('-3.6'),
+    width: Dimensions.get('window').width * 0.06,
+    height: Dimensions.get('window').width * 0.06,
+    left: wp('3.6'),
   },
 });
