@@ -160,6 +160,13 @@ const MapScreen = ({route, navigation}) => {
                   latitudeDelta,
                   longitudeDelta: laongituteDalta,
                 }}>
+                <FirstCharacterComponent
+                  text={'ssdsd'}
+                  extraStyle={{
+                    poition: 'absolute',
+                    bottom: hp('-5'),
+                  }}
+                />
                 <Lottie autoSize source={userWithOutPicLottie} autoPlay loop />
               </Marker>
             );
