@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   TripsHeading: {
     fontSize: hp('3'),
     fontWeight: '600',
-    marginTop: hp('5'),
+    marginTop: hp('3'),
     marginBottom: hp('3'),
     paddingHorizontal: wp('4'),
   },
