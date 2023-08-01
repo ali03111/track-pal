@@ -199,7 +199,7 @@ const MapScreen = ({route, navigation}) => {
               );
             })}
         </MapView>
-        <KiloMeterView />
+        {!tripData.owner && <KiloMeterView />}
       </View>
     </View>
   );
