@@ -33,6 +33,7 @@ const MapScreen = ({route, navigation}) => {
     laongituteDalta,
     latitudeDelta,
     kiloMeterRef,
+    userMarkerRef,
   } = useMapScreen(navigation, route);
 
   console.log('currentUsercurrentUsercurrentUser', currentUser);
@@ -58,8 +59,6 @@ const MapScreen = ({route, navigation}) => {
             blurRadius={0.5}
           />
         )}
-        {/* <CircleImage image={DemoProfileImage1} style={styles.groupLogo} /> */}
-
         {tripData.image ? (
           <CircleImage image={tripData.image} style={styles.groupLogo} />
         ) : (
@@ -91,11 +90,15 @@ const MapScreen = ({route, navigation}) => {
             longitude: tripData.owner
               ? destination.longitude
               : currentUser.coords.longitude ?? destination.longitude,
-            // latitude: destination.latitude,
-            // longitude: destination.longitude,
             latitudeDelta,
             longitudeDelta: laongituteDalta,
-          }}>
+          }}
+          showsUserLocation
+          focusable
+          followsUserLocation
+          moveOnMarkerPress
+          showsMyLocationButton
+          zoomEnabled>
           <Marker
             coordinate={{
               latitude: destination.latitude,
@@ -103,10 +106,6 @@ const MapScreen = ({route, navigation}) => {
               latitudeDelta,
               longitudeDelta: laongituteDalta,
             }}>
-            {/* <Text
-            style={{width: wp('20'), height: hp('30'), backgroundColor: 'red'}}>
-            hsvdhjsdkjbskvsjdv
-          </Text> */}
             <Lottie
               style={{height: hp('8'), width: wp('4')}}
               resizeMode="contain"
@@ -117,37 +116,22 @@ const MapScreen = ({route, navigation}) => {
           </Marker>
           {currentUser.coords.latitude != null && !tripData.owner && (
             <>
-              {console.log('jkadbcjksdbvjksbdjkvsdvsdnvks')}
               <MapViewDirections
                 origin={{
-                  // 24.907937434853988, 67.02333317832343
-                  // latitude: ' 24.907937434853988',
-                  // longitude: '67.02333317832343',
                   latitude: currentUser.coords.latitude,
                   longitude: currentUser.coords.longitude,
                 }}
                 precision="high"
                 destination={{
-                  // 24.909454807683705, 66.9879688334235
-                  // latitude: '24.909454807683705',
-                  // longitude: '66.9879688334235',
                   latitude: destination.latitude,
                   longitude: destination.longitude,
                 }}
                 mode="DRIVING"
-                // optimizeWaypoints={true}
-                // tappable
-                // strokeColor={'red'}
-                // start={{x: 0, y: 0}}
-                // end={{x: 1, y: 0}}
                 strokeWidth={4}
                 strokeColors={['#92278F', '#EE2A7B']}
-                // strokeColors={[Colors.themeColorDark, Colors.themeColorLight]}
                 apikey={'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U'} // android
-                // apikey={'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE'}
-                // strokeColors={['red']}
               />
-              <Marker
+              <Marker.Animated
                 focusable
                 coordinate={{
                   latitude: currentUser.coords.latitude,
@@ -155,8 +139,6 @@ const MapScreen = ({route, navigation}) => {
                   latitudeDelta,
                   longitudeDelta: laongituteDalta,
                 }}>
-                {/* <Lottie source={userWithOutPicLottie} autoPlay loop /> */}
-
                 <Lottie
                   style={{height: hp('8'), width: wp('4')}}
                   resizeMode="contain"
@@ -164,9 +146,8 @@ const MapScreen = ({route, navigation}) => {
                   autoPlay
                   loop
                 />
-              </Marker>
+              </Marker.Animated>
             </>
-            // console.log('jksbdjkbsdjkbvjsdb vsdjv sdj jdjdjd', currentUser)
           )}
           {allMember.length > 0 &&
             allMember.map(res => {

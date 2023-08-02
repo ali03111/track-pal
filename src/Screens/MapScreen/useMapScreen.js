@@ -10,6 +10,7 @@ import useReduxStore from '../../Hooks/UseReduxStore';
 import {Dimensions} from 'react-native';
 import Geolib from 'geolib';
 import getDistance from 'geolib/es/getPreciseDistance';
+import {AnimatedRegion} from 'react-native-maps';
 
 const useMapScreen = ({navigate}, {params}) => {
   const {item} = params.params;
@@ -34,7 +35,12 @@ const useMapScreen = ({navigate}, {params}) => {
     },
     status: true,
   });
-
+  const userMarkerRef = useRef(
+    new AnimatedRegion({
+      latitude: 0,
+      longitude: 0,
+    }),
+  );
   const {getState} = useReduxStore();
   const {userData} = getState('Auth');
 
@@ -46,11 +52,21 @@ const useMapScreen = ({navigate}, {params}) => {
     if (ok) {
       if (!item.owner) {
         setAllMembers(() => data.filter(res => res.id != userData.id));
+        const user = data.filter(res => res.id == userData.id);
         setCurrentUser(prev => {
-          const user = data.filter(res => res.id == userData.id);
           if (user.length > 0) return user[0];
           else return prev;
         });
+        if (user.length > 0)
+          userMarkerRef.current
+            .timing(
+              {
+                latitude: user[0].coords.latitude,
+                longitude: user[0].coords.longitude,
+              },
+              100,
+            )
+            .start();
       } else if (item.owner) {
         setAllMembers(data);
       }
@@ -87,6 +103,19 @@ const useMapScreen = ({navigate}, {params}) => {
           } else return prev;
         });
         if (checkLength) {
+          userMarkerRef.current
+            .timing(
+              {
+                latitude: user[0].coords.latitude,
+                longitude: user[0].coords.longitude,
+              },
+              100,
+            )
+            .start();
+          console.log(
+            userMarkerRef.current,
+            'userMarkerRef.currentuserMarkerRef.currentuserMarkerRef.currentuserMarkerRef.current',
+          );
           distance = getDistance(
             {
               latitude: user[0].coords.latitude,
@@ -114,6 +143,7 @@ const useMapScreen = ({navigate}, {params}) => {
     latitudeDelta,
     laongituteDalta,
     kiloMeterRef,
+    userMarkerRef,
   };
 };
 
