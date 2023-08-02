@@ -24,6 +24,8 @@ import {getSingleCharacter} from '../../Utils/globalFunctions';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import {loaderView} from './MyTrips';
 
 const InvitedTrip = ({navigation, letterStyles}) => {
   const {
@@ -137,7 +139,7 @@ const InvitedTrip = ({navigation, letterStyles}) => {
       rowMap[rowKey]?.closeRow();
     }, 2000);
   };
-  const noData = Boolean(invitedTrips.length == 0)
+  const noData = Boolean(invitedTrips != null && invitedTrips.length == 0)
     ? {
         alignItems: 'center',
         justifyContent: 'center',
@@ -152,7 +154,15 @@ const InvitedTrip = ({navigation, letterStyles}) => {
         height: '100%',
         ...noData,
       }}>
-      {invitedTrips.length > 0 ? (
+      {invitedTrips == null && (
+        <SkeletonPlaceholder borderRadius={4}>
+          {loaderView()}
+          {loaderView()}
+          {loaderView()}
+          {loaderView()}
+        </SkeletonPlaceholder>
+      )}
+      {invitedTrips != null && invitedTrips.length > 0 ? (
         <SwipeListView
           useFlatList={true}
           data={invitedTrips}
@@ -172,7 +182,10 @@ const InvitedTrip = ({navigation, letterStyles}) => {
           style={{height: '100%'}}
         />
       ) : (
-        <EmptyViewComp onRefresh={tripsCard} refreshStyle={styles.refStyle} />
+        invitedTrips != null &&
+        invitedTrips.length == 0 && (
+          <EmptyViewComp onRefresh={tripsCard} refreshStyle={styles.refStyle} />
+        )
       )}
 
       {/* <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} /> */}

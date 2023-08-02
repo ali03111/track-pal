@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {
   View,
   Text,
@@ -24,88 +24,111 @@ import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent'
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+
+export const loaderView = () => {
+  return (
+    <View style={styles.loaderMain}>
+      <View>
+        <View style={{flexDirection: 'row'}}>
+          <View style={styles.LoaderImage} />
+          <View style={styles.loaderInner}>
+            <View style={styles.loaderName} />
+            <View style={styles.loaderDes} />
+            <View style={styles.loaderDes} />
+          </View>
+        </View>
+        <View style={styles.loaderBtn} />
+      </View>
+      <View style={styles.loaderBar} />
+    </View>
+  );
+};
 
 const MyTrips = ({navigation}) => {
   const {updateState, tripCardData, tripsCard, isTripCreated} =
     useEditTripScreen(navigation);
 
-  const renderOwnerItem = ({item, index}) => {
-    const generateColor = () => {
-      profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
-      return profileBgColor;
-    };
-    const status = {
-      0: 'Pendding',
-      1: 'Active',
-      2: 'Inactive',
-    };
-    return (
-      <View style={styles.activeCardMain(item?.status)}>
-        <View style={styles.activeCardStyle}>
-          <View style={styles.cardLeft}>
-            {item?.image ? (
-              <CircleImage image={item?.image} style={styles.groupLogo} />
-            ) : (
-              <FirstCharacterComponent text={item?.name} />
-            )}
-            <View style={styles.groupDesc}>
-              <TextComponent
-                numberOfLines={1}
-                text={item?.name}
-                styles={styles.groupName}
-              />
-              <TextComponent
-                text={item?.total_members + ' members'}
-                styles={styles.groupMember}
-              />
-              <TextComponent
-                text={item?.status}
-                styles={styles.groupActive(item?.status)}
-              />
+  const renderOwnerItem = useCallback(
+    ({item, index}) => {
+      const generateColor = () => {
+        profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
+        return profileBgColor;
+      };
+      const status = {
+        0: 'Pendding',
+        1: 'Active',
+        2: 'Inactive',
+      };
+      return (
+        <View style={styles.activeCardMain(item?.status)}>
+          <View style={styles.activeCardStyle}>
+            <View style={styles.cardLeft}>
+              {item?.image ? (
+                <CircleImage image={item?.image} style={styles.groupLogo} />
+              ) : (
+                <FirstCharacterComponent text={item?.name} />
+              )}
+              <View style={styles.groupDesc}>
+                <TextComponent
+                  numberOfLines={1}
+                  text={item?.name}
+                  styles={styles.groupName}
+                />
+                <TextComponent
+                  text={item?.total_members + ' members'}
+                  styles={styles.groupMember}
+                />
+                <TextComponent
+                  text={item?.status}
+                  styles={styles.groupActive(item?.status)}
+                />
+              </View>
             </View>
+            {item?.owner_running_status == 0 ||
+            item?.owner_running_status == 2 ? (
+              <ThemeButton
+                title={'Start Trip'}
+                textStyle={styles.TripBtnText}
+                btnStyle={styles.TripBtn}
+                onPress={async () => {
+                  const result = await requestPermission();
+                  if (result) updateState(1, item.id, index);
+                }}
+              />
+            ) : (
+              <ThemeButton
+                title={'End Trip'}
+                textStyle={styles.TripBtnText}
+                btnStyle={styles.TripBtn}
+                onPress={() => {
+                  updateState(2, item.id, index);
+                }}
+              />
+            )}
           </View>
-          {item?.owner_running_status == 0 ||
-          item?.owner_running_status == 2 ? (
-            <ThemeButton
-              title={'Start Trip'}
-              textStyle={styles.TripBtnText}
-              btnStyle={styles.TripBtn}
-              onPress={async () => {
-                const result = await requestPermission();
-                if (result) updateState(1, item.id, index);
+          <TouchableOpacity
+            onPress={() =>
+              item?.owner_running_status == 1 &&
+              navigation.navigate('MapAndChatScreen', {
+                item: {...tripCardData[index], owner: true},
+              })
+            }>
+            <Image
+              style={{
+                height: Platform.OS == 'ios' ? hp('18.2') : hp('22.1'),
+                width: wp('14'),
+                opacity: item?.owner_running_status == 1 ? 1 : 0,
               }}
+              resizeMode="contain"
+              source={leftArrow}
             />
-          ) : (
-            <ThemeButton
-              title={'End Trip'}
-              textStyle={styles.TripBtnText}
-              btnStyle={styles.TripBtn}
-              onPress={() => {
-                updateState(2, item.id, index);
-              }}
-            />
-          )}
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() =>
-            item?.owner_running_status == 1 &&
-            navigation.navigate('MapAndChatScreen', {
-              item: {...tripCardData[index], owner: true},
-            })
-          }>
-          <Image
-            style={{
-              height: Platform.OS == 'ios' ? hp('18.2') : hp('22.1'),
-              width: wp('14'),
-              opacity: item?.owner_running_status == 1 ? 1 : 0,
-            }}
-            resizeMode="contain"
-            source={leftArrow}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  };
+      );
+    },
+    [tripCardData],
+  );
 
   const renderHiddenItem = (data, rowMap) => (
     <View style={styles.rowBack}>
@@ -122,13 +145,14 @@ const MyTrips = ({navigation}) => {
       rowMap[rowKey]?.closeRow();
     }, 2000);
   };
-  const noData = Boolean(tripCardData.length == 0)
+  const noData = Boolean(tripCardData != null && tripCardData.length == 0)
     ? {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: hp('0'),
       }
     : {};
+
   return (
     <View
       style={{
@@ -137,7 +161,15 @@ const MyTrips = ({navigation}) => {
         flex: 1,
         ...noData,
       }}>
-      {tripCardData.length > 0 ? (
+      {tripCardData == null && (
+        <SkeletonPlaceholder borderRadius={4}>
+          {loaderView()}
+          {loaderView()}
+          {loaderView()}
+          {loaderView()}
+        </SkeletonPlaceholder>
+      )}
+      {tripCardData != null && tripCardData.length > 0 ? (
         <>
           <SwipeListView
             useFlatList={true}
@@ -154,6 +186,7 @@ const MyTrips = ({navigation}) => {
             scrollEnabled
             refreshing={false}
             onRefresh={tripsCard}
+            ListEmptyComponent={<EmptyViewComp onRefresh={tripsCard} />}
             showsVerticalScrollIndicator={false}
             style={{height: '100%'}}
           />
@@ -163,7 +196,12 @@ const MyTrips = ({navigation}) => {
           />
         </>
       ) : (
-        <EmptyViewComp onRefresh={tripsCard} />
+        tripCardData != null &&
+        tripCardData.length == 0 && (
+          <View>
+            <EmptyViewComp onRefresh={tripsCard} />
+          </View>
+        )
       )}
     </View>
   );

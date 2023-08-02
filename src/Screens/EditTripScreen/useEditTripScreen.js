@@ -29,9 +29,9 @@ import Geolocation from '@react-native-community/geolocation';
 const useEditTripScreen = ({addListener, navigate}) => {
   const [isTripCreated, setIsTripCreated] = useState(false);
 
-  const [tripCardData, setTripCardData] = useState([]);
-  const [invitedTrips, setInvitedTrip] = useState([]);
-  const [groupTrips, setGroupTrip] = useState([]);
+  const [tripCardData, setTripCardData] = useState(null);
+  const [invitedTrips, setInvitedTrip] = useState(null);
+  const [groupTrips, setGroupTrip] = useState(null);
 
   const {dispatch, getState} = useReduxStore();
 
