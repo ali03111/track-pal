@@ -38,11 +38,6 @@ const GroupTrips = ({navigation, letterStyles}) => {
   } = useEditTripScreen(navigation);
 
   const renderItem = ({item, index}) => {
-    const status = {
-      0: 'Pendding',
-      1: 'Active',
-      2: 'Inactive',
-    };
     return (
       <View style={styles.activeCardMain(item?.status)}>
         <View style={styles.activeCardStyle}>
