@@ -135,6 +135,7 @@ const HomeScreen = () => {
         <Text>asd</Text>
       </Tooltip> */}
       <TextComponent text={'Frequent Trips'} styles={styles.TripsHeading} />
+
       <FlatList
         refreshing={false}
         data={frequentTrips}

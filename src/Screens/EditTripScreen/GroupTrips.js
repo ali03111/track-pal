@@ -24,6 +24,8 @@ import {getSingleCharacter} from '../../Utils/globalFunctions';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';
+import {loaderView} from './MyTrips';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const GroupTrips = ({navigation, letterStyles}) => {
   const {
@@ -141,7 +143,7 @@ const GroupTrips = ({navigation, letterStyles}) => {
       rowMap[rowKey]?.closeRow();
     }, 2000);
   };
-  const noData = Boolean(groupTrips.length == 0)
+  const noData = Boolean(groupTrips != null && groupTrips.length == 0)
     ? {
         alignItems: 'center',
         justifyContent: 'center',
@@ -158,7 +160,15 @@ const GroupTrips = ({navigation, letterStyles}) => {
         flex: 1,
         ...noData,
       }}>
-      {groupTrips.length > 0 ? (
+      {groupTrips == null && (
+        <SkeletonPlaceholder borderRadius={4}>
+          {loaderView()}
+          {loaderView()}
+          {loaderView()}
+          {loaderView()}
+        </SkeletonPlaceholder>
+      )}
+      {groupTrips != null && groupTrips.length > 0 ? (
         <SwipeListView
           useFlatList={true}
           data={groupTrips}
@@ -178,7 +188,8 @@ const GroupTrips = ({navigation, letterStyles}) => {
           showsVerticalScrollIndicator={false}
         />
       ) : (
-        <EmptyViewComp onRefresh={tripsCard} />
+        groupTrips != null &&
+        groupTrips.length == 0 && <EmptyViewComp onRefresh={tripsCard} />
       )}
 
       {/* <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} /> */}

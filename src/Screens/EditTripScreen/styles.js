@@ -127,5 +127,39 @@ export const styles = StyleSheet.create({
     width: wp('6'),
     resizeMode: 'contain',
   },
-  refStyle: {},
+  loaderMain: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginVertical: hp('1.5'),
+  },
+  LoaderImage: {
+    width: wp('15'),
+    height: hp('7.5'),
+    borderRadius: 50,
+  },
+  loaderInner: {
+    marginLeft: wp('5'),
+    marginRight: wp('18'),
+  },
+  loaderName: {
+    width: wp('40'),
+    height: hp('2'),
+    marginTop: hp('1'),
+  },
+  loaderDes: {
+    width: wp('30'),
+    height: hp('1'),
+    marginTop: hp('1'),
+  },
+  loaderBtn: {
+    width: wp('30'),
+    height: hp('4'),
+    marginTop: hp('4'),
+    marginLeft: wp('1'),
+  },
+  loaderBar: {
+    width: wp('10'),
+    height: hp('16'),
+    borderRadius: 5,
+  },
 });
