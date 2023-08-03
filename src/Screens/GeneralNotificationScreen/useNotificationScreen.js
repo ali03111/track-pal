@@ -15,15 +15,10 @@ import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 
 const useNotificationScreen = ({params}, {navigate}) => {
   const [tripNotification, setTripNotification] = useState([]);
-  const [notifications, setNotification] = useState([]);
+  const [notifications, setNotification] = useState(null);
 
   const {dispatch} = useReduxStore();
-  const getUserTrips = async () => {
-    const {ok, data} = await API.get(userTrips);
-    if (ok) {
-      setTripNotification(data);
-    } else errorMessage('an error occured');
-  };
+
   const getUserNotification = async () => {
     const {ok, data} = await API.get(notificationUrl);
     console.log('setNotificationsetNotificationsetNotification', data);
@@ -56,7 +51,6 @@ const useNotificationScreen = ({params}, {navigate}) => {
   };
 
   const useEffectFuc = () => {
-    getUserTrips();
     getUserNotification();
     console.log('paramsparamsparamsparamsparamsparams', params);
     setTimeout(() => {
@@ -72,7 +66,6 @@ const useNotificationScreen = ({params}, {navigate}) => {
     Invitation,
     tripNotification,
     tripStatus,
-    getUserTrips,
     notifications,
     getUserNotification,
   };

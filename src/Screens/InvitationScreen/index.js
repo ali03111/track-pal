@@ -2,15 +2,17 @@ import React, {memo, useCallback} from 'react';
 import {View, Text, FlatList} from 'react-native';
 import {styles} from './styles';
 
-import useNotificationScreen from './useNotificationScreen';
+import useInvitaionScreen from './useInvitaionScreen';
 import {hp, wp} from '../../Config/responsive';
 import InvitationComp from '../../Components/InvitationComp';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import CustomHeader from '../../Components/Header';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import {loaderView} from '../GeneralNotificationScreen';
 
 const InvitationTab = ({route, navigation}) => {
   const {Invitation, tripNotification, tripStatus, getUserTrips} =
-    useNotificationScreen(route, navigation);
+    useInvitaionScreen(route, navigation);
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.notification}>
@@ -30,7 +32,9 @@ const InvitationTab = ({route, navigation}) => {
       </View>
     );
   });
-  const noData = Boolean(tripNotification.length == 0)
+  const noData = Boolean(
+    tripNotification != null && tripNotification.length == 0,
+  )
     ? {
         flex: 1,
         alignItems: 'center',
@@ -48,7 +52,18 @@ const InvitationTab = ({route, navigation}) => {
         backTextStyle={styles.back}
       />
       <View style={{...noData}}>
-        {tripNotification.length > 0 ? (
+        {tripNotification == null && (
+          <SkeletonPlaceholder borderRadius={4}>
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+          </SkeletonPlaceholder>
+        )}
+        {tripNotification != null && tripNotification.length > 0 ? (
           <FlatList
             onRefresh={getUserTrips}
             refreshing={false}
@@ -62,10 +77,13 @@ const InvitationTab = ({route, navigation}) => {
             }}
           />
         ) : (
-          <EmptyViewComp
-            onRefresh={getUserTrips}
-            refreshStyle={styles.refStyle}
-          />
+          tripNotification != null &&
+          tripNotification.length == 0 && (
+            <EmptyViewComp
+              onRefresh={getUserTrips}
+              refreshStyle={styles.refStyle}
+            />
+          )
         )}
       </View>
     </>

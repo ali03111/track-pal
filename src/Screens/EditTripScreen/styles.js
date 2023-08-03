@@ -162,4 +162,7 @@ export const styles = StyleSheet.create({
     height: hp('16'),
     borderRadius: 5,
   },
+  refresh: {
+    marginTop: hp('6'),
+  },
 });

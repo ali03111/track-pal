@@ -13,6 +13,6 @@ export {default as ChatScreen} from './ChatScreen';
 export {default as EditTripScreen} from './EditTripScreen';
 export {default as MapScreen} from './MapScreen';
 // export {default as GeneralNotificationTab} from './InvitationScreen/GeneralNotificationTab';
-export {default as InvitaitionTab} from './InvitationScreen';
+// export {default as InvitaitionTab} from './InvitationScreen';
 export {default as GeneralNotification} from './GeneralNotificationScreen';
 export {default as InvitationScreen} from './InvitationScreen';
