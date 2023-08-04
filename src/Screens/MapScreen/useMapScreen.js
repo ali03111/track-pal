@@ -53,6 +53,7 @@ const useMapScreen = ({navigate}, {params}) => {
         });
       } else if (item.owner) {
         setAllMembers(data);
+        console.log('asd asd', data);
       }
     } else console.log('get all members error', data);
   };
@@ -106,6 +107,12 @@ const useMapScreen = ({navigate}, {params}) => {
 
   useEffect(useEffectFunc, []);
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return {
     allMember,
     destination: JSON.parse(item.end_destination),
@@ -114,6 +121,8 @@ const useMapScreen = ({navigate}, {params}) => {
     latitudeDelta,
     laongituteDalta,
     kiloMeterRef,
+    toggleModal,
+    isModalVisible,
   };
 };
 

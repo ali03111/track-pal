@@ -1,5 +1,5 @@
 import React, {memo, useCallback} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import {styles} from './styles';
 import {
@@ -23,6 +23,7 @@ import Lottie from 'lottie-react-native';
 import {Colors} from '../../Theme/Variables';
 // import ImageAsset from 'lottie-react-native/lib/js/components/ImageAsset';
 import {hp, wp} from '../../Config/responsive';
+import InfoModal from './InfoModal';
 
 const MapScreen = ({route, navigation}) => {
   const {
@@ -33,6 +34,8 @@ const MapScreen = ({route, navigation}) => {
     laongituteDalta,
     latitudeDelta,
     kiloMeterRef,
+    toggleModal,
+    isModalVisible,
   } = useMapScreen(navigation, route);
 
   console.log('currentUsercurrentUsercurrentUser', currentUser);
@@ -48,7 +51,10 @@ const MapScreen = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      <View style={styles.groupInfoMain}>
+      <Touchable
+        style={styles.groupInfoMain}
+        Opacity={0.7}
+        onPress={toggleModal}>
         {Platform.OS == 'ios' ? (
           <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
         ) : (
@@ -77,10 +83,11 @@ const MapScreen = ({route, navigation}) => {
             text={allMember.length + 1 + ' members'}
           />
         </View>
-        <Touchable style={styles.groupLink}>
+        <Touchable style={styles.groupLink} onPress={toggleModal}>
           <Image source={alert} style={styles.externalLinks} />
+          <InfoModal {...{isModalVisible, toggleModal}} />
         </Touchable>
-      </View>
+      </Touchable>
       <View style={styles.staticMapImg}>
         <MapView
           style={styles.staticMapImg}
