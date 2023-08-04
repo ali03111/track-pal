@@ -8,6 +8,25 @@ import GeneralNotification from '../../Components/GeneralNotification';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import CustomHeader from '../../Components/Header';
 import {arrowBack, whiteArrowBack} from '../../Assets';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+
+export const loaderView = () => {
+  return (
+    <View style={styles.loaderMain}>
+      <View>
+        <View style={{flexDirection: 'row'}}>
+          <View style={styles.LoaderImage} />
+          <View style={styles.loaderInner}>
+            <View style={styles.loaderName} />
+            <View style={styles.loaderDes} />
+          </View>
+        </View>
+        <View style={styles.loaderBtn} />
+      </View>
+      <View style={styles.loaderBar} />
+    </View>
+  );
+};
 
 const GeneralNotificationTab = ({route, navigation, goBack}) => {
   const {ChatData, notifications, getUserNotification} = useNotificationScreen(
@@ -28,7 +47,7 @@ const GeneralNotificationTab = ({route, navigation, goBack}) => {
       </View>
     );
   });
-  const noData = Boolean(notifications.length == 0)
+  const noData = Boolean(notifications != null && notifications.length == 0)
     ? {
         flex: 1,
         alignItems: 'center',
@@ -46,7 +65,18 @@ const GeneralNotificationTab = ({route, navigation, goBack}) => {
         backTextStyle={styles.back}
       />
       <View style={{...noData}}>
-        {notifications.length > 0 ? (
+        {notifications == null && (
+          <SkeletonPlaceholder borderRadius={4}>
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+            {loaderView()}
+          </SkeletonPlaceholder>
+        )}
+        {notifications != null && notifications.length > 0 ? (
           <FlatList
             refreshing={false}
             data={notifications}
@@ -60,10 +90,13 @@ const GeneralNotificationTab = ({route, navigation, goBack}) => {
             }}
           />
         ) : (
-          <EmptyViewComp
-            onRefresh={getUserNotification}
-            refreshStyle={styles.refStyle}
-          />
+          notifications != null &&
+          notifications.length == 0 && (
+            <EmptyViewComp
+              onRefresh={getUserNotification}
+              refreshStyle={styles.refStyle}
+            />
+          )
         )}
       </View>
     </>

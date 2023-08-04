@@ -26,6 +26,8 @@ export {default as bgBlurDone} from './Images/imgpsh_fullsize_anim1.png';
 export {default as leftArrow} from './Images/leftArrow.png';
 export {default as bgBlurHome} from './Images/bgBlurHome.png';
 export {default as profile} from './Images/profile.png';
+export {default as dataNotFound1} from './Images/dataNotFound-1.png';
+export {default as dataNotFound2} from './Images/dataNotFound-2.png';
 
 // export {default as DemoProfileImage7} from './Images/profile7.png';
 
@@ -71,6 +73,7 @@ export {default as send} from './Icons/send.png';
 export {default as trash} from './Icons/trash.png';
 export {default as cardediticon} from './Icons/editicon.png';
 export {default as alert} from './Icons/alert.png';
+export {default as clipboardClose} from './Icons/clipboard-close.png';
 
 // Lotties files
 

@@ -27,4 +27,40 @@ export const styles = StyleSheet.create({
   back: {
     color: Colors.black,
   },
+  loaderMain: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginVertical: hp('1.5'),
+  },
+  LoaderImage: {
+    width: wp('15'),
+    height: hp('7.5'),
+    borderRadius: 50,
+  },
+  loaderInner: {
+    marginLeft: wp('5'),
+    marginRight: wp('0'),
+  },
+  loaderName: {
+    width: wp('40'),
+    height: hp('2'),
+    marginTop: hp('1'),
+  },
+  loaderDes: {
+    width: wp('50'),
+    height: hp('1'),
+    marginTop: hp('2'),
+  },
+  // loaderBtn: {
+  //   width: wp('30'),
+  //   height: hp('4'),
+  //   marginTop: hp('4'),
+  //   marginLeft: wp('1'),
+  // },
+  loaderBar: {
+    width: wp('20'),
+    height: hp('2'),
+    borderRadius: 5,
+    marginTop: hp('1'),
+  },
 });

@@ -199,7 +199,10 @@ const MyTrips = ({navigation}) => {
         tripCardData != null &&
         tripCardData.length == 0 && (
           <View>
-            <EmptyViewComp onRefresh={tripsCard} />
+            <EmptyViewComp
+              onRefresh={tripsCard}
+              refreshStyle={styles.refresh}
+            />
           </View>
         )
       )}

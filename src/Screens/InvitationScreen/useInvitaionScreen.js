@@ -14,7 +14,7 @@ import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 
 const useNotificationScreen = ({params}, {navigate}) => {
-  const [tripNotification, setTripNotification] = useState([]);
+  const [tripNotification, setTripNotification] = useState(null);
   const [notifications, setNotification] = useState([]);
 
   const {dispatch} = useReduxStore();

@@ -184,7 +184,9 @@ const GroupTrips = ({navigation, letterStyles}) => {
         />
       ) : (
         groupTrips != null &&
-        groupTrips.length == 0 && <EmptyViewComp onRefresh={tripsCard} />
+        groupTrips.length == 0 && (
+          <EmptyViewComp onRefresh={tripsCard} refreshStyle={styles.refresh} />
+        )
       )}
 
       {/* <TripCreatedModal title={'Trip started'} isTripCreated={isTripCreated} /> */}

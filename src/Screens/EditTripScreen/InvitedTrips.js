@@ -184,7 +184,7 @@ const InvitedTrip = ({navigation, letterStyles}) => {
       ) : (
         invitedTrips != null &&
         invitedTrips.length == 0 && (
-          <EmptyViewComp onRefresh={tripsCard} refreshStyle={styles.refStyle} />
+          <EmptyViewComp onRefresh={tripsCard} refreshStyle={styles.refresh} />
         )
       )}
 
