@@ -7,6 +7,7 @@ const initial_state = {
 };
 const actionMap = {
   [types.isLocationTrue]: (state, act) => {
+    console.log('kjavjkvskdvjksbd vbsdjvs', act.payload);
     return {
       islocationShare: true,
       tripId: act.payload.tripId,

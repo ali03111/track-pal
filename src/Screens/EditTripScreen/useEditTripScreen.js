@@ -148,9 +148,9 @@ const useEditTripScreen = ({addListener, navigate}) => {
   };
 
   const useEffectFuc = () => {
-    tripsCard();
-    // const event = addListener('focus', tripsCard);
-    // return event;
+    // tripsCard();
+    const event = addListener('focus', tripsCard);
+    return event;
   };
 
   useEffect(useEffectFuc, []);

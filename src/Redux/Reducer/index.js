@@ -8,6 +8,7 @@ import onboardingReducer from './onboardingReducer';
 import createSagaMiddleware from 'redux-saga';
 import mySaga from './../Sagas/index';
 import {createStore, applyMiddleware, combineReducers} from 'redux';
+import AlertReucer from './AlertReucer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -34,6 +35,7 @@ const reducers = {
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
   islocationShare: persistReducer(LocationPersistConfig, ShareLocationReducer),
   isloading: loadingReducer,
+  isAlert: AlertReucer,
   // isQuestion: questionReducer,
   // sagas: applyMiddleware(sagaMiddleware),
 };

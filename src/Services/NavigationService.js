@@ -7,6 +7,8 @@ class Navigation {
 
   navigate = (route, param) => this.ref?.navigate(route, param);
 
+  goBack = () => this.ref.goBack();
+
   getCurrentRoute = () => {
     return this.ref;
   };

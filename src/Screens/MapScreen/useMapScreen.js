@@ -5,6 +5,7 @@ import {
   getFirebaseUpdatedData,
   reference,
   shareLocationFirebase,
+  notifyUser,
 } from '../../Services/FireBaseRealTImeServices';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {Dimensions} from 'react-native';
@@ -24,10 +25,7 @@ const useMapScreen = ({navigate}, {params}) => {
   const ACPT_RATIO = width / height;
   const latitudeDelta = 0.02;
   const laongituteDalta = latitudeDelta * ACPT_RATIO;
-  console.log(
-    'JSON.parse(item.end_destination)JSON.parse(item.end_destination)JSON.parse(item.end_destination)',
-    JSON.parse(item.end_destination),
-  );
+
   const [currentUser, setCurrentUser] = useState({
     coords: {
       longitude: null,
@@ -43,6 +41,7 @@ const useMapScreen = ({navigate}, {params}) => {
   );
   const {getState} = useReduxStore();
   const {userData} = getState('Auth');
+  console.log('kiloMeterRef.currentkiloMeterRef.current', kiloMeterRef.current);
 
   const getMembers = async () => {
     const {ok, data} = await getFirebaseData({
@@ -125,6 +124,11 @@ const useMapScreen = ({navigate}, {params}) => {
           );
           const kiloMeter = distance / 1000;
           kiloMeterRef.current = kiloMeter.toFixed(2);
+          Number(kiloMeterRef.current) <= Number('0.04') &&
+            !item.owner &&
+            notifyUser(
+              `${item.owner ? Number(item.user_id) : item.trip_owner.id}`,
+            );
         }
       } else if (item.owner) {
         setAllMembers(filterData);

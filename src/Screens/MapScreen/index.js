@@ -36,8 +36,6 @@ const MapScreen = ({route, navigation}) => {
     userMarkerRef,
   } = useMapScreen(navigation, route);
 
-  console.log('currentUsercurrentUsercurrentUser', currentUser);
-
   const KiloMeterView = useCallback(() => {
     return (
       <TextComponent
@@ -46,6 +44,56 @@ const MapScreen = ({route, navigation}) => {
       />
     );
   }, [kiloMeterRef]);
+
+  const MembersView = useCallback(
+    ({res}) => {
+      return (
+        <Marker
+          focusable
+          // tracksInfoWindowChanges
+          // tracksViewChanges
+          coordinate={{
+            latitude: res.coords.latitude,
+            longitude: res.coords.longitude,
+            latitudeDelta,
+            longitudeDelta: laongituteDalta,
+          }}>
+          {res?.details.profile_image ? (
+            <CircleImage
+              uri={true}
+              image={res?.details.profile_image}
+              // style={styles.pImage}
+              styles={styles.pImage}
+            />
+          ) : (
+            <FirstCharacterComponent
+              text={res?.details.name}
+              extraStyle={styles.firstCharStyle}
+              textStyle={styles.firstTextStyle}
+            />
+          )}
+          <Lottie
+            source={userWithOutPicLottie}
+            autoPlay
+            loop
+            style={{height: hp('8'), width: wp('4')}}
+            resizeMode="contain"
+          />
+        </Marker>
+      );
+    },
+    [allMember],
+  );
+
+  console.log('allMemberallMemberallMemberallMember', allMember);
+
+  const TripNameBottom = useCallback(() => {
+    return tripData.image ? (
+      <CircleImage image={tripData.image} style={styles.groupLogo} />
+    ) : (
+      <FirstCharacterComponent text={tripData.name} />
+    );
+  }, [tripData.image, tripData.name]);
 
   return (
     <View style={{flex: 1}}>
@@ -59,11 +107,8 @@ const MapScreen = ({route, navigation}) => {
             blurRadius={0.5}
           />
         )}
-        {tripData.image ? (
-          <CircleImage image={tripData.image} style={styles.groupLogo} />
-        ) : (
-          <FirstCharacterComponent text={tripData.name} />
-        )}
+
+        <TripNameBottom />
 
         <View style={styles.groupDesc}>
           <TextComponent
@@ -93,7 +138,7 @@ const MapScreen = ({route, navigation}) => {
             latitudeDelta,
             longitudeDelta: laongituteDalta,
           }}
-          showsUserLocation
+          // showsUserLocation={tripData.owner ? false : true}
           focusable
           followsUserLocation
           moveOnMarkerPress
@@ -114,78 +159,52 @@ const MapScreen = ({route, navigation}) => {
               loop
             />
           </Marker>
-          {currentUser.coords.latitude != null && !tripData.owner && (
-            <>
-              <MapViewDirections
-                origin={{
-                  latitude: currentUser.coords.latitude,
-                  longitude: currentUser.coords.longitude,
-                }}
-                precision="high"
-                destination={{
-                  latitude: destination.latitude,
-                  longitude: destination.longitude,
-                }}
-                mode="DRIVING"
-                strokeWidth={4}
-                strokeColors={['#92278F', '#EE2A7B']}
-                apikey={'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U'} // android
-              />
-              <Marker.Animated
-                focusable
-                coordinate={{
-                  latitude: currentUser.coords.latitude,
-                  longitude: currentUser.coords.longitude,
-                  latitudeDelta,
-                  longitudeDelta: laongituteDalta,
-                }}>
-                <Lottie
-                  style={{height: hp('8'), width: wp('4')}}
-                  resizeMode="contain"
-                  source={currentUserLottie}
-                  autoPlay
-                  loop
+          {
+            currentUser.coords.latitude != null && !tripData.owner && (
+              <>
+                <MapViewDirections
+                  origin={{
+                    latitude: currentUser.coords.latitude,
+                    longitude: currentUser.coords.longitude,
+                  }}
+                  precision="high"
+                  destination={{
+                    latitude: destination.latitude,
+                    longitude: destination.longitude,
+                  }}
+                  optimizeWaypoints
+                  geodesic
+                  mode="DRIVING"
+                  strokeWidth={4}
+                  strokeColors={['#92278F', '#EE2A7B']}
+                  apikey={'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U'} // android
+                  strokeColor={Colors.faceBookColor}
                 />
-              </Marker.Animated>
-            </>
-          )}
-          {allMember.length > 0 &&
-            allMember.map(res => {
-              return (
-                <Marker
+                <Marker.Animated
                   focusable
-                  tracksInfoWindowChanges
-                  tracksViewChanges
                   coordinate={{
-                    latitude: res.coords.latitude,
-                    longitude: res.coords.longitude,
+                    latitude: currentUser.coords.latitude,
+                    longitude: currentUser.coords.longitude,
                     latitudeDelta,
                     longitudeDelta: laongituteDalta,
                   }}>
-                  {res?.details.profile_image ? (
-                    <CircleImage
-                      uri={true}
-                      image={res?.details.profile_image}
-                      // style={styles.pImage}
-                      styles={styles.pImage}
-                    />
-                  ) : (
-                    <FirstCharacterComponent
-                      text={res?.details.name}
-                      extraStyle={styles.firstCharStyle}
-                      textStyle={styles.firstTextStyle}
-                    />
-                  )}
                   <Lottie
-                    source={userWithOutPicLottie}
-                    autoPlay
-                    loop
                     style={{height: hp('8'), width: wp('4')}}
                     resizeMode="contain"
+                    source={currentUserLottie}
+                    autoPlay
+                    loop
                   />
-                </Marker>
-              );
-            })}
+                </Marker.Animated>
+              </>
+            )
+            // useCallback(() => {
+            //   return (
+            //   );
+            // }, [currentUser])
+          }
+          {allMember.length > 0 &&
+            allMember.map(res => <MembersView res={res} />)}
         </MapView>
         {!tripData.owner && <KiloMeterView />}
       </View>

@@ -37,7 +37,8 @@ export const styles = StyleSheet.create({
   groupLogo: {
     // flex: 0.17,
     resizeMode: 'contain',
-    marginRight: wp('4'),
+    // left: wp('10'),
+    marginRight: wp('2'),
   },
   groupDesc: {
     flex: 1,
@@ -79,7 +80,7 @@ export const styles = StyleSheet.create({
     bottom: hp('-4.7'),
     width: Dimensions.get('window').width * 0.08,
     height: Dimensions.get('window').width * 0.08,
-    left: wp('4.3'),
+    left: wp('4.7'),
     backgroundColor: Colors.white,
   },
   firstTextStyle: {
@@ -93,6 +94,6 @@ export const styles = StyleSheet.create({
     bottom: hp('-4.7'),
     width: Dimensions.get('window').width * 0.08,
     height: Dimensions.get('window').width * 0.08,
-    left: wp('4.3'),
+    left: wp('4.7'),
   },
 });

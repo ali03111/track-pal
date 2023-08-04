@@ -35,6 +35,16 @@ import Overlay from './src/Components/Overlay';
 import {fcmService} from './src/Services/Notifications';
 import {fcmRegister} from './src/Redux/Action/AuthAction';
 import NavigationService from './src/Services/NavigationService';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import {Colors} from './src/Theme/Variables';
+import {alertFalse} from './src/Redux/Action/isAlertAction';
+import API from './src/Utils/helperFunc';
+import {changeMemberStatusUrl} from './src/Utils/Urls';
+import {onEndTrip} from './src/Services/FireBaseRealTImeServices';
+import {loadingFalse, loadingTrue} from './src/Redux/Action/isloadingAction';
+import {hp, wp} from './src/Config/responsive';
+import {Touchable} from './src/Components/Touchable';
+import {TextComponent} from './src/Components/TextComponent';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -55,7 +65,9 @@ const App = () => {
   };
   const {getState, dispatch} = useReduxStore();
   const {isloading} = getState('isloading');
-  const {isLogin} = getState('Auth');
+  const {isAlert} = getState('isAlert');
+  const {tripId, tripOwnerID} = getState('islocationShare');
+  const {isLogin, userData} = getState('Auth');
 
   const appState = useRef(AppState.currentState);
 
@@ -132,6 +144,60 @@ const App = () => {
   return (
     <>
       {isloading && <Overlay />}
+      {isAlert && (
+        <Overlay
+          childern={
+            <View style={styles.actionViewStyle}>
+              <TextComponent text={'Are You!'} styles={styles.modalTitle} />
+              <TextComponent
+                text={'Do you want to end this trip?'}
+                styles={styles.modalMsg}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: wp('70'),
+                }}>
+                <Touchable
+                  onPress={() => dispatch(alertFalse())}
+                  style={styles.cancelButtonStyle}
+                  children={
+                    <TextComponent
+                      text={'Cancel'}
+                      styles={{color: Colors.black}}
+                    />
+                  }
+                />
+                <Touchable
+                  onPress={async () => {
+                    dispatch(alertFalse());
+                    const {ok, data} = await API.post(changeMemberStatusUrl, {
+                      status: 2,
+                      id: tripId,
+                    });
+                    console.log('dfsdfsdfsdfsdfsdffd', data);
+                    if (ok) {
+                      dispatch(loadingTrue());
+                      onEndTrip({tripId, tripOnnwerID: tripOwnerID, userData});
+                      dispatch(loadingFalse());
+                      NavigationService.goBack();
+                    }
+                  }}
+                  style={styles.confirmButtonStyle}
+                  children={
+                    <TextComponent
+                      text={'Confirm'}
+                      styles={{color: Colors.white}}
+                    />
+                  }
+                />
+              </View>
+            </View>
+          }
+        />
+      )}
       <StatusBar
         hidden={isVisible}
         backgroundColor={Platform.OS == 'ios' ? 'white' : '#F2F2F2'}
@@ -152,6 +218,52 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'white',
+  },
+  actionViewStyle: {
+    width: wp('80'),
+    justifyContent: 'center',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    paddingHorizontal: wp('2'),
+    paddingVertical: hp('2'),
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontWeight: '600',
+    color: Colors.black,
+    fontSize: hp('2.5'),
+  },
+  modalMsg: {
+    color: Colors.gray,
+    fontSize: hp('1.8'),
+    marginBottom: hp('3'),
+  },
+  cancelButtonStyle: {
+    width: wp('33'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    height: hp('5'),
+    borderColor: Colors.primaryColor,
+    borderWidth: 0.2,
+    borderRadius: 5,
+  },
+  confirmButtonStyle: {
+    width: wp('33'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primaryColor,
+    height: hp('5'),
+    borderRadius: 8,
+    alignSelf: 'center',
+    // marginTop: hp('1'),
+  },
+  modalCancelBtnText: {
+    fontSize: hp('1.8'),
+    color: '#212759',
+  },
+  modalcConfirmBtnText: {
+    fontSize: hp('1.8'),
   },
 });
 

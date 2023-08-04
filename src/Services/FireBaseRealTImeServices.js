@@ -1,5 +1,5 @@
 // import {firebase} from '@react-native-firebase/database';
-import {firebaseDataBaseURL} from '../Utils/Urls';
+import {firebaseDataBaseURL, notifyToOwnerUrl} from '../Utils/Urls';
 import {successMessage} from '../Config/NotificationMessage';
 import {store} from '../Redux/Reducer';
 import Geolocation from '@react-native-community/geolocation';
@@ -16,6 +16,8 @@ import {
   openSettings,
 } from 'react-native-permissions';
 import {Alert, Platform} from 'react-native';
+import API from '../Utils/helperFunc';
+import {alertTrue} from '../Redux/Action/isAlertAction';
 
 const perSKU = Platform.select({
   android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -218,6 +220,7 @@ const updateLocationONfire = async data => {
   } = store.getState('Auth');
   const {tripId, tripOnnwerID} = data;
   store.dispatch(loadingTrue());
+  console.log('tripIdtripIdtripIdtripIdtripIdtripIdtripIdtripId', tripId);
   try {
     store.dispatch({
       type: types.isLocationTrue,
@@ -435,6 +438,14 @@ const firebaseSubON = async data => {
   }
 };
 
+const notifyUser = async id => {
+  const {ok, data} = await API.get(notifyToOwnerUrl + id);
+  console.log('jadbfjkbadjbsjdbbsd', data);
+  if (ok) {
+    store.dispatch(alertTrue());
+  }
+};
+
 export {
   createTripObj,
   updateDataFirebase,
@@ -448,4 +459,5 @@ export {
   onEndTrip,
   requestPermission,
   creaetChatObj,
+  notifyUser,
 };
