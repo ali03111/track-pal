@@ -1,5 +1,5 @@
 // import {firebase} from '@react-native-firebase/database';
-import {firebaseDataBaseURL} from '../Utils/Urls';
+import {firebaseDataBaseURL, notifyToOwnerUrl} from '../Utils/Urls';
 import {successMessage} from '../Config/NotificationMessage';
 import {store} from '../Redux/Reducer';
 import Geolocation from '@react-native-community/geolocation';
@@ -16,6 +16,8 @@ import {
   openSettings,
 } from 'react-native-permissions';
 import {Alert, Platform} from 'react-native';
+import API from '../Utils/helperFunc';
+// import {alertTrue} from '../Redux/Action/isAlertAction';
 
 const perSKU = Platform.select({
   android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -218,6 +220,7 @@ const updateLocationONfire = async data => {
   } = store.getState('Auth');
   const {tripId, tripOnnwerID} = data;
   store.dispatch(loadingTrue());
+  console.log('tripIdtripIdtripIdtripIdtripIdtripIdtripIdtripId', tripId);
   try {
     store.dispatch({
       type: types.isLocationTrue,
@@ -323,33 +326,6 @@ const sendDataToFIrebase = async data => {
   }
 };
 
-// Geolocation.watchPosition
-
-// const updateDataFirebase = async data => {
-//   const {
-//     Auth: {userData},
-//   } = store.getState('Auth');
-//   const {tripId, tripOwnerId} = data;
-//   console.log('tripId, tripOwnerId', tripId, tripOwnerId);
-//   try {
-//     const fire = reference.ref(
-//       `Trips/${tripOwnerId}/${tripId}/members/${userData.id}`,
-//     );
-//     console.log('userData, fire', userData, fire);
-//     const snapshot = await fire.on('value');
-//     const existingObject = snapshot.val();
-//     console.log('existingObject, snapshot', existingObject, snapshot);
-//     const val = Object.values(existingObject)[0];
-//     await fire.set({...val, status: true});
-//     // await firebaseSubON(data);
-
-//     return {ok: true, result: null};
-//   } catch (error) {
-//     console.log('Error updating data:', error);
-//     return {ok: false, result: error};
-//   }
-// };
-
 var filte = [];
 
 const getFirebaseUpdatedData = async data => {
@@ -425,7 +401,12 @@ const firebaseSubON = async data => {
       error => {
         return {ok: false, data: error};
       },
-      {enableHighAccuracy: true, fastestInterval: 1, distanceFilter: 1},
+      {
+        enableHighAccuracy: true,
+        fastestInterval: 1,
+        distanceFilter: 1,
+        useSignificantChanges: true,
+      },
     );
 
     return {ok: true, data: null};
@@ -434,6 +415,33 @@ const firebaseSubON = async data => {
     return {ok: false, data: error};
   }
 };
+
+const getFirebaseAllData = async data => {
+  store.dispatch(loadingTrue());
+  const {tripId, tripOnnwerID} = data;
+  try {
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+    const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+    const wholeObj = firebaseGet.data();
+
+    store.dispatch(loadingFalse());
+    // wholeObj.members[index] = {...wholeObj.members[index], status: true};
+    return {ok: true, data: wholeObj};
+  } catch (error) {
+    store.dispatch(loadingFalse());
+    return {ok: false, data: error};
+  }
+};
+
+// const notifyUser = async id => {
+//   const {ok, data} = await API.get(notifyToOwnerUrl + id);
+//   console.log('jadbfjkbadjbsjdbbsd', data);
+//   if (ok) {
+//     store.dispatch(alertTrue());
+//   }
+// };
 
 export {
   createTripObj,
@@ -448,4 +456,6 @@ export {
   onEndTrip,
   requestPermission,
   creaetChatObj,
+  // notifyUser,
+  getFirebaseAllData,
 };

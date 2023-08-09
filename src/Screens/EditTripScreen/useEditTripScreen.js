@@ -108,7 +108,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
   };
 
   const changeMemberStatusGroup = async (status, id, tripOnnwerID, index) => {
-    const {ok, data} = await API.post(changeMemberStatusUrl, {
+    const {ok, data, originalError} = await API.post(changeMemberStatusUrl, {
       status,
       id,
     });
@@ -134,6 +134,9 @@ const useEditTripScreen = ({addListener, navigate}) => {
       }
     } else {
       errorMessage('somfkle n');
+      console.log(originalError);
+      console.log(data);
+
       dispatch(loadingFalse());
     }
   };

@@ -5,11 +5,15 @@ import {
   getFirebaseUpdatedData,
   reference,
   shareLocationFirebase,
+  getFirebaseAllData,
 } from '../../Services/FireBaseRealTImeServices';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {Dimensions} from 'react-native';
 import Geolib from 'geolib';
 import getDistance from 'geolib/es/getPreciseDistance';
+import {SOSToMembers} from '../../Utils/Urls';
+import {errorMessage, successMessage} from '../../Config/NotificationMessage';
+import API from '../../Utils/helperFunc';
 
 const useMapScreen = ({navigate}, {params}) => {
   const {item} = params.params;
@@ -57,9 +61,29 @@ const useMapScreen = ({navigate}, {params}) => {
       }
     } else console.log('get all members error', data);
   };
+  const [tripInfo, setTripInfo] = useState([]);
+  const getAllData = async () => {
+    const {ok, data} = await getFirebaseAllData({
+      tripId: item.id,
+      tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
+    });
+    // console.log('asdasdasddgfggbnb', data);
+    if (ok) {
+      setTripInfo(data);
+    } else console.log('get all members error', data);
+  };
+
+  const notificationToAllMembers = async () => {
+    const {ok, originalError, data} = await API.get(SOSToMembers + item.id);
+    console.log('test', data);
+    if (ok) successMessage('Notification has been sent.');
+    else errorMessage(originalError?.message);
+  };
 
   const useEffectFunc = () => {
+    // iconRef.current = 1;
     getMembers();
+    getAllData();
     firebaseSnapOn();
   };
 
@@ -123,6 +147,8 @@ const useMapScreen = ({navigate}, {params}) => {
     kiloMeterRef,
     toggleModal,
     isModalVisible,
+    tripInfo,
+    notificationToAllMembers,
   };
 };
 

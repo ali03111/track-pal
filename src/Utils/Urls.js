@@ -49,3 +49,4 @@ export const tripsData = '/owner-trips';
 export const changeOwnerStatusUrl = '/change-owner-status';
 export const changeMemberStatusUrl = '/change-member-status';
 export const UpdateProfileUrl = 'update-profile';
+export const SOSToMembers = 'sendNotificationToAllTripMembers?trip_id=';

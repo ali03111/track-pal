@@ -14,12 +14,7 @@ export const EmptyViewComp = ({onRefresh, refreshStyle}) => {
     <View
       style={{
         width: wp('100'),
-        // height: hp('30'),
         flex: 1,
-        // backgroundColor: Colors.themeExtraLight,
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // alignSelf: 'center',
         borderRadius: 10,
         ...refreshStyle,
       }}>

@@ -39,12 +39,11 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginRight: wp('4'),
   },
-  groupDesc: {
-    flex: 1,
-    marginLeft: wp('3'),
+  groupLink: {
+    flex: 0.1,
   },
   groupDesc: {
-    flex: 1,
+    flex: 3,
     marginLeft: wp('3'),
   },
   groupName: {
@@ -155,6 +154,13 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.black,
     marginBottom: hp('0.2'),
+    flex: 0.8,
+  },
+  creator: {
+    flex: 0.3,
+    alignItems: 'center',
+    verticalAlign: 'middle',
+    textAlign: 'right',
   },
   tripCreator: {
     fontSize: hp('1.8'),
@@ -175,6 +181,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: wp('12'),
     height: hp('6'),
+    maxHeight: hp('20'),
     marginVertical: hp('-0.5'),
     alignSelf: 'flex-start',
     marginLeft: wp('-1'),
@@ -216,6 +223,7 @@ export const styles = StyleSheet.create({
     marginBottom: hp('1.5'),
     marginTop: hp('2.7'),
     marginLeft: wp('2.5'),
+    flexDirection: 'row',
   },
   memberInfo: {
     flexDirection: 'row',
@@ -226,6 +234,12 @@ export const styles = StyleSheet.create({
     marginBottom: hp('1'),
     paddingHorizontal: wp('3'),
     paddingVertical: hp('1.5'),
-    height: hp('37'),
+    height: 'auto',
+  },
+  LText: {
+    // flex: 0.8,
+    borderColor: Colors.themeColorDark,
+    width: wp('75'),
+    marginBottom: hp('3'),
   },
 });

@@ -13,20 +13,40 @@ import {dotbar, from, location} from '../../Assets';
 import {frequentTrips} from '../../Utils/localDB';
 import {CircleImage} from '../../Components/CircleImage';
 
-function InfoModal({isModalVisible, toggleModal}) {
+function InfoModal({
+  isModalVisible,
+  toggleModal,
+  tripData,
+  currentUser,
+  tripInfo,
+}) {
+  // console.log('asd  test', tripInfo);
+  // console.log('asd asd asd test ', tripInfo?.members);
+  // console.log('asd ', tripData);
+
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.memberList}>
         {/* <Image source={item?.image} /> */}
-        <CircleImage image={item?.image} />
+        {item.details.profile_image ? (
+          <CircleImage image={item.details.profile_image} />
+        ) : (
+          <FirstCharacterComponent text={item.details.name} />
+        )}
         <View style={styles.memberText}>
-          <TextComponent text={item?.name} styles={styles.creatorName} />
+          <TextComponent text={item.details.name} styles={styles.creatorName} />
+
+          {item.details.id == tripInfo.tripCreator.id && (
+            <>
+              <TextComponent text={'Creator'} styles={styles.creator} />
+            </>
+          )}
         </View>
       </View>
     );
   });
   return (
-    <View style={{flex: 1, backgroundColor: 'red'}}>
+    <View style={{flex: 1}}>
       <Modal
         isVisible={isModalVisible}
         animationInTiming={100}
@@ -42,60 +62,74 @@ function InfoModal({isModalVisible, toggleModal}) {
             onPress={toggleModal}
             color={Colors.gray}
           />
-          <FirstCharacterComponent text={'B'} extraStyle={styles.profileText} />
+          {tripData?.image ? (
+            <CircleImage uri={true} image={tripData?.image} />
+          ) : (
+            <FirstCharacterComponent
+              text={tripData?.name}
+              extraStyle={styles.profileText}
+            />
+          )}
+
           <GradientText style={styles.gText} GradientAlignment={0.7}>
             <TextComponent
-              text={'Business Meets'}
+              text={tripData?.name}
               styles={styles.heading}
               numberOfLines={1}
             />
           </GradientText>
-          <View style={styles.creatorInfoMain}>
-            <FirstCharacterComponent
-              text={'B'}
-              extraStyle={styles.creatorProfile}
-            />
-            <View style={styles.creatorInfo}>
-              <TextComponent
-                text={'Alberto Smith'}
-                styles={styles.creatorName}
-              />
-              <TextComponent
-                text={'Trip Creator'}
-                styles={styles.tripCreator}
-              />
-            </View>
-          </View>
-          <View style={styles.locationInfoMain}>
-            <View style={styles.locationArea}>
-              <Image source={location} style={styles.desImage} />
-              <GradientText style={styles.LText} GradientAlignment={0.7}>
-                <TextComponent
-                  text={'1050 Old Nichols Rd Islandia.'}
-                  styles={styles.desText}
-                  numberOfLines={2}
+          <ScrollView>
+            <View style={styles.creatorInfoMain}>
+              {tripInfo?.tripCreator?.image ? (
+                <CircleImage uri={true} image={tripInfo.tripCreator?.image} />
+              ) : (
+                <FirstCharacterComponent
+                  text={tripInfo.tripCreator?.name}
+                  extraStyle={styles.creatorProfile}
                 />
-              </GradientText>
+              )}
+              <View style={styles.creatorInfo}>
+                <TextComponent
+                  text={tripInfo.tripCreator?.name}
+                  styles={styles.creatorName}
+                />
+                <TextComponent
+                  text={'Trip Creator'}
+                  styles={styles.tripCreator}
+                />
+              </View>
             </View>
-            <Image source={dotbar} style={styles.dotbar} />
-            <View style={styles.locationArea}>
-              <Image source={from} style={styles.desImage} />
-              <TextComponent
-                text={'55 Riverview Trailer CtUnion, New Way Islandia Street.'}
-                styles={styles.desText}
-                numberOfLines={2}
+            <View style={styles.locationInfoMain}>
+              {!tripData.owner && (
+                <View style={styles.locationArea}>
+                  <Image source={location} style={styles.desImage} />
+                  <GradientText style={styles.LText} GradientAlignment={0.7}>
+                    <TextComponent
+                      text={tripInfo.members?.description}
+                      styles={styles.desText}
+                    />
+                  </GradientText>
+                </View>
+              )}
+              {/* <Image source={dotbar} style={styles.dotbar} /> */}
+              <View style={styles.locationArea}>
+                <Image source={from} style={styles.desImage} />
+                <TextComponent
+                  text={tripInfo.destination?.description}
+                  styles={styles.desText}
+                />
+              </View>
+            </View>
+            <View style={styles.memberInfo}>
+              <FlatList
+                refreshing={false}
+                data={tripInfo?.members}
+                renderItem={renderItem}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
               />
             </View>
-          </View>
-          <View style={styles.memberInfo}>
-            <FlatList
-              refreshing={false}
-              data={frequentTrips}
-              renderItem={renderItem}
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
+          </ScrollView>
         </View>
       </Modal>
     </View>

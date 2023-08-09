@@ -10,6 +10,7 @@ import {
   destinationLottie,
   link,
   profile,
+  sosLottie,
   userWithOutPicLottie,
 } from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
@@ -36,9 +37,13 @@ const MapScreen = ({route, navigation}) => {
     kiloMeterRef,
     toggleModal,
     isModalVisible,
+    tripInfo,
+    notificationToAllMembers,
   } = useMapScreen(navigation, route);
 
-  console.log('currentUsercurrentUsercurrentUser', currentUser);
+  // console.log('currentUsercurrentUsercurrentUser', currentUser);
+  // console.log('triiiiiiiiiiiiiiiiiiiiiiiiiiiiiiip data', tripData);
+  // console.log('destionationnnnnnnnnn', destination);
 
   const KiloMeterView = useCallback(() => {
     return (
@@ -83,10 +88,19 @@ const MapScreen = ({route, navigation}) => {
             text={allMember.length + 1 + ' members'}
           />
         </View>
-        <Touchable style={styles.groupLink} onPress={toggleModal}>
-          <Image source={alert} style={styles.externalLinks} />
-          <InfoModal {...{isModalVisible, toggleModal}} />
+        <Touchable style={styles.groupLink} onPress={notificationToAllMembers}>
+          {/* <Image source={alert} style={styles.externalLinks} /> */}
+          <Lottie
+            style={{height: hp('8'), width: wp('4')}}
+            resizeMode="contain"
+            source={sosLottie}
+            autoPlay
+            loop
+          />
         </Touchable>
+        <InfoModal
+          {...{isModalVisible, toggleModal, tripData, currentUser, tripInfo}}
+        />
       </Touchable>
       <View style={styles.staticMapImg}>
         <MapView
