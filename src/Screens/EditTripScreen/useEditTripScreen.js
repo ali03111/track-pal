@@ -38,7 +38,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
   const {userData} = getState('Auth');
 
   const updateState = async (status, id, index) => {
-    const {ok, data} = await API.post(changeOwnerStatusUrl, {
+    const {ok, data, originalError} = await API.post(changeOwnerStatusUrl, {
       status,
       id,
     });
@@ -62,6 +62,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
       // status == 1 && setIsTripCreated(!isTripCreated);
     } else {
       dispatch(loadingFalse());
+      errorMessage(originalError.message);
       console.log('datadatadatadata', data);
     }
   };
@@ -73,7 +74,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
   };
   const changeMemberStatus = async (status, id, tripOnnwerID, index) => {
     try {
-      const {ok, data} = await API.post(changeMemberStatusUrl, {
+      const {ok, data, originalError} = await API.post(changeMemberStatusUrl, {
         status,
         id,
       });
@@ -97,7 +98,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
         }
       } else {
         dispatch(loadingFalse());
-        errorMessage('some thing went wrong');
+        errorMessage(originalError.message);
       }
     } catch (error) {
       // Handle the error here
@@ -108,7 +109,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
   };
 
   const changeMemberStatusGroup = async (status, id, tripOnnwerID, index) => {
-    const {ok, data} = await API.post(changeMemberStatusUrl, {
+    const {ok, data, originalError} = await API.post(changeMemberStatusUrl, {
       status,
       id,
     });
@@ -133,7 +134,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
         dispatch(loadingFalse());
       }
     } else {
-      errorMessage('somfkle n');
+      errorMessage(originalError.message);
       dispatch(loadingFalse());
     }
   };

@@ -6,6 +6,7 @@ import {
   reference,
   shareLocationFirebase,
   notifyUser,
+  getFirebaseAllData,
 } from '../../Services/FireBaseRealTImeServices';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {Dimensions} from 'react-native';
@@ -25,6 +26,8 @@ const useMapScreen = ({navigate}, {params}) => {
   const ACPT_RATIO = width / height;
   const latitudeDelta = 0.02;
   const laongituteDalta = latitudeDelta * ACPT_RATIO;
+
+  const iconRef = useRef(null);
 
   const [currentUser, setCurrentUser] = useState({
     coords: {
@@ -72,8 +75,19 @@ const useMapScreen = ({navigate}, {params}) => {
     } else console.log('get all members error', data);
   };
 
+  const getAllData = async () => {
+    const {ok, data} = await getFirebaseAllData({
+      tripId: item.id,
+      tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
+    });
+    if (ok) {
+    } else console.log('get all members error', data);
+  };
+
   const useEffectFunc = () => {
+    iconRef.current = 1;
     getMembers();
+    getAllData();
     firebaseSnapOn();
   };
 
@@ -91,10 +105,13 @@ const useMapScreen = ({navigate}, {params}) => {
       const filterData = allMsg[0].members.filter(
         member => member.status == true && member?.coords != null && true,
       );
-
       if (!item.owner) {
         setAllMembers(() => filterData.filter(res => res.id != userData.id));
         const user = filterData.filter(res => res.id == userData.id);
+        console.log(
+          'filterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterData',
+          filterData,
+        );
         const checkLength = Boolean(user.length > 0);
         setCurrentUser(prev => {
           if (checkLength) {
@@ -111,10 +128,6 @@ const useMapScreen = ({navigate}, {params}) => {
               100,
             )
             .start();
-          console.log(
-            userMarkerRef.current,
-            'userMarkerRef.currentuserMarkerRef.currentuserMarkerRef.currentuserMarkerRef.current',
-          );
           distance = getDistance(
             {
               latitude: user[0].coords.latitude,
@@ -148,6 +161,7 @@ const useMapScreen = ({navigate}, {params}) => {
     laongituteDalta,
     kiloMeterRef,
     userMarkerRef,
+    iconRef,
   };
 };
 

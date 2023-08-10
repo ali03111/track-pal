@@ -34,6 +34,7 @@ const MapScreen = ({route, navigation}) => {
     latitudeDelta,
     kiloMeterRef,
     userMarkerRef,
+    iconRef,
   } = useMapScreen(navigation, route);
 
   const KiloMeterView = useCallback(() => {
@@ -85,15 +86,13 @@ const MapScreen = ({route, navigation}) => {
     [allMember],
   );
 
-  console.log('allMemberallMemberallMemberallMember', allMember);
-
   const TripNameBottom = useCallback(() => {
     return tripData.image ? (
       <CircleImage image={tripData.image} style={styles.groupLogo} />
     ) : (
       <FirstCharacterComponent text={tripData.name} />
     );
-  }, [tripData.image, tripData.name]);
+  }, [iconRef]);
 
   return (
     <View style={{flex: 1}}>
@@ -108,7 +107,7 @@ const MapScreen = ({route, navigation}) => {
           />
         )}
 
-        <TripNameBottom />
+        {iconRef.current == 1 && <TripNameBottom />}
 
         <View style={styles.groupDesc}>
           <TextComponent
@@ -122,6 +121,7 @@ const MapScreen = ({route, navigation}) => {
           />
         </View>
         <Touchable style={styles.groupLink}>
+          <Lottie />
           <Image source={alert} style={styles.externalLinks} />
         </Touchable>
       </View>
@@ -180,8 +180,8 @@ const MapScreen = ({route, navigation}) => {
                   apikey={'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U'} // android
                   strokeColor={Colors.faceBookColor}
                 />
-                <Marker.Animated
-                  focusable
+                <Marker
+                  // focusable
                   coordinate={{
                     latitude: currentUser.coords.latitude,
                     longitude: currentUser.coords.longitude,
@@ -195,7 +195,7 @@ const MapScreen = ({route, navigation}) => {
                     autoPlay
                     loop
                   />
-                </Marker.Animated>
+                </Marker>
               </>
             )
             // useCallback(() => {

@@ -80,3 +80,4 @@ export {default as clipboardClose} from './Icons/clipboard-close.png';
 export {default as currentUserLottie} from './Lotties/currentUser1.json';
 export {default as destinationLottie} from './Lotties/destination1.json';
 export {default as userWithOutPicLottie} from './Lotties/userWithOutPic1.json';
+export {default as SOSLottie} from './Lotties/SOSLottie.json';

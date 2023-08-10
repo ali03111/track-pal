@@ -326,33 +326,6 @@ const sendDataToFIrebase = async data => {
   }
 };
 
-// Geolocation.watchPosition
-
-// const updateDataFirebase = async data => {
-//   const {
-//     Auth: {userData},
-//   } = store.getState('Auth');
-//   const {tripId, tripOwnerId} = data;
-//   console.log('tripId, tripOwnerId', tripId, tripOwnerId);
-//   try {
-//     const fire = reference.ref(
-//       `Trips/${tripOwnerId}/${tripId}/members/${userData.id}`,
-//     );
-//     console.log('userData, fire', userData, fire);
-//     const snapshot = await fire.on('value');
-//     const existingObject = snapshot.val();
-//     console.log('existingObject, snapshot', existingObject, snapshot);
-//     const val = Object.values(existingObject)[0];
-//     await fire.set({...val, status: true});
-//     // await firebaseSubON(data);
-
-//     return {ok: true, result: null};
-//   } catch (error) {
-//     console.log('Error updating data:', error);
-//     return {ok: false, result: error};
-//   }
-// };
-
 var filte = [];
 
 const getFirebaseUpdatedData = async data => {
@@ -428,12 +401,36 @@ const firebaseSubON = async data => {
       error => {
         return {ok: false, data: error};
       },
-      {enableHighAccuracy: true, fastestInterval: 1, distanceFilter: 1},
+      {
+        enableHighAccuracy: true,
+        fastestInterval: 1,
+        distanceFilter: 1,
+        useSignificantChanges: true,
+      },
     );
 
     return {ok: true, data: null};
   } catch (error) {
     console.log('Error creating trip: firebaseSubON', error);
+    return {ok: false, data: error};
+  }
+};
+
+const getFirebaseAllData = async () => {
+  store.dispatch(loadingTrue());
+  const {tripId, tripOnnwerID} = data;
+  try {
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+    const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+    const wholeObj = firebaseGet.data();
+
+    store.dispatch(loadingFalse());
+    // wholeObj.members[index] = {...wholeObj.members[index], status: true};
+    return {ok: true, data: wholeObj};
+  } catch (error) {
+    store.dispatch(loadingFalse());
     return {ok: false, data: error};
   }
 };
@@ -460,4 +457,5 @@ export {
   requestPermission,
   creaetChatObj,
   notifyUser,
+  getFirebaseAllData,
 };
