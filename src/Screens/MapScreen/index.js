@@ -1,5 +1,5 @@
 import React, {memo, useCallback} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import {styles} from './styles';
 import {
@@ -10,6 +10,7 @@ import {
   destinationLottie,
   link,
   profile,
+  sosLottie,
   userWithOutPicLottie,
 } from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
@@ -23,6 +24,7 @@ import Lottie from 'lottie-react-native';
 import {Colors} from '../../Theme/Variables';
 // import ImageAsset from 'lottie-react-native/lib/js/components/ImageAsset';
 import {hp, wp} from '../../Config/responsive';
+import InfoModal from './InfoModal';
 
 const MapScreen = ({route, navigation}) => {
   const {
@@ -33,9 +35,17 @@ const MapScreen = ({route, navigation}) => {
     laongituteDalta,
     latitudeDelta,
     kiloMeterRef,
+    toggleModal,
+    isModalVisible,
+    tripInfo,
+    notificationToAllMembers,
     userMarkerRef,
     iconRef,
   } = useMapScreen(navigation, route);
+
+  // console.log('currentUsercurrentUsercurrentUser', currentUser);
+  // console.log('triiiiiiiiiiiiiiiiiiiiiiiiiiiiiiip data', tripData);
+  // console.log('destionationnnnnnnnnn', destination);
 
   const KiloMeterView = useCallback(() => {
     return (
@@ -96,7 +106,10 @@ const MapScreen = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      <View style={styles.groupInfoMain}>
+      <Touchable
+        style={styles.groupInfoMain}
+        Opacity={0.7}
+        onPress={toggleModal}>
         {Platform.OS == 'ios' ? (
           <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
         ) : (
@@ -120,11 +133,20 @@ const MapScreen = ({route, navigation}) => {
             text={allMember.length + 1 + ' members'}
           />
         </View>
-        <Touchable style={styles.groupLink}>
-          <Lottie />
-          <Image source={alert} style={styles.externalLinks} />
+        <Touchable style={styles.groupLink} onPress={notificationToAllMembers}>
+          {/* <Image source={alert} style={styles.externalLinks} /> */}
+          <Lottie
+            style={{height: hp('8'), width: wp('4')}}
+            resizeMode="contain"
+            source={sosLottie}
+            autoPlay
+            loop
+          />
         </Touchable>
-      </View>
+        <InfoModal
+          {...{isModalVisible, toggleModal, tripData, currentUser, tripInfo}}
+        />
+      </Touchable>
       <View style={styles.staticMapImg}>
         <MapView
           style={styles.staticMapImg}

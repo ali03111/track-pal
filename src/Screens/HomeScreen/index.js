@@ -67,6 +67,7 @@ const HomeScreen = () => {
     openNextModal,
     openPrevModal,
     isGroupMemberSelectModal,
+    istooltipModal,
     remember,
     rememberValue,
     keyboardStatus,
@@ -161,6 +162,7 @@ const HomeScreen = () => {
         <TripTypeSelectModal
           {...{
             isTripSelectModal,
+            istooltipModal,
             toggleNextModal: () => {
               openNextModal('isTripSelectModal', 'isGroupMemberSelectModal');
             },

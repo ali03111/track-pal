@@ -13,6 +13,9 @@ import {Dimensions} from 'react-native';
 import Geolib from 'geolib';
 import getDistance from 'geolib/es/getPreciseDistance';
 import {AnimatedRegion} from 'react-native-maps';
+import {SOSToMembers} from '../../Utils/Urls';
+import {errorMessage, successMessage} from '../../Config/NotificationMessage';
+import API from '../../Utils/helperFunc';
 
 const useMapScreen = ({navigate}, {params}) => {
   const {item} = params.params;
@@ -71,24 +74,36 @@ const useMapScreen = ({navigate}, {params}) => {
             .start();
       } else if (item.owner) {
         setAllMembers(data);
+        console.log('asd asd', data);
       }
     } else console.log('get all members error', data);
   };
+  const [tripInfo, setTripInfo] = useState([]);
 
   const getAllData = async () => {
+    console.log('kjsdbjkfbsdkjbvkjsdbvkjsdbkvbsdkvbsdjbkvskjbd');
     const {ok, data} = await getFirebaseAllData({
       tripId: item.id,
       tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
     });
+    console.log('asdasdasddgfggbnb', data);
     if (ok) {
+      setTripInfo(data);
     } else console.log('get all members error', data);
   };
 
+  const notificationToAllMembers = async () => {
+    const {ok, originalError, data} = await API.get(SOSToMembers + item.id);
+    console.log('test', data);
+    if (ok) successMessage('Notification has been sent.');
+    else errorMessage(originalError?.message);
+  };
+
   const useEffectFunc = () => {
-    iconRef.current = 1;
     getMembers();
     getAllData();
     firebaseSnapOn();
+    iconRef.current = 1;
   };
 
   useEffect(shareLocationFirebase, [shareLocationFirebase]);
@@ -152,6 +167,12 @@ const useMapScreen = ({navigate}, {params}) => {
 
   useEffect(useEffectFunc, []);
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return {
     allMember,
     destination: JSON.parse(item.end_destination),
@@ -162,6 +183,10 @@ const useMapScreen = ({navigate}, {params}) => {
     kiloMeterRef,
     userMarkerRef,
     iconRef,
+    toggleModal,
+    isModalVisible,
+    tripInfo,
+    notificationToAllMembers,
   };
 };
 

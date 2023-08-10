@@ -74,6 +74,8 @@ export {default as trash} from './Icons/trash.png';
 export {default as cardediticon} from './Icons/editicon.png';
 export {default as alert} from './Icons/alert.png';
 export {default as clipboardClose} from './Icons/clipboard-close.png';
+export {default as tooltip} from './Icons/tooltip.png';
+export {default as tooltip1} from './Icons/tooltip1.png';
 
 // Lotties files
 
@@ -81,3 +83,4 @@ export {default as currentUserLottie} from './Lotties/currentUser1.json';
 export {default as destinationLottie} from './Lotties/destination1.json';
 export {default as userWithOutPicLottie} from './Lotties/userWithOutPic1.json';
 export {default as SOSLottie} from './Lotties/SOSLottie.json';
+export {default as sosLottie} from './Lotties/sos.json';

@@ -416,7 +416,7 @@ const firebaseSubON = async data => {
   }
 };
 
-const getFirebaseAllData = async () => {
+const getFirebaseAllData = async data => {
   store.dispatch(loadingTrue());
   const {tripId, tripOnnwerID} = data;
   try {

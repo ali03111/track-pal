@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 
@@ -40,12 +40,11 @@ export const styles = StyleSheet.create({
     // left: wp('10'),
     marginRight: wp('2'),
   },
-  groupDesc: {
-    flex: 1,
-    marginLeft: wp('3'),
+  groupLink: {
+    flex: 0.1,
   },
   groupDesc: {
-    flex: 1,
+    flex: 3,
     marginLeft: wp('3'),
   },
   groupName: {
@@ -80,7 +79,7 @@ export const styles = StyleSheet.create({
     bottom: hp('-4.7'),
     width: Dimensions.get('window').width * 0.08,
     height: Dimensions.get('window').width * 0.08,
-    left: wp('4.7'),
+    left: Platform.OS == 'ios' ? wp('4.7') : wp('4.2'),
     backgroundColor: Colors.white,
   },
   firstTextStyle: {
@@ -95,5 +94,155 @@ export const styles = StyleSheet.create({
     width: Dimensions.get('window').width * 0.08,
     height: Dimensions.get('window').width * 0.08,
     left: wp('4.7'),
+  },
+  closeIcon: {
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-end',
+    marginTop: hp('2'),
+    marginRight: wp('1.5'),
+  },
+  modalStyle: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 2,
+      height: 10,
+    },
+    shadowOpacity: 3,
+    shadowRadius: 7.68,
+    elevation: 20,
+    // flex: 1,
+    justifyContent: 'flex-start',
+    height: hp('87'),
+    paddingHorizontal: wp('2'),
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  heading: {
+    fontSize: hp('2.2'),
+    fontWeight: '600',
+    color: 'red',
+    textAlign: 'center',
+    alignSelf: 'center',
+  },
+  gText: {
+    alignSelf: 'center',
+    marginBottom: hp('2.3'),
+  },
+  profileText: {
+    marginBottom: hp('1'),
+    alignSelf: 'center',
+  },
+  creatorInfoMain: {
+    flexDirection: 'row',
+    border: 1,
+    borderColor: Colors.grayBorder,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom: hp('1'),
+    paddingHorizontal: wp('3'),
+    paddingVertical: hp('1.5'),
+  },
+  creatorProfile: {
+    marginRight: wp('2.5'),
+  },
+  creatorName: {
+    fontSize: hp('2'),
+    fontWeight: '600',
+    color: Colors.black,
+    marginBottom: hp('0.2'),
+    flex: 0.8,
+  },
+  creator: {
+    flex: 0.3,
+    alignItems: 'center',
+    verticalAlign: 'middle',
+    textAlign: 'right',
+  },
+  tripCreator: {
+    fontSize: hp('1.8'),
+    fontWeight: '400',
+    color: Colors.black,
+  },
+  creatorInfo: {
+    verticalAlign: 'middle',
+    justifyContent: 'center',
+  },
+  locationArea: {
+    flexDirection: 'row',
+    verticalAlign: 'middle',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    // backgroundColor: 'yellow',
+  },
+  dotbar: {
+    resizeMode: 'contain',
+    // width: wp('12'),
+    height: hp('6'),
+    // maxHeight: hp('20'),
+    // marginVertical: hp('-0.5'),
+    alignSelf: 'flex-start',
+    marginLeft: wp('-1'),
+    // backgroundColor: 'red',
+  },
+  locationInfoMain: {
+    border: 1,
+    borderColor: Colors.grayBorder,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom: hp('1'),
+    paddingHorizontal: wp('3'),
+    paddingVertical: hp('1.5'),
+  },
+  desImage: {
+    resizeMode: 'contain',
+    width: wp('11'),
+    height: hp('5.5'),
+    marginRight: wp('2.5'),
+    alignSelf: 'flex-start',
+  },
+  desText: {
+    fontSize: hp('1.8'),
+    fontWeight: '400',
+    color: 'black',
+    flex: 1,
+    lineHeight: 22,
+  },
+  memberList: {
+    flexDirection: 'row',
+    verticalAlign: 'middle',
+    alignItems: 'center',
+    flex: 1,
+  },
+  memberText: {
+    borderBottomColor: Colors.grayBorder,
+    borderBottomWidth: 1,
+    flex: 1,
+    paddingBottom: hp('1.5'),
+    marginBottom: hp('1.5'),
+    marginTop: hp('2.7'),
+    marginLeft: wp('2.5'),
+    flexDirection: 'row',
+  },
+  memberInfo: {
+    flexDirection: 'row',
+    border: 1,
+    borderColor: Colors.grayBorder,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom: hp('1'),
+    paddingHorizontal: wp('3'),
+    paddingVertical: hp('1.5'),
+    height: 'auto',
+  },
+  LText: {
+    // flex: 0.8,
+    borderColor: Colors.themeColorDark,
+    width: wp('75'),
+    // marginBottom: hp('3'),
   },
 });

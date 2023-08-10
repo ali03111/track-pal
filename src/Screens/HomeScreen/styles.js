@@ -1,6 +1,7 @@
 import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
+import {white} from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
 
 export const styles = StyleSheet.create({
   homeScreenStyle: {
@@ -288,12 +289,13 @@ export const styles = StyleSheet.create({
     paddingBottom: hp('2'),
     borderBottomWidth: 0.5,
     borderColor: Colors.themeColorLight,
-    fontSize: hp('1.5'),
+    fontSize: hp('1.8'),
   },
   radioText: {
-    fontSize: hp('1.8'),
+    fontSize: hp('2'),
     fontWeight: '600',
-    marginTop: hp('.5'),
+    marginTop: hp('.1'),
+    marginRight: wp('2'),
   },
   selectTrip: {
     fontWeight: '600',
@@ -373,5 +375,40 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     // marginVertical: 50,
+  },
+  tooltipMain: {
+    flexDirection: 'row',
+  },
+  tooltipImage: {
+    resizeMode: 'contain',
+    width: wp('4.5'),
+    height: hp('2.25'),
+    marginTop: hp('.3'),
+  },
+  tooltipView: {
+    backgroundColor: 'white',
+    paddingHorizontal: wp('5'),
+    paddingVertical: hp('2.5'),
+    borderRadius: 10,
+  },
+  tooltipClose: {
+    position: 'absolute',
+    textAlign: 'right',
+    alignSelf: 'flex-end',
+    top: 2,
+    right: 2,
+  },
+  tooltipHeading: {
+    fontWeight: '600',
+    fontSize: hp('3'),
+    color: Colors.primaryColor,
+    textAlign: 'center',
+  },
+  tooltipText: {
+    fontSize: hp('2'),
+    color: 'black',
+    textAlign: 'center',
+    marginVertical: hp('1'),
+    lineHeight: 22,
   },
 });

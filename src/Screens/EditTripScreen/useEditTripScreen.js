@@ -134,7 +134,7 @@ const useEditTripScreen = ({addListener, navigate}) => {
         dispatch(loadingFalse());
       }
     } else {
-      errorMessage(originalError.message);
+      errorMessage(data.message);
       dispatch(loadingFalse());
     }
   };
