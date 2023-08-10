@@ -1,10 +1,12 @@
 import React, {memo, useCallback, useState} from 'react';
-import {View, Image, TextInput, FlatList, Text} from 'react-native';
+import {View, Image, TextInput, FlatList, Text, Button} from 'react-native';
 import {
   DemoProfileImage1,
   editIcon,
   addProfileImage,
   bgBlur,
+  tooltip,
+  tooltip1,
 } from '../../Assets';
 import {styles} from './styles';
 
@@ -27,8 +29,10 @@ const TripTypeSelectModal = ({
   toggleNextModal,
   onBackPress,
   extraData,
+  istooltipModal,
 }) => {
   const {selectTripType, updateState} = extraData;
+  const [indexNumber, setIndexNumber] = useState(0);
   const renderItem = useCallback(({item, index}) => {
     return (
       <Touchable
@@ -42,7 +46,17 @@ const TripTypeSelectModal = ({
               <RadioButton value={item?.id} color="#EE2A7B" />
             </View>
             <View style={{flex: 1}}>
-              <TextComponent text={item?.title} styles={styles.radioText} />
+              <View style={styles.tooltipMain}>
+                <TextComponent text={item?.title} styles={styles.radioText} />
+                <Touchable
+                  Opacity={0.7}
+                  onPress={() => {
+                    setIndexNumber(index);
+                    updateState({istooltipModal: true});
+                  }}>
+                  <Image source={tooltip1} style={styles.tooltipImage} />
+                </Touchable>
+              </View>
               <TextComponent text={item?.des} styles={styles.radioDes} />
             </View>
           </View>
@@ -110,6 +124,29 @@ const TripTypeSelectModal = ({
           </View>
         </View>
       </Modal>
+      <View style={{flex: 1}}>
+        <Modal
+          isVisible={istooltipModal}
+          backdropColor="black"
+          backdropOpacity={0.5}>
+          <View style={styles.tooltipView}>
+            <Ionicons
+              name="close-outline"
+              size={hp('3.5')}
+              style={styles.tooltipClose}
+              onPress={() => updateState({istooltipModal: false})}
+              color={Colors.gray}
+            />
+            <GradientText GradientAlignment={0.8} style={styles.tooltipHeading}>
+              {tripsTypes[indexNumber].title}
+            </GradientText>
+            <TextComponent
+              text={tripsTypes[indexNumber].details}
+              styles={styles.tooltipText}
+            />
+          </View>
+        </Modal>
+      </View>
     </View>
   );
 };

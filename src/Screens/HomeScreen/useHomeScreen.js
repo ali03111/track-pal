@@ -22,6 +22,7 @@ const useHomeScreen = () => {
     isTripStarted: false,
     isTripSelectModal: false,
     isGroupMemberSelectModal: false,
+    istooltipModal: false,
     currentLocation: {
       coords: {
         latitude: 37.78825,
@@ -65,6 +66,7 @@ const useHomeScreen = () => {
     isTripSelectModal,
     selectTripType,
     isGroupMemberSelectModal,
+    istooltipModal,
     allUser,
     groupMembers,
   } = homeStates;
@@ -330,6 +332,7 @@ const useHomeScreen = () => {
     updateInputState,
     destinationInputRef,
     isGroupMemberSelectModal,
+    istooltipModal,
     remember,
     rememberValue,
     keyboardStatus,

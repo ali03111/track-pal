@@ -74,6 +74,8 @@ export {default as trash} from './Icons/trash.png';
 export {default as cardediticon} from './Icons/editicon.png';
 export {default as alert} from './Icons/alert.png';
 export {default as clipboardClose} from './Icons/clipboard-close.png';
+export {default as tooltip} from './Icons/tooltip.png';
+export {default as tooltip1} from './Icons/tooltip1.png';
 
 // Lotties files
 
