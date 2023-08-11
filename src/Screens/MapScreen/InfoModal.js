@@ -101,18 +101,22 @@ function InfoModal({
             </View>
             <View style={styles.locationInfoMain}>
               {!tripData.owner && (
-                <View style={styles.locationArea}>
-                  <Image source={location} style={styles.desImage} />
-                  <GradientText style={styles.LText} GradientAlignment={0.7}>
-                    <TextComponent
-                      text={currentUser?.description}
-                      styles={styles.desText}
-                    />
-                  </GradientText>
-                </View>
+                <>
+                  <View style={styles.locationArea}>
+                    <Image source={location} style={styles.locImage} />
+                    <GradientText style={styles.LText} GradientAlignment={0.7}>
+                      <TextComponent
+                        text={'asdasdasd asdasdasdas asdasda'}
+                        styles={styles.desText}
+                      />
+                    </GradientText>
+                  </View>
+                  {/* <View style={styles.dotImage}>
+                    <Image source={dotbar} style={styles.dotbar} />
+                  </View> */}
+                </>
               )}
-              <Image source={dotbar} style={styles.dotbar} />
-              <View style={styles.locationArea}>
+              <View style={styles.destinationArea}>
                 <Image source={from} style={styles.desImage} />
                 <TextComponent
                   text={tripInfo.destination?.description}

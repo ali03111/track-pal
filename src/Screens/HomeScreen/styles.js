@@ -241,6 +241,7 @@ export const styles = StyleSheet.create({
     height: hp('6'),
     paddingHorizontal: wp('3'),
     color: Colors.black,
+    flex: 1,
   },
   profileEditImg: {
     alignSelf: 'center',
