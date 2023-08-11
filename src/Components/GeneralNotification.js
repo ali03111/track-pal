@@ -37,7 +37,11 @@ const GeneralNotification = ({
       </View>
       <View style={styles.nameDescriptionMain}>
         <View style={styles.namestyle}>
-          <TextComponent text={name} styles={styles.username} />
+          <TextComponent
+            text={name}
+            styles={styles.username}
+            numberOfLines={1}
+          />
           <TextComponent
             text={moment(time).calendar()}
             styles={styles.timing}
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
   },
 
   timing: {
-    flex: 1,
+    flex: 1.2,
     fontSize: hp('1.7'),
     textAlign: 'right',
     color: 'rgba(41, 45, 50, 0.5)',
