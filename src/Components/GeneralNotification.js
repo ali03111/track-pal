@@ -24,6 +24,7 @@ const GeneralNotification = ({
   groupName,
   messages,
   onPress,
+  index,
 }) => {
   return (
     <Touchable style={styles.notificationMian} onPress={onPress}>
@@ -31,7 +32,7 @@ const GeneralNotification = ({
         {image ? (
           <CircleImage image={imageUrl(image)} uri={true} />
         ) : (
-          <FirstCharacterComponent text={name} />
+          <FirstCharacterComponent indexNumber={index} text={name} />
         )}
         {/* <CircleImageComp styles={styles.bannerImg}  image={image} /> */}
       </View>

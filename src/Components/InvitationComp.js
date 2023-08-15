@@ -34,6 +34,7 @@ const InvitationComp = ({
   letterStyles,
   tripId,
   tripOwner,
+  index,
 }) => {
   return (
     <View style={styles.invitationStyle}>
@@ -42,7 +43,10 @@ const InvitationComp = ({
           {image ? (
             <CircleImage image={image} />
           ) : (
-            <FirstCharacterComponent text={getSingleCharacter(name)} />
+            <FirstCharacterComponent
+              indexNumber={index}
+              text={getSingleCharacter(name)}
+            />
           )}
           {/* <CircleImageComp styles={styles.bannerImg}  image={image} /> */}
         </View>

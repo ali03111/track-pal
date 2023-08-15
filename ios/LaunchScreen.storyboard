@@ -15,23 +15,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="820" height="1180"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="SplashScreenBackground" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bK4-aW-cSR" userLabel="SplashScreenBackground">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashScreen" highlightedImage="SplashScreen" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yYs-ku-rVa" userLabel="SplashScreen">
                                 <rect key="frame" x="0.0" y="0.0" width="820" height="1180"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="SplashScreen" highlightedImage="SplashScreen" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yYs-ku-rVa" userLabel="SplashScreen">
-                                <rect key="frame" x="-10" y="0.0" width="820" height="1180"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OUR-ZP-dA4"/>
                         <constraints>
-                            <constraint firstItem="yYs-ku-rVa" firstAttribute="leading" secondItem="0xo-nU-0eh" secondAttribute="leading" id="1j8-Js-62A"/>
-                            <constraint firstItem="bK4-aW-cSR" firstAttribute="bottom" secondItem="0xo-nU-0eh" secondAttribute="bottom" id="7cA-tK-k2Q"/>
-                            <constraint firstItem="bK4-aW-cSR" firstAttribute="leading" secondItem="0xo-nU-0eh" secondAttribute="leading" id="Fzf-Od-NSw"/>
-                            <constraint firstItem="yYs-ku-rVa" firstAttribute="trailing" secondItem="0xo-nU-0eh" secondAttribute="trailing" id="Jsi-Qh-yzS"/>
-                            <constraint firstItem="yYs-ku-rVa" firstAttribute="top" secondItem="0xo-nU-0eh" secondAttribute="top" id="Xb5-Jq-5Ii"/>
-                            <constraint firstItem="bK4-aW-cSR" firstAttribute="top" secondItem="0xo-nU-0eh" secondAttribute="top" id="bbc-IB-A25"/>
-                            <constraint firstItem="yYs-ku-rVa" firstAttribute="bottom" secondItem="0xo-nU-0eh" secondAttribute="bottom" id="hx0-J0-eGu"/>
-                            <constraint firstItem="bK4-aW-cSR" firstAttribute="trailing" secondItem="0xo-nU-0eh" secondAttribute="trailing" id="pkQ-sO-L2J"/>
+                            <constraint firstItem="OUR-ZP-dA4" firstAttribute="trailing" secondItem="yYs-ku-rVa" secondAttribute="trailing" id="4FD-Qy-Vjg"/>
+                            <constraint firstAttribute="bottom" secondItem="yYs-ku-rVa" secondAttribute="bottom" id="Tmr-xE-0Mn"/>
+                            <constraint firstItem="yYs-ku-rVa" firstAttribute="top" secondItem="0xo-nU-0eh" secondAttribute="top" id="UhA-uO-31F"/>
+                            <constraint firstItem="yYs-ku-rVa" firstAttribute="leading" secondItem="0xo-nU-0eh" secondAttribute="leading" id="lEE-mN-DI8"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -42,6 +35,5 @@
     </scenes>
     <resources>
         <image name="SplashScreen" width="207" height="388.5"/>
-        <image name="SplashScreenBackground" width="207" height="388.5"/>
     </resources>
 </document>

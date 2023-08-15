@@ -25,13 +25,18 @@ function InfoModal({
   // console.log('asd ', tripData);
 
   const renderItem = useCallback(({item, index}) => {
+    var color =
+      index.toString().length === 1 ? index : index.toString().split('').pop();
     return (
       <View style={styles.memberList}>
         {/* <Image source={item?.image} /> */}
         {item.details.profile_image ? (
           <CircleImage image={item.details.profile_image} />
         ) : (
-          <FirstCharacterComponent text={item.details.name} />
+          <FirstCharacterComponent
+            indexNumber={color}
+            text={item.details.name}
+          />
         )}
         <View style={styles.memberText}>
           <TextComponent text={item.details.name} styles={styles.creatorName} />

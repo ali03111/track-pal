@@ -5,9 +5,14 @@ import {Colors} from '../Theme/Variables';
 import {tripProfileColors} from '../Utils/localDB';
 import {getSingleCharacter} from '../Utils/globalFunctions';
 
-export const FirstCharacterComponent = ({text, extraStyle, textStyle}) => {
+export const FirstCharacterComponent = ({
+  text,
+  extraStyle,
+  textStyle,
+  indexNumber,
+}) => {
   const generateColor = () => {
-    profileBgColor = tripProfileColors[Math.floor(Math.random() * 10)];
+    profileBgColor = tripProfileColors[indexNumber ?? 2];
     return profileBgColor;
   };
   return (

@@ -14,6 +14,8 @@ const InvitationTab = ({route, navigation}) => {
   const {Invitation, tripNotification, tripStatus, getUserTrips} =
     useInvitaionScreen(route, navigation);
   const renderItem = useCallback(({item, index}) => {
+    var color =
+      index.toString().length === 1 ? index : index.toString().split('').pop();
     return (
       <View style={styles.notification}>
         <InvitationComp
@@ -28,6 +30,7 @@ const InvitationTab = ({route, navigation}) => {
           letterStyles={styles.bg}
           onPress={tripStatus}
           tripOwner={item?.trip_owner}
+          index={color}
         />
       </View>
     );
