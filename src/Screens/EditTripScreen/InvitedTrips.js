@@ -38,6 +38,8 @@ const InvitedTrip = ({navigation, letterStyles}) => {
   } = useEditTripScreen(navigation);
 
   const renderItem = ({item, index}) => {
+    var color =
+      index.toString().length === 1 ? index : index.toString().split('').pop();
     const status = {
       0: 'Pendding',
       1: 'Active',
@@ -50,7 +52,7 @@ const InvitedTrip = ({navigation, letterStyles}) => {
             {item?.image ? (
               <CircleImage image={item?.image} style={styles.groupLogo} />
             ) : (
-              <FirstCharacterComponent text={item?.name} />
+              <FirstCharacterComponent indexNumber={color} text={item?.name} />
             )}
             <View style={styles.groupDesc}>
               <TextComponent

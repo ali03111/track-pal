@@ -114,6 +114,7 @@ const useMapScreen = ({navigate}, {params}) => {
       .collection(`"${item.id}"`);
 
     const subscriber = fire.onSnapshot(querySnapshot => {
+      console.log('asd', querySnapshot);
       const allMsg = querySnapshot.docs.map(item => {
         return {...item._data};
       });
