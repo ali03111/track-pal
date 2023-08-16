@@ -62,7 +62,7 @@ const createTripObj = async data => {
     Auth: {userData},
   } = store.getState('Auth');
   const {tripId, members, destination, startPoint, tripType, TripName} = data;
-  console.log('membersmembersmembersmembersmembersmembers', members);
+  console.log('membersmembersmembersmembersmembersmembers', data);
   try {
     const membersData = members.map(res => ({
       id: res.id,

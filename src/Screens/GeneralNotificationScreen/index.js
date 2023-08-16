@@ -34,11 +34,14 @@ const GeneralNotificationTab = ({route, navigation, goBack}) => {
     navigation,
   );
   const renderItem = useCallback(({item, index}) => {
+    var color =
+      index.toString().length === 1 ? index : index.toString().split('').pop();
     return (
       <View style={styles.notification}>
         <GeneralNotification
           image={item?.profile_image}
           name={item?.sender?.name}
+          index={color}
           // description={item?.description}
           time={item?.created_at}
           // groupName={item?.groupName}

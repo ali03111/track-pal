@@ -76,6 +76,8 @@ const GroupMemberSelectModal = ({
 
   // errorMessageHandler
   const renderItem = useCallback(({item, index}) => {
+    var color =
+      index.toString().length === 1 ? index : index.toString().split('').pop();
     return (
       <View style={styles.radioMain}>
         <Touchable
@@ -92,6 +94,7 @@ const GroupMemberSelectModal = ({
               ) : (
                 <FirstCharacterComponent
                   extraStyle={styles.firstLetterStyle}
+                  indexNumber={color}
                   text={item?.name}
                 />
               )}
