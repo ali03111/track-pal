@@ -3,7 +3,7 @@ import Geolocation from '@react-native-community/geolocation';
 import {frequentTrips, tripsTypes} from '../../Utils/localDB';
 import {BackHandler, Keyboard} from 'react-native';
 import {errorMessage} from '../../Config/NotificationMessage';
-import API from '../../Utils/helperFunc';
+import API, {formDataFunc} from '../../Utils/helperFunc';
 import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingTrue} from '../../Redux/Action/isloadingAction';
@@ -71,6 +71,7 @@ const useHomeScreen = () => {
     groupMembers,
   } = homeStates;
 
+  const [tripImage, setTripImage] = useState(null);
   const [updateError, setUpdateError] = useState('');
 
   const updateState = data => setHomeStates(prev => ({...prev, ...data}));
@@ -104,6 +105,7 @@ const useHomeScreen = () => {
       user_ids: [...groupMembers, userData.id],
       type: selectTripType,
       // 'image' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+      profileData: tripImage,
     },
     [tripsTypes[1].id]: {
       start_destination: locationInput,
@@ -111,6 +113,7 @@ const useHomeScreen = () => {
       end_destination: destinationInput,
       user_ids: [...groupMembers, userData.id],
       type: selectTripType,
+      profileData: tripImage,
     },
     [tripsTypes[2].id]: {
       start_destination: locationInput,
@@ -118,6 +121,7 @@ const useHomeScreen = () => {
       end_destination: destinationInput,
       user_ids: [...groupMembers, userData.id],
       type: selectTripType,
+      profileData: tripImage,
     },
   };
 
@@ -146,7 +150,8 @@ const useHomeScreen = () => {
   const createTripFun = async () => {
     dispatch(loadingTrue());
     const body = bodyKey[selectTripType];
-    const {ok, data, originalError} = await API.post(CreateTripUrl, body);
+    // const {ok, data, originalError} = await API.post(CreateTripUrl, body);
+    const {ok, data} = await formDataFunc(CreateTripUrl, body, 'trip_image');
     if (ok) {
       createTripObj({
         ...firebaseDataType[selectTripType],
@@ -179,7 +184,7 @@ const useHomeScreen = () => {
         updateState({isTripStarted: false});
       }, 1000);
     }
-    console.log('erororororororororororo', data, originalError);
+    console.log('erororororororororororo', data);
   };
 
   const getLocationName = async (latitude, longitude) => {
@@ -294,7 +299,6 @@ const useHomeScreen = () => {
 
   useEffect(useEffectFuc, []);
 
-  const [tripImage, setTripImage] = useState(null);
   const uploadFromGalary = () => {
     launchImageLibrary(
       {

@@ -89,11 +89,20 @@ const CreateGroupModal = ({
                   />
                 </View> */}
                 {/* <FirstCharacterComponent text={GroupInput ? GroupInput : 'T'} /> */}
-                <ModalFirstLetterComp text={GroupInput ? GroupInput : 'T'} />
+                <BlurImage
+                  blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
+                  radius={75}
+                  styles={styles.ProfileImage}
+                  uri={tripImage?.uri}
+                />
+                {/* <ModalFirstLetterComp text={GroupInput ? GroupInput : 'T'} /> */}
 
-                {/* <Touchable onPress={uploadFromGalary} Opacity={0.8}>
+                <Touchable
+                  onPress={uploadFromGalary}
+                  Opacity={0.8}
+                  style={styles.addImageBtn}>
                   <Image source={addProfileImage} style={styles.addImageIcon} />
-                </Touchable> */}
+                </Touchable>
               </View>
               <View style={styles.editInput}>
                 <Image source={editIcon} style={styles.editIcon} />

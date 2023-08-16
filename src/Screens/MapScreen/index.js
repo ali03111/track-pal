@@ -100,7 +100,7 @@ const MapScreen = ({route, navigation}) => {
     return tripData.image ? (
       <CircleImage image={tripData.image} style={styles.groupLogo} />
     ) : (
-      <FirstCharacterComponent text={tripData.name} />
+      <FirstCharacterComponent indexNumber={5} text={tripData.name} />
     );
   }, [iconRef]);
 
