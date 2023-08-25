@@ -118,7 +118,7 @@ const useMapScreen = ({navigate}, {params}) => {
       const allMsg = querySnapshot.docs.map(item => {
         return {...item._data};
       });
-      if (allMsg[0].member) {
+      if (allMsg[0]?.member) {
         const filterData = allMsg[0].members.filter(
           member => member.status == true && member?.coords != null && true,
         );

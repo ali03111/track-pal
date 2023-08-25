@@ -105,7 +105,7 @@ const useHomeScreen = () => {
       user_ids: [...groupMembers, userData.id],
       type: selectTripType,
       // 'image' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-      profileData: tripImage,
+      // profileData: tripImage,
     },
     [tripsTypes[1].id]: {
       start_destination: locationInput,
@@ -113,7 +113,7 @@ const useHomeScreen = () => {
       end_destination: destinationInput,
       user_ids: [...groupMembers, userData.id],
       type: selectTripType,
-      profileData: tripImage,
+      // profileData: tripImage,
     },
     [tripsTypes[2].id]: {
       start_destination: locationInput,
@@ -121,7 +121,7 @@ const useHomeScreen = () => {
       end_destination: destinationInput,
       user_ids: [...groupMembers, userData.id],
       type: selectTripType,
-      profileData: tripImage,
+      // profileData: tripImage,
     },
   };
 
@@ -158,7 +158,7 @@ const useHomeScreen = () => {
         ...firebaseDataType[selectTripType],
         tripId: data.trip_id,
         members: data.users,
-        image: data.image,
+        // image: data.image,
       });
       openNextModal('isTripModalVisible', 'isTripStarted');
       updateInputState({
@@ -186,9 +186,11 @@ const useHomeScreen = () => {
         updateState({isTripStarted: false});
       }, 1000);
     }
-    console.log('erororororororororororo', data);
+    console.log('erororororororororororo', originalError);
+
+    console.log('asdasdasdurl', CreateTripUrl);
     console.log('asdasdasd', body);
-    dispatch(loadingFalse());
+    // dispatch(loadingFalse());
   };
 
   const getLocationName = async (latitude, longitude) => {

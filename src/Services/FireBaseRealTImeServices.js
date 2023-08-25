@@ -61,8 +61,7 @@ const createTripObj = async data => {
   const {
     Auth: {userData},
   } = store.getState('Auth');
-  const {tripId, members, destination, startPoint, tripType, TripName, image} =
-    data;
+  const {tripId, members, destination, startPoint, tripType, TripName} = data;
   console.log('membersmembersmembersmembersmembersmembers', data);
   try {
     const membersData = members.map(res => ({
@@ -95,7 +94,7 @@ const createTripObj = async data => {
       tripType,
       TripName,
       members: membersData,
-      tripImage: image,
+      // tripImage: image,
     });
     await fireChat.set({chat: []});
   } catch (error) {

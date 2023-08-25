@@ -12,6 +12,7 @@ import {TextComponent} from '../../Components/TextComponent';
 import {dotbar, from, location} from '../../Assets';
 import {frequentTrips} from '../../Utils/localDB';
 import {CircleImage} from '../../Components/CircleImage';
+import {imageUrl} from '../../Utils/Urls';
 
 function InfoModal({
   isModalVisible,
@@ -25,13 +26,17 @@ function InfoModal({
   // console.log('asd ', tripData);
 
   const renderItem = useCallback(({item, index}) => {
+    console.log('item', item);
     var color =
       index.toString().length === 1 ? index : index.toString().split('').pop();
     return (
       <View style={styles.memberList}>
         {/* <Image source={item?.image} /> */}
-        {item.details.profile_image ? (
-          <CircleImage image={item.details.profile_image} />
+        {item.details?.profile_image ? (
+          <CircleImage
+            image={imageUrl(item.details?.profile_image)}
+            uri={true}
+          />
         ) : (
           <FirstCharacterComponent
             indexNumber={color}
@@ -68,7 +73,7 @@ function InfoModal({
             color={Colors.gray}
           />
           {tripData?.image ? (
-            <CircleImage uri={true} image={tripData?.image} />
+            <CircleImage uri={true} image={imageUrl(tripData?.image)} />
           ) : (
             <FirstCharacterComponent
               text={tripData?.name}
@@ -85,8 +90,12 @@ function InfoModal({
           </GradientText>
           <ScrollView>
             <View style={styles.creatorInfoMain}>
-              {tripInfo?.tripCreator?.image ? (
-                <CircleImage uri={true} image={tripInfo.tripCreator?.image} />
+              {tripInfo.tripCreator?.image ? (
+                <CircleImage
+                  uri={true}
+                  image={imageUrl(tripInfo.tripCreator?.image)}
+                  styles={styles.creatorProfile}
+                />
               ) : (
                 <FirstCharacterComponent
                   text={tripInfo.tripCreator?.name}
@@ -111,7 +120,7 @@ function InfoModal({
                     <Image source={location} style={styles.locImage} />
                     <GradientText style={styles.LText} GradientAlignment={0.7}>
                       <TextComponent
-                        text={'asdasdasd asdasdasdas asdasda'}
+                        text={tripInfo.startPoint?.description}
                         styles={styles.desText}
                       />
                     </GradientText>
