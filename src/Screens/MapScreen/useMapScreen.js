@@ -118,49 +118,51 @@ const useMapScreen = ({navigate}, {params}) => {
       const allMsg = querySnapshot.docs.map(item => {
         return {...item._data};
       });
-      const filterData = allMsg[0].members.filter(
-        member => member.status == true && member?.coords != null && true,
-      );
-      if (!item.owner) {
-        setAllMembers(() => filterData.filter(res => res.id != userData.id));
-        const user = filterData.filter(res => res.id == userData.id);
-        console.log(
-          'filterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterData',
-          filterData,
+      if (allMsg[0].member) {
+        const filterData = allMsg[0].members.filter(
+          member => member.status == true && member?.coords != null && true,
         );
-        const checkLength = Boolean(user.length > 0);
-        setCurrentUser(prev => {
+        if (!item.owner) {
+          setAllMembers(() => filterData.filter(res => res.id != userData.id));
+          const user = filterData.filter(res => res.id == userData.id);
+          console.log(
+            'filterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterData',
+            filterData,
+          );
+          const checkLength = Boolean(user.length > 0);
+          setCurrentUser(prev => {
+            if (checkLength) {
+              return user[0];
+            } else return prev;
+          });
           if (checkLength) {
-            return user[0];
-          } else return prev;
-        });
-        if (checkLength) {
-          userMarkerRef.current
-            .timing(
+            userMarkerRef.current
+              .timing(
+                {
+                  latitude: user[0].coords.latitude,
+                  longitude: user[0].coords.longitude,
+                },
+                100,
+              )
+              .start();
+            distance = getDistance(
               {
                 latitude: user[0].coords.latitude,
                 longitude: user[0].coords.longitude,
               },
-              100,
-            )
-            .start();
-          distance = getDistance(
-            {
-              latitude: user[0].coords.latitude,
-              longitude: user[0].coords.longitude,
-            },
-            {latitude: log.latitude, longitude: log.longitude},
-          );
-          const kiloMeter = distance / 1000;
-          kiloMeterRef.current = kiloMeter.toFixed(2);
-          Number(kiloMeterRef.current) <= Number('0.04') &&
-            !item.owner &&
-            notifyUser(
-              `${item.owner ? Number(item.user_id) : item.trip_owner.id}`,
+              {latitude: log.latitude, longitude: log.longitude},
             );
+            const kiloMeter = distance / 1000;
+            kiloMeterRef.current = kiloMeter.toFixed(2);
+            Number(kiloMeterRef.current) <= Number('0.04') &&
+              !item.owner &&
+              notifyUser(
+                `${item.owner ? Number(item.user_id) : item.trip_owner.id}`,
+              );
+          }
+        } else if (item.owner) {
+          setAllMembers(filterData);
         }
-      } else if (item.owner) {
-        setAllMembers(filterData);
       }
     });
     return () => subscriber();
