@@ -109,6 +109,7 @@ const formDataFunc = (url, body, imageKey, isArray) => {
     }
     formData.append(key, value);
   });
+  console.log('asdasd123', formData);
   // Object.entries(body).forEach(([key, val]) => {
   //   if (key == imageKey) {
   //     isArray
@@ -145,9 +146,11 @@ const formDataFunc = (url, body, imageKey, isArray) => {
   return fetch(newUrl, requestOptions)
     .then(res => res.json())
     .then(res => {
+      console.log('test', res);
       return {data: res, ok: true};
     })
     .catch(err => {
+      console.log('testerr', err);
       return {data: err, ok: false};
     });
 };

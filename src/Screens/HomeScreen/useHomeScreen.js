@@ -6,7 +6,7 @@ import {errorMessage} from '../../Config/NotificationMessage';
 import API, {formDataFunc} from '../../Utils/helperFunc';
 import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
-import {loadingTrue} from '../../Redux/Action/isloadingAction';
+import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 import {createTripObj} from '../../Services/FireBaseRealTImeServices';
 import {launchImageLibrary} from 'react-native-image-picker';
 
@@ -150,13 +150,15 @@ const useHomeScreen = () => {
   const createTripFun = async () => {
     dispatch(loadingTrue());
     const body = bodyKey[selectTripType];
-    // const {ok, data, originalError} = await API.post(CreateTripUrl, body);
-    const {ok, data} = await formDataFunc(CreateTripUrl, body, 'trip_image');
+    console.log('asd', body.profileData);
+    const {ok, data, originalError} = await API.post(CreateTripUrl, body);
+    // const {ok, data} = await formDataFunc(CreateTripUrl, body, 'image');
     if (ok) {
       createTripObj({
         ...firebaseDataType[selectTripType],
         tripId: data.trip_id,
         members: data.users,
+        image: data.image,
       });
       openNextModal('isTripModalVisible', 'isTripStarted');
       updateInputState({
@@ -185,6 +187,8 @@ const useHomeScreen = () => {
       }, 1000);
     }
     console.log('erororororororororororo', data);
+    console.log('asdasdasd', body);
+    dispatch(loadingFalse());
   };
 
   const getLocationName = async (latitude, longitude) => {
