@@ -15,7 +15,7 @@ const useProfileScreen = ({navigate}) => {
     setAlert(false);
     setTimeout(() => {
       dispatch(logOutUser());
-    }, 1);
+    }, 100);
   };
 
   return {dynamicNav, alert, onCancel, onConfirm, userData};

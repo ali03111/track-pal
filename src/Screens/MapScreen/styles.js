@@ -41,11 +41,15 @@ export const styles = StyleSheet.create({
     marginRight: wp('2'),
   },
   groupLink: {
-    flex: 0.1,
+    flex: 3,
+    // backgroundColor: 'red',
+    // height: hp('8'),
+    // width: wp('4'),
   },
   groupDesc: {
-    flex: 3,
+    flex: 7,
     marginLeft: wp('3'),
+    paddingRight: wp('5'),
   },
   groupName: {
     fontSize: hp('2.3'),
@@ -54,7 +58,7 @@ export const styles = StyleSheet.create({
   },
   groupMember: {
     fontSize: hp('1.8'),
-    marginTop: hp('-.4'),
+    // marginTop: hp('0.5'),
     color: Colors.gray,
   },
   externalLinks: {
@@ -171,6 +175,7 @@ export const styles = StyleSheet.create({
   creatorInfo: {
     verticalAlign: 'middle',
     justifyContent: 'center',
+    marginLeft: wp('2.5'),
   },
   locationArea: {
     flexDirection: 'row',
@@ -178,7 +183,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     // backgroundColor: 'yellow',
-    marginBottom: hp('3'),
+    marginBottom: hp('1'),
   },
   destinationArea: {
     flexDirection: 'row',

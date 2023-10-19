@@ -35,6 +35,7 @@ const MapScreen = ({route, navigation}) => {
     laongituteDalta,
     latitudeDelta,
     kiloMeterRef,
+    userData,
     toggleModal,
     isModalVisible,
     tripInfo,
@@ -95,12 +96,14 @@ const MapScreen = ({route, navigation}) => {
     },
     [allMember],
   );
-
+  const checkCurrentUser = Boolean(
+    currentUser.coords.latitude != null && !tripData.owner,
+  );
   const TripNameBottom = useCallback(() => {
     return tripData.image ? (
       <CircleImage image={tripData.image} style={styles.groupLogo} />
     ) : (
-      <FirstCharacterComponent text={tripData.name} />
+      <FirstCharacterComponent indexNumber={5} text={tripData.name} />
     );
   }, [iconRef]);
 
@@ -130,21 +133,33 @@ const MapScreen = ({route, navigation}) => {
           />
           <TextComponent
             styles={styles.groupMember}
-            text={allMember.length + 1 + ' members'}
+            text={`Active Members ${
+              checkCurrentUser ? allMember.length + 1 : allMember.length
+            }`}
           />
         </View>
         <Touchable style={styles.groupLink} onPress={notificationToAllMembers}>
           {/* <Image source={alert} style={styles.externalLinks} /> */}
-          <Lottie
-            style={{height: hp('8'), width: wp('4')}}
-            resizeMode="contain"
-            source={sosLottie}
-            autoPlay
-            loop
-          />
+          {tripData.trip_owner.id == userData.id && (
+            <Lottie
+              style={{height: hp('8'), width: wp('4')}}
+              resizeMode="contain"
+              source={sosLottie}
+              autoPlay
+              loop
+            />
+          )}
         </Touchable>
         <InfoModal
-          {...{isModalVisible, toggleModal, tripData, currentUser, tripInfo}}
+          {...{
+            isModalVisible,
+            toggleModal,
+            tripData,
+            currentUser,
+            tripInfo,
+            allMember,
+            userData,
+          }}
         />
       </Touchable>
       <View style={styles.staticMapImg}>
@@ -228,7 +243,11 @@ const MapScreen = ({route, navigation}) => {
           {allMember.length > 0 &&
             allMember.map(res => <MembersView res={res} />)}
         </MapView>
-        {!tripData.owner && <KiloMeterView />}
+        {!tripData.owner && tripData.type != 'personalTrip' && (
+          <KiloMeterView />
+        )}
+        {tripData.type == 'personalTrip' &&
+          tripData.trip_owner.id == userData.id && <KiloMeterView />}
       </View>
     </View>
   );

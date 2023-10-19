@@ -26,8 +26,9 @@ import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {loaderView} from './MyTrips';
+import {keyExtractor} from '../../Utils';
 
-const InvitedTrip = ({navigation, letterStyles}) => {
+const InvitedTrip = ({navigation, route}) => {
   const {
     updateState,
     isTripCreated,
@@ -35,7 +36,7 @@ const InvitedTrip = ({navigation, letterStyles}) => {
     tripsCard,
     changeMemberStatus,
     invitedTrips,
-  } = useEditTripScreen(navigation);
+  } = useEditTripScreen(navigation, route);
 
   const renderItem = ({item, index}) => {
     var color =
@@ -61,7 +62,7 @@ const InvitedTrip = ({navigation, letterStyles}) => {
                 styles={styles.groupName}
               />
               <TextComponent
-                text={item?.total_members + ' members'}
+                text={'Total members ' + item?.total_members}
                 styles={styles.groupMember}
               />
               <TextComponent
@@ -165,23 +166,15 @@ const InvitedTrip = ({navigation, letterStyles}) => {
         </SkeletonPlaceholder>
       )}
       {invitedTrips != null && invitedTrips.length > 0 ? (
-        <SwipeListView
-          useFlatList={true}
+        <FlatList
           data={invitedTrips}
-          // disableRightSwipe={true}
           renderItem={renderItem}
-          renderHiddenItem={renderHiddenItem}
-          leftOpenValue={70}
-          rightOpenValue={-70}
-          previewRowKey={'0'}
-          previewOpenValue={0}
-          previewOpenDelay={3000}
-          onRowOpen={onRowOpen}
           scrollEnabled
           refreshing={false}
           onRefresh={tripsCard}
           showsVerticalScrollIndicator={false}
           style={{height: '100%'}}
+          extraData={keyExtractor}
         />
       ) : (
         invitedTrips != null &&

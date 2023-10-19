@@ -9,9 +9,10 @@ import {hp} from '../../Config/responsive';
 import GradientText from '../../Components/GradientText';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {TextComponent} from '../../Components/TextComponent';
-import {dotbar, from, location} from '../../Assets';
+import {bgBlur, dotbar, from, location} from '../../Assets';
 import {frequentTrips} from '../../Utils/localDB';
 import {CircleImage} from '../../Components/CircleImage';
+import {imageUrl} from '../../Utils/Urls';
 
 function InfoModal({
   isModalVisible,
@@ -19,9 +20,17 @@ function InfoModal({
   tripData,
   currentUser,
   tripInfo,
+  allMember,
+  userData,
 }) {
+  const tripDatddda = userData.id;
+  const {email} = userData;
   console.log('asd  test', tripInfo);
-  // console.log('asd asd asd test ', tripInfo?.members);
+  console.log(
+    'asdasdasdasdasdasasdaasdasdassdasdasasdasdasdas dasddsaadsfasfasassadas',
+    tripInfo?.members?.filter(res => res.details.email == email),
+    userData.id,
+  );
   // console.log('asd ', tripData);
 
   const renderItem = useCallback(({item, index}) => {
@@ -30,8 +39,11 @@ function InfoModal({
     return (
       <View style={styles.memberList}>
         {/* <Image source={item?.image} /> */}
-        {item.details.profile_image ? (
-          <CircleImage image={item.details.profile_image} />
+        {item.details?.profile_image ? (
+          <CircleImage
+            image={imageUrl(item.details?.profile_image)}
+            uri={true}
+          />
         ) : (
           <FirstCharacterComponent
             indexNumber={color}
@@ -59,6 +71,7 @@ function InfoModal({
         avoidKeyboard
         animationType="fade"
         style={styles.bottomModal}>
+        <Image style={styles.absolute} source={bgBlur} />
         <View style={styles.modalStyle}>
           <Ionicons
             name="close-outline"
@@ -68,7 +81,7 @@ function InfoModal({
             color={Colors.gray}
           />
           {tripData?.image ? (
-            <CircleImage uri={true} image={tripData?.image} />
+            <CircleImage uri={true} image={imageUrl(tripData?.image)} />
           ) : (
             <FirstCharacterComponent
               text={tripData?.name}
@@ -85,13 +98,13 @@ function InfoModal({
           </GradientText>
           <ScrollView>
             <View style={styles.creatorInfoMain}>
-              {tripInfo?.tripCreator?.image ? (
-                <CircleImage uri={true} image={tripInfo.tripCreator?.image} />
-              ) : (
-                <FirstCharacterComponent
-                  text={tripInfo.tripCreator?.name}
-                  extraStyle={styles.creatorProfile}
+              {tripInfo.tripCreator?.image ? (
+                <CircleImage
+                  uri={true}
+                  image={imageUrl(tripInfo.tripCreator?.image)}
                 />
+              ) : (
+                <FirstCharacterComponent text={tripInfo.tripCreator?.name} />
               )}
               <View style={styles.creatorInfo}>
                 <TextComponent
@@ -111,7 +124,16 @@ function InfoModal({
                     <Image source={location} style={styles.locImage} />
                     <GradientText style={styles.LText} GradientAlignment={0.7}>
                       <TextComponent
-                        text={'asdasdasd asdasdasdas asdasda'}
+                        // text={
+                        //   tripInfo.members?.filter(
+                        //     res => res.id == userData.id,
+                        //   )[0] ?? 'sdsd'
+                        // }
+                        text={
+                          tripInfo?.members?.filter(
+                            res => res.details.email == email,
+                          )[0]?.description
+                        }
                         styles={styles.desText}
                       />
                     </GradientText>

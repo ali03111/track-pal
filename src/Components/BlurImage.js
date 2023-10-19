@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {Blurhash} from 'react-native-blurhash';
 import FastImage from 'react-native-fast-image';
 
-const BlurImage = ({styles, uri, blurhash, radius, children}) => {
+const BlurImage = ({styles, uri, blurhash, radius, children, isURI}) => {
   const [load, setLoad] = useState(true);
   const imageSource = {uri, priority: FastImage.priority.high};
   // const imageSource = uri
@@ -19,7 +19,7 @@ const BlurImage = ({styles, uri, blurhash, radius, children}) => {
       }}>
       <FastImage
         style={[styles, {zIndex: -1, position: 'relative'}]}
-        source={imageSource}
+        source={isURI ? imageSource : uri}
         onLoad={() => setLoad(false)}
       />
       {load && (

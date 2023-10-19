@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6.apps.googleusercontent.com</string>
+	<string>1005053076444-o39f1ubb1suj4uvm2suo3vfp4vmf8b6b.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6</string>
+	<string>com.googleusercontent.apps.1005053076444-o39f1ubb1suj4uvm2suo3vfp4vmf8b6b</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>1005053076444-78i3aufnqf8pdeb8pb4joikn45irfp1o.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.codment.trackpal.app</string>
+	<string>com.trackpal.codment</string>
 	<key>PROJECT_ID</key>
 	<string>track-pal-e4e07</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1005053076444:ios:f280626b18b54a5d4be519</string>
+	<string>1:1005053076444:ios:b690224e54c1ad264be519</string>
+	<key>DATABASE_URL</key>
+	<string>https://track-pal-e4e07-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

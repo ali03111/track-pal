@@ -15,26 +15,49 @@ import {
   setting,
   setting2,
 } from '../Assets';
+import useReduxStore from '../Hooks/UseReduxStore';
 
 globalStyles = {};
 const isIOS = Boolean(Platform.OS == 'ios');
-const tabarComponent = (activeImage, unActiveImage, ImageStyle) => {
-  return {
-    tabBarIcon: ({focused}) => (
-      <View style={styles.tabarView}>
-        <Image
-          style={{...styles.imgstyle, ...ImageStyle}}
-          source={focused ? activeImage : unActiveImage}
-        />
-      </View>
-    ),
-    title: '',
-    tabBarLabelStyle: styles.tabarTitle,
-  };
-};
 
 const Tab = createBottomTabNavigator();
 function MybottomTabs() {
+  const {getState} = useReduxStore();
+
+  const {inviNotify} = getState('inviNotify');
+  const {generalNotify} = getState('generalNotify');
+
+  const inviNotifyStatus = Boolean(inviNotify.length > 0);
+  // const genNotifyStatus = Boolean(generalNotify.length > 0);
+
+  console.log(
+    'inviNotifyinviNotifyinviNotify',
+    Boolean(inviNotify.length > 0),
+    inviNotify,
+  );
+
+  const tabarComponent = (
+    activeImage,
+    unActiveImage,
+    ImageStyle,
+    isDot,
+    DotStyles,
+  ) => {
+    return {
+      tabBarIcon: ({focused}) => (
+        <View style={styles.tabarView}>
+          {isDot && <View style={{...styles.dot, ...DotStyles}} />}
+          <Image
+            style={{...styles.imgstyle, ...ImageStyle}}
+            source={focused ? activeImage : unActiveImage}
+          />
+        </View>
+      ),
+      title: '',
+      tabBarLabelStyle: styles.tabarTitle,
+    };
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
@@ -87,12 +110,21 @@ function MybottomTabs() {
             marginTop: hp('-5'),
             height: hp('12'),
           }),
+          // inviNotifyStatus,
+          // {
+          //   left: wp('20'),
+          // },
         )}
         component={Screens.GeneralNotification}
       />
       <Tab.Screen
         name="ChatScreen"
-        options={tabarComponent(notification2, notification)}
+        options={tabarComponent(
+          notification2,
+          notification,
+          {},
+          inviNotifyStatus,
+        )}
         component={Screens.InvitationScreen}
       />
       <Tab.Screen
@@ -125,5 +157,17 @@ const styles = StyleSheet.create({
   imgstyle: {
     resizeMode: 'contain',
     width: wp('7'),
+  },
+  dot: {
+    backgroundColor: Colors.primaryColor,
+    borderRadius: Math.round(
+      Dimensions.get('window').width + Dimensions.get('window').height,
+    ),
+    width: Dimensions.get('window').width * 0.03,
+    height: Dimensions.get('window').width * 0.03,
+    position: 'absolute',
+    left: wp('5'),
+    top: hp('0.68'),
+    zIndex: 1,
   },
 });

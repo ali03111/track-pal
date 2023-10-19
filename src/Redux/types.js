@@ -22,4 +22,8 @@ export const types = {
   fcmRegType: 'fcmRegType',
   isLocationTrue: 'isLocationTrue',
   isLocationFalse: 'isLocationFalse',
+  addNotification: 'addNotification',
+  ClearNotify: 'ClearNotify',
+  ClearNotifyInvitation: 'ClearNotifyInvitation',
+  addNotiInvitation: 'addNotiInvitation',
 };

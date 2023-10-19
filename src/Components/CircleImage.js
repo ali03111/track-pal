@@ -1,12 +1,14 @@
 import React from 'react';
 import {Image, Dimensions} from 'react-native';
+import BlurImage from './BlurImage';
 
 export const CircleImage = props => {
   const {styles} = props;
   return (
-    <Image
-      source={props?.uri ? {uri: props?.image} : props?.image}
-      style={{
+    <BlurImage
+      uri={props?.image}
+      // uri={props?.uri ? {uri: props?.image} : props?.image}
+      styles={{
         borderRadius: Math.round(
           Dimensions.get('window').width + Dimensions.get('window').height,
         ),
@@ -14,6 +16,10 @@ export const CircleImage = props => {
         height: Dimensions.get('window').width * 0.13,
         ...styles,
       }}
+      isURI={props?.uri}
+      radius={Math.round(
+        Dimensions.get('window').width + Dimensions.get('window').height,
+      )}
     />
   );
 };

@@ -260,13 +260,18 @@ export const styles = StyleSheet.create({
   },
   addImageIcon: {
     alignSelf: 'center',
-    position: 'absolute',
-    left: wp('50%'),
-    bottom: hp('5'),
-    zIndex: 999,
+    // position: 'absolute',
+    // left: wp('50%'),
+    // bottom: hp('5'),
+    // zIndex: 999,
     width: wp('12'),
     height: hp('6'),
     resizeMode: 'contain',
+  },
+  addImageBtn: {
+    position: 'absolute',
+    left: wp('48%'),
+    bottom: hp('5'),
   },
   radio: {
     flexDirection: 'row',

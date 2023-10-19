@@ -13,7 +13,7 @@ import {errorMessage} from '../../Config/NotificationMessage';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 
-const useNotificationScreen = ({params}, {navigate}) => {
+const useNotificationScreen = ({params}, {navigate, addListener}) => {
   const [tripNotification, setTripNotification] = useState([]);
   const [notifications, setNotification] = useState(null);
 
@@ -51,11 +51,8 @@ const useNotificationScreen = ({params}, {navigate}) => {
   };
 
   const useEffectFuc = () => {
-    getUserNotification();
-    console.log('paramsparamsparamsparamsparamsparams', params);
-    setTimeout(() => {
-      params?.sendTo && navigate(params?.sendTo);
-    }, 1000);
+    const event = addListener('focus', getUserNotification);
+    return event;
     // params?.sendTo && navigate(params?.sendTo);
   };
 

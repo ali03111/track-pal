@@ -6,12 +6,16 @@ import notifee, {
 } from '@notifee/react-native';
 import {requestNotifications, openSettings} from 'react-native-permissions';
 import {useNavigation} from '@react-navigation/native';
+import {store} from '../Redux/Reducer';
+import {types} from '../Redux/types';
 // import NavigationService from './NavigationService';
 // import useRouteName from '@/hooks/useRouteName';
 
+// notifee.registerForegroundService(() => {});
+
 const sound = Platform.select({ios: 'interval.wav', android: 'interval.mp3'});
 const onNotificationNotiFee = async (data, appState) => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const channelId = await notifee.createChannel({
     id: 'default',
     name: 'Default Channel',
@@ -33,7 +37,20 @@ const onNotificationNotiFee = async (data, appState) => {
     },
     ios: {sound},
   });
-  console.log('data=>>>>>>>', data);
+
+  const notificationData = JSON.parse(data.data.payload);
+
+  const isRoute = Boolean(notificationData.is_route);
+
+  const isInvitation = Boolean(notificationData.route == 'InvitationScreen');
+
+  console.log('data=>>>>>>>', notificationData.route);
+
+  isRoute &&
+    store.dispatch({
+      type: isInvitation ? types.addNotiInvitation : types.addNotification,
+      payload: notificationData.payload,
+    });
   // navigation.navigate('Invitation');
   // const isActive = Boolean(NavigationService.ref && appState == 'active');
   // const notificationObj = JSON.parse(data.data.payload);
@@ -67,11 +84,13 @@ class FCMService {
     }
   };
 
-  getToken = onRegister =>
+  getToken = async onRegister => {
+    await messaging().registerDeviceForRemoteMessages();
     messaging()
       .getToken()
-      .then(res => onRegister(res));
-
+      .then(res => onRegister(res))
+      .catch(e => console.log('ndjkcsdkcnksdcnsdvnsd', e));
+  };
   requestPermission = async onRegister => {
     try {
       const {status} = await requestNotifications(['alert', 'sound', 'badge']);
@@ -153,6 +172,10 @@ class FCMService {
     this.forgroundListener = notifee.onForegroundEvent(
       async ({type, detail}) => {
         const {notification} = detail;
+        console.log(
+          'notificationnotificationnotificationnotificationnotificationnotification',
+          notification,
+        );
         const isPressed = Boolean(
           type === EventType.ACTION_PRESS || type == EventType.PRESS,
         );
@@ -163,6 +186,10 @@ class FCMService {
     this.backgroundListner = notifee.onBackgroundEvent(
       async ({type, detail}) => {
         const {notification} = detail;
+        console.log(
+          'notificationnotificationnotificationnoasdasdastificationnotificationnotification',
+          notification,
+        );
         const isPressed = Boolean(
           type === EventType.ACTION_PRESS || type == EventType.PRESS,
         );
@@ -177,6 +204,7 @@ class FCMService {
     this.notificationOpenedListener();
     this.onTokenRefreshListener();
     this.forgroundListener();
+    this.backgroundListner();
     this.deletedToken();
     console.log('FCMService unRegister successfully');
   };

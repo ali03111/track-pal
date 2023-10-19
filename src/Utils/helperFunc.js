@@ -109,31 +109,7 @@ const formDataFunc = (url, body, imageKey, isArray) => {
     }
     formData.append(key, value);
   });
-  // Object.entries(body).forEach(([key, val]) => {
-  //   if (key == imageKey) {
-  //     isArray
-  //       ? val.forEach((res, index) => {
-  //           formData.append(imageKey, {
-  //             name: res?.fileName,
-  //             type: res?.type,
-  //             uri:
-  //               Platform.OS == 'ios'
-  //                 ? res?.uri.replace('file://', '')
-  //                 : res?.uri,
-  //           });
-  //         })
-  //       : formData.append(imageKey, {
-  //           name: body[imageKey]?.fileName,
-  //           type: body[imageKey]?.type,
-  //           uri:
-  //             Platform.OS == 'ios'
-  //               ? body[imageKey]?.uri.replace('file://', '')
-  //               : body[imageKey]?.uri,
-  //         });
-  //   } else {
-  //     formData.append(key, val);
-  //   }
-  // });
+  console.log('asdasd123', formData);
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
@@ -145,9 +121,11 @@ const formDataFunc = (url, body, imageKey, isArray) => {
   return fetch(newUrl, requestOptions)
     .then(res => res.json())
     .then(res => {
+      console.log('test', res);
       return {data: res, ok: true};
     })
     .catch(err => {
+      console.log('testerr', err);
       return {data: err, ok: false};
     });
 };

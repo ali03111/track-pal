@@ -26,18 +26,29 @@ import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 import Geolocation from '@react-native-community/geolocation';
 
-const useEditTripScreen = ({addListener, navigate}) => {
-  const [isTripCreated, setIsTripCreated] = useState(false);
+const useEditTripScreen = ({addListener, navigate}, {params}) => {
+  console.log(
+    'EditTripScreenEditTripScreenEditTripScreenEditTripScrsdsdsdsdsdeenEditTripScreenEditTripScreen',
+    params?.params?.item,
+  );
 
+  const routeName = params?.params?.sendTo;
+
+  const [isTripCreated, setIsTripCreated] = useState(false);
   const [tripCardData, setTripCardData] = useState(null);
   const [invitedTrips, setInvitedTrip] = useState(null);
   const [groupTrips, setGroupTrip] = useState(null);
+  const [perssonalTrips, setPerssonalTrip] = useState(null);
 
   const {dispatch, getState} = useReduxStore();
 
   const {userData} = getState('Auth');
 
-  const updateState = async (status, id, index) => {
+  const updateState = async (status, id, index, ownerStatus) => {
+    const y = ownerStatus
+      ? {...perssonalTrips[index]}
+      : {...tripCardData[index]};
+
     const {ok, data, originalError} = await API.post(changeOwnerStatusUrl, {
       status,
       id,
@@ -46,15 +57,41 @@ const useEditTripScreen = ({addListener, navigate}) => {
     if (ok) {
       tripsCard();
       if (status == 1) {
-        setIsTripCreated(true);
-        dispatch(loadingFalse());
-        setTimeout(() => {
-          setIsTripCreated(false);
-          navigate('MapAndChatScreen', {
-            item: {...tripCardData[index], owner: true},
+        if (ownerStatus) {
+          await updateDataFirebase({
+            tripId: id,
+            tripOnnwerID: perssonalTrips[index].user_id,
           });
-        }, 1000);
+          await updateLocationONfire({
+            tripId: id,
+            tripOnnwerID: perssonalTrips[index].user_id,
+          });
+        }
+        setTimeout(() => {
+          setIsTripCreated(true);
+          dispatch(loadingFalse());
+          setTimeout(() => {
+            setIsTripCreated(false);
+            navigate('MapAndChatScreen', {
+              item: {...y, owner: !ownerStatus ? true : false},
+            });
+          }, 1000);
+        }, 2000);
+        // setIsTripCreated(true);
+        // dispatch(loadingFalse());
+        // setTimeout(() => {
+        //   setIsTripCreated(false);
+        //   navigate('MapAndChatScreen', {
+        //     item: {...y, owner: !ownerStatus ? true : false},
+        //   });
+        // }, 1000);
       } else if (status == 2) {
+        ownerStatus &&
+          onEndTrip({
+            tripId: id,
+            tripOnnwerID: perssonalTrips[index].user_id,
+            userData,
+          });
         Geolocation.clearWatch();
         dispatch(loadingFalse());
       }
@@ -73,11 +110,13 @@ const useEditTripScreen = ({addListener, navigate}) => {
     setActiveSessionHelp(e);
   };
   const changeMemberStatus = async (status, id, tripOnnwerID, index) => {
+    console.log('dvchsvcsdb kjsdjk bskd');
     try {
       const {ok, data, originalError} = await API.post(changeMemberStatusUrl, {
         status,
         id,
       });
+      console.log('datadatadatadatadata', data);
       dispatch(loadingTrue());
       if (ok) {
         tripsCard();
@@ -98,15 +137,21 @@ const useEditTripScreen = ({addListener, navigate}) => {
         }
       } else {
         dispatch(loadingFalse());
-        errorMessage(originalError.message);
+        errorMessage(data.message);
       }
     } catch (error) {
       // Handle the error here
       console.error('An error occurred:', error);
       dispatch(loadingFalse());
-      errorMessage('An error occurred: ' + error.message);
+      errorMessage('An error occurred: ' + data.message);
     }
   };
+
+  // const screenName = {
+  //   [tripsTypes[0].id]:()=> changeMemberStatus(),
+  //   [tripsTypes[1].id]: 'Group Trips',
+  //   [tripsTypes[2].id]: 'Personal Trips',
+  // };
 
   const changeMemberStatusGroup = async (status, id, tripOnnwerID, index) => {
     const {ok, data, originalError} = await API.post(changeMemberStatusUrl, {
@@ -141,15 +186,23 @@ const useEditTripScreen = ({addListener, navigate}) => {
 
   const tripsCard = async () => {
     const {ok, data} = await API.get(tripsData);
+    console.log(
+      'data.personal_tripsdata.personal_tripsdata.personal_tripsdata.personal_trips',
+      data.personal_trips,
+    );
     if (ok) {
       setTripCardData(data.my_trips);
       setInvitedTrip(data.invitation_trips);
       setGroupTrip(data.group_trips);
+      setPerssonalTrip(data.personal_trips);
     }
   };
 
   const useEffectFuc = () => {
     // tripsCard();
+    routeName && navigate(routeName);
+    // routeName && changeMemberStatus(1,routeName.id,routeName.trip_owner.id);
+
     const event = addListener('focus', tripsCard);
     return event;
   };
@@ -168,6 +221,8 @@ const useEditTripScreen = ({addListener, navigate}) => {
     changeMemberStatus,
     groupTrips,
     changeMemberStatusGroup,
+    perssonalTrips,
+    userData,
   };
 };
 
