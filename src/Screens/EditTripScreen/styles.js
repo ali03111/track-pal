@@ -165,4 +165,7 @@ export const styles = StyleSheet.create({
   refresh: {
     marginTop: hp('6'),
   },
+  tabarTitle: {
+    fontSize: hp('1.1'),
+  },
 });

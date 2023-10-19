@@ -35,6 +35,7 @@ const InvitationComp = ({
   tripId,
   tripOwner,
   index,
+  indexNumber,
 }) => {
   return (
     <View style={styles.invitationStyle}>
@@ -76,13 +77,13 @@ const InvitationComp = ({
             title={'Decline'}
             btnStyle={styles.whiteBtn}
             textStyle={styles.whiteBtnText}
-            onPress={() => onPress(3, tripId, tripOwner.id)}
+            onPress={() => onPress(3, tripId, tripOwner.id, indexNumber)}
           />
           <ThemeButton
             title={'Accept'}
             btnStyle={styles.acceptBtn}
             textStyle={styles.btnText}
-            onPress={() => onPress(1, tripId, tripOwner.id)}
+            onPress={() => onPress(1, tripId, tripOwner.id, indexNumber)}
           />
         </View>
       )}

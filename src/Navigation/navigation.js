@@ -71,10 +71,14 @@ const StackNavigatior = () => {
               component={Screens.SyncingScreen}
             />
             <Stack.Screen name="MapScreen" component={Screens.MapScreen} />
-            {/* <Stack.Screen
-              name="InvitaitionTab"
-              component={Screens.InvitaitionTab}
-            /> */}
+            <Stack.Screen
+              name="InvitationScreen"
+              component={Screens.InvitationScreen}
+            />
+            <Stack.Screen
+              name="GeneralNotification"
+              component={Screens.GeneralNotification}
+            />
             <Stack.Screen name="SyncScreen" component={Screens.SyncScreen} />
           </>
         )}

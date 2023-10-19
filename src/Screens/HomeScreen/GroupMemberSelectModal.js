@@ -176,7 +176,10 @@ const GroupMemberSelectModal = ({
               </View>
               <ThemeButton
                 title={'Next'}
-                onPress={toggleNextModal}
+                onPress={() => {
+                  toggleNextModal();
+                  setText('');
+                }}
                 btnStyle={styles.groupBtn}
               />
             </View>

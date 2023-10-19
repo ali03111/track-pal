@@ -110,31 +110,6 @@ const formDataFunc = (url, body, imageKey, isArray) => {
     formData.append(key, value);
   });
   console.log('asdasd123', formData);
-  // Object.entries(body).forEach(([key, val]) => {
-  //   if (key == imageKey) {
-  //     isArray
-  //       ? val.forEach((res, index) => {
-  //           formData.append(imageKey, {
-  //             name: res?.fileName,
-  //             type: res?.type,
-  //             uri:
-  //               Platform.OS == 'ios'
-  //                 ? res?.uri.replace('file://', '')
-  //                 : res?.uri,
-  //           });
-  //         })
-  //       : formData.append(imageKey, {
-  //           name: body[imageKey]?.fileName,
-  //           type: body[imageKey]?.type,
-  //           uri:
-  //             Platform.OS == 'ios'
-  //               ? body[imageKey]?.uri.replace('file://', '')
-  //               : body[imageKey]?.uri,
-  //         });
-  //   } else {
-  //     formData.append(key, val);
-  //   }
-  // });
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,

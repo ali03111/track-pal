@@ -20,7 +20,6 @@ import API from '../../Utils/helperFunc';
 const useMapScreen = ({navigate}, {params}) => {
   const {item} = params.params;
   var distance = 0;
-
   const [allMember, setAllMembers] = useState([]);
 
   const log = JSON.parse(item.end_destination);
@@ -47,7 +46,6 @@ const useMapScreen = ({navigate}, {params}) => {
   );
   const {getState} = useReduxStore();
   const {userData} = getState('Auth');
-  console.log('kiloMeterRef.currentkiloMeterRef.current', kiloMeterRef.current);
 
   const getMembers = async () => {
     const {ok, data} = await getFirebaseData({
@@ -55,7 +53,7 @@ const useMapScreen = ({navigate}, {params}) => {
       tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
     });
     if (ok) {
-      if (!item.owner) {
+      if (!item.owner && item.type != 'personalTrip') {
         setAllMembers(() => data.filter(res => res.id != userData.id));
         const user = data.filter(res => res.id == userData.id);
         setCurrentUser(prev => {
@@ -75,18 +73,23 @@ const useMapScreen = ({navigate}, {params}) => {
       } else if (item.owner) {
         setAllMembers(data);
         console.log('asd asd', data);
+      } else if (item.type == 'personalTrip') {
+        const user = data.filter(res => res.id == item.trip_owner.id);
+        console.log('updateState(1, item.id, index, true);', user);
+        setCurrentUser(prev => {
+          if (user.length > 0) return user[0];
+          else return prev;
+        });
       }
     } else console.log('get all members error', data);
   };
   const [tripInfo, setTripInfo] = useState([]);
 
   const getAllData = async () => {
-    console.log('kjsdbjkfbsdkjbvkjsdbvkjsdbkvbsdkvbsdjbkvskjbd');
     const {ok, data} = await getFirebaseAllData({
       tripId: item.id,
       tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
     });
-    console.log('asdasdasddgfggbnb', data);
     if (ok) {
       setTripInfo(data);
     } else console.log('get all members error', data);
@@ -108,27 +111,51 @@ const useMapScreen = ({navigate}, {params}) => {
 
   useEffect(shareLocationFirebase, [shareLocationFirebase]);
 
+  const getKiloMeter = user => {
+    userMarkerRef.current
+      .timing(
+        {
+          latitude: user[0].coords.latitude,
+          longitude: user[0].coords.longitude,
+        },
+        100,
+      )
+      .start();
+    distance = getDistance(
+      {
+        latitude: user[0].coords.latitude,
+        longitude: user[0].coords.longitude,
+      },
+      {latitude: log.latitude, longitude: log.longitude},
+    );
+    const kiloMeter = distance / 1000;
+    console.log(
+      'kiloMeterkiloMeterkiloMeterkiloMeterkiloMeterkiloMeter',
+      kiloMeter,
+    );
+    kiloMeterRef.current = kiloMeter.toFixed(2);
+    Number(kiloMeterRef.current) <= Number('0.04') &&
+      !item.owner &&
+      notifyUser(`${item.owner ? Number(item.user_id) : item.trip_owner.id}`);
+  };
+
   const firebaseSnapOn = () => {
     const fire = reference
       .doc(`${item.owner ? Number(item.user_id) : item.trip_owner.id}`)
       .collection(`"${item.id}"`);
 
     const subscriber = fire.onSnapshot(querySnapshot => {
-      console.log('asd', querySnapshot);
       const allMsg = querySnapshot.docs.map(item => {
         return {...item._data};
       });
-      if (allMsg[0]?.member) {
+      // console.log('asdksjdbjsdbjksbbsdjbjsbdkj bkjsdbj ', allMsg);
+      if (allMsg[0]?.members) {
         const filterData = allMsg[0].members.filter(
           member => member.status == true && member?.coords != null && true,
         );
-        if (!item.owner) {
+        if (!item.owner && item.type != 'personalTrip') {
           setAllMembers(() => filterData.filter(res => res.id != userData.id));
           const user = filterData.filter(res => res.id == userData.id);
-          console.log(
-            'filterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterData',
-            filterData,
-          );
           const checkLength = Boolean(user.length > 0);
           setCurrentUser(prev => {
             if (checkLength) {
@@ -136,32 +163,22 @@ const useMapScreen = ({navigate}, {params}) => {
             } else return prev;
           });
           if (checkLength) {
-            userMarkerRef.current
-              .timing(
-                {
-                  latitude: user[0].coords.latitude,
-                  longitude: user[0].coords.longitude,
-                },
-                100,
-              )
-              .start();
-            distance = getDistance(
-              {
-                latitude: user[0].coords.latitude,
-                longitude: user[0].coords.longitude,
-              },
-              {latitude: log.latitude, longitude: log.longitude},
-            );
-            const kiloMeter = distance / 1000;
-            kiloMeterRef.current = kiloMeter.toFixed(2);
-            Number(kiloMeterRef.current) <= Number('0.04') &&
-              !item.owner &&
-              notifyUser(
-                `${item.owner ? Number(item.user_id) : item.trip_owner.id}`,
-              );
+            getKiloMeter(user);
           }
         } else if (item.owner) {
           setAllMembers(filterData);
+        } else if (item.type == 'personalTrip') {
+          const user = filterData.filter(res => res.id == item.trip_owner.id);
+          const checkLength = Boolean(user.length > 0);
+          console.log(
+            'checkLengthcheckLengthcheckLengthcheckLengthcheckLengthcheckLengthcheckLength',
+            user,
+          );
+          setCurrentUser(prev => {
+            if (user.length > 0) return user[0];
+            else return prev;
+          });
+          if (checkLength) getKiloMeter(user);
         }
       }
     });
@@ -190,6 +207,7 @@ const useMapScreen = ({navigate}, {params}) => {
     isModalVisible,
     tripInfo,
     notificationToAllMembers,
+    userData,
   };
 };
 

@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
   },
   groupMember: {
     fontSize: hp('1.8'),
-    marginTop: hp('-.4'),
+    // marginTop: hp('0.5'),
     color: Colors.gray,
   },
   externalLinks: {
@@ -175,6 +175,7 @@ export const styles = StyleSheet.create({
   creatorInfo: {
     verticalAlign: 'middle',
     justifyContent: 'center',
+    marginLeft: wp('2.5'),
   },
   locationArea: {
     flexDirection: 'row',

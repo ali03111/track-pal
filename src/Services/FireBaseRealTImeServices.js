@@ -62,6 +62,8 @@ const createTripObj = async data => {
     Auth: {userData},
   } = store.getState('Auth');
   const {tripId, members, destination, startPoint, tripType, TripName} = data;
+  // const {tripId, members, destination, startPoint, tripType, TripName, image} =
+  //   data;
   console.log('membersmembersmembersmembersmembersmembers', data);
   try {
     const membersData = members.map(res => ({
@@ -248,7 +250,7 @@ const updateLocationONfire = async data => {
 
       await fire.doc(`${tripOnnwerID}`).update(wholeObj);
       console.log(
-        'locationDatalocationDatalocationDatalocationData',
+        'locationDatalocationDatalocatsdasdasdasdasdasdasdasdasdasionDatalocationData',
         locationData,
       );
     }, 1000);
@@ -267,6 +269,8 @@ const getFirebaseData = async data => {
     const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
 
     const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+    console.log('firebaseGetfirebaseGet', firebaseGet);
 
     const wholeObj = firebaseGet.data();
 

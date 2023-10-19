@@ -27,7 +27,7 @@ import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 import {loaderView} from './MyTrips';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const GroupTrips = ({navigation, letterStyles}) => {
+const GroupTrips = ({navigation, route}) => {
   const {
     updateState,
     isTripCreated,
@@ -37,7 +37,7 @@ const GroupTrips = ({navigation, letterStyles}) => {
     invitedTrips,
     groupTrips,
     changeMemberStatusGroup,
-  } = useEditTripScreen(navigation);
+  } = useEditTripScreen(navigation, route);
 
   const renderItem = ({item, index}) => {
     var color =
@@ -54,7 +54,7 @@ const GroupTrips = ({navigation, letterStyles}) => {
             <View style={styles.groupDesc}>
               <TextComponent text={item?.name} styles={styles.groupName} />
               <TextComponent
-                text={item?.total_members + ' members'}
+                text={'Total members ' + item?.total_members}
                 styles={styles.groupMember}
               />
               <TextComponent

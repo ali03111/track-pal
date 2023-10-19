@@ -45,9 +45,9 @@ export const loaderView = () => {
   );
 };
 
-const MyTrips = ({navigation}) => {
+const MyTrips = ({navigation, route}) => {
   const {updateState, tripCardData, tripsCard, isTripCreated} =
-    useEditTripScreen(navigation);
+    useEditTripScreen(navigation, route);
 
   const renderOwnerItem = useCallback(
     ({item, index}) => {
@@ -79,7 +79,7 @@ const MyTrips = ({navigation}) => {
                   styles={styles.groupName}
                 />
                 <TextComponent
-                  text={item?.total_members + ' members'}
+                  text={'Total members ' + item?.total_members}
                   styles={styles.groupMember}
                 />
                 <TextComponent

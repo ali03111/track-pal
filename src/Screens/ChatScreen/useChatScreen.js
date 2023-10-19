@@ -52,6 +52,7 @@ const useChatScreen = ({navigate}, {params}) => {
 
   useEffect(() => {
     const fire = referenceChat.doc(`"${item.id}"`);
+    // const fire = referenceChat.doc(`"${item.id}"`).orderBy('timeStamp', 'desc');
 
     const subscriber = fire.onSnapshot(querySnapshot => {
       const allMsg = querySnapshot._data.chat.map(item => {
@@ -60,7 +61,6 @@ const useChatScreen = ({navigate}, {params}) => {
 
       if (allMsg.length > 0) {
         allMsg.sort((a, b) => a.timeStamp - b.timeStamp);
-
         setChatArry(allMsg);
       }
     });

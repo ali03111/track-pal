@@ -1,6 +1,6 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
 
-import {ChatData} from '../../Utils/localDB';
+import {ChatData, tripsTypes} from '../../Utils/localDB';
 import {Invitation} from '../../Utils/localDB';
 import {
   changeUserTripStatus,
@@ -12,27 +12,25 @@ import {updateDataFirebase} from '../../Services/FireBaseRealTImeServices';
 import {errorMessage} from '../../Config/NotificationMessage';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
+import {types} from '../../Redux/types';
 
-const useNotificationScreen = ({params}, {navigate}) => {
+const useNotificationScreen = ({params}, {navigate, addListener}) => {
   const [tripNotification, setTripNotification] = useState(null);
-  const [notifications, setNotification] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(null);
 
   const {dispatch} = useReduxStore();
+
   const getUserTrips = async () => {
     const {ok, data} = await API.get(userTrips);
     if (ok) {
+      console.log('datadatadatadatadata', data);
       setTripNotification(data);
     } else errorMessage('an error occured');
   };
-  const getUserNotification = async () => {
-    const {ok, data} = await API.get(notificationUrl);
-    console.log('setNotificationsetNotificationsetNotification', data);
-    if (ok) {
-      setNotification(data);
-    } else errorMessage('an error occured');
-  };
 
-  const tripStatus = async (status, id, tripOnnwerID) => {
+  const tripStatus = async (status, id, tripOnnwerID, indexNumber) => {
+    setCurrentIndex(indexNumber);
     const {ok, data} = await API.post(changeUserTripStatus, {status, id});
     if (ok) {
       dispatch(loadingTrue());
@@ -44,6 +42,7 @@ const useNotificationScreen = ({params}, {navigate}) => {
         if (ok) {
           setTripNotification(data.trips);
           dispatch(loadingFalse());
+          setShowAlert(!showAlert);
         } else dispatch(loadingFalse());
       } else {
         setTripNotification(data.trips);
@@ -55,14 +54,28 @@ const useNotificationScreen = ({params}, {navigate}) => {
     }
   };
 
+  const screenName = {
+    [tripsTypes[0].id]: 'Invited Trips',
+    [tripsTypes[1].id]: 'Group Trips',
+    [tripsTypes[2].id]: 'Personal Trips',
+  };
+
+  const toggleButton = () => {
+    setShowAlert(!showAlert);
+    if (showAlert) {
+      navigate('EditTripScreen', {
+        item: tripNotification[currentIndex],
+        sendTo: screenName[tripNotification[currentIndex].type],
+      });
+    } else setShowAlert(false);
+  };
+
   const useEffectFuc = () => {
-    getUserTrips();
-    getUserNotification();
-    console.log('paramsparamsparamsparamsparamsparams', params);
-    setTimeout(() => {
-      params?.sendTo && navigate(params?.sendTo);
-    }, 1000);
-    // params?.sendTo && navigate(params?.sendTo);
+    const event = addListener('focus', () => {
+      getUserTrips();
+      dispatch({type: types.ClearNotifyInvitation});
+    });
+    return event;
   };
 
   useEffect(useEffectFuc, []);
@@ -73,8 +86,9 @@ const useNotificationScreen = ({params}, {navigate}) => {
     tripNotification,
     tripStatus,
     getUserTrips,
-    notifications,
-    getUserNotification,
+    showAlert,
+    toggleButton,
+    setCurrentIndex,
   };
 };
 export default useNotificationScreen;

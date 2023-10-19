@@ -38,7 +38,7 @@ const ChatScreen = ({navigation, route}) => {
           user={userData.id == item?.userId ? true : false}
           time={item?.timeStamp}
           msg={item?.msg}
-          email={item.email}
+          email={item?.userName}
         />
       </View>
     );

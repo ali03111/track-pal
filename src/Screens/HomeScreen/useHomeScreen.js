@@ -153,6 +153,7 @@ const useHomeScreen = () => {
     console.log('asd', body.profileData);
     const {ok, data, originalError} = await API.post(CreateTripUrl, body);
     // const {ok, data} = await formDataFunc(CreateTripUrl, body, 'image');
+    console.log('sjdbvjksvbsjkvbsdbvsdbvbsdbvjsbjsd', ok);
     if (ok) {
       createTripObj({
         ...firebaseDataType[selectTripType],
@@ -186,7 +187,8 @@ const useHomeScreen = () => {
         updateState({isTripStarted: false});
       }, 1000);
     }
-    console.log('erororororororororororo', originalError);
+    // console.log('erororororororororororo', originalError);
+    dispatch(loadingFalse());
 
     console.log('asdasdasdurl', CreateTripUrl);
     console.log('asdasdasd', body);

@@ -87,6 +87,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    console.log(
+      'isLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLogin',
+      isLogin,
+    );
     /* It's a function that registers the device to receive push notifications. */
     if (isLogin)
       setTimeout(() => {
@@ -104,9 +108,8 @@ const App = () => {
 
   const onOpenNotification = notify => {
     const screenRoute = JSON.parse(notify.data.payload);
-    NavigationService.navigate('NotificationTabsScreen', {
-      sendTo: screenRoute.route,
-    });
+    console.log('kjasdbchjsvdchvshdcsd', screenRoute);
+    NavigationService.navigate(screenRoute.route);
   };
 
   const time = () => {

@@ -9,10 +9,18 @@ import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import CustomHeader from '../../Components/Header';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {loaderView} from '../GeneralNotificationScreen';
+import {AlertDesign} from '../../Components/AlertDesign';
 
 const InvitationTab = ({route, navigation}) => {
-  const {Invitation, tripNotification, tripStatus, getUserTrips} =
-    useInvitaionScreen(route, navigation);
+  const {
+    Invitation,
+    tripNotification,
+    tripStatus,
+    getUserTrips,
+    showAlert,
+    toggleButton,
+    setCurrentIndex,
+  } = useInvitaionScreen(route, navigation);
   const renderItem = useCallback(({item, index}) => {
     var color =
       index.toString().length === 1 ? index : index.toString().split('').pop();
@@ -31,6 +39,7 @@ const InvitationTab = ({route, navigation}) => {
           onPress={tripStatus}
           tripOwner={item?.trip_owner}
           index={color}
+          indexNumber={index}
         />
       </View>
     );
@@ -53,6 +62,14 @@ const InvitationTab = ({route, navigation}) => {
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
         backTextStyle={styles.back}
+      />
+      <AlertDesign
+        isVisible={showAlert}
+        message={'Want to start trip now?'}
+        confirmText={'Start Trip'}
+        cancelText={'Not Now!'}
+        onCancel={toggleButton}
+        onConfirm={toggleButton}
       />
       <View style={{...noData}}>
         {tripNotification == null && (

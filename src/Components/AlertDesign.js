@@ -11,6 +11,7 @@ export const AlertDesign = ({
   confirmText,
   onConfirm,
   onCancel,
+  cancelText,
 }) => {
   return (
     <AwesomeAlert
@@ -22,7 +23,7 @@ export const AlertDesign = ({
       closeOnHardwareBackPress={false}
       showCancelButton={true}
       showConfirmButton={true}
-      cancelText="Cancel"
+      cancelText={cancelText ?? 'Cancel'}
       confirmText={confirmText}
       confirmButtonColor="rgba(234, 67, 53, 1)"
       titleStyle={styles.modalTitle}
