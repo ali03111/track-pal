@@ -298,3 +298,141 @@ export const frequentTrips = [
     image: DemoProfileImage5,
   },
 ];
+
+export const msgs = [
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+    userEmail: 'abc@gmail.com',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+    userEmail: 'abc@gmail.com',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing lines in.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+    userEmail: 'abc@gmail.com',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing lines in.',
+    time: '3:15 PM',
+  },
+  {
+    user: 'sender',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dummy text of the printing.',
+    time: '3:15 PM',
+    userEmail: 'abc@gmail.com',
+  },
+  {
+    user: 'reciever',
+    name: 'William James',
+    msg: 'Lorem Ipsum is simply dumm',
+    time: '3:15 PM',
+  },
+];
+
+export const trips = [
+  {
+    tripProfile: DemoProfileImage1,
+    tripName: 'Business trip',
+    member: '15 members',
+    status: 'Active',
+  },
+  {
+    tripProfile: DemoProfileImage2,
+    tripName: 'Outings',
+    member: '10 members',
+    status: 'Inactive',
+  },
+  {
+    tripProfile: DemoProfileImage3,
+    tripName: 'Home',
+    member: '5 members',
+    status: 'Active',
+  },
+  {
+    tripProfile: DemoProfileImage1,
+    tripName: 'Business trip',
+    member: '15 members',
+    status: 'Active',
+  },
+  {
+    tripProfile: DemoProfileImage2,
+    tripName: 'Outings',
+    member: '10 members',
+    status: 'Inactive',
+  },
+  {
+    tripProfile: DemoProfileImage3,
+    tripName: 'Home',
+    member: '5 members',
+    status: 'Active',
+  },
+];
+
+export const tripsTypes = [
+  {
+    id: 'myTrip',
+    des: 'Track where your loved ones are - keep them safe!',
+    title: 'Keep A Track',
+    details:
+      'Stay in the loop during your events or trips with our Real-Time Location Sharing feature. As the host, you can effortlessly keep track of all participants who have accepted the invitation.',
+  },
+  {
+    id: 'groupTrip',
+    des: 'Track each other across every mile by location sharing',
+    title: 'Mutual Tracking',
+    details:
+      "Whether it's a meetup, adventure, or any group activity, stay connected and aware of each other's movements. Enjoy a seamless and secure tracking experience that fosters teamwork and ensures safety throughout your shared journey.",
+  },
+  {
+    id: 'personalTrip',
+    des: 'Stay safe, stay connected! Share your real-time location with just a tap.',
+    title: 'Share Location',
+    details:
+      'Easily connect with your loved ones. As the host, you can share your real-time location with friends and family, allowing them to track you throughout your journey.',
+  },
+];
+
+export const tripProfileColors = [
+  '#FFD700',
+  '#DAA520',
+  '#FF7F50',
+  '#9ACD32',
+  '#90EE90',
+  '#66CDAA',
+  '#00FFFF',
+  '#48D1CC',
+  '#6495ED',
+  '#4169E1',
+  '#00BFFF',
+];

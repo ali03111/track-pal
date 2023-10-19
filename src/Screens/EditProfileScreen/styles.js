@@ -71,10 +71,16 @@ export const styles = StyleSheet.create({
   passIcon: {
     flex: 0.06,
     resizeMode: 'contain',
+    width: wp('1'),
+    height: hp('2.5'),
+  },
+  ProfileImage: {
+    // width: wp('20'),
+    height: hp('15'),
+    aspectRatio: 1,
   },
   profileEditImg: {
     alignSelf: 'center',
-    marginTop: hp('-9'),
     borderRadius: Math.round(
       Dimensions.get('window').width + Dimensions.get('window').height,
     ),
@@ -83,12 +89,11 @@ export const styles = StyleSheet.create({
   },
   userProfileImg: {
     backgroundColor: Colors.white,
-    position: 'relative',
   },
   addImageIcon: {
     alignSelf: 'center',
-    position: 'absolute',
-    left: wp('55%'),
-    bottom: hp('0'),
+    width: wp('14'),
+    height: hp('8'),
+    resizeMode: 'contain',
   },
 });

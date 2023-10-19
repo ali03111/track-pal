@@ -28,11 +28,12 @@ export const styles = StyleSheet.create({
   logInBorder: {
     borderBottomWidth: 1,
     height: 0,
-    flex: 1,
+    flex: 0.7,
+    backgroundColor: 'black',
   },
   logInText: {
     flex: 1,
-    fontSize: hp('2.1'),
+    fontSize: hp('2'),
     color: Colors.black,
     paddingHorizontal: wp('4'),
     justifyContent: 'center',
@@ -61,6 +62,7 @@ export const styles = StyleSheet.create({
   },
   signUpTextMain: {
     flexDirection: 'row',
+    paddingBottom: hp('3'),
     justifyContent: 'center',
   },
   signUpText: {

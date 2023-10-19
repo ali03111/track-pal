@@ -13,7 +13,7 @@ const passwordSchema = {
   confirm_password: yup
     .string()
     .required('Confirm password is required')
-    .oneOf([yup.ref('password'), null], 'Passwords must match'),
+    .oneOf([yup.ref('password'), null], 'Password must match'),
 };
 const number = yup.object().shape({
   number: yup.string().required('Please Enter your number'),
@@ -129,7 +129,7 @@ const editProfileScheme = yup.object().shape({
     .matches(/^[A-Za-z ]*$/, 'Please Enter valid name')
     .min(2, 'Name must be atleast 2 characters')
     .max(50, 'Name must be of 50 characters'),
-  number: yup.string().required('Please enter your number'),
+  phone: yup.string().required('Please enter your number'),
   email: yup
     .string()
     .email('Email must be valid')

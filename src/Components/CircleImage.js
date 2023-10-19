@@ -5,7 +5,7 @@ export const CircleImage = props => {
   const {styles} = props;
   return (
     <Image
-      source={props?.image}
+      source={props?.uri ? {uri: props?.image} : props?.image}
       style={{
         borderRadius: Math.round(
           Dimensions.get('window').width + Dimensions.get('window').height,

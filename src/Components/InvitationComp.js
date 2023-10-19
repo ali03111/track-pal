@@ -16,6 +16,11 @@ import ThemeButton from './ThemeButton';
 import TransparentBtn from './TransparentBtn';
 import {checked, uncheck} from '../Assets';
 import GradientText from './GradientText';
+import {TextComponentTripInvite} from './TextComponentTripInvite';
+import moment from 'moment';
+import {tripProfileColors} from '../Utils/localDB';
+import {getSingleCharacter} from '../Utils/globalFunctions';
+import {FirstCharacterComponent} from './FirstCharacterComponent';
 
 const InvitationComp = ({
   image,
@@ -26,41 +31,62 @@ const InvitationComp = ({
   messages,
   status,
   onPress,
+  letterStyles,
+  tripId,
+  tripOwner,
+  index,
 }) => {
   return (
     <View style={styles.invitationStyle}>
-      <Touchable style={styles.notificationMian} onPress={onPress}>
+      <View style={styles.notificationMian}>
         <View style={styles.mainBannerImg}>
-          <CircleImage image={image} />
+          {image ? (
+            <CircleImage image={image} />
+          ) : (
+            <FirstCharacterComponent
+              indexNumber={index}
+              text={getSingleCharacter(name)}
+            />
+          )}
           {/* <CircleImageComp styles={styles.bannerImg}  image={image} /> */}
         </View>
         <View style={styles.nameDescriptionMain}>
           <View style={styles.namestyle}>
             <TextComponent text={name} styles={styles.username} />
-            <TextComponent text={time} styles={styles.timing} />
+            <TextComponent
+              text={moment(time).calendar()}
+              styles={styles.timing}
+            />
           </View>
           <View style={styles.descmain}>
-            <TextComponent text={description} styles={styles.description} />
-            <TextComponent text={' '} />
-            <TextComponent text={groupName} styles={styles.groupName} />
+            <TextComponentTripInvite
+              text={name + ' has invited you to become a member of '}
+              tripName={groupName + ' Trip'}
+              styles={styles.description}
+              tripStyles={styles.groupName}
+            />
+            {/* <TextComponent text={' '} /> */}
+            {/* <TextComponent text={groupName} styles={styles.groupName} /> */}
           </View>
         </View>
-      </Touchable>
-      {status == 'pending' && (
+      </View>
+      {status == '0' && (
         <View style={styles.invitationBtn}>
           <TransparentBtn
             title={'Decline'}
             btnStyle={styles.whiteBtn}
             textStyle={styles.whiteBtnText}
+            onPress={() => onPress(3, tripId, tripOwner.id)}
           />
           <ThemeButton
             title={'Accept'}
             btnStyle={styles.acceptBtn}
             textStyle={styles.btnText}
+            onPress={() => onPress(1, tripId, tripOwner.id)}
           />
         </View>
       )}
-      {status == 'accepted' && (
+      {status == '1' && (
         <View style={styles.status}>
           <Image source={checked} style={styles.statusImg} />
           <GradientText style={styles.acceptText} GradientAlignment={0.7}>
@@ -69,7 +95,7 @@ const InvitationComp = ({
         </View>
       )}
 
-      {status == 'rejected' && (
+      {status == '3' && (
         <View style={styles.status}>
           <Image source={uncheck} style={styles.statusImg} />
           <TextComponent
@@ -118,6 +144,8 @@ const styles = StyleSheet.create({
   description: {
     fontSize: Platform.OS == 'ios' ? hp('1.5') : hp('1.8'),
     color: Colors.gray,
+    // backgroundColor: 'red',
+    display: 'flex',
   },
 
   timing: {
@@ -161,7 +189,7 @@ const styles = StyleSheet.create({
     marginLeft: wp('0'),
   },
   acceptText: {
-    fontSize: hp('2.1'),
+    fontSize: hp('2'),
     fontWeight: '500',
   },
   status: {
@@ -176,6 +204,12 @@ const styles = StyleSheet.create({
   statusRejectText: {
     fontSize: hp('2.1'),
     fontWeight: '500',
+  },
+
+  letterSt: {
+    color: Colors.white,
+    fontSize: hp('3'),
+    fontWeight: '700',
   },
 });
 

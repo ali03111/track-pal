@@ -18,12 +18,27 @@ import CustomHeader from '../../Components/Header';
 import {TextComponent} from '../../Components/TextComponent';
 import {Touchable} from '../../Components/Touchable';
 import {CircleImage} from '../../Components/CircleImage';
+import KeyBoardWrapper from '../../Components/KeyboardWrapper';
+import {imageUrl} from '../../Utils/Urls';
+import BlurImage from '../../Components/BlurImage';
+import {hp, wp} from '../../Config/responsive';
 
 const EditProfileScreen = ({navigation}) => {
-  const {handleSubmit, errors, reset, control, getValues, goBack} =
-    useResetPassword(navigation);
+  const {
+    handleSubmit,
+    errors,
+    reset,
+    control,
+    getValues,
+    goBack,
+    navigateToReset,
+    updateProfileFunction,
+    uploadFromGalary,
+    profileData,
+    userData,
+  } = useResetPassword(navigation);
   return (
-    <>
+    <KeyBoardWrapper>
       <ImageBackground source={editProfileBgNew} resizeMode="cover">
         <CustomHeader
           arrowBackIcon={whiteArrowBack}
@@ -32,11 +47,36 @@ const EditProfileScreen = ({navigation}) => {
           style={styles.headerStyle}
           titleStyle={styles.hdTitle}
           backTextStyle={styles.back}
+          goBack={goBack}
         />
       </ImageBackground>
       <View style={styles.userProfileImg}>
-        <CircleImage image={profleImg} styles={styles.profileEditImg} />
-        <Touchable Opacity={0.8}>
+        {/* <CircleImage
+          uri={profileData ? false : true}
+          image={profileData || imageUrl(userData?.profile_image)}
+          styles={styles.profileEditImg}
+        /> */}
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: -65,
+          }}>
+          <BlurImage
+            blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
+            radius={75}
+            styles={styles.ProfileImage}
+            uri={profileData?.uri || imageUrl(userData.profile_image)}
+          />
+        </View>
+        <Touchable
+          onPress={uploadFromGalary}
+          style={{
+            position: 'absolute',
+            left: wp('55%'),
+            bottom: hp('0'),
+          }}
+          Opacity={0.8}>
           <Image source={addProfileImage} style={styles.addImageIcon} />
         </Touchable>
       </View>
@@ -51,13 +91,15 @@ const EditProfileScreen = ({navigation}) => {
             control,
             getValues,
             placeholder: 'Full Name',
-            defaultValue: 'Jhon Doe',
+            // defaultValue: 'Jhon Doe',
+            defaultValue: userData?.name,
+
             textStyle: styles.inputStyle,
             viewStyle: styles.mainStyle,
           }}
         />
         <TextComponent text={'Change Password'} styles={styles.inputTitle} />
-        <Touchable style={styles.passBtn}>
+        <Touchable onPress={navigateToReset} style={styles.passBtn}>
           <Text style={styles.passText}>************</Text>
           <Image style={styles.passIcon} source={arrowRightIcon} />
         </Touchable>
@@ -71,29 +113,38 @@ const EditProfileScreen = ({navigation}) => {
             control,
             getValues,
             placeholder: 'Email',
-            defaultValue: 'jhondoe@gmail.com',
+            // defaultValue: 'jhondoe@gmail.com',
+            defaultValue: userData?.email,
+
             textStyle: styles.inputStyle,
             viewStyle: styles.mainStyle,
+            editable: false,
           }}
         />
         <TextComponent text={'Phone Number'} styles={styles.inputTitle} />
         <InputComponent
           {...{
-            name: 'number',
+            name: 'phone',
             handleSubmit,
             errors,
             reset,
             control,
             getValues,
             placeholder: 'Phone Number',
-            defaultValue: '+12 3456 789',
+            // defaultValue: '+12 3456 789',
+            defaultValue: userData?.phone,
             textStyle: styles.inputStyle,
             viewStyle: styles.mainStyle,
           }}
         />
-        <ThemeButton title={'Save'} btnStyle={styles.buttonStyle} />
+        {console.log('userData?.phone ', userData?.phone)}
+        <ThemeButton
+          onPress={handleSubmit(updateProfileFunction)}
+          title={'Save'}
+          btnStyle={styles.buttonStyle}
+        />
       </View>
-    </>
+    </KeyBoardWrapper>
   );
 };
 export default memo(EditProfileScreen);

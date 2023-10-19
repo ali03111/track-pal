@@ -17,6 +17,7 @@ const CustomHeader = ({
   goBack,
   backTextStyle,
   titleStyle,
+  numberOfLines,
 }) => {
   return (
     <View style={[styles.TopHeader, {...style}]}>
@@ -38,6 +39,7 @@ const CustomHeader = ({
       <View style={styles.HeaderCenter}>
         <TextComponent
           text={headerTitle}
+          numberOfLines={numberOfLines ?? 1}
           styles={{...styles.HeaderTitle, ...titleStyle}}
         />
       </View>
@@ -62,9 +64,10 @@ const CustomHeader = ({
 const styles = StyleSheet.create({
   TopHeader: {
     flexDirection: 'row',
-    marginTop: Platform.OS == 'ios' ? hp('5') : hp('3'),
+    marginTop: Platform.OS == 'ios' ? hp('6') : hp('3'),
     paddingHorizontal: wp('5'),
     paddingBottom: hp('3'),
+    // backgroundColor: 'white',
   },
 
   backMain: {
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
   },
   backBtn: {
     marginLeft: wp('3'),
-    color: Colors.gray2,
+    color: Colors.gray,
     fontSize: hp('2'),
   },
   HeaderTitle: {

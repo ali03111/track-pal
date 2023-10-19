@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ScrollView} from 'react-native';
 import {TextComponent} from '../../Components/TextComponent';
 import {styles} from './styles';
 import {globalHeading} from '../../Config/globalStyles';
@@ -25,9 +25,13 @@ const RegisterScreen = ({navigation}) => {
     rememberValue,
     remember,
     goBack,
+    loginNav,
+    signUpButton,
   } = useRegister(navigation);
   return (
-    <View style={styles.logInMain}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.logInMain}>
       <Touchable style={styles.backMain} onPress={goBack}>
         <Image
           source={arrowBack}
@@ -102,7 +106,7 @@ const RegisterScreen = ({navigation}) => {
       />
       <InputComponent
         {...{
-          name: 'confirm password',
+          name: 'confirm_password',
           handleSubmit,
           errors,
           reset,
@@ -115,14 +119,20 @@ const RegisterScreen = ({navigation}) => {
           inputIconStyle: styles.lockstyle,
         }}
       />
-      <ThemeButton title={'Sign up'} btnStyle={styles.buttonStyle} />
+      <ThemeButton
+        title={'Sign up'}
+        onPress={handleSubmit(signUpButton)}
+        btnStyle={styles.buttonStyle}
+      />
       <View style={styles.signUpTextMain}>
         <TextComponent text={'Already have an account?  '} />
-        <GradientText style={styles.signUpText} GradientAlignment={0.8}>
-          Log In
-        </GradientText>
+        <Touchable onPress={loginNav}>
+          <GradientText style={styles.signUpText} GradientAlignment={0.8}>
+            Log In
+          </GradientText>
+        </Touchable>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 export default memo(RegisterScreen);
