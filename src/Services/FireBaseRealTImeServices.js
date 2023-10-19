@@ -15,7 +15,7 @@ import {
   request,
   openSettings,
 } from 'react-native-permissions';
-import {Alert, Platform} from 'react-native';
+import {Alert, PermissionsAndroid, Platform} from 'react-native';
 import API from '../Utils/helperFunc';
 import {alertTrue} from '../Redux/Action/isAlertAction';
 
@@ -31,6 +31,16 @@ const requestPermission = async () => {
   const status = await check(perSKU);
   console.log('sssssss', status);
   // const {status} = await requestLocationAccuracy();
+  // Request permission to access geolocation if needed
+  if (Platform.OS === 'android') {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    );
+    if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+      throw new Error('Location permission denied');
+    }
+  }
+
   if (status == 'granted') return true;
   else {
     Alert.alert(
@@ -164,6 +174,8 @@ const updateDataFirebase = async data => {
 };
 
 const getLocationName = async (latitude, longitude) => {
+  console.log('first');
+
   const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE`;
 
   // Replace "YOUR_API_KEY" with your actual Google Maps Geocoding API key
@@ -179,6 +191,16 @@ const getLocationName = async (latitude, longitude) => {
 var locationData;
 
 const getCurrentLocation = async () => {
+  console.log('first');
+  // Request permission to access geolocation if needed
+  if (Platform.OS === 'android') {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    );
+    if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+      throw new Error('Location permission denied');
+    }
+  }
   Geolocation.getCurrentPosition(async info => {
     const locationName = await getLocationName(
       info.coords.latitude,
