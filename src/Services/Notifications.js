@@ -240,7 +240,7 @@ class FCMService {
     this.onTokenRefreshListener();
     this.forgroundListener();
     this.deletedToken();
-    this.backgroundListner();
+    // this.backgroundListner();
     console.log('FCMService unRegister successfully');
   };
 }

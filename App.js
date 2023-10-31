@@ -129,10 +129,6 @@ const App = () => {
     setTimeout(function () {
       Hide_Splash_Screen();
     }, time());
-    GoogleSignin.configure({
-      webClientId:
-        '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com',
-    });
   };
 
   useEffect(useEffectFun, []);
