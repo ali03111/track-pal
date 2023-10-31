@@ -61,7 +61,7 @@ const RegisterScreen = ({navigation}) => {
           getValues,
           placeholder: 'Name',
           isImage: userIcon,
-          defaultValue: '',
+          defaultValue: __DEV__ ? 'userHund' : '',
         }}
       />
       <InputComponent
@@ -74,7 +74,7 @@ const RegisterScreen = ({navigation}) => {
           getValues,
           placeholder: 'Email',
           isImage: email,
-          defaultValue: '',
+          defaultValue: __DEV__ ? 'user100@gmail.com' : '',
         }}
       />
       <InputComponent
@@ -87,7 +87,7 @@ const RegisterScreen = ({navigation}) => {
           getValues,
           placeholder: 'Contact Number',
           isImage: phone,
-          defaultValue: '',
+          defaultValue: __DEV__ ? '1546585458' : '',
         }}
       />
       <InputComponent
@@ -103,6 +103,7 @@ const RegisterScreen = ({navigation}) => {
           defaultValue: '',
           isSecure: true,
           inputIconStyle: styles.lockstyle,
+          defaultValue: __DEV__ ? 'Test@123' : '',
         }}
       />
       <InputComponent
@@ -118,6 +119,7 @@ const RegisterScreen = ({navigation}) => {
           defaultValue: '',
           isSecure: true,
           inputIconStyle: styles.lockstyle,
+          defaultValue: __DEV__ ? 'Test@123' : '',
         }}
       />
       <ThemeButton

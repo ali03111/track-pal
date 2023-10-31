@@ -1,7 +1,14 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
+import Geolocationios from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import {frequentTrips, tripsTypes} from '../../Utils/localDB';
-import {BackHandler, Keyboard} from 'react-native';
+import {
+  BackHandler,
+  Keyboard,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import {errorMessage} from '../../Config/NotificationMessage';
 import API, {formDataFunc} from '../../Utils/helperFunc';
 import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
@@ -80,22 +87,56 @@ const useHomeScreen = () => {
   };
   // info?.coords?.latitude, info?.coords?.longitude
 
-  const locationFun = stateName => {
-    Geolocation.getCurrentPosition(async info => {
-      const locationName = await getLocationName(
-        info.coords.latitude,
-        info.coords.longitude,
+  const locationFun = async stateName => {
+    console.log('first');
+
+    // Request permission to access geolocation if needed
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       );
-      updateInputState({
-        [stateName]: {
-          coords: {
-            latitude: info.coords.latitude,
-            longitude: info.coords.longitude,
+      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+        throw new Error('Location permission denied');
+      }
+    }
+
+    if (Platform.OS == 'android') {
+      Geolocation.getCurrentPosition(async info => {
+        console.log('sec');
+
+        const locationName = await getLocationName(
+          info.coords.latitude,
+          info.coords.longitude,
+        );
+        updateInputState({
+          [stateName]: {
+            coords: {
+              latitude: info.coords.latitude,
+              longitude: info.coords.longitude,
+            },
+            description: locationName,
           },
-          description: locationName,
-        },
+        });
       });
-    });
+    } else {
+      Geolocationios.getCurrentPosition(async info => {
+        console.log('sec');
+
+        const locationName = await getLocationName(
+          info.coords.latitude,
+          info.coords.longitude,
+        );
+        updateInputState({
+          [stateName]: {
+            coords: {
+              latitude: info.coords.latitude,
+              longitude: info.coords.longitude,
+            },
+            description: locationName,
+          },
+        });
+      });
+    }
   };
 
   const bodyKey = {
@@ -196,6 +237,8 @@ const useHomeScreen = () => {
   };
 
   const getLocationName = async (latitude, longitude) => {
+    console.log('third');
+
     const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE`;
 
     // Replace "YOUR_API_KEY" with your actual Google Maps Geocoding API key
@@ -260,6 +303,7 @@ const useHomeScreen = () => {
   };
 
   const useEffectFuc = () => {
+    console.log('redawww');
     getUser();
     locationFun(currentLocation);
   };
