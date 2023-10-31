@@ -44,12 +44,18 @@ const onNotificationNotiFee = async (data, appState) => {
 
   const isInvitation = Boolean(notificationData.route == 'InvitationScreen');
 
-  console.log('data=>>>>>>>', notificationData.route);
+  console.log('data=>>>>>dsdfsdfsdfdsfsdfds>>', notificationData);
+
+  const storeObj = {
+    InvitationScreen: types.addNotiInvitation,
+    GeneralScreen: types.addNotification,
+    MapAndChatScreen: types.addChatNoification,
+  };
 
   isRoute &&
     store.dispatch({
-      type: isInvitation ? types.addNotiInvitation : types.addNotification,
-      payload: notificationData.payload,
+      type: storeObj[notificationData.route],
+      payload: notificationData,
     });
   // navigation.navigate('Invitation');
   // const isActive = Boolean(NavigationService.ref && appState == 'active');
@@ -64,6 +70,27 @@ const onNotificationNotiFee = async (data, appState) => {
   //   NavigationService.navigate('Congratulations', notificationObj || {});
   // }
 };
+
+// Register background handler
+// backgroundListner = () => {
+// messaging().setBackgroundMessageHandler(async remoteMessage => {
+//   console.log('Message handled in the background!', remoteMessage);
+
+//   const notificationData = JSON.parse(remoteMessage.data.payload);
+
+//   const isRoute = Boolean(notificationData.is_route);
+
+//   const isInvitation = Boolean(notificationData.route == 'InvitationScreen');
+
+//   isRoute &&
+//     store.dispatch({
+//       type: isInvitation ? types.addNotiInvitation : types.addNotification,
+//       payload: notificationData,
+//     });
+
+//   // store.dispatch(setNotificationLength(remoteMessage));
+// });
+// };
 
 class FCMService {
   register = (onRegister, onOpenNotification, appState) => {
@@ -173,9 +200,10 @@ class FCMService {
       async ({type, detail}) => {
         const {notification} = detail;
         console.log(
-          'notificationnotificationnotificationnotificationnotificationnotification',
+          'notificationnotificationnotificationnotificatioasdasdasdasdasdasnnotificationnotification',
           notification,
         );
+
         const isPressed = Boolean(
           type === EventType.ACTION_PRESS || type == EventType.PRESS,
         );
@@ -190,6 +218,13 @@ class FCMService {
           'notificationnotificationnotificationnoasdasdastificationnotificationnotification',
           notification,
         );
+        let searchTerm = /invitation/;
+        let findWord = Boolean(searchTerm.test(notification.body));
+        findWord &&
+          store.dispatch({
+            type: findWord ? types.addNotiInvitation : types.addNotification,
+            payload: notification,
+          });
         const isPressed = Boolean(
           type === EventType.ACTION_PRESS || type == EventType.PRESS,
         );
@@ -204,8 +239,8 @@ class FCMService {
     this.notificationOpenedListener();
     this.onTokenRefreshListener();
     this.forgroundListener();
-    this.backgroundListner();
     this.deletedToken();
+    this.backgroundListner();
     console.log('FCMService unRegister successfully');
   };
 }

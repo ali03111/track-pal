@@ -7,7 +7,7 @@ const initial_state = {
 const actionMap = {
   [types.addNotiInvitation]: (state, act) => {
     return {
-      inviNotify: [act.payload],
+      inviNotify: [...state.inviNotify, act.payload],
     };
   },
   [types.ClearNotifyInvitation]: (state, act) => ({

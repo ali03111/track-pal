@@ -1,5 +1,12 @@
 import {create} from 'apisauce';
-import {baseURL, fcmToken, getAllUser, notifyUserUrl} from './Urls';
+import {
+  NotificationStatus,
+  baseURL,
+  fcmToken,
+  getAllUser,
+  notifyUserUrl,
+  sendChatNotification,
+} from './Urls';
 import {store} from '../Redux/Reducer';
 import {loadingFalse, loadingTrue} from '../Redux/Action/isloadingAction';
 import {Platform} from 'react-native';
@@ -12,7 +19,13 @@ const API = create({
   //   timeoutErrorMessage: 'Please try Again...',
 });
 
-const hideLoaderAPIs = [notifyUserUrl, getAllUser, fcmToken];
+const hideLoaderAPIs = [
+  notifyUserUrl,
+  getAllUser,
+  fcmToken,
+  NotificationStatus,
+  sendChatNotification,
+];
 // const hideLoaderAPIs = ['/playcount', '/playlist', '/home-content'];
 
 API.addRequestTransform(config => {
@@ -86,13 +99,7 @@ API.get = async (url, params, axiosConfig) => {
 // export {formDataFunc};
 const formDataFunc = (url, body, imageKey, isArray) => {
   const {Auth} = store.getState();
-  console.log(
-    'bjdv dv hj hj dhjs dshj bdh∫√ dhjksbvsdhj',
-    url,
-    body,
-    imageKey,
-    isArray,
-  );
+
   var myHeaders = new Headers();
   myHeaders.append('Accept', 'application/json');
   myHeaders.append('Authorization', `Bearer ${Auth.token}`);

@@ -9,11 +9,16 @@ import {
 } from '../../Services/FireBaseRealTImeServices';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {Platform} from 'react-native';
+import API from '../../Utils/helperFunc';
+import {NotificationStatus, sendChatNotification} from '../../Utils/Urls';
+import {types} from '../../Redux/types';
 
 const useChatScreen = ({navigate}, {params}) => {
   const {item} = params.params;
 
-  const {getState} = useReduxStore();
+  const {getState, dispatch} = useReduxStore();
+
+  let regexp = /^(?![\s\b]).*/;
 
   const {userData} = getState('Auth');
   const [chatArry, setChatArry] = useState([]);
@@ -37,11 +42,15 @@ const useChatScreen = ({navigate}, {params}) => {
     onChangeText('');
 
     console.log('sdvns dhvsdjhvbsd', item);
-    const {data} = await sendDataToFIrebase({
+    await sendDataToFIrebase({
       tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
       tripId: item.id,
       msgObj: msgBoj,
       userData,
+    });
+    const {data} = await API.post(sendChatNotification, {
+      trip_id: item.id,
+      message: text,
     });
     console.log('message DAta', data);
   };
@@ -49,6 +58,25 @@ const useChatScreen = ({navigate}, {params}) => {
   useEffect(() => {
     handleAutoScroll();
   }, [chatArry]);
+
+  /**
+   * The function `notificationStatusFunc` is an asynchronous function that sends a POST request to the
+   * API with a notification status.
+   */
+  const notificationStatusFunc = async status => {
+    await API.post(NotificationStatus, {
+      notification_status: status,
+    });
+  };
+
+  useEffect(() => {
+    dispatch({
+      type: types.clearNofityObjByID,
+      payload: item.id,
+    });
+    notificationStatusFunc('false');
+    return () => notificationStatusFunc('true');
+  }, []);
 
   useEffect(() => {
     const fire = referenceChat.doc(`"${item.id}"`);
@@ -75,6 +103,7 @@ const useChatScreen = ({navigate}, {params}) => {
     sendDataToFIrebase: onSend,
     handleAutoScroll,
     scrollViewRef,
+    regexp,
   };
 };
 export default useChatScreen;

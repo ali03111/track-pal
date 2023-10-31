@@ -108,7 +108,6 @@ const App = () => {
 
   const onOpenNotification = notify => {
     const screenRoute = JSON.parse(notify.data.payload);
-    console.log('kjasdbchjsvdchvshdcsd', screenRoute);
     NavigationService.navigate(screenRoute.route);
   };
 

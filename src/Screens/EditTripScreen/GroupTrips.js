@@ -11,7 +11,7 @@ import {
 import {styles} from './styles';
 import CustomHeader from '../../Components/Header';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {cardediticon, leftArrow, trash} from '../../Assets';
+import {cardediticon, greenCircle, leftArrow, trash} from '../../Assets';
 import {CircleImage} from '../../Components/CircleImage';
 import {TextComponent} from '../../Components/TextComponent';
 import ThemeButton from '../../Components/ThemeButton';
@@ -37,6 +37,7 @@ const GroupTrips = ({navigation, route}) => {
     invitedTrips,
     groupTrips,
     changeMemberStatusGroup,
+    checkLenght,
   } = useEditTripScreen(navigation, route);
 
   const renderItem = ({item, index}) => {
@@ -53,14 +54,32 @@ const GroupTrips = ({navigation, route}) => {
             )}
             <View style={styles.groupDesc}>
               <TextComponent text={item?.name} styles={styles.groupName} />
-              <TextComponent
-                text={'Total members ' + item?.total_members}
-                styles={styles.groupMember}
-              />
-              <TextComponent
-                text={item?.status}
-                styles={styles.groupActive(item?.status)}
-              />
+              <View style={styles.circleView}>
+                {item?.status == 'Active' && (
+                  <Image
+                    source={greenCircle}
+                    style={{width: wp('2')}}
+                    resizeMode="contain"
+                  />
+                )}
+                <TextComponent
+                  text={item?.status}
+                  styles={styles.groupActive(item?.status)}
+                />
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <TextComponent
+                  text={item?.total_members + ' members'}
+                  styles={styles.groupMember}
+                />
+                {checkLenght(item.id) > 0 && (
+                  <TextComponent
+                    text={` ( ${checkLenght(item.id)} messages )`}
+                    // text={'Total members ' + item?.total_members}
+                    styles={styles.messageNumber}
+                  />
+                )}
+              </View>
             </View>
           </View>
           {item?.owner_running_status == 0 ||

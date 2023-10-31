@@ -10,6 +10,8 @@ import {Colors} from '../../Theme/Variables';
 import LinearGradient from 'react-native-linear-gradient';
 import {hp, wp} from '../../Config/responsive';
 import * as Screens from '../index';
+import useReduxStore from '../../Hooks/UseReduxStore';
+import useMapAndChatScreen from './useMapAndChatScreen';
 
 function MyTabBar({state, descriptors, navigation}) {
   return (
@@ -75,7 +77,12 @@ const Tab = createMaterialTopTabNavigator();
 // const Tab = createBottomTabNavigator();
 
 const MapAndChatScreen = ({navigation, route}) => {
-  console.log('{route?.params?.item?', route?.params?.item);
+  console.log(
+    '{route?.params?.asdasdasdasdasdasdasdasitem?',
+    route?.params?.item,
+  );
+  const {checkLenght} = useMapAndChatScreen(route?.params?.item);
+
   return (
     <View style={styles.tabsMain}>
       <CustomHeader
@@ -100,7 +107,7 @@ const MapAndChatScreen = ({navigation, route}) => {
           initialParams={route}
         />
         <Tab.Screen
-          name="Chat"
+          name={`Chat ( ${checkLenght} )`}
           component={Screens.ChatScreen}
           options={{headerShown: false}}
           initialParams={route}

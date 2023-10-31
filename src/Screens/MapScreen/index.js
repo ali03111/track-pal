@@ -25,6 +25,7 @@ import {Colors} from '../../Theme/Variables';
 // import ImageAsset from 'lottie-react-native/lib/js/components/ImageAsset';
 import {hp, wp} from '../../Config/responsive';
 import InfoModal from './InfoModal';
+import {imageURL, imageUrl} from '../../Utils/Urls';
 
 const MapScreen = ({route, navigation}) => {
   const {
@@ -71,12 +72,23 @@ const MapScreen = ({route, navigation}) => {
             longitudeDelta: laongituteDalta,
           }}>
           {res?.details.profile_image ? (
-            <CircleImage
-              uri={true}
-              image={res?.details.profile_image}
-              // style={styles.pImage}
-              styles={styles.pImage}
-            />
+            <>
+              <Lottie
+                source={userWithOutPicLottie}
+                autoPlay
+                loop
+                style={{height: hp('8'), width: wp('4')}}
+                resizeMode="contain"
+              />
+              <View style={styles.pView}>
+                <CircleImage
+                  uri={true}
+                  image={imageUrl(res?.details.profile_image)}
+                  // style={styles.pImage}
+                  styles={styles.pImage}
+                />
+              </View>
+            </>
           ) : (
             <FirstCharacterComponent
               text={res?.details.name}
@@ -84,13 +96,15 @@ const MapScreen = ({route, navigation}) => {
               textStyle={styles.firstTextStyle}
             />
           )}
-          <Lottie
-            source={userWithOutPicLottie}
-            autoPlay
-            loop
-            style={{height: hp('8'), width: wp('4')}}
-            resizeMode="contain"
-          />
+          {res?.details.profile_image == null && (
+            <Lottie
+              source={userWithOutPicLottie}
+              autoPlay
+              loop
+              style={{height: hp('8'), width: wp('4')}}
+              resizeMode="contain"
+            />
+          )}
         </Marker>
       );
     },
@@ -101,7 +115,11 @@ const MapScreen = ({route, navigation}) => {
   );
   const TripNameBottom = useCallback(() => {
     return tripData.image ? (
-      <CircleImage image={tripData.image} style={styles.groupLogo} />
+      <CircleImage
+        uri={true}
+        image={imageUrl(tripData.image)}
+        styles={styles.groupLogo}
+      />
     ) : (
       <FirstCharacterComponent indexNumber={5} text={tripData.name} />
     );
@@ -140,15 +158,15 @@ const MapScreen = ({route, navigation}) => {
         </View>
         <Touchable style={styles.groupLink} onPress={notificationToAllMembers}>
           {/* <Image source={alert} style={styles.externalLinks} /> */}
-          {tripData.trip_owner.id == userData.id && (
-            <Lottie
-              style={{height: hp('8'), width: wp('4')}}
-              resizeMode="contain"
-              source={sosLottie}
-              autoPlay
-              loop
-            />
-          )}
+          {/* {tripData.trip_owner.id == userData.id && ( */}
+          <Lottie
+            style={{height: hp('8'), width: wp('4')}}
+            resizeMode="contain"
+            source={sosLottie}
+            autoPlay
+            loop
+          />
+          {/* )} */}
         </Touchable>
         <InfoModal
           {...{

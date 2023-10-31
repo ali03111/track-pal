@@ -43,7 +43,12 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
   const {dispatch, getState} = useReduxStore();
 
   const {userData} = getState('Auth');
+  const {chatNotify} = getState('chatNotify');
 
+  const checkLenght = id => {
+    let givenID = JSON.stringify(id);
+    return chatNotify[givenID] ? chatNotify[givenID].length : 0;
+  };
   const updateState = async (status, id, index, ownerStatus) => {
     const y = ownerStatus
       ? {...perssonalTrips[index]}
@@ -198,6 +203,13 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
     }
   };
 
+  useEffect(() => {
+    console.log(
+      'sdsdsddchatNotifychatNotifychatNotifychatNotifychatNotifychatNotifychatNotify',
+      chatNotify,
+    );
+  }, [chatNotify]);
+
   const useEffectFuc = () => {
     // tripsCard();
     routeName && navigate(routeName);
@@ -223,6 +235,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
     changeMemberStatusGroup,
     perssonalTrips,
     userData,
+    checkLenght,
   };
 };
 

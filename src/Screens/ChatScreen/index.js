@@ -30,6 +30,7 @@ const ChatScreen = ({navigation, route}) => {
     sendDataToFIrebase,
     handleAutoScroll,
     scrollViewRef,
+    regexp,
   } = useChatScreen(navigation, route);
   const renderItem = useCallback(({item, index}) => {
     return (
@@ -75,7 +76,7 @@ const ChatScreen = ({navigation, route}) => {
           // numberOfLines={5}
         />
 
-        {text != null && text != '' && (
+        {text != null && text != '' && regexp.test(text) && (
           <Touchable onPress={sendDataToFIrebase} style={styles.sendBtnStyle}>
             <LinearGradient
               start={{x: 0, y: 0}}

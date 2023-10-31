@@ -216,7 +216,7 @@ const useHomeScreen = () => {
       locationFun('locationInput');
     }
   };
-
+  let regexp = /^(?![\s\b]).*/;
   const errorStats = {
     isTripSelectModal: () => true,
     isModalVisible: () => {
@@ -233,10 +233,14 @@ const useHomeScreen = () => {
     },
     isTripModalVisible: () => true,
     iscreateModal: () => {
-      if (GroupInput == '') {
-        setUpdateError('Please enter the trip name ');
-        return false;
-      } else return true;
+      if (
+        GroupInput != '' &&
+        regexp.test(GroupInput) &&
+        GroupInput != undefined
+      ) {
+        // setUpdateError('Please enter the trip name ');
+        return true;
+      } else return false;
     },
     isTripCreated: () => true,
     isTripStarted: () => true,

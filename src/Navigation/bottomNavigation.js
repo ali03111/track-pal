@@ -1,6 +1,13 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {View, Platform, Dimensions, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Platform,
+  Dimensions,
+  StyleSheet,
+  Image,
+  Text,
+} from 'react-native';
 import * as Screens from '../Screens/index';
 import {Colors} from '../Theme/Variables';
 import {hp, wp} from '../Config/responsive';
@@ -46,7 +53,20 @@ function MybottomTabs() {
     return {
       tabBarIcon: ({focused}) => (
         <View style={styles.tabarView}>
-          {isDot && <View style={{...styles.dot, ...DotStyles}} />}
+          {isDot && (
+            <View style={{...styles.dot, ...DotStyles}}>
+              <Text
+                style={{
+                  color: 'white',
+                  textAlignVertical: 'center',
+                  fontSize: hp('1'),
+                  marginHorizontal: wp('1.5'),
+                  marginVertical: hp('0.2'),
+                }}>
+                {inviNotify?.length}
+              </Text>
+            </View>
+          )}
           <Image
             style={{...styles.imgstyle, ...ImageStyle}}
             source={focused ? activeImage : unActiveImage}
@@ -163,11 +183,14 @@ const styles = StyleSheet.create({
     borderRadius: Math.round(
       Dimensions.get('window').width + Dimensions.get('window').height,
     ),
-    width: Dimensions.get('window').width * 0.03,
-    height: Dimensions.get('window').width * 0.03,
+    // width: Dimensions.get('window').width * 0.03,
+    // height: Dimensions.get('window').width * 0.03,
     position: 'absolute',
-    left: wp('5'),
-    top: hp('0.68'),
+    left: wp('4'),
+    top: hp('0.5'),
     zIndex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
 });

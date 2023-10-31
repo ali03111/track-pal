@@ -1,17 +1,21 @@
-// import {errorMessage} from '../../Components/NotificationMessage';
-// import {loginUser} from '../../Redux/Actions/AuthAction';
-// import API from '../../Utils/helperFunction';
-// import {
-//   faceBookLogin,
-//   googleLogin,
-//   PhoneNumberLogin,
-//   verifyCode,
-// } from '../../Utils/SocialLogin';
-// import {loginUrl} from '../../Utils/Url';
-import {useState} from 'react';
+import useReduxStore from '../../Hooks/UseReduxStore';
 
-const useMapAndChatScreen = () => {
-  return {};
+const useMapAndChatScreen = ({id}) => {
+  const {getState} = useReduxStore();
+
+  const {chatNotify} = getState('chatNotify');
+  // console.log(
+  //   'dbjksdbsdknkasdasdasdassndvnsdnjdsdfsdfsdfsdfskbsdjkbvklasdasdasjsdadsfsdbvklsbd',
+  //   chatNotify[`"${id}"`],
+  //   `"${id}"`,
+  // );
+  let givenID = JSON.stringify(id);
+  // const checkLenght = id => {
+  //   return chatNotify[givenID] ? chatNotify[givenID].length : 0;
+  // };
+  const checkLenght = chatNotify[givenID] ? chatNotify[givenID].length : 0;
+
+  return {checkLenght};
 };
 
 export default useMapAndChatScreen;

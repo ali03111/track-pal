@@ -55,12 +55,12 @@ export const styles = StyleSheet.create({
   },
   groupMember: {
     fontSize: hp('1.8'),
-    marginTop: hp('-.4'),
     color: Colors.gray,
   },
   groupActive: status => ({
     fontSize: hp('1.8'),
-    color: status == 'Active' ? Colors.gray : Colors.primaryColor,
+    color: status == 'Active' ? Colors.fadeGreen : Colors.primaryColor,
+    // marginTop: hp('-.4'),
   }),
   groupDesc: {
     flex: 1,
@@ -167,5 +167,16 @@ export const styles = StyleSheet.create({
   },
   tabarTitle: {
     fontSize: hp('1.1'),
+  },
+  circleView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: wp('14'),
+    marginTop: hp('-0.6'),
+  },
+  messageNumber: {
+    color: Colors.primaryColor,
+    fontSize: hp('1.5'),
   },
 });

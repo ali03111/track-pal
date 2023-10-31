@@ -417,4 +417,8 @@ export const styles = StyleSheet.create({
     marginVertical: hp('1'),
     lineHeight: 22,
   },
+  refresh: {
+    height: hp('80'),
+    width: wp('90'),
+  },
 });

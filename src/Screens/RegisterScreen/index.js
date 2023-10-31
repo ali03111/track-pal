@@ -13,6 +13,7 @@ import {InputComponent} from '../../Components/InputComponent';
 import {Controller} from 'react-hook-form';
 import {Touchable} from '../../Components/Touchable';
 import useRegister from './useRegisterScreen';
+import KeyBoardWrapper from '../../Components/KeyboardWrapper';
 
 const RegisterScreen = ({navigation}) => {
   const {
@@ -29,9 +30,9 @@ const RegisterScreen = ({navigation}) => {
     signUpButton,
   } = useRegister(navigation);
   return (
-    <ScrollView
+    <KeyBoardWrapper
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.logInMain}>
+      styles={styles.logInMain}>
       <Touchable style={styles.backMain} onPress={goBack}>
         <Image
           source={arrowBack}
@@ -132,7 +133,7 @@ const RegisterScreen = ({navigation}) => {
           </GradientText>
         </Touchable>
       </View>
-    </ScrollView>
+    </KeyBoardWrapper>
   );
 };
 export default memo(RegisterScreen);

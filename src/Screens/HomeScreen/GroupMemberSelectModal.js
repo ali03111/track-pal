@@ -34,6 +34,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {errorMessage} from '../../Config/NotificationMessage';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {imageUrl} from '../../Utils/Urls';
+import {EmptyViewComp} from '../../Components/EmptyViewComp';
 
 const GroupMemberSelectModal = ({
   isGroupMemberSelectModal,
@@ -172,6 +173,12 @@ const GroupMemberSelectModal = ({
                     paddingRight: wp('2'),
                     paddingLeft: wp('0'),
                   }}
+                  ListEmptyComponent={
+                    <EmptyViewComp
+                      onRefresh={getUser}
+                      refreshStyle={styles.refresh}
+                    />
+                  }
                 />
               </View>
               <ThemeButton

@@ -88,14 +88,12 @@ const verificationSchema = yup.object().shape({
     .max(6, 'Verification code must be of 6 characters'),
 });
 const resetPasswordScheme = yup.object().shape({
-  password: yup
-    .string()
-    .required('Please Enter your password')
-    .max(25, 'Password must be less than 25 characters')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
-    ),
+  password: yup.string().required('Please Enter your password'),
+  // .max(25, 'Password must be less than 25 characters')
+  // .matches(
+  //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+  //   'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
+  // ),
 
   new_password: yup
     .string()

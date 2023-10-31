@@ -11,6 +11,7 @@ import {createStore, applyMiddleware, combineReducers} from 'redux';
 import AlertReucer from './AlertReucer';
 import invitationNotReducer from './invitationNotReducer';
 import GeneralNotReducer from './GeneralNotReducer';
+import ChatNotifyReducer from './ChatNotifyReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,15 +20,23 @@ const onBoardPersistConfig = {
   storage: AsyncStorage,
   whitelist: 'onboarding',
 };
+
 const inviteNotificationPersistConfig = {
   key: 'inviNotify',
   storage: AsyncStorage,
   whitelist: 'inviNotify',
 };
+
 const generalNotifyPersistConfig = {
   key: 'generalNotify',
   storage: AsyncStorage,
   whitelist: 'generalNotify',
+};
+
+const chatNotifyPersistConfig = {
+  key: 'chatNotify',
+  storage: AsyncStorage,
+  whitelist: 'chatNotify',
 };
 
 const AuthPersistConfig = {
@@ -51,6 +60,7 @@ const reducers = {
     invitationNotReducer,
   ),
   generalNotify: persistReducer(generalNotifyPersistConfig, GeneralNotReducer),
+  chatNotify: persistReducer(chatNotifyPersistConfig, ChatNotifyReducer),
   isloading: loadingReducer,
   isAlert: AlertReucer,
   // isQuestion: questionReducer,

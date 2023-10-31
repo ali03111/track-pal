@@ -26,4 +26,7 @@ export const types = {
   ClearNotify: 'ClearNotify',
   ClearNotifyInvitation: 'ClearNotifyInvitation',
   addNotiInvitation: 'addNotiInvitation',
+  addChatNoification: 'addChatNoification',
+  clearNofityObjByID: 'clearNofityObjByID',
+  clearAllChatNotifyObj: 'clearAllChatNotifyObj',
 };
