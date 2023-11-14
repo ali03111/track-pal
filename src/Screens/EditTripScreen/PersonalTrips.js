@@ -12,7 +12,7 @@ import {loaderView} from './MyTrips';
 import TripCreatedModal from '../HomeScreen/TripCreatedModal';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {hp, wp} from '../../Config/responsive';
-import {cardediticon, leftArrow, trash} from '../../Assets';
+import {cardediticon, greenCircle, leftArrow, trash} from '../../Assets';
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 import InactiveBtn from '../../Components/InactiveBtn';
 
@@ -97,6 +97,7 @@ const PersonalTrips = ({navigation, route}) => {
     isTripCreated,
     userData,
     changeMemberStatusGroup,
+    checkLenght,
   } = useEditTripScreen(navigation, route);
 
   const renderOwnerItem = useCallback(
@@ -115,7 +116,9 @@ const PersonalTrips = ({navigation, route}) => {
           <View style={styles.activeCardStyle}>
             <View style={styles.cardLeft}>
               {item?.image ? (
-                <CircleImage image={item?.image} style={styles.groupLogo} />
+                <View>
+                  <CircleImage image={imageUrl(item?.image)} uri={true} />
+                </View>
               ) : (
                 <FirstCharacterComponent
                   indexNumber={color}
@@ -124,14 +127,32 @@ const PersonalTrips = ({navigation, route}) => {
               )}
               <View style={styles.groupDesc}>
                 <TextComponent text={item?.name} styles={styles.groupName} />
-                <TextComponent
-                  text={'Total members ' + item?.total_members}
-                  styles={styles.groupMember}
-                />
-                <TextComponent
-                  text={item?.status}
-                  styles={styles.groupActive(item?.status)}
-                />
+                <View style={styles.circleView}>
+                  {item?.status == 'Active' && (
+                    <Image
+                      source={greenCircle}
+                      style={{width: wp('2')}}
+                      resizeMode="contain"
+                    />
+                  )}
+                  <TextComponent
+                    text={item?.status}
+                    styles={styles.groupActive(item?.status)}
+                  />
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <TextComponent
+                    text={item?.total_members + ' members'}
+                    styles={styles.groupMember}
+                  />
+                  {checkLenght(item.id) > 0 && (
+                    <TextComponent
+                      text={` ( ${checkLenght(item.id)} messages )`}
+                      // text={'Total members ' + item?.total_members}
+                      styles={styles.messageNumber}
+                    />
+                  )}
+                </View>
               </View>
             </View>
             {userData.id == item.user_id &&

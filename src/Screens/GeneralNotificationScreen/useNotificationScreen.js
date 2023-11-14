@@ -12,6 +12,7 @@ import {updateDataFirebase} from '../../Services/FireBaseRealTImeServices';
 import {errorMessage} from '../../Config/NotificationMessage';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
+import {types} from '../../Redux/types';
 
 const useNotificationScreen = ({params}, {navigate, addListener}) => {
   const [tripNotification, setTripNotification] = useState([]);
@@ -21,7 +22,6 @@ const useNotificationScreen = ({params}, {navigate, addListener}) => {
 
   const getUserNotification = async () => {
     const {ok, data} = await API.get(notificationUrl);
-    console.log('setNotificationsetNotificationsetNotification', data);
     if (ok) {
       setNotification(data);
     } else errorMessage('an error occured');
@@ -51,7 +51,10 @@ const useNotificationScreen = ({params}, {navigate, addListener}) => {
   };
 
   const useEffectFuc = () => {
-    const event = addListener('focus', getUserNotification);
+    const event = addListener('focus', () => {
+      getUserNotification();
+      dispatch({type: types.ClearNotify});
+    });
     return event;
     // params?.sendTo && navigate(params?.sendTo);
   };

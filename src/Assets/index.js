@@ -85,3 +85,4 @@ export {default as destinationLottie} from './Lotties/destination1.json';
 export {default as userWithOutPicLottie} from './Lotties/userWithOutPic1.json';
 export {default as SOSLottie} from './Lotties/SOSLottie.json';
 export {default as sosLottie} from './Lotties/sos.json';
+export {default as bottomNavBellLottie} from './Lotties/Bell.json';

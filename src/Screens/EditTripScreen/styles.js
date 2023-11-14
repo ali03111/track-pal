@@ -179,4 +179,9 @@ export const styles = StyleSheet.create({
     color: Colors.primaryColor,
     fontSize: hp('1.5'),
   },
+  groupLogo: {
+    backgroundColor: 'red',
+    width: Dimensions.get('window').width * 0.1,
+    height: Dimensions.get('window').width * 0.1,
+  },
 });

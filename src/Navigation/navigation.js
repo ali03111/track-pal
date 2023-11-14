@@ -15,7 +15,7 @@ const StackNavigatior = () => {
     <NavigationContainer
       ref={ref => {
         NavigationService.setRef(ref);
-        // const p = NavigationService.getCurrentRoute(ref.getCurrentRoute());
+        console.log('kdnkdnfkndkfnkdnfndknfnkdnfdf', ref?.getCurrentRoute());
       }}>
       <Stack.Navigator
         screenOptions={{

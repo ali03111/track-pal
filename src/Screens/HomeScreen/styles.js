@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
   groupLogo: {
     // flex: 0.17,
     resizeMode: 'contain',
-    marginRight: wp('4'),
+    // marginRight: wp('4'),
   },
   groupDesc: {
     flex: 1,
@@ -232,7 +232,8 @@ export const styles = StyleSheet.create({
     borderColor: Colors.grayBorder,
     border: 1,
     height: hp('6'),
-    marginVertical: hp('3.5'),
+    // marginVertical: hp('3.5'),
+    marginTop: hp('3.5'),
     borderWidth: 1,
     borderRadius: 7,
     paddingHorizontal: wp('3'),
@@ -420,5 +421,12 @@ export const styles = StyleSheet.create({
   refresh: {
     height: hp('80'),
     width: wp('90'),
+  },
+  tripNameError: {
+    color: 'red',
+    marginBottom: hp('3.5'),
+    marginTop: hp('0.5'),
+    fontSize: hp('1.5'),
+    marginLeft: wp('1'),
   },
 });

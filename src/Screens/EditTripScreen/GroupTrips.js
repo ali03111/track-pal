@@ -26,6 +26,7 @@ import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 import {loaderView} from './MyTrips';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import {imageUrl} from '../../Utils/Urls';
 
 const GroupTrips = ({navigation, route}) => {
   const {
@@ -48,7 +49,9 @@ const GroupTrips = ({navigation, route}) => {
         <View style={styles.activeCardStyle}>
           <View style={styles.cardLeft}>
             {item?.image ? (
-              <CircleImage image={item?.image} style={styles.groupLogo} />
+              <View>
+                <CircleImage image={imageUrl(item?.image)} uri={true} />
+              </View>
             ) : (
               <FirstCharacterComponent indexNumber={color} text={item?.name} />
             )}

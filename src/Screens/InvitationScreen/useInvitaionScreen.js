@@ -43,7 +43,10 @@ const useNotificationScreen = ({params}, {navigate, addListener}) => {
           setTripNotification(data.trips);
           dispatch(loadingFalse());
           setShowAlert(!showAlert);
-        } else dispatch(loadingFalse());
+        } else {
+          console.log('errrrrrrrrrrrrr', data);
+          dispatch(loadingFalse());
+        }
       } else {
         setTripNotification(data.trips);
         dispatch(loadingFalse());
@@ -67,6 +70,9 @@ const useNotificationScreen = ({params}, {navigate, addListener}) => {
         item: tripNotification[currentIndex],
         sendTo: screenName[tripNotification[currentIndex].type],
       });
+      setTimeout(() => {
+        navigate(screenName[tripNotification[currentIndex].type]);
+      }, 1000);
     } else setShowAlert(false);
   };
 

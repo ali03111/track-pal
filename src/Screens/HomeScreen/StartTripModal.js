@@ -51,6 +51,7 @@ const StartTripModal = ({
     destinationInputRef,
     groupMembers,
     GroupInput,
+    tripImage,
   } = extraData;
   return (
     <View
@@ -88,9 +89,15 @@ const StartTripModal = ({
               color={Colors.gray}
             />
             <View style={styles.groupInfoMain}>
-              {/* <Image source={DemoProfileImage1} style={styles.groupLogo} /> */}
-
-              <FirstCharacterComponent text={GroupInput} />
+              {tripImage ? (
+                <CircleImage
+                  image={tripImage?.uri}
+                  uri={true}
+                  styles={styles.groupLogo}
+                />
+              ) : (
+                <FirstCharacterComponent text={GroupInput} />
+              )}
 
               <View style={styles.groupDesc}>
                 <Text style={styles.groupName}>{GroupInput}</Text>

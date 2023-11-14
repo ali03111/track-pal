@@ -71,9 +71,9 @@ const createTripObj = async data => {
   const {
     Auth: {userData},
   } = store.getState('Auth');
-  const {tripId, members, destination, startPoint, tripType, TripName} = data;
-  // const {tripId, members, destination, startPoint, tripType, TripName, image} =
-  //   data;
+  // const {tripId, members, destination, startPoint, tripType, TripName} = data;
+  const {tripId, members, destination, startPoint, tripType, TripName, image} =
+    data;
   console.log('membersmembersmembersmembersmembersmembers', data);
   try {
     const membersData = members.map(res => ({
@@ -106,7 +106,7 @@ const createTripObj = async data => {
       tripType,
       TripName,
       members: membersData,
-      // tripImage: image,
+      tripImage: image,
     });
     await fireChat.set({chat: []});
   } catch (error) {
@@ -176,7 +176,7 @@ const updateDataFirebase = async data => {
 const getLocationName = async (latitude, longitude) => {
   console.log('first');
 
-  const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE`;
+  const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U`;
 
   // Replace "YOUR_API_KEY" with your actual Google Maps Geocoding API key
 

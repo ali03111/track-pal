@@ -1,7 +1,7 @@
 import useReduxStore from '../../Hooks/UseReduxStore';
 
 const useMapAndChatScreen = ({id}) => {
-  const {getState} = useReduxStore();
+  const {getState, dispatch} = useReduxStore();
 
   const {chatNotify} = getState('chatNotify');
   // console.log(
@@ -15,7 +15,7 @@ const useMapAndChatScreen = ({id}) => {
   // };
   const checkLenght = chatNotify[givenID] ? chatNotify[givenID].length : 0;
 
-  return {checkLenght};
+  return {checkLenght, dispatch};
 };
 
 export default useMapAndChatScreen;

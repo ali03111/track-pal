@@ -1,5 +1,5 @@
 import React, {memo, useState} from 'react';
-import {View, Image, TextInput} from 'react-native';
+import {View, Image, TextInput, Dimensions} from 'react-native';
 import {
   DemoProfileImage1,
   editIcon,
@@ -15,12 +15,13 @@ import Modal from 'react-native-modal';
 import {CircleImage} from '../../Components/CircleImage';
 import {Touchable} from '../../Components/Touchable';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {hp} from '../../Config/responsive';
+import {hp, wp} from '../../Config/responsive';
 import {Colors} from '../../Theme/Variables';
 import BlurImage from '../../Components/BlurImage';
 import {Text} from 'react-native-paper';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {ModalFirstLetterComp} from '../../Components/ModalFirstLetterComp';
+import {TextComponent} from '../../Components/TextComponent';
 
 const CreateGroupModal = ({
   iscreateModal,
@@ -35,6 +36,8 @@ const CreateGroupModal = ({
     updateInputState,
     uploadFromGalary,
     tripImage,
+    message,
+    clearImage,
   } = extraData;
   return (
     <View
@@ -88,21 +91,32 @@ const CreateGroupModal = ({
                     uri={tripImage?.uri}
                   />
                 </View> */}
-                <FirstCharacterComponent text={GroupInput ? GroupInput : 'T'} />
-                {/* <BlurImage
-                  blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
-                  radius={75}
-                  styles={styles.ProfileImage}
-                  uri={tripImage?.uri}
-                /> */}
-                {/* <ModalFirstLetterComp text={GroupInput ? GroupInput : 'T'} /> */}
+                {tripImage?.uri ? (
+                  <BlurImage
+                    blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
+                    radius={75}
+                    styles={styles.ProfileImage}
+                    uri={tripImage?.uri}
+                    isURI={true}
+                  />
+                ) : (
+                  <ModalFirstLetterComp
+                    text={GroupInput ? GroupInput : 'T'}
+                    extraStyle={{
+                      width: Dimensions.get('window').width * 0.19,
+                      height: Dimensions.get('window').width * 0.19,
+                    }}
+                  />
+                )}
+                {/* <FirstCharacterComponent text={GroupInput ? GroupInput : 'T'} /> */}
 
-                {/* <Touchable
+                <Touchable
+                  // onPress={clearImage}
                   onPress={uploadFromGalary}
                   Opacity={0.8}
                   style={styles.addImageBtn}>
                   <Image source={addProfileImage} style={styles.addImageIcon} />
-                </Touchable> */}
+                </Touchable>
               </View>
               <View style={styles.editInput}>
                 <Image source={editIcon} style={styles.editIcon} />
@@ -114,6 +128,10 @@ const CreateGroupModal = ({
                   placeholderTextColor={'gray'}
                 />
               </View>
+              <TextComponent
+                text={message ?? ''}
+                styles={styles.tripNameError}
+              />
               <ThemeButton title={'Next'} onPress={CreateGroup} />
             </View>
           </View>

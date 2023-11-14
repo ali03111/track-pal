@@ -52,3 +52,4 @@ export const notifyToOwnerUrl = 'sendNotificationToOwnerAndMe?owner_id=';
 export const SOSToMembers = 'sendNotificationToAllTripMembers?trip_id=';
 export const NotificationStatus = 'notification-status';
 export const sendChatNotification = 'sendNotification';
+export const createTripImage = 'set-tripe-image';

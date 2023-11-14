@@ -44,6 +44,7 @@ const ProfileScreen = ({navigation}) => {
           <BlurImage
             blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
             radius={75}
+            isURI={true}
             styles={styles.ProfileImage}
             uri={imageUrl(userData?.profile_image)}
           />

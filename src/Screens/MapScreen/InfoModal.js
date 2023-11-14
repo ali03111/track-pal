@@ -80,14 +80,14 @@ function InfoModal({
             onPress={toggleModal}
             color={Colors.gray}
           />
-          {tripData?.image ? (
+          {/* {tripData?.image ? (
             <CircleImage uri={true} image={imageUrl(tripData?.image)} />
           ) : (
             <FirstCharacterComponent
               text={tripData?.name}
               extraStyle={styles.profileText}
             />
-          )}
+          )} */}
 
           <GradientText style={styles.gText} GradientAlignment={0.7}>
             <TextComponent

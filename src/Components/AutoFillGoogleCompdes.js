@@ -95,7 +95,7 @@ export const AutoFillGoogleCompdes = ({
         handleButtonClick(data);
       }}
       query={{
-        key: 'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE',
+        key: 'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U',
         language: 'en',
         components: 'country:us',
       }}

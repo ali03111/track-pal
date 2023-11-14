@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TrackPal</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE</string>
+        AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U</string>
     <string name="facebook_app_id">1254157088825041</string>
     <string name="fb_login_protocol_scheme">fb1254157088825041</string>
     <string name="facebook_client_token">95216d298b45ac33d8cdb9f5a62b96b8</string>

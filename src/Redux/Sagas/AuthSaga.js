@@ -61,6 +61,8 @@ const loginSaga = function* ({payload: {datas, type}}) {
         if (ok) {
           yield put(loadingTrue());
           yield put(updateAuth(data));
+        } else {
+          errorMessage(data.message);
         }
       }
     }
@@ -92,11 +94,15 @@ function* registerSaga({payload: {datas}}) {
         if (ok) {
           yield put(loadingTrue());
           yield put(updateAuth(data));
+        } else {
+          errorMessage(data?.message);
         }
       }
     }
   } catch (error) {
-    errorMessage(error.message.split(' ').slice(1).join(' ') ?? error);
+    errorMessage(
+      error.message.split(' ').slice(1).join(' ') ?? error ?? error?.message,
+    );
     console.log('slbklsdbbsdfkgbsdklbgs', error);
   } finally {
     // delay(4000);
@@ -135,7 +141,7 @@ function* updateProfileSaga({payload: profileData}) {
     if (ok) {
       yield put({type: types.UpdateProfile, payload: data.data});
       // successMessage('Your profile has been updated');
-    }
+    } else errorMessage(data.message);
   } catch (error) {
     console.log('error ', error);
     errorMessage(error.message.split(' ').slice(1).join(' '));

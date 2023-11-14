@@ -12,6 +12,8 @@ import {hp, wp} from '../../Config/responsive';
 import * as Screens from '../index';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import useMapAndChatScreen from './useMapAndChatScreen';
+import {types} from '../../Redux/types';
+import {notificationStatusFunc} from '../ChatScreen/useChatScreen';
 
 function MyTabBar({state, descriptors, navigation}) {
   return (
@@ -81,7 +83,7 @@ const MapAndChatScreen = ({navigation, route}) => {
     '{route?.params?.asdasdasdasdasdasdasdasitem?',
     route?.params?.item,
   );
-  const {checkLenght} = useMapAndChatScreen(route?.params?.item);
+  const {checkLenght, dispatch} = useMapAndChatScreen(route?.params?.item);
 
   return (
     <View style={styles.tabsMain}>
@@ -111,6 +113,18 @@ const MapAndChatScreen = ({navigation, route}) => {
           component={Screens.ChatScreen}
           options={{headerShown: false}}
           initialParams={route}
+          listeners={{
+            focus: () => {
+              dispatch({
+                type: types.clearNofityObjByID,
+                payload: route?.params?.item.id,
+              });
+              notificationStatusFunc('false');
+            },
+            blur: () => {
+              notificationStatusFunc('true');
+            },
+          }}
         />
       </Tab.Navigator>
     </View>

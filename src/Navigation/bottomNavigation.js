@@ -12,6 +12,7 @@ import * as Screens from '../Screens/index';
 import {Colors} from '../Theme/Variables';
 import {hp, wp} from '../Config/responsive';
 import {
+  bottomNavBellLottie,
   home,
   home2,
   map,
@@ -23,6 +24,7 @@ import {
   setting2,
 } from '../Assets';
 import useReduxStore from '../Hooks/UseReduxStore';
+import Lottie from 'lottie-react-native';
 
 globalStyles = {};
 const isIOS = Boolean(Platform.OS == 'ios');
@@ -35,12 +37,12 @@ function MybottomTabs() {
   const {generalNotify} = getState('generalNotify');
 
   const inviNotifyStatus = Boolean(inviNotify.length > 0);
-  // const genNotifyStatus = Boolean(generalNotify.length > 0);
+  const genNotifyStatus = Boolean(generalNotify.length > 0);
 
   console.log(
     'inviNotifyinviNotifyinviNotify',
-    Boolean(inviNotify.length > 0),
-    inviNotify,
+    Boolean(generalNotify.length > 0),
+    generalNotify,
   );
 
   const tabarComponent = (
@@ -49,6 +51,7 @@ function MybottomTabs() {
     ImageStyle,
     isDot,
     DotStyles,
+    isLottie,
   ) => {
     return {
       tabBarIcon: ({focused}) => (
@@ -67,10 +70,20 @@ function MybottomTabs() {
               </Text>
             </View>
           )}
-          <Image
-            style={{...styles.imgstyle, ...ImageStyle}}
-            source={focused ? activeImage : unActiveImage}
-          />
+          {isLottie ? (
+            <Lottie
+              style={{...styles.imgstyle, ...ImageStyle}}
+              resizeMode="contain"
+              source={bottomNavBellLottie}
+              autoPlay
+              loop
+            />
+          ) : (
+            <Image
+              style={{...styles.imgstyle, ...ImageStyle}}
+              source={focused ? activeImage : unActiveImage}
+            />
+          )}
         </View>
       ),
       title: '',
@@ -80,7 +93,6 @@ function MybottomTabs() {
 
   return (
     <Tab.Navigator
-      initialRouteName="HomeScreen"
       screenOptions={({route}) => ({
         tabBarActiveTintColor: 'yellow',
         // tabBarActiveTintColor: Colors.white,
@@ -121,15 +133,18 @@ function MybottomTabs() {
         component={Screens.EditTripScreen}
       />
       <Tab.Screen
-        name="SomeComponent"
+        name="GeneralNotification"
         options={tabarComponent(
           sendNotification,
           sendNotification,
           (ImageStyle = {
             width: wp('24'),
-            marginTop: hp('-5'),
-            height: hp('12'),
+            marginTop: genNotifyStatus ? hp('-2') : hp('-5'),
+            height: genNotifyStatus ? hp('10') : hp('12'),
           }),
+          false,
+          {},
+          genNotifyStatus,
           // inviNotifyStatus,
           // {
           //   left: wp('20'),
@@ -138,7 +153,7 @@ function MybottomTabs() {
         component={Screens.GeneralNotification}
       />
       <Tab.Screen
-        name="ChatScreen"
+        name="InvitationScreen"
         options={tabarComponent(
           notification2,
           notification,

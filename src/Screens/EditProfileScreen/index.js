@@ -66,6 +66,7 @@ const EditProfileScreen = ({navigation}) => {
             blurhash={'LKK1wP_3yYIU4.jsWrt7_NRjMdt7'}
             radius={75}
             styles={styles.ProfileImage}
+            isURI={true}
             uri={profileData?.uri || imageUrl(userData.profile_image)}
           />
         </View>

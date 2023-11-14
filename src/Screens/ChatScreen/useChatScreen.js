@@ -13,6 +13,17 @@ import API from '../../Utils/helperFunc';
 import {NotificationStatus, sendChatNotification} from '../../Utils/Urls';
 import {types} from '../../Redux/types';
 
+/**
+ * The function `notificationStatusFunc` is an asynchronous function that sends a POST request to the
+ * API with a notification status.
+ */
+export const notificationStatusFunc = async status => {
+  console.log('jbvjsdbvjsdbvskdjvbsdkvbsdkvbsd', status);
+  await API.post(NotificationStatus, {
+    notification_status: status,
+  });
+};
+
 const useChatScreen = ({navigate}, {params}) => {
   const {item} = params.params;
 
@@ -59,22 +70,7 @@ const useChatScreen = ({navigate}, {params}) => {
     handleAutoScroll();
   }, [chatArry]);
 
-  /**
-   * The function `notificationStatusFunc` is an asynchronous function that sends a POST request to the
-   * API with a notification status.
-   */
-  const notificationStatusFunc = async status => {
-    await API.post(NotificationStatus, {
-      notification_status: status,
-    });
-  };
-
   useEffect(() => {
-    dispatch({
-      type: types.clearNofityObjByID,
-      payload: item.id,
-    });
-    notificationStatusFunc('false');
     return () => notificationStatusFunc('true');
   }, []);
 

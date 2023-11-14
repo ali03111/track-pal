@@ -8,6 +8,7 @@ import {requestNotifications, openSettings} from 'react-native-permissions';
 import {useNavigation} from '@react-navigation/native';
 import {store} from '../Redux/Reducer';
 import {types} from '../Redux/types';
+import NavigationService from './NavigationService';
 // import NavigationService from './NavigationService';
 // import useRouteName from '@/hooks/useRouteName';
 
@@ -38,13 +39,16 @@ const onNotificationNotiFee = async (data, appState) => {
     ios: {sound},
   });
 
+  const getNameFunc = NavigationService.getCurrentRoute();
+  const routeName = getNameFunc?.getCurrentRoute()?.name;
+
   const notificationData = JSON.parse(data.data.payload);
 
   const isRoute = Boolean(notificationData.is_route);
 
   const isInvitation = Boolean(notificationData.route == 'InvitationScreen');
 
-  console.log('data=>>>>>dsdfsdfsdfdsfsdfds>>', notificationData);
+  console.log('data=>>>>>dsdfsdfsdfdsfsdfds>>', notificationData, routeName);
 
   const storeObj = {
     InvitationScreen: types.addNotiInvitation,
@@ -53,6 +57,7 @@ const onNotificationNotiFee = async (data, appState) => {
   };
 
   isRoute &&
+    routeName != 'InvitationScreen' &&
     store.dispatch({
       type: storeObj[notificationData.route],
       payload: notificationData,
@@ -60,8 +65,7 @@ const onNotificationNotiFee = async (data, appState) => {
   // navigation.navigate('Invitation');
   // const isActive = Boolean(NavigationService.ref && appState == 'active');
   // const notificationObj = JSON.parse(data.data.payload);
-  // const getNameFunc = NavigationService.getCurrentRoute();
-  // const routeName = getNameFunc?.getCurrentRoute()?.name;
+
   // if (
   //   isActive &&
   //   notificationObj?.notification_type == 'badge_unlocked' &&
@@ -215,12 +219,16 @@ class FCMService {
       async ({type, detail}) => {
         const {notification} = detail;
         console.log(
-          'notificationnotificationnotificationnoasdasdastificationnotificationnotification',
+          'notificationnotificationnotificatisdsdsonnoasdasdastificationnotificationnotification',
           notification,
+          routeName,
         );
         let searchTerm = /invitation/;
         let findWord = Boolean(searchTerm.test(notification.body));
+        const getNameFunc = NavigationService.getCurrentRoute();
+        const routeName = getNameFunc?.getCurrentRoute()?.name;
         findWord &&
+          routeName != 'InvitationScreen' &&
           store.dispatch({
             type: findWord ? types.addNotiInvitation : types.addNotification,
             payload: notification,

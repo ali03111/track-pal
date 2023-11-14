@@ -76,6 +76,7 @@ const HomeScreen = () => {
     uploadFromGalary,
     getUser,
     tripImage,
+    clearImage,
   } = useHomeScreen();
   const [showTip, setTip] = useState(false);
 
@@ -246,6 +247,8 @@ const HomeScreen = () => {
               updateInputState,
               uploadFromGalary,
               tripImage,
+              message: updateError,
+              clearImage,
             },
           }}
         />
@@ -283,6 +286,7 @@ const HomeScreen = () => {
               message: updateError,
               groupMembers,
               GroupInput,
+              tripImage,
             },
           }}
         />

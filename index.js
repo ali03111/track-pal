@@ -2,7 +2,7 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import {AppRegistry, Text, TextInput, View} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import {Provider} from 'react-redux';
@@ -11,6 +11,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import FlashMessage from 'react-native-flash-message';
 import message from '@react-native-firebase/messaging';
 import {types} from './src/Redux/types';
+import NavigationService from './src/Services/NavigationService';
 
 const TrackPal = () => (
   <Provider store={store}>
@@ -30,6 +31,9 @@ message().setBackgroundMessageHandler(async remoteMessage => {
 
   const isInvitation = Boolean(notificationData.route == 'InvitationScreen');
 
+  const getNameFunc = NavigationService.getCurrentRoute();
+  const routeName = getNameFunc?.getCurrentRoute()?.name;
+
   const storeObj = {
     InvitationScreen: types.addNotiInvitation,
     GeneralScreen: types.addNotification,
@@ -37,6 +41,7 @@ message().setBackgroundMessageHandler(async remoteMessage => {
   };
 
   isRoute &&
+    routeName != 'InvitationScreen' &&
     store.dispatch({
       type: storeObj[notificationData.route],
       payload: notificationData,
@@ -44,5 +49,21 @@ message().setBackgroundMessageHandler(async remoteMessage => {
 
   // store.dispatch(setNotificationLength(remoteMessage));
 });
+
+//ADD this
+if (Text.defaultProps == null) {
+  Text.defaultProps = {};
+  Text.defaultProps.allowFontScaling = false;
+}
+
+if (TextInput.defaultProps == null) {
+  TextInput.defaultProps = {};
+  TextInput.defaultProps.allowFontScaling = false;
+}
+
+if (View.defaultProps == null) {
+  View.defaultProps = {};
+  View.defaultProps.allowFontScaling = false;
+}
 
 AppRegistry.registerComponent(appName, () => TrackPal);

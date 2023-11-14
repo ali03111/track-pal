@@ -7,7 +7,7 @@ const initial_state = {
 const actionMap = {
   [types.addNotification]: (state, act) => {
     return {
-      generalNotify: act.payload,
+      generalNotify: [...state.generalNotify, act.payload],
     };
   },
   [types.ClearNotify]: () => initial_state,

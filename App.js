@@ -16,6 +16,7 @@ import {
   Platform,
   NativeEventEmitter,
   AppState,
+  TextInput,
 } from 'react-native';
 import StackNavigatior from './src/Navigation/navigation';
 import {logoScreen} from './src/Assets';
@@ -116,6 +117,10 @@ const App = () => {
   };
 
   const useEffectFun = () => {
+    GoogleSignin.configure({
+      webClientId:
+        '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com',
+    });
     LogBox.ignoreLogs([
       'VirtualizedLists should never be nested',
       'ViewPropTypes will be removed from React Native',
@@ -129,6 +134,12 @@ const App = () => {
     setTimeout(function () {
       Hide_Splash_Screen();
     }, time());
+    Text.defaultProps = Text.defaultProps || {};
+    Text.defaultProps.allowFontScaling = false;
+    TextInput.defaultProps = TextInput.defaultProps || {};
+    TextInput.defaultProps.allowFontScaling = false;
+    View.defaultProps = View.defaultProps || {};
+    View.defaultProps.allowFontScaling = false;
   };
 
   useEffect(useEffectFun, []);

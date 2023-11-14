@@ -25,6 +25,7 @@ import {EmptyViewComp} from '../../Components/EmptyViewComp';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import {imageUrl} from '../../Utils/Urls';
 
 export const loaderView = () => {
   return (
@@ -65,7 +66,9 @@ const MyTrips = ({navigation, route}) => {
           <View style={styles.activeCardStyle}>
             <View style={styles.cardLeft}>
               {item?.image ? (
-                <CircleImage image={item?.image} style={styles.groupLogo} />
+                <View>
+                  <CircleImage image={imageUrl(item?.image)} uri={true} />
+                </View>
               ) : (
                 <FirstCharacterComponent
                   indexNumber={color}

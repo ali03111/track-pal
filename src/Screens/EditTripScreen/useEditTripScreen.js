@@ -27,11 +27,6 @@ import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 import Geolocation from '@react-native-community/geolocation';
 
 const useEditTripScreen = ({addListener, navigate}, {params}) => {
-  console.log(
-    'EditTripScreenEditTripScreenEditTripScreenEditTripScrsdsdsdsdsdeenEditTripScreenEditTripScreen',
-    params?.params?.item,
-  );
-
   const routeName = params?.params?.sendTo;
 
   const [isTripCreated, setIsTripCreated] = useState(false);
@@ -104,7 +99,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
       // status == 1 && setIsTripCreated(!isTripCreated);
     } else {
       dispatch(loadingFalse());
-      errorMessage(originalError.message);
+      errorMessage(data.message);
       console.log('datadatadatadata', data);
     }
   };
@@ -191,10 +186,6 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
 
   const tripsCard = async () => {
     const {ok, data} = await API.get(tripsData);
-    console.log(
-      'data.personal_tripsdata.personal_tripsdata.personal_tripsdata.personal_trips',
-      data.personal_trips,
-    );
     if (ok) {
       setTripCardData(data.my_trips);
       setInvitedTrip(data.invitation_trips);
@@ -203,18 +194,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
     }
   };
 
-  useEffect(() => {
-    console.log(
-      'sdsdsddchatNotifychatNotifychatNotifychatNotifychatNotifychatNotifychatNotify',
-      chatNotify,
-    );
-  }, [chatNotify]);
-
   const useEffectFuc = () => {
-    // tripsCard();
-    routeName && navigate(routeName);
-    // routeName && changeMemberStatus(1,routeName.id,routeName.trip_owner.id);
-
     const event = addListener('focus', tripsCard);
     return event;
   };

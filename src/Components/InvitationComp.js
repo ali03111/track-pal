@@ -21,6 +21,8 @@ import moment from 'moment';
 import {tripProfileColors} from '../Utils/localDB';
 import {getSingleCharacter} from '../Utils/globalFunctions';
 import {FirstCharacterComponent} from './FirstCharacterComponent';
+import {imageUrl} from '../Utils/Urls';
+import BlurImage from './BlurImage';
 
 const InvitationComp = ({
   image,
@@ -42,7 +44,7 @@ const InvitationComp = ({
       <View style={styles.notificationMian}>
         <View style={styles.mainBannerImg}>
           {image ? (
-            <CircleImage image={image} />
+            <CircleImage image={imageUrl(image)} uri={true} />
           ) : (
             <FirstCharacterComponent
               indexNumber={index}
@@ -111,7 +113,7 @@ const InvitationComp = ({
 
 const styles = StyleSheet.create({
   mainBannerImg: {
-    flex: 0.2,
+    // flex: 0.2,
   },
   nameDescriptionMain: {
     flex: 1,
@@ -211,6 +213,10 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: hp('3'),
     fontWeight: '700',
+  },
+  image: {
+    height: hp('6'),
+    aspectRatio: 1,
   },
 });
 

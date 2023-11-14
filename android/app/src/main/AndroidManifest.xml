@@ -15,7 +15,7 @@
     android:theme="@style/AppTheme">
     <meta-data
       android:name="com.google.android.geo.API_KEY"
-      android:value="AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE" />
+      android:value="AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U" />
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id" />
     <meta-data android:name="com.facebook.sdk.ClientToken"
       android:value="@string/facebook_client_token" />

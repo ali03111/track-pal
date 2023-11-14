@@ -27,6 +27,8 @@ import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {loaderView} from './MyTrips';
 import {keyExtractor} from '../../Utils';
+import BlurImage from '../../Components/BlurImage';
+import {imageUrl} from '../../Utils/Urls';
 
 const InvitedTrip = ({navigation, route}) => {
   const {
@@ -52,7 +54,9 @@ const InvitedTrip = ({navigation, route}) => {
         <View style={styles.activeCardStyle}>
           <View style={styles.cardLeft}>
             {item?.image ? (
-              <CircleImage image={item?.image} style={styles.groupLogo} />
+              <View>
+                <CircleImage image={imageUrl(item?.image)} uri={true} />
+              </View>
             ) : (
               <FirstCharacterComponent indexNumber={color} text={item?.name} />
             )}

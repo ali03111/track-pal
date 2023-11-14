@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {errorMessage} from '../../Config/NotificationMessage';
 import API, {formDataFunc} from '../../Utils/helperFunc';
-import {CreateTripUrl, getAllUser} from '../../Utils/Urls';
+import {CreateTripUrl, createTripImage, getAllUser} from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 import {createTripObj} from '../../Services/FireBaseRealTImeServices';
@@ -188,19 +188,37 @@ const useHomeScreen = () => {
     },
   };
 
+  const updateTripImage = async params => {
+    setTimeout(() => {
+      dispatch(loadingTrue());
+    }, 1000);
+    const {ok, data} = await formDataFunc(
+      createTripImage,
+      {
+        trip_id: params.trip_id,
+        profileData: tripImage,
+      },
+      'image',
+    );
+    return {status: ok, res: data};
+  };
+
   const createTripFun = async () => {
     dispatch(loadingTrue());
     const body = bodyKey[selectTripType];
     console.log('asd', body.profileData);
     const {ok, data, originalError} = await API.post(CreateTripUrl, body);
+    if (tripImage != null) {
+      var {status, res} = await updateTripImage(data);
+      console.log('resresresresresresresresresssssss', res);
+    }
     // const {ok, data} = await formDataFunc(CreateTripUrl, body, 'image');
-    console.log('sjdbvjksvbsjkvbsdbvsdbvbsdbvjsbjsd', ok);
-    if (ok) {
+    if ((tripImage != null && status) || (tripImage == null && ok)) {
       createTripObj({
         ...firebaseDataType[selectTripType],
         tripId: data.trip_id,
         members: data.users,
-        // image: data.image,
+        image: res?.image ?? null,
       });
       openNextModal('isTripModalVisible', 'isTripStarted');
       updateInputState({
@@ -224,12 +242,16 @@ const useHomeScreen = () => {
         groupMembers: [],
         selectTripType: tripsTypes[0].id,
       });
+      setTripImage(null);
+      dispatch(loadingFalse());
       setTimeout(() => {
         updateState({isTripStarted: false});
       }, 1000);
+    } else {
+      dispatch(loadingFalse());
+      errorMessage('');
     }
     // console.log('erororororororororororo', originalError);
-    dispatch(loadingFalse());
 
     console.log('asdasdasdurl', CreateTripUrl);
     console.log('asdasdasd', body);
@@ -239,7 +261,7 @@ const useHomeScreen = () => {
   const getLocationName = async (latitude, longitude) => {
     console.log('third');
 
-    const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE`;
+    const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U`;
 
     // Replace "YOUR_API_KEY" with your actual Google Maps Geocoding API key
 
@@ -272,7 +294,10 @@ const useHomeScreen = () => {
       } else if (destinationInput.description == '') {
         setUpdateError('Please enter the destination location');
         return false;
-      } else return true;
+      } else {
+        setUpdateError('');
+        return true;
+      }
     },
     isTripModalVisible: () => true,
     iscreateModal: () => {
@@ -281,14 +306,18 @@ const useHomeScreen = () => {
         regexp.test(GroupInput) &&
         GroupInput != undefined
       ) {
-        // setUpdateError('Please enter the trip name ');
+        setUpdateError('');
         return true;
-      } else return false;
+      } else {
+        setUpdateError('Please type correct name');
+        return false;
+      }
     },
     isTripCreated: () => true,
     isTripStarted: () => true,
     isGroupMemberSelectModal: () => {
       if (groupMembers.length > 0) {
+        setUpdateError('');
         return true;
       } else {
         setUpdateError('Please select at least one memeber');
@@ -372,6 +401,8 @@ const useHomeScreen = () => {
     );
   };
 
+  const clearImage = () => setTripImage(null);
+
   return {
     frequentTrips,
     isModalVisible,
@@ -404,6 +435,7 @@ const useHomeScreen = () => {
     uploadFromGalary,
     tripImage,
     getUser,
+    clearImage,
   };
 };
 
