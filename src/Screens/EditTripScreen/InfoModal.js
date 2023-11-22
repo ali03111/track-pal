@@ -1,7 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {Button, Text, View, Image, ScrollView, FlatList} from 'react-native';
 import Modal from 'react-native-modal';
-import useMapScreen from './useMapScreen';
 import {styles} from './styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../../Theme/Variables';
@@ -10,50 +9,25 @@ import GradientText from '../../Components/GradientText';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {TextComponent} from '../../Components/TextComponent';
 import {bgBlur, dotbar, from, location} from '../../Assets';
-import {frequentTrips} from '../../Utils/localDB';
 import {CircleImage} from '../../Components/CircleImage';
 import {imageUrl} from '../../Utils/Urls';
 
-function InfoModal({
-  isModalVisible,
-  toggleModal,
-  tripData,
-  currentUser,
-  tripInfo,
-  allMember,
-  userData,
-}) {
-  const tripDatddda = userData.id;
-  const {email} = userData;
-  console.log('asd  test', tripInfo);
-  console.log(
-    'asdasdasdasdasdasasdaasdasdassdasdasasdasdasdas dasddsaadsfasfasassadas',
-    tripInfo?.members?.filter(res => res.details.email == email),
-    userData.id,
-  );
-  // console.log('asd ', tripData);
-
+function InfoModal({isModalVisible, toggleModal, tripData, userData}) {
   const renderItem = useCallback(({item, index}) => {
     var color =
       index.toString().length === 1 ? index : index.toString().split('').pop();
     return (
       <View style={styles.memberList}>
         {/* <Image source={item?.image} /> */}
-        {item.details?.profile_image ? (
-          <CircleImage
-            image={imageUrl(item.details?.profile_image)}
-            uri={true}
-          />
+        {item?.profile_image ? (
+          <CircleImage image={imageUrl(item?.profile_image)} uri={true} />
         ) : (
-          <FirstCharacterComponent
-            indexNumber={color}
-            text={item.details.name}
-          />
+          <FirstCharacterComponent indexNumber={color} text={item.name} />
         )}
         <View style={styles.memberText}>
-          <TextComponent text={item.details.name} styles={styles.creatorName} />
+          <TextComponent text={item.name} styles={styles.creatorName} />
 
-          {item.details.id == tripInfo.tripCreator.id && (
+          {item.id == userData.id && (
             <>
               <TextComponent text={'Creator'} styles={styles.creator} />
             </>
@@ -63,12 +37,11 @@ function InfoModal({
     );
   });
   return (
-    <View style={{flex: 1}}>
+    <View>
       <Modal
         isVisible={isModalVisible}
         animationInTiming={100}
         animationOutTiming={100}
-        avoidKeyboard
         animationType="fade"
         style={styles.bottomModal}>
         <Image style={styles.absolute} source={bgBlur} />
@@ -102,17 +75,14 @@ function InfoModal({
           </GradientText>
           <ScrollView>
             <View style={styles.creatorInfoMain}>
-              {tripInfo.tripCreator?.image ? (
-                <CircleImage
-                  uri={true}
-                  image={imageUrl(tripInfo.tripCreator?.image)}
-                />
+              {userData?.image ? (
+                <CircleImage uri={true} image={imageUrl(tripData?.image)} />
               ) : (
-                <FirstCharacterComponent text={tripInfo.tripCreator?.name} />
+                <FirstCharacterComponent text={userData?.name} />
               )}
               <View style={styles.creatorInfo}>
                 <TextComponent
-                  text={tripInfo.tripCreator?.name}
+                  text={userData?.name}
                   styles={styles.creatorName}
                 />
                 <TextComponent
@@ -122,35 +92,10 @@ function InfoModal({
               </View>
             </View>
             <View style={styles.locationInfoMain}>
-              {!tripData.owner && (
-                <>
-                  <View style={styles.locationArea}>
-                    <Image source={location} style={styles.locImage} />
-                    <GradientText style={styles.LText} GradientAlignment={0.7}>
-                      <TextComponent
-                        // text={
-                        //   tripInfo.members?.filter(
-                        //     res => res.id == userData.id,
-                        //   )[0] ?? 'sdsd'
-                        // }
-                        text={
-                          tripInfo?.members?.filter(
-                            res => res.details.email == email,
-                          )[0]?.description
-                        }
-                        styles={styles.desText}
-                      />
-                    </GradientText>
-                  </View>
-                  {/* <View style={styles.dotImage}>
-                    <Image source={dotbar} style={styles.dotbar} />
-                  </View> */}
-                </>
-              )}
               <View style={styles.destinationArea}>
                 <Image source={from} style={styles.desImage} />
                 <TextComponent
-                  text={tripInfo.destination?.description}
+                  text={tripData?.end_destination_description}
                   styles={styles.desText}
                 />
               </View>
@@ -158,7 +103,7 @@ function InfoModal({
             <View style={styles.memberInfo}>
               <FlatList
                 refreshing={false}
-                data={tripInfo?.members}
+                data={tripData?.users}
                 renderItem={renderItem}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}

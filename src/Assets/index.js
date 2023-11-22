@@ -77,6 +77,8 @@ export {default as alert} from './Icons/alert.png';
 export {default as clipboardClose} from './Icons/clipboard-close.png';
 export {default as tooltip} from './Icons/tooltip.png';
 export {default as tooltip1} from './Icons/tooltip1.png';
+export {default as addUserCircle} from './Icons/addUser.png';
+export {default as userMinus} from './Icons/userMinus.png';
 
 // Lotties files
 

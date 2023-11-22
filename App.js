@@ -108,8 +108,20 @@ const App = () => {
   };
 
   const onOpenNotification = notify => {
+    console.log('notify.data.payload', JSON.parse(notify.data.payload));
     const screenRoute = JSON.parse(notify.data.payload);
-    NavigationService.navigate(screenRoute.route);
+    const tripData = Boolean(screenRoute.tripData);
+    NavigationService.navigate(
+      screenRoute.route,
+      tripData && {item: {...screenRoute.tripData[0], isRoute: true}},
+    );
+    // if (tripData) {
+    //   setTimeout(() => {
+    //     NavigationService.navigate('ChatScreen', {
+    //       item: screenRoute.tripData[0],
+    //     });
+    //   }, 1000);
+    // }
   };
 
   const time = () => {

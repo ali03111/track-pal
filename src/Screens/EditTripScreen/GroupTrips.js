@@ -27,6 +27,8 @@ import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 import {loaderView} from './MyTrips';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {imageUrl} from '../../Utils/Urls';
+import EditTripModal from './editTripModal';
+import GroupMemberSelectModal from './GroupMemberSelectModal';
 
 const GroupTrips = ({navigation, route}) => {
   const {
@@ -39,6 +41,25 @@ const GroupTrips = ({navigation, route}) => {
     groupTrips,
     changeMemberStatusGroup,
     checkLenght,
+    deleteTrip,
+    openInfoModal,
+    infoModal,
+    editTripData,
+    updateModalsState,
+    userData,
+    keyboardType,
+    tripMemebers,
+    tripName,
+    tripPicture,
+    uploadFromGalary,
+    onCloseModal,
+    allUser,
+    userModal,
+    addMembersToGroup,
+    getUser,
+    filterIDSfromArry,
+    updateTripData,
+    updateError,
   } = useEditTripScreen(navigation, route);
 
   const renderItem = ({item, index}) => {
@@ -149,10 +170,17 @@ const GroupTrips = ({navigation, route}) => {
 
   const renderHiddenItem = (data, rowMap) => (
     <View style={styles.rowBack}>
-      <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]}>
+      <TouchableOpacity
+        style={[styles.backRightBtn, styles.backRightBtnLeft]}
+        onPress={() => {
+          console.log('datadatadata', data);
+          deleteTrip(data?.item?.trip_owner?.id, data?.item?.id);
+        }}>
         <Image source={trash} style={styles.trachIcon} />
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]}>
+      <TouchableOpacity
+        style={[styles.backRightBtn, styles.backRightBtnRight]}
+        onPress={() => openInfoModal(data.item)}>
         <Image source={cardediticon} style={styles.editIcon} />
       </TouchableOpacity>
     </View>
@@ -179,6 +207,62 @@ const GroupTrips = ({navigation, route}) => {
         flex: 1,
         ...noData,
       }}>
+      {infoModal && (
+        <EditTripModal
+          isModalVisible={infoModal}
+          toggleModal={onCloseModal}
+          tripData={editTripData}
+          userData={userData}
+          keyboardType={keyboardType}
+          uploadFromGalary={uploadFromGalary}
+          tripPicture={tripPicture}
+          tripMemebers={tripMemebers}
+          tripName={tripName}
+          changeName={e => updateModalsState({tripName: e})}
+          updateTripData={updateTripData}
+          updateError={updateError}
+          openMembersModal={() => {
+            console.log(
+              'editTripData.userseditTripData.users',
+              editTripData.users,
+            );
+            updateModalsState({
+              tripMemebers: editTripData.users,
+              infoModal: false,
+            });
+            setTimeout(() => {
+              updateModalsState({userModal: true});
+            }, 100);
+          }}
+        />
+      )}
+      {userModal && (
+        <GroupMemberSelectModal
+          {...{
+            isGroupMemberSelectModal: userModal,
+            toggleNextModal: () => {
+              updateModalsState({
+                editTripData: {...editTripData, users: tripMemebers},
+              });
+              // openNextModal('isGroupMemberSelectModal', 'isModalVisible');
+            },
+            onBackPress: () => {
+              updateModalsState({userModal: false});
+              setTimeout(() => {
+                updateModalsState({infoModal: true});
+              }, 100);
+            },
+            extraData: {
+              keyboardStatus: keyboardType,
+              allUser,
+              addMembersToGroup,
+              groupMembers: tripMemebers,
+              message: 'updateError',
+              getUser,
+            },
+          }}
+        />
+      )}
       {groupTrips == null && (
         <SkeletonPlaceholder borderRadius={4}>
           {loaderView()}

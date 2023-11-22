@@ -106,6 +106,9 @@ export const verifyCode = async ({confirm, code}) => {
   }
 };
 
+export const forgotPasswordServices = async email =>
+  auth().sendPasswordResetEmail(email);
+
 export const emailSignUp = async ({email, password}) => {
   console.log('dffs', email, password);
   const data = await auth().createUserWithEmailAndPassword(email, password);

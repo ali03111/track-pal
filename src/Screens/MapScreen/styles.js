@@ -1,6 +1,6 @@
 import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {hp, wp} from '../../Config/responsive';
-import {Colors} from '../../Theme/Variables';
+import {Colors, shadowStyleGlobal} from '../../Theme/Variables';
 
 export const styles = StyleSheet.create({
   staticMapImg: {
@@ -113,7 +113,7 @@ export const styles = StyleSheet.create({
     // top: hp('2.7'),
     // width: Dimensions.get('window').width * 0.1,
     // height: Dimensions.get('window').width * 0.1,
-    left: Platform.OS == 'ios' ? wp('5') : wp('4.3'),
+    left: Platform.OS == 'ios' ? wp('4.7') : wp('4.3'),
     // backgroundColor: 'red',
     bottom: hp('3.5'),
     tintColor: 'red',
@@ -170,6 +170,8 @@ export const styles = StyleSheet.create({
     marginBottom: hp('1'),
     paddingHorizontal: wp('3'),
     paddingVertical: hp('1.5'),
+    backgroundColor: 'white',
+    ...shadowStyleGlobal,
   },
   creatorProfile: {
     marginRight: wp('2.5'),
@@ -230,6 +232,8 @@ export const styles = StyleSheet.create({
     marginBottom: hp('1'),
     paddingHorizontal: wp('3'),
     paddingVertical: hp('1.5'),
+    backgroundColor: 'white',
+    ...shadowStyleGlobal,
     // position: 'relative',
   },
   desImage: {
@@ -279,6 +283,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: wp('3'),
     paddingVertical: hp('1.5'),
     height: 'auto',
+    backgroundColor: 'white',
+    ...shadowStyleGlobal,
   },
   LText: {
     // flex: 0.8,

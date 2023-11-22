@@ -60,7 +60,7 @@ const useNotificationScreen = ({params}, {navigate, addListener}) => {
   const screenName = {
     [tripsTypes[0].id]: 'Invited Trips',
     [tripsTypes[1].id]: 'Group Trips',
-    [tripsTypes[2].id]: 'Personal Trips',
+    [tripsTypes[2].id]: 'Invited Trips',
   };
 
   const toggleButton = () => {

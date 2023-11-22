@@ -309,7 +309,7 @@ const useHomeScreen = () => {
         setUpdateError('');
         return true;
       } else {
-        setUpdateError('Please type correct name');
+        setUpdateError('Trip name is required');
         return false;
       }
     },

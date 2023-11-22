@@ -37,6 +37,7 @@ const LoginScreen = ({navigation}) => {
     appleIdlogin,
     googleLoginFunc,
     facebookLoginFunc,
+    goToForgotPassword,
   } = useLogin(navigation);
   return (
     <ScrollView style={styles.logInMain}>
@@ -84,7 +85,11 @@ const LoginScreen = ({navigation}) => {
           />
           <Text style={styles.tickText}>Remember me</Text>
         </Touchable>
-        <TextComponent text={'Forgot Password'} styles={styles.forgetText} />
+        <TextComponent
+          onPress={goToForgotPassword}
+          text={'Forgot Password?'}
+          styles={styles.forgetText}
+        />
       </View>
       <ThemeButton onPress={handleSubmit(loginUser)} title={'Log In'} />
       <View style={styles.logInWith}>

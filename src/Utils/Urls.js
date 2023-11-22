@@ -53,3 +53,5 @@ export const SOSToMembers = 'sendNotificationToAllTripMembers?trip_id=';
 export const NotificationStatus = 'notification-status';
 export const sendChatNotification = 'sendNotification';
 export const createTripImage = 'set-tripe-image';
+export const deleteTripUrl = '/delete-trip/';
+export const editTripUrl = '/update-trip';

@@ -36,6 +36,10 @@ const StackNavigatior = () => {
               name="RegisterScreen"
               component={Screens.RegisterScreen}
             />
+            <Stack.Screen
+              name="ForgotPasswordScreen"
+              component={Screens.ForgotPasswordScreen}
+            />
           </>
         )}
         {isLogin && (

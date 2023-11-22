@@ -1,5 +1,6 @@
 import {Dimensions, Platform, Image, Text} from 'react-native';
 import {CardStyleInterpolators} from '@react-navigation/stack';
+import {hp} from '../Config/responsive';
 const {width, height} = Dimensions.get('window');
 
 const Colors = {
@@ -46,4 +47,15 @@ const Sizes = {
   h20: Math.round(height * 0.025),
 };
 
-export {Colors, FontSize, Sizes};
+const shadowStyleGlobal = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: hp('0.5'),
+};
+
+export {Colors, FontSize, Sizes, shadowStyleGlobal};

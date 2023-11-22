@@ -29,4 +29,5 @@ export const types = {
   addChatNoification: 'addChatNoification',
   clearNofityObjByID: 'clearNofityObjByID',
   clearAllChatNotifyObj: 'clearAllChatNotifyObj',
+  forgotPasswordType: 'forgotPasswordType',
 };

@@ -36,6 +36,7 @@ function MyTabBar({state, descriptors, navigation}) {
           });
 
           if (!isFocused && !event.defaultPrevented) {
+            console.log('on pressssss', route.name);
             navigation.navigate(route.name);
           }
         };
@@ -105,13 +106,13 @@ const MapAndChatScreen = ({navigation, route}) => {
         <Tab.Screen
           name="Map"
           component={Screens.MapScreen}
-          options={{headerShown: false}}
+          // options={{headerShown: false}}
           initialParams={route}
         />
         <Tab.Screen
           name={`Chat ( ${checkLenght} )`}
           component={Screens.ChatScreen}
-          options={{headerShown: false}}
+          // options={{headerShown: false}}
           initialParams={route}
           listeners={{
             focus: () => {

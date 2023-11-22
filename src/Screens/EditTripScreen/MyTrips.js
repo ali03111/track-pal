@@ -26,6 +26,9 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {requestPermission} from '../../Services/FireBaseRealTImeServices';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {imageUrl} from '../../Utils/Urls';
+import InfoModal from './InfoModal';
+import EditTripModal from './editTripModal';
+import GroupMemberSelectModal from './GroupMemberSelectModal';
 
 export const loaderView = () => {
   return (
@@ -47,8 +50,33 @@ export const loaderView = () => {
 };
 
 const MyTrips = ({navigation, route}) => {
-  const {updateState, tripCardData, tripsCard, isTripCreated, checkLenght} =
-    useEditTripScreen(navigation, route);
+  const {
+    updateState,
+    tripCardData,
+    tripsCard,
+    isTripCreated,
+    checkLenght,
+    deleteTrip,
+    editTrip,
+    openInfoModal,
+    infoModal,
+    editTripData,
+    updateModalsState,
+    userData,
+    keyboardType,
+    tripMemebers,
+    tripName,
+    tripPicture,
+    uploadFromGalary,
+    onCloseModal,
+    allUser,
+    userModal,
+    addMembersToGroup,
+    getUser,
+    filterIDSfromArry,
+    updateTripData,
+    updateError,
+  } = useEditTripScreen(navigation, route);
 
   const renderOwnerItem = useCallback(
     ({item, index}) => {
@@ -156,10 +184,14 @@ const MyTrips = ({navigation, route}) => {
 
   const renderHiddenItem = (data, rowMap) => (
     <View style={styles.rowBack}>
-      <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]}>
+      <TouchableOpacity
+        style={[styles.backRightBtn, styles.backRightBtnLeft]}
+        onPress={() => deleteTrip(data?.item?.user_id, data.item.id)}>
         <Image source={trash} style={styles.trachIcon} />
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]}>
+      <TouchableOpacity
+        style={[styles.backRightBtn, styles.backRightBtnRight]}
+        onPress={() => openInfoModal(data.item)}>
         <Image source={cardediticon} style={styles.editIcon} />
       </TouchableOpacity>
     </View>
@@ -185,6 +217,62 @@ const MyTrips = ({navigation, route}) => {
         flex: 1,
         ...noData,
       }}>
+      {infoModal && (
+        <EditTripModal
+          isModalVisible={infoModal}
+          toggleModal={onCloseModal}
+          tripData={editTripData}
+          userData={userData}
+          keyboardType={keyboardType}
+          uploadFromGalary={uploadFromGalary}
+          tripPicture={tripPicture}
+          tripMemebers={tripMemebers}
+          tripName={tripName}
+          changeName={e => updateModalsState({tripName: e})}
+          updateTripData={updateTripData}
+          updateError={updateError}
+          openMembersModal={() => {
+            console.log(
+              'editTripData.userseditTripData.users',
+              editTripData.users,
+            );
+            updateModalsState({
+              tripMemebers: editTripData.users,
+              infoModal: false,
+            });
+            setTimeout(() => {
+              updateModalsState({userModal: true});
+            }, 100);
+          }}
+        />
+      )}
+      {userModal && (
+        <GroupMemberSelectModal
+          {...{
+            isGroupMemberSelectModal: userModal,
+            toggleNextModal: () => {
+              updateModalsState({
+                editTripData: {...editTripData, users: tripMemebers},
+              });
+              // openNextModal('isGroupMemberSelectModal', 'isModalVisible');
+            },
+            onBackPress: () => {
+              updateModalsState({userModal: false});
+              setTimeout(() => {
+                updateModalsState({infoModal: true});
+              }, 100);
+            },
+            extraData: {
+              keyboardStatus: keyboardType,
+              allUser,
+              addMembersToGroup,
+              groupMembers: tripMemebers,
+              message: 'updateError',
+              getUser,
+            },
+          }}
+        />
+      )}
       {tripCardData == null && (
         <SkeletonPlaceholder borderRadius={4}>
           {loaderView()}

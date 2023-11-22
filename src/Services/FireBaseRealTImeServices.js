@@ -231,7 +231,10 @@ const shareLocationFirebase = async () => {
   const {
     islocationShare: {islocationShare, tripId, tripOwnerID},
   } = store.getState('islocationShare');
-
+  console.log(
+    'islocationShareislocationShareislocationShareislocationShare',
+    islocationShare,
+  );
   if (islocationShare) {
     await firebaseSubON({tripId, tripOnnwerID: tripOwnerID});
   }
@@ -306,6 +309,92 @@ const getFirebaseData = async data => {
     return {ok: true, data: filterData};
   } catch (error) {
     store.dispatch(loadingFalse());
+    return {ok: false, data: error};
+  }
+};
+
+const deleteDataOnFirebase = async data => {
+  store.dispatch(loadingTrue());
+  const {tripId, tripOnnwerID} = data;
+  try {
+    await referenceChat.doc(`"${tripId}"`).delete();
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+    await fire.doc(`${tripOnnwerID}`).delete();
+    store.dispatch({
+      type: types.clearNofityObjByID,
+      payload: tripId,
+    });
+    return {ok: true, data: {}};
+  } catch (error) {
+    store.dispatch(loadingFalse());
+    return {ok: false, data: error};
+  }
+};
+
+const updateTripDataonFirebase = async data => {
+  const {tripId, tripOnnwerID, tripName, tripImage, new_users, remove_users} =
+    data;
+  try {
+    const fire = reference.doc(`${tripOnnwerID}`).collection(`"${tripId}"`);
+
+    const firebaseGet = await fire.doc(`${tripOnnwerID}`).get();
+
+    const wholeObj = firebaseGet.data();
+    if (remove_users.length > 0) {
+      console.log(
+        'removed arry firebase',
+        wholeObj.members.filter(item1 => !remove_users.includes(item1.id)),
+      );
+      // wholeObj.members.filter(
+      //   item1 => !remove_users.some(item2 => item1.id === item2.id),
+      // );
+      wholeObj.members = wholeObj.members.filter(
+        item1 => !remove_users.includes(item1.id),
+      );
+      // wholeObj.members.filter(
+      //   item1 => !remove_users.find(item2 => item1.id === item2.id),
+      // );
+    }
+    if (new_users.length > 0) {
+      const membersData = new_users.map(res => ({
+        id: res.id,
+        details: res,
+        location: {
+          coords: {},
+          description: '',
+        },
+      }));
+      wholeObj.members = [...wholeObj.members, ...membersData];
+    }
+    // if (new_users.length > 0) {
+    //   wholeObj.members.push(
+    //     new_users.map(res => ({
+    //       id: res.id,
+    //       details: res,
+    //       location: {
+    //         coords: {},
+    //         description: '',
+    //       },
+    //     })),
+    //   );
+    // }
+    wholeObj.TripName = tripName;
+    wholeObj.tripImage = tripImage;
+    // wholeObj.members=
+    // wholeObj = {
+    //   ...wholeObj,
+    //   TripName: tripName,
+    //   tripImage,
+    // };
+    console.log(
+      'updatedDataupdatedDataupdatedDataupdatedDataupdatedData',
+      wholeObj,
+    );
+    const r = await fire.doc(`${tripOnnwerID}`).update(wholeObj);
+    console.log('Firebase error', r);
+    return {ok: true, data: null};
+  } catch (error) {
+    console.log('Firebase ', error);
     return {ok: false, data: error};
   }
 };
@@ -485,4 +574,6 @@ export {
   creaetChatObj,
   notifyUser,
   getFirebaseAllData,
+  deleteDataOnFirebase,
+  updateTripDataonFirebase,
 };

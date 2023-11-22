@@ -113,6 +113,11 @@ const MapScreen = ({route, navigation}) => {
   const checkCurrentUser = Boolean(
     currentUser.coords.latitude != null && !tripData.owner,
   );
+  console.log(
+    'checkCurrentUsercheckCurrentUsercheckCurrentUsercheckCurrentUser',
+    checkCurrentUser,
+  );
+
   const TripNameBottom = useCallback(() => {
     return tripData.image ? (
       <CircleImage

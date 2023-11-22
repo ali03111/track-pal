@@ -5,6 +5,7 @@ import {
   emailLogin,
   emailSignUp,
   faceBookLogin,
+  forgotPasswordServices,
   googleLogin,
 } from '../../Utils/SocialLogin';
 import {updateAuth} from '../Action/AuthAction';
@@ -18,7 +19,8 @@ import {
   updateProfileServices,
 } from '../../Services/AuthServices';
 import DeviceInfo from 'react-native-device-info';
-import {errorMessage} from '../../Config/NotificationMessage';
+import {errorMessage, successMessage} from '../../Config/NotificationMessage';
+import NavigationService from '../../Services/NavigationService';
 
 const loginObject = {
   Google: () => googleLogin(),
@@ -62,12 +64,12 @@ const loginSaga = function* ({payload: {datas, type}}) {
           yield put(loadingTrue());
           yield put(updateAuth(data));
         } else {
-          errorMessage(data.message);
+          errorMessage(data?.message);
         }
       }
     }
   } catch (error) {
-    errorMessage(error.message.split(' ').slice(1).join(' ') ?? error);
+    errorMessage(error?.message.split(' ').slice(1).join(' ') ?? error);
     console.log('err', error);
   } finally {
     yield put(loadingFalse());
@@ -101,7 +103,7 @@ function* registerSaga({payload: {datas}}) {
     }
   } catch (error) {
     errorMessage(
-      error.message.split(' ').slice(1).join(' ') ?? error ?? error?.message,
+      error?.message.split(' ').slice(1).join(' ') ?? error ?? error?.message,
     );
     console.log('slbklsdbbsdfkgbsdklbgs', error);
   } finally {
@@ -118,9 +120,12 @@ function* logOutSaga(action) {
     // yield call(logoutService);
     yield put({type: types.LogoutType});
     yield call(logOutFirebase);
+    yield put({type: types.ClearNotify});
+    yield put({type: types.clearAllChatNotifyObj});
+    yield put({type: types.ClearNotifyInvitation});
     console.log('okokok');
   } catch (error) {
-    errorMessage(error.message.split(' ').slice(1).join(' '));
+    errorMessage(error?.message.split(' ').slice(1).join(' '));
   } finally {
     yield put(loadingFalse());
   }
@@ -141,12 +146,27 @@ function* updateProfileSaga({payload: profileData}) {
     if (ok) {
       yield put({type: types.UpdateProfile, payload: data.data});
       // successMessage('Your profile has been updated');
-    } else errorMessage(data.message);
+    } else errorMessage(data?.message);
   } catch (error) {
     console.log('error ', error);
-    errorMessage(error.message.split(' ').slice(1).join(' '));
+    errorMessage(error?.message.split(' ').slice(1).join(' '));
   } finally {
     delay(2000);
+    yield put(loadingFalse());
+  }
+}
+
+/* This function is used to reset the user password. */
+function* forgotUserSaga(action) {
+  try {
+    yield put(loadingTrue());
+    yield call(forgotPasswordServices, action.payload);
+    successMessage('Password Reset Request has been sent to your mail');
+    NavigationService.navigate('LoginScreen');
+  } catch (error) {
+    errorMessage(error.message.split(' ').slice(1).join(' '));
+  } finally {
+    delay(1000);
     yield put(loadingFalse());
   }
 }
@@ -162,6 +182,7 @@ function* authSaga() {
   yield takeLatest(types.RegisterUser, registerSaga);
   yield takeLatest(types.UpdateUser, updateProfileSaga);
   yield takeLatest(types.fcmRegType, fcmTokenSaga);
+  yield takeLatest(types.forgotPasswordType, forgotUserSaga);
 }
 
 export default authSaga;

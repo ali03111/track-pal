@@ -38,6 +38,8 @@ const useLogin = ({navigate, goBack}) => {
   };
   // const loginUser = () => navigate('MybottomTabs');
 
+  const goToForgotPassword = () => navigate('ForgotPasswordScreen');
+
   const googleLoginFunc = async () => {
     dispatch(loginUser({type: 'Google', datas: {}}));
   };
@@ -63,6 +65,7 @@ const useLogin = ({navigate, goBack}) => {
     onPress,
     loginUser: loginUserFun,
     appleIdlogin,
+    goToForgotPassword,
   };
 };
 
