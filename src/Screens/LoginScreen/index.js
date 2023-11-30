@@ -59,7 +59,7 @@ const LoginScreen = ({navigation}) => {
           getValues,
           placeholder: 'Email',
           isImage: email,
-          defaultValue: '',
+          defaultValue: 'user@gmail.com',
         }}
       />
       <InputComponent
@@ -72,7 +72,7 @@ const LoginScreen = ({navigation}) => {
           getValues,
           placeholder: 'Password',
           isImage: lock,
-          defaultValue: '',
+          defaultValue: 'Test@123',
           isSecure: true,
           inputIconStyle: styles.lockstyle,
         }}

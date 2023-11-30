@@ -85,7 +85,7 @@ const MapAndChatScreen = ({navigation, route}) => {
     route?.params?.item,
   );
   const {checkLenght, dispatch} = useMapAndChatScreen(route?.params?.item);
-
+  const length = checkLenght;
   return (
     <View style={styles.tabsMain}>
       <CustomHeader
@@ -99,6 +99,7 @@ const MapAndChatScreen = ({navigation, route}) => {
       />
 
       <Tab.Navigator
+        initialRouteName={route?.params?.item?.isRoute ? `Chat` : 'Map'}
         tabBarOptions={{
           headerShown: false,
         }}
@@ -110,16 +111,27 @@ const MapAndChatScreen = ({navigation, route}) => {
           initialParams={route}
         />
         <Tab.Screen
-          name={`Chat ( ${checkLenght} )`}
+          name={`Chat`}
           component={Screens.ChatScreen}
-          // options={{headerShown: false}}
+          options={{title: `Chat ( ${length} )`}}
           initialParams={route}
           listeners={{
             focus: () => {
+              // if (route?.params?.item?.isRoute) {
               dispatch({
                 type: types.clearNofityObjByID,
                 payload: route?.params?.item.id,
               });
+              // }
+              // navigation.navigate('Chat', route);
+              // setTimeout(() => {
+              //   if (!route?.params?.item?.isRoute) {
+              //   dispatch({
+              //     type: types.clearNofityObjByID,
+              //     payload: route?.params?.item.id,
+              //   });
+              //   }
+              // }, 1000);
               notificationStatusFunc('false');
             },
             blur: () => {

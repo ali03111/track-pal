@@ -16,4 +16,5 @@ export {default as MapScreen} from './MapScreen';
 // export {default as InvitaitionTab} from './InvitationScreen';
 export {default as GeneralNotification} from './GeneralNotificationScreen';
 export {default as InvitationScreen} from './InvitationScreen';
+export {default as EditPhoneNumberScreen} from './EditPhoneNumberScreen';
 export {default as ForgotPasswordScreen} from './ForgotPasswordScreen';

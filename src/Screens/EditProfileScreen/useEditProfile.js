@@ -53,17 +53,18 @@ const useEditProfile = ({navigate, goBack}) => {
   const updateProfileFunction = async currentValue => {
     try {
       dispatch(loadingTrue());
+      console.log('currentValuecurrentValuecurrentValue', currentValue);
       const {ok, data} = await formDataFunc(
         UpdateProfileUrl,
         {...currentValue, profileData},
         'profile_image',
       );
       console.log(ok, data, 'uueueue');
-      if (ok) {
+      if (ok && data?.user) {
         dispatch(loadingFalse());
         successMessage(data.message);
         dispatch({type: types.UpdateProfile, payload: data.user});
-      }
+      } else errorMessage(data?.message);
     } catch (e) {
       dispatch(loadingFalse());
       errorMessage(e.message.split(' ').slice(1).join(' ') ?? e);

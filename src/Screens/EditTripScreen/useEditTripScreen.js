@@ -35,6 +35,7 @@ import {showMessage} from 'react-native-flash-message';
 import {types} from '../../Redux/types';
 import {Keyboard} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {getContactFromSql, sendUpdatedAt} from '../../Services/ContactServices';
 
 const useEditTripScreen = ({addListener, navigate}, {params}) => {
   const routeName = params?.params?.sendTo;
@@ -73,6 +74,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
     setModalsState(prev => ({...prev, ...data}));
 
   const {dispatch, getState} = useReduxStore();
+  const {contacts} = getState('contacts');
 
   const {userData} = getState('Auth');
   const {chatNotify} = getState('chatNotify');
@@ -282,8 +284,9 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
   }, []);
 
   const getUser = async () => {
-    const {ok, data} = await API.get(getAllUser);
-    if (ok) updateModalsState({allUser: data});
+    await getContactFromSql();
+    console.log('contactscontactscontactscontactscontactscontacts', contacts);
+    updateModalsState({allUser: contacts});
   };
 
   const useEffectFuc = () => {
@@ -316,6 +319,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
       tripPicture: null,
       keyboardType: false,
     });
+    setUpdateError('');
   };
   let regexp = /^(?![\s\b]).*/;
   const errorObj = {
@@ -359,7 +363,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
               : filterIDSfromArry(editTripData.users),
           id: editTripData.id,
         });
-        console.log('kjdbkjsdbkjbsdjkbfjksdbfd', data);
+        console.log('kjdbkjsdbkjbsdjkbfjksdbfd', data.message);
         if (tripPicture != null && ok) {
           var {status, res} = await updateTripImage(data);
         }
@@ -377,13 +381,15 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
           tripsCard();
           console.log('okokokokokok', ok);
         }
+        if (!ok) setUpdateError(data?.message);
       } else {
-        errorMessage(data?.message);
+        setUpdateError(data?.message);
         dispatch(loadingFalse());
         console.log('error');
       }
     } catch (error) {
       errorMessage(error);
+      setUpdateError(error);
       dispatch(loadingFalse());
       console.log('skljdfjksbdkfbsdjkbfjksdbjkfbsdjbfsd', error);
     }
@@ -435,10 +441,10 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
     keyboardType,
     uploadFromGalary,
     onCloseModal,
-    allUser,
+    allUser: contacts,
     userModal,
     addMembersToGroup,
-    getUser,
+    getUser: sendUpdatedAt,
     filterIDSfromArry,
     updateTripData,
     updateError,

@@ -109,13 +109,13 @@ const useMapScreen = ({navigate}, {params}) => {
     iconRef.current = 1;
   };
 
-  useEffect(() => {
-    if (item.isRoute) {
-      setTimeout(() => {
-        navigate('ChatScreen', {params: {item: item}});
-      }, 2000);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (item.isRoute) {
+  //     setTimeout(() => {
+  //       navigate('Chat', {params: {item: item}});
+  //     }, 2000);
+  //   }
+  // }, []);
 
   useEffect(shareLocationFirebase, [shareLocationFirebase]);
 

@@ -12,6 +12,7 @@ import AlertReucer from './AlertReucer';
 import invitationNotReducer from './invitationNotReducer';
 import GeneralNotReducer from './GeneralNotReducer';
 import ChatNotifyReducer from './ChatNotifyReducer';
+import ContactsReducer from './ContactsReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -62,6 +63,7 @@ const reducers = {
   generalNotify: persistReducer(generalNotifyPersistConfig, GeneralNotReducer),
   chatNotify: persistReducer(chatNotifyPersistConfig, ChatNotifyReducer),
   isloading: loadingReducer,
+  contacts: ContactsReducer,
   isAlert: AlertReucer,
   // isQuestion: questionReducer,
   // sagas: applyMiddleware(sagaMiddleware),

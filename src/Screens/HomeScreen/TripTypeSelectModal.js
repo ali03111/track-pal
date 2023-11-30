@@ -123,8 +123,6 @@ const TripTypeSelectModal = ({
             </View>
           </View>
         </View>
-      </Modal>
-      <View style={{flex: 1}}>
         <Modal
           isVisible={istooltipModal}
           backdropColor="black"
@@ -146,7 +144,9 @@ const TripTypeSelectModal = ({
             />
           </View>
         </Modal>
-      </View>
+      </Modal>
+      {/* <View style={{flex: 1, backgroundColor: 'red'}}> */}
+      {/* </View> */}
     </View>
   );
 };

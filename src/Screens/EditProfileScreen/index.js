@@ -67,7 +67,7 @@ const EditProfileScreen = ({navigation}) => {
             radius={75}
             styles={styles.ProfileImage}
             isURI={true}
-            uri={profileData?.uri || imageUrl(userData.profile_image)}
+            uri={profileData?.uri || imageUrl(userData?.profile_image)}
           />
         </View>
         <Touchable

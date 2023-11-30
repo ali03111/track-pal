@@ -46,6 +46,7 @@ import {loadingFalse, loadingTrue} from './src/Redux/Action/isloadingAction';
 import {hp, wp} from './src/Config/responsive';
 import {Touchable} from './src/Components/Touchable';
 import {TextComponent} from './src/Components/TextComponent';
+import {checkContactPermission} from './src/Services/ContactServices';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -87,19 +88,20 @@ const App = () => {
     Settings.setAppID('1254157088825041');
   }, []);
 
+  useEffect(() => {});
+
   useEffect(() => {
-    console.log(
-      'isLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLoginisLogin',
-      isLogin,
-    );
     /* It's a function that registers the device to receive push notifications. */
-    if (isLogin)
+    if (isLogin) {
       setTimeout(() => {
         fcmService.register(onRegister, onOpenNotification, appState.current);
       }, 5000);
+    }
     return () => {
       /* It's a function that unregisters the device from receiving push notifications. */
-      if (isLogin) fcmService.unRegister();
+      if (isLogin) {
+        fcmService.unRegister();
+      }
     };
   }, [isLogin]);
   const onRegister = fcm_token => {
@@ -108,13 +110,15 @@ const App = () => {
   };
 
   const onOpenNotification = notify => {
-    console.log('notify.data.payload', JSON.parse(notify.data.payload));
-    const screenRoute = JSON.parse(notify.data.payload);
-    const tripData = Boolean(screenRoute.tripData);
-    NavigationService.navigate(
-      screenRoute.route,
-      tripData && {item: {...screenRoute.tripData[0], isRoute: true}},
-    );
+    if (notify?.data?.payload) {
+      console.log('notify.data.payload', JSON.parse(notify.data.payload));
+      const screenRoute = JSON.parse(notify.data.payload);
+      const tripData = Boolean(screenRoute.tripData);
+      NavigationService.navigate(
+        screenRoute.route,
+        tripData && {item: {...screenRoute.tripData[0], isRoute: true}},
+      );
+    }
     // if (tripData) {
     //   setTimeout(() => {
     //     NavigationService.navigate('ChatScreen', {

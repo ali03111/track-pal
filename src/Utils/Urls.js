@@ -3,17 +3,19 @@ const getCredentials = () => {
     return {
       baseURL: 'https://virtualrealitycreators.com/trackpal/api/',
       imageURL: 'https://virtualrealitycreators.com/trackpal/public/',
+      twiloURL: 'https://verify.twilio.com/v2/Services',
     };
   else {
     console.log = () => {};
     return {
       baseURL: 'https://virtualrealitycreators.com/trackpal/api/',
       imageURL: 'https://virtualrealitycreators.com/trackpal/public/',
+      twiloURL: 'https://verify.twilio.com/v2/Services',
     };
   }
 };
 
-export const {baseURL, imageURL} = getCredentials();
+export const {baseURL, imageURL, twiloURL} = getCredentials();
 
 export const apendUrl = url => {
   return baseURL + url;
@@ -55,3 +57,8 @@ export const sendChatNotification = 'sendNotification';
 export const createTripImage = 'set-tripe-image';
 export const deleteTripUrl = '/delete-trip/';
 export const editTripUrl = '/update-trip';
+export const SendVerficatioUrl = '/send-message/';
+export const checkVerficatioUrl = '/verify-number/';
+export const twiloSendVerficatioUrl = '/start-verify';
+export const sendNumberToServerUrl = '/send-mobile-numbers';
+export const sendUpdatedAtUrl = '/match-data';

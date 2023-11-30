@@ -416,7 +416,7 @@ export const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     marginVertical: hp('1'),
-    lineHeight: 22,
+    lineHeight: hp('3'),
   },
   refresh: {
     height: hp('80'),

@@ -30,4 +30,6 @@ export const types = {
   clearNofityObjByID: 'clearNofityObjByID',
   clearAllChatNotifyObj: 'clearAllChatNotifyObj',
   forgotPasswordType: 'forgotPasswordType',
+  ClearContacts: 'ClearContacts',
+  addContacts: 'addContacts',
 };

@@ -58,16 +58,7 @@ function MybottomTabs() {
         <View style={styles.tabarView}>
           {isDot && (
             <View style={{...styles.dot, ...DotStyles}}>
-              <Text
-                style={{
-                  color: 'white',
-                  textAlignVertical: 'center',
-                  fontSize: hp('1'),
-                  marginHorizontal: wp('1.5'),
-                  marginVertical: hp('0.2'),
-                }}>
-                {inviNotify?.length}
-              </Text>
+              <Text style={styles.numberLength}>{inviNotify?.length}</Text>
             </View>
           )}
           {isLottie ? (
@@ -139,8 +130,13 @@ function MybottomTabs() {
           sendNotification,
           (ImageStyle = {
             width: wp('24'),
-            marginTop: genNotifyStatus ? hp('-2') : hp('-5'),
+            marginTop: genNotifyStatus
+              ? Platform.OS == 'ios'
+                ? hp('-1.4')
+                : hp('-2')
+              : hp('-5'),
             height: genNotifyStatus ? hp('10') : hp('12'),
+            // backgroundColor: 'transparent',
           }),
           false,
           {},
@@ -207,5 +203,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
+  },
+  numberLength: {
+    color: 'white',
+    textAlignVertical: 'center',
+    fontSize: hp('1'),
+    marginHorizontal: wp('1.5'),
+    marginVertical: hp('0.2'),
   },
 });

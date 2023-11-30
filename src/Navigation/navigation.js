@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigatior = () => {
   const {getState} = useReduxStore();
   const {onboarding} = getState('onboarding');
-  const {isLogin} = getState('Auth');
+  const {isLogin, userData} = getState('Auth');
   return (
     <NavigationContainer
       ref={ref => {
@@ -44,7 +44,17 @@ const StackNavigatior = () => {
         )}
         {isLogin && (
           <>
+            {/* {!userData.is_verified && (
+              <Stack.Screen
+                name="EditPhoneNumberScreen"
+                component={Screens.EditPhoneNumberScreen}
+              />
+            )} */}
             <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
+            <Stack.Screen
+              name="EditPhoneNumberScreen"
+              component={Screens.EditPhoneNumberScreen}
+            />
             <Stack.Screen
               name="EditTripScreen"
               component={Screens.EditTripScreen}

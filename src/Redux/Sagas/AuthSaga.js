@@ -21,6 +21,11 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import NavigationService from '../../Services/NavigationService';
+import {
+  checkSqlDataBase,
+  getContactFromSql,
+  sendPhoneBookTOServer,
+} from '../../Services/ContactServices';
 
 const loginObject = {
   Google: () => googleLogin(),
@@ -63,6 +68,17 @@ const loginSaga = function* ({payload: {datas, type}}) {
         if (ok) {
           yield put(loadingTrue());
           yield put(updateAuth(data));
+          // if (data.user.is_verified == 0) {
+          //   delay('100');
+          //   // yield call(NavigationService.navigate, 'EditPhoneNumberScreen');
+          // }
+          if (data.user.isNewUser) {
+            yield call(sendPhoneBookTOServer);
+            yield call(getContactFromSql);
+          } else {
+            yield call(checkSqlDataBase);
+            yield call(getContactFromSql);
+          }
         } else {
           errorMessage(data?.message);
         }
@@ -95,7 +111,23 @@ function* registerSaga({payload: {datas}}) {
         console.log('sdjbfjksdbfjbsdjfbsdf', data);
         if (ok) {
           yield put(loadingTrue());
+          yield call(sendPhoneBookTOServer);
           yield put(updateAuth(data));
+          // if (data.user.is_verified == 0) {
+          //   delay('100');
+          //   console.log(
+          //     'NavigationServiceNavigationServiceNavigationServiceNavigationServiceNavigationServiceNavigationService',
+          //     NavigationService,
+          //   );
+          //   yield call(NavigationService.navigate, 'EditPhoneNumberScreen');
+          // }
+          if (data.user.isNewUser) {
+            yield call(sendPhoneBookTOServer);
+            yield call(getContactFromSql);
+          } else {
+            yield call(checkSqlDataBase);
+            yield call(getContactFromSql);
+          }
         } else {
           errorMessage(data?.message);
         }
@@ -121,6 +153,7 @@ function* logOutSaga(action) {
     yield put({type: types.LogoutType});
     yield call(logOutFirebase);
     yield put({type: types.ClearNotify});
+    yield put({type: types.ClearContacts});
     yield put({type: types.clearAllChatNotifyObj});
     yield put({type: types.ClearNotifyInvitation});
     console.log('okokok');

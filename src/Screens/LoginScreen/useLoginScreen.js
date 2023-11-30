@@ -34,6 +34,7 @@ const useLogin = ({navigate, goBack}) => {
   const onPress = () => navigate('RegisterScreen');
 
   const loginUserFun = ({email, password}) => {
+    // navigate('EditPhoneNumberScreen');
     dispatch(registerUser({datas: {email, password}}));
   };
   // const loginUser = () => navigate('MybottomTabs');

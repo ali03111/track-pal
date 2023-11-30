@@ -53,21 +53,23 @@ const GroupMemberSelectModal = ({
   } = extraData;
   const [text, setText] = useState('');
   const [filterData, setFilterData] = useState([]);
+  const cloneUser = [...allUser];
   function searchFun(e) {
     var text = e;
     if (text) {
       // Inserted text is not blank
       // Filter the masterDataSource and update FilteredDataSource
-      const newData = allUser.filter(function (item) {
+      const newData = cloneUser.filter(function (item) {
         // Applying filter for the inserted text in search bar
-        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const itemData = (item.name || '').toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
+      console.log('newDatanewDatanewDatanewData', newData);
       setFilterData(newData);
       setText(text);
     } else {
-      setFilterData(allUser);
+      setFilterData(cloneUser);
       setText(text);
     }
   }
@@ -76,43 +78,48 @@ const GroupMemberSelectModal = ({
   // }, [message]);
 
   // errorMessageHandler
-  const renderItem = useCallback(({item, index}) => {
-    var color =
-      index.toString().length === 1 ? index : index.toString().split('').pop();
-    return (
-      <View style={styles.radioMain}>
-        <Touchable
-          style={styles.rememberInner}
-          onPress={() => addMembersToGroup(item.id)}>
-          <View style={styles.radio}>
-            <View style={styles.groupMembers}>
-              {item.profile_image ? (
-                <CircleImage
-                  uri={true}
-                  image={imageUrl(item?.profile_image)}
-                  styles={styles.memberPic}
-                />
-              ) : (
-                <FirstCharacterComponent
-                  extraStyle={styles.firstLetterStyle}
-                  indexNumber={color}
-                  text={item?.name}
-                />
-              )}
+  const renderItem = useCallback(
+    ({item, index}) => {
+      var color =
+        index.toString().length === 1
+          ? index
+          : index.toString().split('').pop();
+      return (
+        <View style={styles.radioMain}>
+          <Touchable
+            style={styles.rememberInner}
+            onPress={() => addMembersToGroup(item.id)}>
+            <View style={styles.radio}>
+              <View style={styles.groupMembers}>
+                {item.profile_image ? (
+                  <CircleImage
+                    uri={true}
+                    image={imageUrl(item?.profile_image)}
+                    styles={styles.memberPic}
+                  />
+                ) : (
+                  <FirstCharacterComponent
+                    extraStyle={styles.firstLetterStyle}
+                    indexNumber={color}
+                    text={item?.name}
+                  />
+                )}
 
-              <TextComponent text={item?.email} styles={styles.groupTitle} />
-              <Image
-                source={
-                  groupMembers.includes(item.id) ? rememberImg : rememberEmpty
-                }
-                style={styles.tickIcon}
-              />
+                <TextComponent text={item?.name} styles={styles.groupTitle} />
+                <Image
+                  source={
+                    groupMembers.includes(item.id) ? rememberImg : rememberEmpty
+                  }
+                  style={styles.tickIcon}
+                />
+              </View>
             </View>
-          </View>
-        </Touchable>
-      </View>
-    );
-  });
+          </Touchable>
+        </View>
+      );
+    },
+    [filterData, cloneUser],
+  );
   return (
     <View
       key={isGroupMemberSelectModal}
@@ -163,10 +170,17 @@ const GroupMemberSelectModal = ({
                   refreshing={false}
                   data={
                     // filterData
-                    filterData.length >= 0 && text != '' ? filterData : allUser
+                    filterData.length >= 0 && text != ''
+                      ? filterData
+                      : cloneUser
                   }
                   renderItem={renderItem}
-                  onRefresh={() => getUser()}
+                  onRefresh={() => {
+                    getUser();
+                    setTimeout(() => {
+                      getUser();
+                    }, 2000);
+                  }}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={{
@@ -175,7 +189,12 @@ const GroupMemberSelectModal = ({
                   }}
                   ListEmptyComponent={
                     <EmptyViewComp
-                      onRefresh={getUser}
+                      onRefresh={() => {
+                        getUser();
+                        setTimeout(() => {
+                          getUser();
+                        }, 2000);
+                      }}
                       refreshStyle={styles.refresh}
                     />
                   }

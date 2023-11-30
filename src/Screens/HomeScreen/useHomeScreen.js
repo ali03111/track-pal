@@ -9,17 +9,34 @@ import {
   PermissionsAndroid,
   Platform,
 } from 'react-native';
-import {errorMessage} from '../../Config/NotificationMessage';
+import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import API, {formDataFunc} from '../../Utils/helperFunc';
 import {CreateTripUrl, createTripImage, getAllUser} from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 import {createTripObj} from '../../Services/FireBaseRealTImeServices';
 import {launchImageLibrary} from 'react-native-image-picker';
+import Contact, {getAll} from 'react-native-contacts';
+import {
+  requestLocationAccuracy,
+  LocationAccuracy,
+  checkLocationAccuracy,
+  PERMISSIONS,
+  check,
+  request,
+  openSettings,
+} from 'react-native-permissions';
+import {
+  getContactFromSql,
+  // checkContactPermission,
+  sendPhoneBookTOServer,
+  sendUpdatedAt,
+} from '../../Services/ContactServices';
 
 const useHomeScreen = () => {
   const {dispatch, getState} = useReduxStore();
   const {userData} = getState('Auth');
+  const {contacts} = getState('contacts');
   const [homeStates, setHomeStates] = useState({
     selectTripType: tripsTypes[0].id,
     isModalVisible: false,
@@ -327,15 +344,30 @@ const useHomeScreen = () => {
   };
 
   const getUser = async () => {
-    const {ok, data} = await API.get(getAllUser);
-    if (ok) updateState({allUser: data});
+    await getContactFromSql();
+    console.log('contactscontactscontactscontactscontactscontacts', contacts);
+    updateState({allUser: contacts});
+    // const {ok, data} = await API.get(getAllUser);
+    // if (ok) updateState({allUser: data});
   };
+
+  // const sendPhone = async () => {
+  //   await sendPhoneBookTOServer();
+  // };
 
   const useEffectFuc = () => {
     console.log('redawww');
+    // sendPhone();
+    sendUpdatedAt();
     getUser();
-    locationFun(currentLocation);
+    setTimeout(() => {
+      locationFun(currentLocation);
+    }, 2000);
   };
+
+  // useEffect(async () => {
+  //   await sendPhoneBookTOServer();
+  // }, []);
 
   const addMembersToGroup = ids => {
     if (groupMembers.includes(ids)) {
@@ -427,15 +459,16 @@ const useHomeScreen = () => {
     remember,
     rememberValue,
     keyboardStatus,
-    allUser,
+    allUser: contacts,
     addMembersToGroup,
     groupMembers,
     updateError,
     createTripFun,
     uploadFromGalary,
     tripImage,
-    getUser,
+    getUser: sendUpdatedAt,
     clearImage,
+    getAll,
   };
 };
 

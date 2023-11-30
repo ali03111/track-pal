@@ -117,10 +117,11 @@ const StartTripModal = ({
                         ...styles.input,
                         justifyContent: 'center',
                         paddingLeft: wp('2'),
+                        height: 'auto',
+                        paddingVertical: hp('1'),
                       }}>
                       <TextComponent
                         styles={{fontSize: hp('1.8')}}
-                        numberOfLines={1}
                         text={locationInput?.description}
                       />
                     </View>
@@ -140,10 +141,11 @@ const StartTripModal = ({
                       ...styles.input,
                       justifyContent: 'center',
                       paddingLeft: wp('2'),
+                      height: 'auto',
+                      paddingVertical: hp('1'),
                     }}>
                     <TextComponent
                       styles={{fontSize: hp('1.8')}}
-                      numberOfLines={1}
                       text={destinationInput?.description}
                     />
                   </View>

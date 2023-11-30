@@ -18,6 +18,7 @@ import {
 import {Alert, PermissionsAndroid, Platform} from 'react-native';
 import API from '../Utils/helperFunc';
 import {alertTrue} from '../Redux/Action/isAlertAction';
+import NavigationService from './NavigationService';
 
 const perSKU = Platform.select({
   android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -552,9 +553,11 @@ const getFirebaseAllData = async data => {
 };
 
 const notifyUser = async id => {
+  const getNameFunc = NavigationService.getCurrentRoute();
+  const routeName = getNameFunc?.getCurrentRoute()?.name;
   const {ok, data} = await API.get(notifyToOwnerUrl + id);
   console.log('jadbfjkbadjbsjdbbsd', data);
-  if (ok) {
+  if (ok && routeName == 'MapAndChatScreen') {
     store.dispatch(alertTrue());
   }
 };
