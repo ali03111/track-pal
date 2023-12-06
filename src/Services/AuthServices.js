@@ -1,5 +1,11 @@
 import auth from '@react-native-firebase/auth';
-import {fcmToken, loginUrl, logoutUrl, registerUrl} from '../Utils/Urls';
+import {
+  checkNumberBeforeRegisterUrl,
+  fcmToken,
+  loginUrl,
+  logoutUrl,
+  registerUrl,
+} from '../Utils/Urls';
 import API from '../Utils/helperFunc';
 
 const getFbResult = () => auth().currentUser.getIdTokenResult();
@@ -7,6 +13,9 @@ const getFbResult = () => auth().currentUser.getIdTokenResult();
 const loginService = param => API.post(loginUrl, param);
 
 const registerService = param => API.post(registerUrl, param);
+
+const checkNumberService = param =>
+  API.get(checkNumberBeforeRegisterUrl + param);
 
 const logoutService = async () => await API.get(logoutUrl);
 
@@ -59,6 +68,7 @@ export {
   updateProfileServices,
   randomService,
   fcmRegService,
+  checkNumberService,
   // createAgoraUser,
   // loginWithAgora,
   // AgoraServerToken,

@@ -10,6 +10,7 @@ import {
   editProfileBg,
   editProfileBgNew,
   profleImg,
+  verify,
   whiteArrowBack,
 } from '../../Assets';
 import {InputComponent} from '../../Components/InputComponent';
@@ -36,6 +37,8 @@ const EditProfileScreen = ({navigation}) => {
     uploadFromGalary,
     profileData,
     userData,
+    navigateToEdit,
+    isVerified,
   } = useResetPassword(navigation);
   return (
     <KeyBoardWrapper>
@@ -116,28 +119,23 @@ const EditProfileScreen = ({navigation}) => {
             placeholder: 'Email',
             // defaultValue: 'jhondoe@gmail.com',
             defaultValue: userData?.email,
-
             textStyle: styles.inputStyle,
             viewStyle: styles.mainStyle,
             editable: false,
           }}
         />
         <TextComponent text={'Phone Number'} styles={styles.inputTitle} />
-        <InputComponent
-          {...{
-            name: 'phone',
-            handleSubmit,
-            errors,
-            reset,
-            control,
-            getValues,
-            placeholder: 'Phone Number',
-            // defaultValue: '+12 3456 789',
-            defaultValue: userData?.phone,
-            textStyle: styles.inputStyle,
-            viewStyle: styles.mainStyle,
-          }}
-        />
+        <Touchable onPress={navigateToEdit} style={styles.passBtn}>
+          <Text
+            style={{
+              ...styles.passText,
+              fontSize: hp('1.7'),
+              fontWeight: 'bold',
+            }}>
+            {userData?.phone ?? 'Please enter your number'}
+          </Text>
+          {isVerified && <Image style={styles.passIcon} source={verify} />}
+        </Touchable>
         {console.log('userData?.phone ', userData?.phone)}
         <ThemeButton
           onPress={handleSubmit(updateProfileFunction)}

@@ -8,6 +8,7 @@ import {
   lock,
   logout,
   privacyPolicy,
+  profileDelete,
   profleImg,
   userProfileIcon,
 } from '../../Assets';
@@ -22,7 +23,7 @@ import {imageUrl} from '../../Utils/Urls';
 import BlurImage from '../../Components/BlurImage';
 
 const ProfileScreen = ({navigation}) => {
-  const {dynamicNav, alert, onCancel, onConfirm, userData} =
+  const {dynamicNav, alert, onCancel, onConfirm, userData, deleteAccount} =
     useProfileScreen(navigation);
   return (
     <ScrollView
@@ -61,6 +62,11 @@ const ProfileScreen = ({navigation}) => {
       <ProfileBtn title={'About TrackPal'} icon={aboutTrackpal} />
       <ProfileBtn title={'Privacy Policy'} icon={privacyPolicy} />
       <ProfileBtn title={'Terms and Conditions'} icon={TermsCondition} />
+      <ProfileBtn
+        title={'Delete Account'}
+        icon={profileDelete}
+        onPress={deleteAccount}
+      />
       <ProfileBtn
         onPress={() => dynamicNav('ResetPasswordScreen')}
         title={'Reset Password'}

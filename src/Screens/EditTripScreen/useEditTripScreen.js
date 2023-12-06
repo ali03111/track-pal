@@ -94,9 +94,12 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
     });
     dispatch(loadingTrue());
     if (ok) {
+      dispatch(loadingTrue());
       tripsCard();
       if (status == 1) {
+        dispatch(loadingTrue());
         if (ownerStatus) {
+          dispatch(loadingTrue());
           await updateDataFirebase({
             tripId: id,
             tripOnnwerID: perssonalTrips[index].user_id,
@@ -108,8 +111,8 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
         }
         setTimeout(() => {
           setIsTripCreated(true);
-          dispatch(loadingFalse());
           setTimeout(() => {
+            dispatch(loadingFalse());
             setIsTripCreated(false);
             navigate('MapAndChatScreen', {
               item: {...y, owner: !ownerStatus ? true : false},
@@ -161,11 +164,12 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
         tripsCard();
         dispatch(loadingTrue());
         if (status == 1) {
+          dispatch(loadingTrue());
           await updateLocationONfire({tripId: id, tripOnnwerID});
           setTimeout(() => {
             setIsTripCreated(true);
-            dispatch(loadingFalse());
             setTimeout(() => {
+              dispatch(loadingFalse());
               setIsTripCreated(false);
               navigate('MapAndChatScreen', {item: invitedTrips[index]});
             }, 1000);
@@ -363,7 +367,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
               : filterIDSfromArry(editTripData.users),
           id: editTripData.id,
         });
-        console.log('kjdbkjsdbkjbsdjkbfjksdbfd', data.message);
+        console.log('kjdbkjsdbkjbsdjkbfjksdbfd', data);
         if (tripPicture != null && ok) {
           var {status, res} = await updateTripImage(data);
         }
@@ -381,9 +385,9 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
           tripsCard();
           console.log('okokokokokok', ok);
         }
-        if (!ok) setUpdateError(data?.message);
+        if (!ok) setUpdateError(data?.errors?.name[0] ?? data.message);
       } else {
-        setUpdateError(data?.message);
+        setUpdateError(data?.errors?.name[0] ?? data.message);
         dispatch(loadingFalse());
         console.log('error');
       }

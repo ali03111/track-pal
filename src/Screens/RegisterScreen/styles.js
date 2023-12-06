@@ -5,7 +5,7 @@ import {Colors} from '../../Theme/Variables';
 export const styles = StyleSheet.create({
   logInMain: {
     // flexGrow: 1,
-    paddingHorizontal: wp('3.5'),
+    paddingHorizontal: wp('3'),
     paddingTop: hp('3'),
     paddingBottom: hp('6'),
   },
@@ -48,5 +48,16 @@ export const styles = StyleSheet.create({
   },
   lockstyle: {
     flex: 0.3,
+  },
+  numberViewStyle: {
+    backgroundColor: 'transparent',
+    marginTop: hp('2'),
+    alignSelf: 'center',
+    borderColor: 'black',
+    borderWidth: 0.67,
+    borderRadius: 10,
+    overflow: 'hidden',
+    width: wp('94'),
+    height: hp('7'),
   },
 });

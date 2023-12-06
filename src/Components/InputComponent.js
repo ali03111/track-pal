@@ -78,6 +78,7 @@ export const InputComponent = ({
                   style={{
                     resizeMode: 'contain',
                     tintColor: Colors.gray,
+                    marginRight: wp('3'),
                   }}
                 />
               </Touchable>
@@ -109,7 +110,7 @@ export const InputComponent = ({
 const styles = StyleSheet.create({
   textfield: {
     width: '100%',
-    borderBottomWidth: 1,
+    borderWidth: 1,
     height: hp('7'),
     // borderRadius: 15,
     marginVertical: hp('1'),
@@ -118,6 +119,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(118, 118, 118)',
     marginTop: hp('2.5'),
     backgroundColor: 'transparent',
+    borderRadius: 10,
+    paddingHorizontal: wp('2'),
   },
   input: isSecure => ({
     height: '100%',

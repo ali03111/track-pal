@@ -3,6 +3,7 @@ import {useEffect, useRef, useState} from 'react';
 import {msgs} from '../../Utils/localDB';
 import {
   creaetChatObj,
+  getFormattedTime,
   reference,
   referenceChat,
   sendDataToFIrebase,
@@ -12,24 +13,40 @@ import {Platform} from 'react-native';
 import API from '../../Utils/helperFunc';
 import {NotificationStatus, sendChatNotification} from '../../Utils/Urls';
 import {types} from '../../Redux/types';
+import {store} from '../../Redux/Reducer';
+
+var tripId = null;
 
 /**
  * The function `notificationStatusFunc` is an asynchronous function that sends a POST request to the
  * API with a notification status.
  */
 export const notificationStatusFunc = async status => {
-  console.log('jbvjsdbvjsdbvskdjvbsdkvbsdkvbsd', status);
-  await API.post(NotificationStatus, {
+  if (!status && tripId != null) {
+    store.dispatch({
+      type: types.clearNofityObjByID,
+      payload: tripId,
+    });
+  }
+  console.log('jbvjsdbvjsdbvskdjvbsdkvbsdkvbsd', status, Platform.OS);
+  const {data} = await API.post(NotificationStatus, {
     notification_status: status,
   });
+
+  console.log(
+    'jbvjsdbvjsdbvskdjvbsdkvbsdkvbsdjbvjsdbvjsdbvskdjvbsdkvbsdkvbsddata',
+    data,
+  );
 };
 
 const useChatScreen = ({navigate}, {params}) => {
   const {item} = params.params;
 
+  tripId = item.id;
+
   const {getState, dispatch} = useReduxStore();
 
-  let regexp = /^(?![\s\b]).*/;
+  let regexp = /^(?![\s\b]+$).+$/;
 
   const {userData} = getState('Auth');
   const [chatArry, setChatArry] = useState([]);
@@ -84,8 +101,12 @@ const useChatScreen = ({navigate}, {params}) => {
       });
 
       if (allMsg.length > 0) {
-        allMsg.sort((a, b) => a.timeStamp - b.timeStamp);
-        setChatArry(allMsg);
+        const timeConveted = allMsg.map(res => ({
+          ...res,
+          timeStamp: getFormattedTime(res.timeStamp),
+        }));
+        timeConveted.sort((a, b) => a.timeStamp - b.timeStamp);
+        setChatArry(timeConveted);
       }
     });
     return () => subscriber();

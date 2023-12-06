@@ -298,7 +298,7 @@ const useHomeScreen = () => {
       locationFun('locationInput');
     }
   };
-  let regexp = /^(?![\s\b]).*/;
+  let regexp = /^(?![\s\b]+$).+$/;
   const errorStats = {
     isTripSelectModal: () => true,
     isModalVisible: () => {

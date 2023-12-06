@@ -15,7 +15,6 @@ const StackNavigatior = () => {
     <NavigationContainer
       ref={ref => {
         NavigationService.setRef(ref);
-        console.log('kdnkdnfkndkfnkdnfndknfnkdnfdf', ref?.getCurrentRoute());
       }}>
       <Stack.Navigator
         screenOptions={{
@@ -54,6 +53,10 @@ const StackNavigatior = () => {
             <Stack.Screen
               name="EditPhoneNumberScreen"
               component={Screens.EditPhoneNumberScreen}
+            />
+            <Stack.Screen
+              name="VerficationScreen"
+              component={Screens.VerficationScreen}
             />
             <Stack.Screen
               name="EditTripScreen"

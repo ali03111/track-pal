@@ -49,10 +49,6 @@ function EditTripModal({
   updateTripData,
   updateError,
 }) {
-  console.log(
-    'updateErrorupdateErrorupdateErrorupdatsdsdeErrorupdateError',
-    updateError,
-  );
   const {getState} = useReduxStore();
   const {isloading} = getState('isloading');
   let IOSPlatform = Boolean(Platform.OS == 'android');

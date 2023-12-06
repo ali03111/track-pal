@@ -79,6 +79,8 @@ export {default as tooltip} from './Icons/tooltip.png';
 export {default as tooltip1} from './Icons/tooltip1.png';
 export {default as addUserCircle} from './Icons/addUser.png';
 export {default as userMinus} from './Icons/userMinus.png';
+export {default as profileDelete} from './Icons/profileDelete.png';
+export {default as verify} from './Icons/verify.png';
 
 // Lotties files
 

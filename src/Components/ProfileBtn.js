@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     width: wp('5'),
     height: hp('5'),
     resizeMode: 'contain',
+    tintColor: Colors.iconColor,
   },
   arrowStyle: {
     flex: 0.06,

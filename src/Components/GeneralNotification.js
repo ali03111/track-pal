@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
 
   timing: {
     flex: 1.2,
-    fontSize: hp('1.7'),
+    fontSize: hp('1.3'),
     textAlign: 'right',
     color: 'rgba(41, 45, 50, 0.5)',
   },

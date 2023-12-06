@@ -21,14 +21,19 @@ const useRegister = ({navigate, goBack}) => {
   );
   const {dispatch} = useReduxStore();
   const [remember, setRemember] = useState(false);
+  const [number, setNumber] = useState(null);
+  const [error, setError] = useState(null);
   const rememberValue = () => {
     setRemember(!remember);
   };
 
-  const signUpButton = ({name, email, number, password, confirm_password}) => {
-    dispatch(
-      loginUser({type: 'email', datas: {name, email, number, password}}),
-    );
+  const signUpButton = ({name, email, password, confirm_password}) => {
+    if (number != '' && number != null) {
+      setError(null);
+      dispatch(
+        loginUser({type: 'email', datas: {name, email, number, password}}),
+      );
+    } else setError('Please enter your number');
   };
   const loginNav = () => navigate('LoginScreen');
 
@@ -47,6 +52,9 @@ const useRegister = ({navigate, goBack}) => {
     goBack,
     loginNav,
     signUpButton,
+    error,
+    number,
+    setNumber,
   };
 };
 

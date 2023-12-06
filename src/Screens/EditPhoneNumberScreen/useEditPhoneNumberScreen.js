@@ -7,7 +7,11 @@ import {forgotPasswordAction} from '../../Redux/Action/AuthAction';
 import {useState} from 'react';
 import {sendVerficationCodeTwilo} from '../../Services/TwiloServices';
 import API from '../../Utils/helperFunc';
-import {SendVerficatioUrl} from '../../Utils/Urls';
+import {
+  SendVerficatioUrl,
+  UpdateProfileUrl,
+  sendNumberToServerUrl,
+} from '../../Utils/Urls';
 
 const {default: useFormHook} = require('../../Hooks/UseFormHooks');
 const {default: Schemas} = require('../../Utils/Validation');
@@ -17,24 +21,40 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
 
   const {userData} = getState('Auth');
 
+  const isNumber = Boolean(userData.phone == null || userData.phone == '');
   console.log('userDatauserDatauserDatauserData', userData);
 
   const [PhoneNumber, setPhoneNumber] = useState({
     countryCode: '',
-    number: userData?.phone,
+    number: '',
+    edit: isNumber,
   });
 
-  const {countryCode, number} = PhoneNumber;
+  const {countryCode, number, edit} = PhoneNumber;
 
   const updateState = data => setPhoneNumber(prev => ({...prev, ...data}));
 
+  const sendVerfication = async num => {
+    const {ok, data} = await API.get(SendVerficatioUrl + num);
+    return {status: ok, res: data};
+  };
+
   const sendVerficationCode = async () => {
-    if (number != '' && number != undefined) {
-      console.log('numbernumbernumber', number, countryCode);
-      const {ok, data} = await API.get(SendVerficatioUrl + countryCode);
-      console.log('skdskjsjdjskjdkjsdjskjdjskdjksd', data);
-    } else errorMessage('Please enter your number');
-    // updateState
+    if (edit && number != null && number != '') {
+      const {ok, data} = await API.post(UpdateProfileUrl, {phone: number});
+      console.log('resresresresresresresresresresres', data);
+      if (ok) {
+        const {status, res} = await sendVerfication(number);
+        // if (status) successMessage('VerficationScreen');
+        if (status) navigate('VerficationScreen', {item: data.user});
+        else errorMessage(res?.message);
+      } else errorMessage(data?.message);
+    } else if (!edit) {
+      const {status, res} = await sendVerfication(userData.phone);
+      // if (status) successMessage('VerficationScreen');
+      if (status) navigate('VerficationScreen', {item: userData});
+      else errorMessage(res?.message);
+    }
   };
 
   return {
@@ -43,6 +63,8 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
     countryCode,
     number,
     updateState,
+    edit,
+    phoneNumber: userData?.phone,
   };
 };
 

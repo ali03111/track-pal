@@ -44,4 +44,31 @@ export const styles = StyleSheet.create({
   inputStyle: {
     marginTop: hp('10'),
   },
+  numberView: {
+    width: wp('89'),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: hp('2'),
+    paddingHorizontal: wp('2'),
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    alignSelf: 'center',
+    marginTop: hp('5'),
+  },
+  bottomText: {
+    textAlign: 'center',
+    fontSize: hp('2'),
+    fontWeight: 'bold',
+  },
+  inputView: {
+    backgroundColor: 'transparent',
+    marginTop: hp('6'),
+    alignSelf: 'center',
+    borderColor: 'black',
+    borderWidth: 0.5,
+    borderRadius: 10,
+    overflow: 'hidden',
+    width: wp('90'),
+  },
 });

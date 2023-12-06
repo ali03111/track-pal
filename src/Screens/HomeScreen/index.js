@@ -43,7 +43,7 @@ import TripCreatedModal from './TripCreatedModal';
 import TripTypeSelectModal from './TripTypeSelectModal';
 import GroupMemberSelectModal from './GroupMemberSelectModal';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const {
     frequentTrips,
     isModalVisible,
@@ -82,13 +82,16 @@ const HomeScreen = () => {
 
   const renderItem = useCallback(({item, index}) => {
     return (
-      <View style={styles.trips}>
+      <Touchable
+        style={styles.trips}
+        //  onPress={() => navigation.navigate('EditPhoneNumberScreen')}
+      >
         {/* <Image source={item?.image} /> */}
         <CircleImage image={item?.image} />
         <GradientText style={styles.heading} GradientAlignment={0.6}>
           {item?.name}
         </GradientText>
-      </View>
+      </Touchable>
     );
   });
   return (

@@ -132,10 +132,14 @@ const MapAndChatScreen = ({navigation, route}) => {
               //   });
               //   }
               // }, 1000);
-              notificationStatusFunc('false');
+              notificationStatusFunc(false);
             },
             blur: () => {
-              notificationStatusFunc('true');
+              console.log('blur blru blrur hrbrirbibrib');
+              notificationStatusFunc(true);
+            },
+            beforeRemove: () => {
+              console.log('kjsbdjkbsdjkbfkjsdbfbsdbfbsdkjfbjksd');
             },
           }}
         />

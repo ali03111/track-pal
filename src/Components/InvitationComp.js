@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 
   timing: {
     flex: 1,
-    fontSize: hp('1.7'),
+    fontSize: hp('1.2'),
     textAlign: 'right',
     color: 'rgba(41, 45, 50, 0.5)',
   },

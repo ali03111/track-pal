@@ -47,6 +47,7 @@ import {hp, wp} from './src/Config/responsive';
 import {Touchable} from './src/Components/Touchable';
 import {TextComponent} from './src/Components/TextComponent';
 import {checkContactPermission} from './src/Services/ContactServices';
+import {notificationStatusFunc} from './src/Screens/ChatScreen/useChatScreen';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -88,7 +89,23 @@ const App = () => {
     Settings.setAppID('1254157088825041');
   }, []);
 
-  useEffect(() => {});
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextState => {
+      const getNameFunc = NavigationService.getCurrentRoute();
+      const routeName = getNameFunc?.getCurrentRoute()?.name;
+      if (nextState.match(/background/) && isLogin) {
+        notificationStatusFunc(true);
+      } else if (nextState.match(/active/) && routeName == 'Chat' && isLogin) {
+        notificationStatusFunc(false);
+      }
+
+      appState.current = nextState;
+      fcmService.setBadge();
+    });
+    return () => {
+      subscription.remove();
+    };
+  }, [appState.current]);
 
   useEffect(() => {
     /* It's a function that registers the device to receive push notifications. */

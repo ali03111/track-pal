@@ -1,5 +1,5 @@
 import React, {memo, useRef} from 'react';
-import {View} from 'react-native';
+import {Keyboard, View} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import useForgotPassword from '../ForgotPasswordScreen/useForgotPasswordScreen';
 import CustomHeader from '../../Components/Header';
@@ -11,9 +11,10 @@ import {styles} from './styles';
 import {arrowBack, email} from '../../Assets';
 import {hp, wp} from '../../Config/responsive';
 import useEditPhoneNumber from './useEditPhoneNumberScreen';
+import {Touchable} from '../../Components/Touchable';
 
 const EditPhoneNumberScreen = ({navigation}) => {
-  const {goBack, number, sendVerficationCode, updateState} =
+  const {goBack, number, sendVerficationCode, updateState, edit, phoneNumber} =
     useEditPhoneNumber(navigation);
   const phoneInput = useRef(null);
   return (
@@ -21,72 +22,85 @@ const EditPhoneNumberScreen = ({navigation}) => {
       <CustomHeader
         arrowBackIcon={arrowBack}
         backText={'Back'}
-        headerTitle={'Number Verfication'}
+        headerTitle={'Number Confirmation'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
         goBack={goBack}
       />
       <GradientText style={styles.heading} GradientAlignment={0.6}>
-        Number Verfication
+        {edit ? 'Edit Your' : 'Confirm Your'} Number
       </GradientText>
       <TextComponent
-        text={'Please confirm your number to verify you.'}
+        text={`Please ${edit ? 'enter' : 'confirm'} your number to verify you.`}
         styles={styles.createAcc}
       />
-      <PhoneInput
-        ref={phoneInput}
-        defaultValue={number}
-        // defaultCode="PK"
-        layout="first"
-        onChangeText={text => {
-          updateState({number: text});
-        }}
-        onChangeFormattedText={text => {
-          updateState({countryCode: text});
-        }}
-        onChangeCountry={test => {
-          console.log('onChangeCountry', test);
-        }}
-        // value={number}
-        autoFocus={false}
-        containerStyle={{
-          backgroundColor: 'transparent',
-          marginTop: hp('6'),
-          alignSelf: 'center',
-          borderColor: 'black',
-          borderWidth: 0.5,
-          borderRadius: 10,
-          overflow: 'hidden',
-        }}
-        textInputProps={{
-          placeholderTextColor: 'gray',
-        }}
-        textContainerStyle={{backgroundColor: 'transparent'}}
-        // textInputStyle={{backgroundColor: 'blue'}}
-        // codeTextStyle={{backgroundColor: 'green'}}
-        // flagButtonStyle={{backgroundColor: 'pink'}}
-      />
+      {!edit && (
+        <View style={styles.numberView}>
+          <TextComponent
+            text={phoneNumber}
+            styles={{fontSize: hp('2'), fontWeight: 'bold'}}
+          />
+          <TextComponent
+            text={'Edit'}
+            styles={{fontSize: hp('2'), color: 'gray'}}
+            onPress={() => updateState({edit: true})}
+          />
+        </View>
+      )}
+      {edit && (
+        <PhoneInput
+          ref={phoneInput}
+          defaultValue={number}
+          defaultCode="US"
+          layout="first"
+          onChangeText={text => {
+            // updateState({number: text});
+          }}
+          onChangeFormattedText={text => {
+            updateState({number: text});
+          }}
+          onChangeCountry={test => {
+            console.log('onChangeCountry', test);
+          }}
+          value={number}
+          autoFocus={false}
+          containerStyle={styles.inputView}
+          textInputStyle={{
+            textAlignVertical: 'center',
+            verticalAlign: 'middle',
+          }}
+          textInputProps={{
+            placeholderTextColor: 'gray',
+            // onBlur: Keyboard.dismiss(),
+            // onPointerCancel: Keyboard.dismiss(),
+            keyboardType: 'number-pad',
+            // onPressOut: Keyboard.dismiss(),
+            blurOnSubmit: true,
+            padding: 0,
+          }}
+          textContainerStyle={{backgroundColor: 'transparent'}}
+        />
+      )}
       <View
         style={{
-          flexDirection: 'row',
+          // flexDirection: 'row',
           width: wp('90'),
           justifyContent: 'space-between',
-          bottom: hp('10'),
+          bottom: hp('5'),
           position: 'absolute',
           left: wp('5'),
+          height: hp('12'),
         }}>
         <ThemeButton
-          onPress={goBack}
-          //   onPress={handleSubmit(forgotPassword)}
-          title={'Skip'}
-          btnStyle={styles.buttonStyle}
-        />
-        <ThemeButton
+          // onPress={goBack}
           onPress={sendVerficationCode}
-          //   onPress={handleSubmit(forgotPassword)}
           title={'Send'}
-          btnStyle={styles.buttonStyle}
         />
+        <Touchable onPress={goBack}>
+          <GradientText style={styles.bottomText} GradientAlignment={0.6}>
+            Skip Verification
+          </GradientText>
+        </Touchable>
       </View>
     </View>
   );

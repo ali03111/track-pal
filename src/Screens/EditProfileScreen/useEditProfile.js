@@ -28,7 +28,12 @@ const useEditProfile = ({navigate, goBack}) => {
 
   const {userData} = getState('Auth');
   console.log(Platform.OS == 'ios', 'userData', userData);
+
+  const isVerified = Boolean(userData?.is_verified == 1);
+
   const navigateToReset = () => navigate('ResetPasswordScreen');
+
+  const navigateToEdit = () => navigate('EditPhoneNumberScreen');
 
   //GET IMAGE From Mobile
   const [profileData, setProfileData] = useState(null);
@@ -83,6 +88,8 @@ const useEditProfile = ({navigate, goBack}) => {
     uploadFromGalary,
     profileData,
     userData,
+    navigateToEdit,
+    isVerified,
   };
 };
 

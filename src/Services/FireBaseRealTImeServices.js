@@ -19,6 +19,8 @@ import {Alert, PermissionsAndroid, Platform} from 'react-native';
 import API from '../Utils/helperFunc';
 import {alertTrue} from '../Redux/Action/isAlertAction';
 import NavigationService from './NavigationService';
+import moment from 'moment-timezone';
+import DeviceInfo from 'react-native-device-info';
 
 const perSKU = Platform.select({
   android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -533,6 +535,14 @@ const firebaseSubON = async data => {
   }
 };
 
+const getFormattedTime = (created_at, format = 'MMM DD YYYY, h:mm:ss a') => {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if (created_at == '' || created_at == null) {
+    return 'unknown';
+  }
+  return moment(created_at).tz(timezone);
+};
+
 const getFirebaseAllData = async data => {
   store.dispatch(loadingTrue());
   const {tripId, tripOnnwerID} = data;
@@ -579,4 +589,5 @@ export {
   getFirebaseAllData,
   deleteDataOnFirebase,
   updateTripDataonFirebase,
+  getFormattedTime,
 };

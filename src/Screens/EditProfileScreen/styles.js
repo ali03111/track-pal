@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
   logInMain: {
     paddingHorizontal: wp('3.5'),
     backgroundColor: Colors.white,
+    paddingBottom: hp('4'),
   },
   backMain: {
     alignItems: 'center',
@@ -55,14 +56,21 @@ export const styles = StyleSheet.create({
     fontSize: hp('1.7'),
     color: Colors.gray,
     marginTop: hp('2.5'),
+    marginBottom: hp('1'),
   },
   passBtn: {
     flexDirection: 'row',
-    marginTop: hp('2.5'),
-    borderBottomWidth: 1,
+    // marginTop: hp('2.5'),
+    // borderBottomWidth: 1,
     borderColor: 'rgb(118, 118, 118)',
-    marginBottom: hp('1'),
-    height: hp('4'),
+    // marginBottom: hp('1'),
+    height: hp('7'),
+    borderWidth: 1,
+    // paddingTop: hp('2'),
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingHorizontal: wp('2'),
+    // borderColor
   },
   passText: {
     flex: 1,

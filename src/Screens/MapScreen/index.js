@@ -26,6 +26,7 @@ import {Colors} from '../../Theme/Variables';
 import {hp, wp} from '../../Config/responsive';
 import InfoModal from './InfoModal';
 import {imageURL, imageUrl} from '../../Utils/Urls';
+import {tripsTypes} from '../../Utils/localDB';
 
 const MapScreen = ({route, navigation}) => {
   const {
@@ -113,6 +114,9 @@ const MapScreen = ({route, navigation}) => {
   const checkCurrentUser = Boolean(
     currentUser.coords.latitude != null && !tripData.owner,
   );
+
+  const isPersonalTripInvited = Boolean(tripData.type == tripsTypes[2].id);
+
   console.log(
     'checkCurrentUsercheckCurrentUsercheckCurrentUsercheckCurrentUser',
     checkCurrentUser,
@@ -154,12 +158,14 @@ const MapScreen = ({route, navigation}) => {
             text={tripData.name}
             numberOfLines={1}
           />
-          <TextComponent
-            styles={styles.groupMember}
-            text={`Active Members ${
-              checkCurrentUser ? allMember.length + 1 : allMember.length
-            }`}
-          />
+          {!isPersonalTripInvited && (
+            <TextComponent
+              styles={styles.groupMember}
+              text={`Active Members ${
+                checkCurrentUser ? allMember.length + 1 : allMember.length
+              }`}
+            />
+          )}
         </View>
         <Touchable style={styles.groupLink} onPress={notificationToAllMembers}>
           {/* <Image source={alert} style={styles.externalLinks} /> */}

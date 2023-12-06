@@ -20,6 +20,7 @@ const Colors = {
   primaryColorFade: 'rgba(146,39,143,0.5)',
   themeExtraLight: '#e7bde6',
   fadeGreen: 'rgba(37, 204, 44, 1)',
+  iconColor: 'rgba(238, 42, 123, 1)',
 };
 
 /** FontSize **/

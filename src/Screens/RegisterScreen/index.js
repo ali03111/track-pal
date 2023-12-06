@@ -14,6 +14,8 @@ import {Controller} from 'react-hook-form';
 import {Touchable} from '../../Components/Touchable';
 import useRegister from './useRegisterScreen';
 import KeyBoardWrapper from '../../Components/KeyboardWrapper';
+import PhoneInput from 'react-native-phone-number-input';
+import {hp, wp} from '../../Config/responsive';
 
 const RegisterScreen = ({navigation}) => {
   const {
@@ -28,6 +30,9 @@ const RegisterScreen = ({navigation}) => {
     goBack,
     loginNav,
     signUpButton,
+    error,
+    number,
+    setNumber,
   } = useRegister(navigation);
   return (
     <KeyBoardWrapper
@@ -77,19 +82,43 @@ const RegisterScreen = ({navigation}) => {
           defaultValue: __DEV__ ? 'user100@gmail.com' : '',
         }}
       />
-      <InputComponent
-        {...{
-          name: 'number',
-          handleSubmit,
-          errors,
-          reset,
-          control,
-          getValues,
-          placeholder: 'Contact Number',
-          isImage: phone,
-          defaultValue: __DEV__ ? '1546585458' : '',
+      <PhoneInput
+        defaultCode="US"
+        layout="first"
+        onChangeText={text => {
+          console.log('onChangeText', text);
         }}
+        onChangeFormattedText={text => {
+          setNumber(text);
+          console.log('onChangeFormattedText', text);
+        }}
+        onChangeCountry={test => {
+          console.log('onChangeCountry', test);
+        }}
+        value={number}
+        autoFocus={false}
+        containerStyle={styles.numberViewStyle}
+        textInputProps={{
+          placeholderTextColor: 'gray',
+          padding: 0,
+        }}
+        textInputStyle={{
+          textAlignVertical: 'center',
+          verticalAlign: 'middle',
+        }}
+        textContainerStyle={{backgroundColor: 'transparent'}}
       />
+      {error != null && (
+        <TextComponent
+          text={error ?? 'sdfsddf'}
+          styles={{
+            color: 'red',
+            fontSize: hp('1.5'),
+            marginTop: hp('1'),
+            marginLeft: wp('1'),
+          }}
+        />
+      )}
       <InputComponent
         {...{
           name: 'password',
