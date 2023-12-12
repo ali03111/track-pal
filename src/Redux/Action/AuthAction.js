@@ -38,3 +38,8 @@ export const forgotPasswordAction = payload => ({
   type: types.forgotPasswordType,
   payload,
 });
+
+export const verifyUser = payload => ({
+  type: types.VerifyType,
+  payload,
+});

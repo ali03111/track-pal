@@ -13,6 +13,7 @@ import invitationNotReducer from './invitationNotReducer';
 import GeneralNotReducer from './GeneralNotReducer';
 import ChatNotifyReducer from './ChatNotifyReducer';
 import ContactsReducer from './ContactsReducer';
+import TimeZoneReducer from './TimeZoneReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -52,6 +53,12 @@ const LocationPersistConfig = {
   whitelist: ['islocationShare', 'tripId', 'tripOwnerID'],
 };
 
+const TimeZoneConfig = {
+  key: 'timeZone',
+  storage: AsyncStorage,
+  whitelist: 'timeZone',
+};
+
 const reducers = {
   onboarding: persistReducer(onBoardPersistConfig, onboardingReducer),
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
@@ -62,6 +69,7 @@ const reducers = {
   ),
   generalNotify: persistReducer(generalNotifyPersistConfig, GeneralNotReducer),
   chatNotify: persistReducer(chatNotifyPersistConfig, ChatNotifyReducer),
+  timeZone: persistReducer(TimeZoneConfig, TimeZoneReducer),
   isloading: loadingReducer,
   contacts: ContactsReducer,
   isAlert: AlertReucer,

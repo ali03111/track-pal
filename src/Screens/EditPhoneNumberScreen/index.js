@@ -12,10 +12,20 @@ import {arrowBack, email} from '../../Assets';
 import {hp, wp} from '../../Config/responsive';
 import useEditPhoneNumber from './useEditPhoneNumberScreen';
 import {Touchable} from '../../Components/Touchable';
+import {AlertDesign} from '../../Components/AlertDesign';
+import {Colors} from '../../Theme/Variables';
 
 const EditPhoneNumberScreen = ({navigation}) => {
-  const {goBack, number, sendVerficationCode, updateState, edit, phoneNumber} =
-    useEditPhoneNumber(navigation);
+  const {
+    goBack,
+    number,
+    sendVerficationCode,
+    updateState,
+    edit,
+    phoneNumber,
+    skipVerification,
+    alert,
+  } = useEditPhoneNumber(navigation);
   const phoneInput = useRef(null);
   return (
     <View style={styles.logInMain}>
@@ -25,7 +35,7 @@ const EditPhoneNumberScreen = ({navigation}) => {
         headerTitle={'Number Confirmation'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
-        goBack={goBack}
+        goBack={skipVerification}
       />
       <GradientText style={styles.heading} GradientAlignment={0.6}>
         {edit ? 'Edit Your' : 'Confirm Your'} Number
@@ -96,12 +106,30 @@ const EditPhoneNumberScreen = ({navigation}) => {
           onPress={sendVerficationCode}
           title={'Send'}
         />
-        <Touchable onPress={goBack}>
-          <GradientText style={styles.bottomText} GradientAlignment={0.6}>
-            Skip Verification
-          </GradientText>
-        </Touchable>
+        {edit && (
+          <Touchable onPress={skipVerification}>
+            <GradientText style={styles.bottomText} GradientAlignment={0.6}>
+              Skip Verification
+            </GradientText>
+          </Touchable>
+        )}
       </View>
+      <AlertDesign
+        isVisible={alert}
+        cancelText={'Skip'}
+        confirmText={'Verify'}
+        message={
+          "If you want to skip this step, you won't be able to create any trip and other members won't be able to invite you to their trips."
+        }
+        title={'Warning Alert'}
+        onCancel={() => {
+          goBack();
+          skipVerification();
+        }}
+        onConfirm={skipVerification}
+        msgStyle={{textAlign: 'center', lineHeight: hp('2.5')}}
+        confirmButtonColor={Colors.primaryColor}
+      />
     </View>
   );
 };

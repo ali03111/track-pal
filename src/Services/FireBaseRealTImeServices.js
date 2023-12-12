@@ -430,14 +430,26 @@ const onEndTrip = async data => {
 
 const sendDataToFIrebase = async data => {
   const {tripOnnwerID, tripId, msgObj, userData} = data;
-  console.log('uyserSTchvschv sc', userData);
+  console.log('uyserSTchvschv sc', msgObj);
   try {
     const fire = referenceChat.doc(`"${tripId}"`);
     const fireGet = await fire.get();
 
     const firebaseGet = await fireGet._data.chat;
 
-    await fire.update({chat: [...firebaseGet, msgObj]});
+    // Find the highest msgId from existing messages
+    const highestMsgId = Math.max(
+      ...firebaseGet.map(message => message.msgId),
+      0,
+    );
+
+    // Increment the highest msgId for the new message
+    const newMsgId = highestMsgId + 1;
+
+    // Add the new msgId to the msgObj
+    const updatedMsgObj = {...msgObj, msgId: newMsgId};
+
+    await fire.update({chat: [...firebaseGet, updatedMsgObj]});
 
     return {ok: true, data: null};
   } catch (error) {
@@ -535,12 +547,16 @@ const firebaseSubON = async data => {
   }
 };
 
-const getFormattedTime = (created_at, format = 'MMM DD YYYY, h:mm:ss a') => {
+const getFormattedTime = (
+  created_at,
+  format = 'MMM DD YYYY, h:mm:ss a',
+  zone,
+) => {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   if (created_at == '' || created_at == null) {
     return 'unknown';
   }
-  return moment(created_at).tz(timezone);
+  return moment(created_at).tz(zone ?? timezone);
 };
 
 const getFirebaseAllData = async data => {

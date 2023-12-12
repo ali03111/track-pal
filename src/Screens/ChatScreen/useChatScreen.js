@@ -14,6 +14,7 @@ import API from '../../Utils/helperFunc';
 import {NotificationStatus, sendChatNotification} from '../../Utils/Urls';
 import {types} from '../../Redux/types';
 import {store} from '../../Redux/Reducer';
+import moment from 'moment-timezone';
 
 var tripId = null;
 
@@ -46,7 +47,9 @@ const useChatScreen = ({navigate}, {params}) => {
 
   const {getState, dispatch} = useReduxStore();
 
-  let regexp = /^(?![\s\b]+$).+$/;
+  const {timeZone} = getState('timeZone');
+
+  let regexp = /^(?![\s\b]+$).+/gm;
 
   const {userData} = getState('Auth');
   const [chatArry, setChatArry] = useState([]);
@@ -60,16 +63,24 @@ const useChatScreen = ({navigate}, {params}) => {
   };
 
   const onSend = async () => {
+    const NewTime = new Date();
+    const convertedTime = getFormattedTime(NewTime, '', 'UTC');
+    const p = moment().utc();
+    console.log(
+      'convertedTimeconvertedTimeconvertedTime',
+      convertedTime,
+      p.toISOString(),
+    );
     const msgBoj = {
       userId: userData.id,
-      msg: text,
-      timeStamp: new Date().getTime(),
+      msg: text.trimStart(),
+      timeStamp: moment().utc().toISOString(),
       userName: userData.name,
       email: userData.email,
     };
     onChangeText('');
 
-    console.log('sdvns dhvsdjhvbsd', item);
+    console.log('sdvns dhvsdjhvbsd', msgBoj);
     await sendDataToFIrebase({
       tripOnnwerID: item.owner ? Number(item.user_id) : item.trip_owner.id,
       tripId: item.id,
@@ -88,7 +99,7 @@ const useChatScreen = ({navigate}, {params}) => {
   }, [chatArry]);
 
   useEffect(() => {
-    return () => notificationStatusFunc('true');
+    return () => notificationStatusFunc(1);
   }, []);
 
   useEffect(() => {
@@ -105,7 +116,18 @@ const useChatScreen = ({navigate}, {params}) => {
           ...res,
           timeStamp: getFormattedTime(res.timeStamp),
         }));
-        timeConveted.sort((a, b) => a.timeStamp - b.timeStamp);
+        // timeConveted.sort((a, b) => {
+        //   const timeComparison = a.timeStamp - b.timeStamp;
+        //   if (timeComparison !== 0) {
+        //     return timeComparison;
+        //   }
+
+        //   // Compare seconds if the dates are equal
+        //   const secondsA = a.timeStamp.getUTCSeconds();
+        //   const secondsB = b.timeStamp.getUTCSeconds();
+        //   return secondsA - secondsB;
+        // });
+        timeConveted.sort((a, b) => a.msgId - b.msgId);
         setChatArry(timeConveted);
       }
     });

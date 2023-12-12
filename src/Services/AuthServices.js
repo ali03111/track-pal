@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import {
+  VerifyUserUrl,
   checkNumberBeforeRegisterUrl,
   fcmToken,
   loginUrl,
@@ -21,6 +22,8 @@ const logoutService = async () => await API.get(logoutUrl);
 
 const fcmRegService = async params =>
   await API.post(fcmToken, {fcm_token: params});
+
+const verifyService = async () => await API.get(VerifyUserUrl);
 
 const randomService = async ({url, params}) =>
   await API.post(url, {answer: params});
@@ -76,6 +79,7 @@ export {
   // getAllAgoraUser,
   createUserFirestore,
   updateProfileFirebase,
+  verifyService,
   // createTelematicUser,
   // loginTelematicUser,
 };

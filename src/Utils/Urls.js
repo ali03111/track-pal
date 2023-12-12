@@ -64,3 +64,6 @@ export const checkNumberBeforeRegisterUrl = '/check-number-before-signup/';
 export const sendUpdatedAtUrl = '/match-data';
 export const deleteAccUrl = '/delete-acc';
 export const logoutUrl = '/logout';
+export const terminateStatusUrl = '/change-terminate-status';
+export const ResetMsgCountUrl = '/reset-msg-count';
+export const VerifyUserUrl = '/verify';

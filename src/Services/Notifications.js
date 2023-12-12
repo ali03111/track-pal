@@ -97,9 +97,15 @@ const onNotificationNotiFee = async (data, appState) => {
 // };
 
 class FCMService {
-  register = (onRegister, onOpenNotification, appState) => {
+  register = (onRegister, onOpenNotification, appState, onNotification) => {
     this.checkPermission(onRegister);
-    this.createNoitificationListeners(onRegister, onOpenNotification, appState);
+    this.registerDeviceForNotification();
+    this.createNoitificationListeners(
+      onRegister,
+      onOpenNotification,
+      appState,
+      onNotification,
+    );
   };
 
   checkPermission = async onRegister => {
@@ -163,7 +169,27 @@ class FCMService {
       });
   };
 
-  createNoitificationListeners = (onRegister, onOpenNotification, appState) => {
+  registerDeviceForNotification = async () => {
+    try {
+      if (!messaging().isDeviceRegisteredForRemoteMessages)
+        await messaging().registerDeviceForRemoteMessages();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  createNoitificationListeners = (
+    onRegister,
+    onOpenNotification,
+    appState,
+    onNotification,
+  ) => {
+    // Triggered  when a particular  notification  has been recevied in foreground
+    this.notificationListener = messaging().onMessage(notification => {
+      console.log('yyyyyyyyytytytytytytytytytytytt', notification);
+      onNotification(notification);
+    });
+
     // Triggered  when a particular  notification  has been recevied in foreground
     this.notificationListener = messaging().onMessage(
       data => onNotificationNotiFee(data, appState),
@@ -182,7 +208,7 @@ class FCMService {
     //notification is clicked / tapped / opened as follows
     this.notificationOpenedListener = messaging().onNotificationOpenedApp(
       notification => {
-        // console.log(notification);
+        console.log('onNotificationOpenedApp', notification);
         if (notification) onOpenNotification(notification);
         // this.removeDelieveredNotification(notification);
       },
@@ -190,13 +216,16 @@ class FCMService {
 
     // if your app is closed, you can check if  it was opened by notification
     // being  clicked / tapped / opened as follows
-    messaging()
-      .getInitialNotification()
-      .then(notification => {
-        if (notification) onOpenNotification(notification);
-        // this.removeDelieveredNotification(notification);
-      });
+    notifee.getInitialNotification().then(notification => {
+      console.log('getInitialNotification', notification);
+      if (notification) onOpenNotification(notification);
+      // this.removeDelieveredNotification(notification);
+    });
 
+    // Triggered for data only payload  in foreground
+    this.messageListener = messaging().onMessage(message => {
+      onNotification(message);
+    });
     // Triggered when have  new token
     this.onTokenRefreshListener = messaging().onTokenRefresh(onRegister);
 
@@ -227,6 +256,19 @@ class FCMService {
         let findWord = Boolean(searchTerm.test(notification.body));
         const getNameFunc = NavigationService.getCurrentRoute();
         const routeName = getNameFunc?.getCurrentRoute()?.name;
+
+        const storeObj = {
+          InvitationScreen: types.addNotiInvitation,
+          GeneralScreen: types.addNotification,
+          MapAndChatScreen: types.addChatNoification,
+        };
+
+        // isRoute &&
+        //   routeName != 'InvitationScreen' &&
+        //   store.dispatch({
+        //     type: storeObj[notificationData.route],
+        //     payload: notificationData,
+        //   });
         findWord &&
           routeName != 'InvitationScreen' &&
           store.dispatch({

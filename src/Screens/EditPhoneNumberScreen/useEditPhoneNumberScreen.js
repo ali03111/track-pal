@@ -4,7 +4,7 @@ import {successMessage, errorMessage} from '../../Config/NotificationMessage';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import auth from '@react-native-firebase/auth';
 import {forgotPasswordAction} from '../../Redux/Action/AuthAction';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {sendVerficationCodeTwilo} from '../../Services/TwiloServices';
 import API from '../../Utils/helperFunc';
 import {
@@ -23,6 +23,8 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
 
   const isNumber = Boolean(userData.phone == null || userData.phone == '');
   console.log('userDatauserDatauserDatauserData', userData);
+
+  const [alert, setAlert] = useState(false);
 
   const [PhoneNumber, setPhoneNumber] = useState({
     countryCode: '',
@@ -57,6 +59,16 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
     }
   };
 
+  const skipVerification = () => {
+    setAlert(!alert);
+  };
+
+  useEffect(() => {
+    return () => {
+      skipVerification();
+    };
+  }, []);
+
   return {
     goBack,
     sendVerficationCode,
@@ -65,6 +77,8 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
     updateState,
     edit,
     phoneNumber: userData?.phone,
+    skipVerification,
+    alert,
   };
 };
 

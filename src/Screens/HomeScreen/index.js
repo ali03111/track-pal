@@ -42,6 +42,8 @@ import StartTripModal from './StartTripModal';
 import TripCreatedModal from './TripCreatedModal';
 import TripTypeSelectModal from './TripTypeSelectModal';
 import GroupMemberSelectModal from './GroupMemberSelectModal';
+import {AlertDesign} from '../../Components/AlertDesign';
+import {Colors} from '../../Theme/Variables';
 
 const HomeScreen = ({navigation}) => {
   const {
@@ -77,7 +79,10 @@ const HomeScreen = ({navigation}) => {
     getUser,
     tripImage,
     clearImage,
-  } = useHomeScreen();
+    toggleAlert,
+    alert,
+    userData,
+  } = useHomeScreen(navigation);
   const [showTip, setTip] = useState(false);
 
   const renderItem = useCallback(({item, index}) => {
@@ -155,7 +160,10 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.btn}>
         <ThemeButton
           title={'Create New Trip'}
-          onPress={() => updateState({isTripSelectModal: true})}
+          onPress={() => {
+            if (userData.is_verified == 0) toggleAlert();
+            else updateState({isTripSelectModal: true});
+          }}
           style={styles.tripBtn}
         />
         {/* <ThemeButton
@@ -308,6 +316,22 @@ const HomeScreen = ({navigation}) => {
           }}
         />
       </View>
+      <AlertDesign
+        isVisible={alert}
+        cancelText={'Cancel'}
+        confirmText={'Verify'}
+        message={
+          'You must verify your number first before creating the a trip.'
+        }
+        title={'Warning Alert'}
+        onCancel={toggleAlert}
+        onConfirm={() => {
+          toggleAlert();
+          navigation.navigate('EditPhoneNumberScreen');
+        }}
+        confirmButtonColor={Colors.primaryColor}
+        msgStyle={{textAlign: 'center'}}
+      />
     </View>
   );
 };

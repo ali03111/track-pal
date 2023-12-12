@@ -1,6 +1,7 @@
 import {create} from 'apisauce';
 import {
   NotificationStatus,
+  VerifyUserUrl,
   baseURL,
   fcmToken,
   getAllUser,
@@ -12,6 +13,7 @@ import {loadingFalse, loadingTrue} from '../Redux/Action/isloadingAction';
 import {Platform} from 'react-native';
 import {logOutUser} from '../Redux/Action/AuthAction';
 import {types} from '../Redux/types';
+import {logoutService} from '../Services/AuthServices';
 
 const API = create({
   baseURL,
@@ -25,6 +27,7 @@ const hideLoaderAPIs = [
   fcmToken,
   NotificationStatus,
   sendChatNotification,
+  VerifyUserUrl,
 ];
 // const hideLoaderAPIs = ['/playcount', '/playlist', '/home-content'];
 
@@ -127,8 +130,13 @@ const formDataFunc = (url, body, imageKey, isArray) => {
   console.log(newUrl, 'aasdas');
   return fetch(newUrl, requestOptions)
     .then(res => res.json())
-    .then(res => {
+    .then(async res => {
       console.log('test', res);
+      if (res?.message == 'Unauthenticated.') {
+        await logoutService();
+        store.dispatch(logOutUser());
+        store.dispatch(loadingFalse());
+      }
       return {data: res, ok: true};
     })
     .catch(err => {

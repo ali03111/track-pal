@@ -65,6 +65,11 @@ const GroupTrips = ({navigation, route}) => {
   const renderItem = ({item, index}) => {
     var color =
       index.toString().length === 1 ? index : index.toString().split('').pop();
+    const pivotObj = item.users.find(user => user.id === userData.id);
+    const msgCount =
+      pivotObj.pivot.msg_count != null
+        ? pivotObj.pivot.msg_count + checkLenght(item.id)
+        : checkLenght(item.id);
     return (
       <View style={styles.activeCardMain(item?.status)}>
         <View style={styles.activeCardStyle}>
@@ -96,9 +101,11 @@ const GroupTrips = ({navigation, route}) => {
                   text={item?.total_members + ' members'}
                   styles={styles.groupMember}
                 />
-                {checkLenght(item.id) > 0 && (
+                {msgCount > 0 && (
                   <TextComponent
-                    text={` ( ${checkLenght(item.id)} messages )`}
+                    text={` ( new messages )`}
+                    // text={` ( ${checkLenght(item.id)} messages )`}
+                    // text={` ( ${msgCount} messages )`}
                     // text={'Total members ' + item?.total_members}
                     styles={styles.messageNumber}
                   />
@@ -143,6 +150,13 @@ const GroupTrips = ({navigation, route}) => {
           )}
         </View>
         <TouchableOpacity
+          disabled={
+            item?.owner_running_status == 0 || item?.owner_running_status == 2
+              ? true
+              : item?.pivot.member_running_status == 1
+              ? false
+              : true
+          }
           onPress={() => {
             navigation.navigate('MapAndChatScreen', {
               item: groupTrips[index],

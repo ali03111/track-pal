@@ -10,6 +10,8 @@ import {CodeField, Cursor} from 'react-native-confirmation-code-field';
 import useVerificationScreen from './useVerficationScreen';
 import ThemeButton from '../../Components/ThemeButton';
 import {hp, wp} from '../../Config/responsive';
+import CountDownTimer from 'react-native-countdown-timer-hooks';
+import {Colors} from '../../Theme/Variables';
 
 const VerficationScreen = ({route, navigation}) => {
   const {
@@ -21,6 +23,11 @@ const VerficationScreen = ({route, navigation}) => {
     CELL_COUNT,
     VerifyCode,
     goBack,
+    isResend,
+    setIsResend,
+    refTimer,
+    timerCallbackFunc,
+    resendOTP,
   } = useVerificationScreen(navigation, route);
   return (
     <View style={{flex: 1}}>
@@ -58,7 +65,26 @@ const VerficationScreen = ({route, navigation}) => {
           </Text>
         )}
       />
-
+      <View style={styles.otpSendView}>
+        <TextComponent text={"Didn't receive OTP? "} />
+        <CountDownTimer
+          ref={refTimer}
+          timestamp={120}
+          timerCallback={timerCallbackFunc}
+          containerStyle={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          textStyle={styles.OtpTextStyle}
+        />
+        {isResend && (
+          <TextComponent
+            text={'Resend OTP'}
+            styles={{color: Colors.primaryColor}}
+            onPress={resendOTP}
+          />
+        )}
+      </View>
       <View style={styles.verificationBtn}>
         <ThemeButton onPress={VerifyCode} title={'Verify'} />
       </View>

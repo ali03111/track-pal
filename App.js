@@ -34,13 +34,13 @@ import DeviceInfo from 'react-native-device-info';
 import useReduxStore from './src/Hooks/UseReduxStore';
 import Overlay from './src/Components/Overlay';
 import {fcmService} from './src/Services/Notifications';
-import {fcmRegister} from './src/Redux/Action/AuthAction';
+import {fcmRegister, verifyUser} from './src/Redux/Action/AuthAction';
 import NavigationService from './src/Services/NavigationService';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {Colors} from './src/Theme/Variables';
 import {alertFalse} from './src/Redux/Action/isAlertAction';
 import API from './src/Utils/helperFunc';
-import {changeMemberStatusUrl} from './src/Utils/Urls';
+import {changeMemberStatusUrl, terminateStatusUrl} from './src/Utils/Urls';
 import {onEndTrip} from './src/Services/FireBaseRealTImeServices';
 import {loadingFalse, loadingTrue} from './src/Redux/Action/isloadingAction';
 import {hp, wp} from './src/Config/responsive';
@@ -48,6 +48,8 @@ import {Touchable} from './src/Components/Touchable';
 import {TextComponent} from './src/Components/TextComponent';
 import {checkContactPermission} from './src/Services/ContactServices';
 import {notificationStatusFunc} from './src/Screens/ChatScreen/useChatScreen';
+import {tripsTypes} from './src/Utils/localDB';
+import {firebase} from '@react-native-firebase/messaging';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -61,6 +63,13 @@ const PlatformPer = Platform.select({
     PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION,
   ],
 });
+
+export const changeUserAppStatus = async status => {
+  console.log('dddddddddddddddddddd', status);
+  const {data} = await API.post(terminateStatusUrl, {status: status});
+  console.log('jksdbfjksdbfjkbsdjkfbsdjkfbjskdbfjksdbfbjsd', data, Platform.OS);
+};
+
 const App = () => {
   const [isVisible, setIsVisible] = useState(true);
   const Hide_Splash_Screen = () => {
@@ -94,9 +103,11 @@ const App = () => {
       const getNameFunc = NavigationService.getCurrentRoute();
       const routeName = getNameFunc?.getCurrentRoute()?.name;
       if (nextState.match(/background/) && isLogin) {
-        notificationStatusFunc(true);
-      } else if (nextState.match(/active/) && routeName == 'Chat' && isLogin) {
-        notificationStatusFunc(false);
+        notificationStatusFunc(1);
+        changeUserAppStatus(1);
+      } else if (nextState.match(/active/) && isLogin) {
+        changeUserAppStatus(0);
+        if (routeName == 'Chat') notificationStatusFunc(0);
       }
 
       appState.current = nextState;
@@ -111,7 +122,12 @@ const App = () => {
     /* It's a function that registers the device to receive push notifications. */
     if (isLogin) {
       setTimeout(() => {
-        fcmService.register(onRegister, onOpenNotification, appState.current);
+        fcmService.register(
+          onRegister,
+          onOpenNotification,
+          appState.current,
+          onNotification,
+        );
       }, 5000);
     }
     return () => {
@@ -127,22 +143,38 @@ const App = () => {
   };
 
   const onOpenNotification = notify => {
+    console.log(
+      'notify.data.payloadnotify.data.payloadnotify.data.payloadnotify.data.payload',
+      notify,
+    );
     if (notify?.data?.payload) {
       console.log('notify.data.payload', JSON.parse(notify.data.payload));
       const screenRoute = JSON.parse(notify.data.payload);
       const tripData = Boolean(screenRoute.tripData);
+      if (tripData) {
+        var checkOwner = Boolean(
+          screenRoute.tripData[0].type == tripsTypes[0].id &&
+            screenRoute.tripData[0].user_id == userData.id,
+        );
+      }
       NavigationService.navigate(
         screenRoute.route,
-        tripData && {item: {...screenRoute.tripData[0], isRoute: true}},
+        tripData && {
+          item: {...screenRoute.tripData[0], isRoute: true, owner: checkOwner},
+        },
       );
+      if (tripData) {
+        setTimeout(() => {
+          NavigationService.navigate('Chat', {
+            item: screenRoute.tripData[0],
+          });
+        }, 1000);
+      }
     }
-    // if (tripData) {
-    //   setTimeout(() => {
-    //     NavigationService.navigate('ChatScreen', {
-    //       item: screenRoute.tripData[0],
-    //     });
-    //   }, 1000);
-    // }
+  };
+
+  const onNotification = notify => {
+    console.log('onNotification: ', notify);
   };
 
   const time = () => {
@@ -150,6 +182,7 @@ const App = () => {
   };
 
   const useEffectFun = () => {
+    dispatch(verifyUser());
     GoogleSignin.configure({
       webClientId:
         '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com',

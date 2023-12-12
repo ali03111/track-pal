@@ -300,6 +300,12 @@ const sendPhoneBookTOServer = async () => {
       filterNumberFromArry(phoneBook),
     );
     const removeSpace = removeSpaceFromNumber(filterNumberFromArry(phoneBook));
+
+    console.log(
+      'removeSpaceremoveSpaceremoveSpaceremoveSpaceremoveSpace',
+      removeSpace,
+    );
+
     const {ok, data} = await API.post(sendNumberToServerUrl, {
       book: removeSpace,
     });

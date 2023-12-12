@@ -69,7 +69,10 @@ const useEditProfile = ({navigate, goBack}) => {
         dispatch(loadingFalse());
         successMessage(data.message);
         dispatch({type: types.UpdateProfile, payload: data.user});
-      } else errorMessage(data?.message);
+      } else {
+        dispatch(loadingFalse());
+        errorMessage(data?.message);
+      }
     } catch (e) {
       dispatch(loadingFalse());
       errorMessage(e.message.split(' ').slice(1).join(' ') ?? e);

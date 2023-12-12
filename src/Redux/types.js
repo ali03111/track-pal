@@ -32,4 +32,7 @@ export const types = {
   forgotPasswordType: 'forgotPasswordType',
   ClearContacts: 'ClearContacts',
   addContacts: 'addContacts',
+  setTimeZone: 'setTimeZone',
+  RemoveTimeZone: 'RemoveTimeZone',
+  VerifyType: 'VerifyType',
 };

@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, Pressable} from 'react-native';
 import {styles} from './styles';
 import CustomHeader from '../../Components/Header';
@@ -14,8 +14,18 @@ import useReduxStore from '../../Hooks/UseReduxStore';
 import useMapAndChatScreen from './useMapAndChatScreen';
 import {types} from '../../Redux/types';
 import {notificationStatusFunc} from '../ChatScreen/useChatScreen';
+import {TextComponent} from '../../Components/TextComponent';
 
-function MyTabBar({state, descriptors, navigation}) {
+const NewMsgText = () => {
+  return (
+    <GradientText styles={{fontSize: hp('1.5')}} GradientAlignment={0.6}>
+      {' '}
+      ( new message )
+    </GradientText>
+  );
+};
+
+function MyTabBar({state, descriptors, navigation, msgCount}) {
   return (
     <View style={styles.mainTabStyle}>
       {state.routes.map((route, index) => {
@@ -58,7 +68,10 @@ function MyTabBar({state, descriptors, navigation}) {
             onLongPress={onLongPress}
             style={styles.TabStyle}>
             {isFocused == false && (
-              <Text style={{...styles.text, color: 'black'}}>{label}</Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{...styles.text, color: 'black'}}>{label}</Text>
+                {msgCount > 0 ? <NewMsgText /> : null}
+              </View>
             )}
             {isFocused == true && (
               <LinearGradient
@@ -84,8 +97,29 @@ const MapAndChatScreen = ({navigation, route}) => {
     '{route?.params?.asdasdasdasdasdasdasdasitem?',
     route?.params?.item,
   );
-  const {checkLenght, dispatch} = useMapAndChatScreen(route?.params?.item);
+  const {checkLenght, dispatch, userData, clearNotCount} = useMapAndChatScreen(
+    route?.params?.item,
+  );
+  const pivotObj = route?.params?.item.users.find(
+    user => user.id === userData.id,
+  );
+  const [msgCount, setMsgCount] = useState(
+    pivotObj.pivot.msg_count != null
+      ? pivotObj.pivot.msg_count + checkLenght
+      : checkLenght,
+  );
+  // var msgCount =
+  //   pivotObj.pivot.msg_count != null
+  //     ? pivotObj.pivot.msg_count + checkLenght
+  //     : checkLenght;
   const length = checkLenght;
+
+  const y = '( new message )';
+
+  // Applying styles for the console output with color #92278F (purple)
+  console.log('\x1b[35m%s\x1b[0m', y);
+
+  console.log('<NewMsgTextasdasdasdakey /> ', NewMsgText().key);
   return (
     <View style={styles.tabsMain}>
       <CustomHeader
@@ -99,11 +133,12 @@ const MapAndChatScreen = ({navigation, route}) => {
       />
 
       <Tab.Navigator
-        initialRouteName={route?.params?.item?.isRoute ? `Chat` : 'Map'}
+        initialRouteName={'Map'}
+        // initialRouteName={route?.params?.item?.isRoute ? `Chat` : 'Map'}
         tabBarOptions={{
           headerShown: false,
         }}
-        tabBar={props => <MyTabBar {...props} />}>
+        tabBar={props => <MyTabBar {...props} msgCount={msgCount} />}>
         <Tab.Screen
           name="Map"
           component={Screens.MapScreen}
@@ -113,15 +148,25 @@ const MapAndChatScreen = ({navigation, route}) => {
         <Tab.Screen
           name={`Chat`}
           component={Screens.ChatScreen}
-          options={{title: `Chat ( ${length} )`}}
+          options={{
+            // title: `Chat ${msgCount > 0 ? ('\x1b[35m%s\x1b[0m', y) : ''}`,
+            headerTitle: () => {
+              <TextComponent>
+                Chat {msgCount > 0 ? <NewMsgText /> : ''}
+              </TextComponent>;
+            },
+          }}
           initialParams={route}
           listeners={{
             focus: () => {
               // if (route?.params?.item?.isRoute) {
+              setMsgCount(0);
+              clearNotCount();
               dispatch({
                 type: types.clearNofityObjByID,
                 payload: route?.params?.item.id,
               });
+
               // }
               // navigation.navigate('Chat', route);
               // setTimeout(() => {
@@ -132,11 +177,12 @@ const MapAndChatScreen = ({navigation, route}) => {
               //   });
               //   }
               // }, 1000);
-              notificationStatusFunc(false);
+              notificationStatusFunc(0);
             },
             blur: () => {
               console.log('blur blru blrur hrbrirbibrib');
-              notificationStatusFunc(true);
+              notificationStatusFunc(1);
+              clearNotCount();
             },
             beforeRemove: () => {
               console.log('kjsbdjkbsdjkbfkjsdbfbsdbfbsdkjfbjksd');

@@ -33,10 +33,11 @@ import {
   sendUpdatedAt,
 } from '../../Services/ContactServices';
 
-const useHomeScreen = () => {
+const useHomeScreen = ({addListener}) => {
   const {dispatch, getState} = useReduxStore();
   const {userData} = getState('Auth');
   const {contacts} = getState('contacts');
+  const [alert, setAlert] = useState(false);
   const [homeStates, setHomeStates] = useState({
     selectTripType: tripsTypes[0].id,
     isModalVisible: false,
@@ -103,6 +104,8 @@ const useHomeScreen = () => {
     setInputFeilds(() => ({...inputFeilds, ...data}));
   };
   // info?.coords?.latitude, info?.coords?.longitude
+
+  const toggleAlert = () => setAlert(!alert);
 
   const locationFun = async stateName => {
     console.log('first');
@@ -298,7 +301,7 @@ const useHomeScreen = () => {
       locationFun('locationInput');
     }
   };
-  let regexp = /^(?![\s\b]+$).+$/;
+  let regexp = /^(?![\s\b]+$).+/gm;
   const errorStats = {
     isTripSelectModal: () => true,
     isModalVisible: () => {
@@ -358,11 +361,15 @@ const useHomeScreen = () => {
   const useEffectFuc = () => {
     console.log('redawww');
     // sendPhone();
-    sendUpdatedAt();
-    getUser();
+    // getUser();
     setTimeout(() => {
       locationFun(currentLocation);
     }, 2000);
+    const event = addListener('focus', () => {
+      getUser();
+      sendUpdatedAt();
+    });
+    return event;
   };
 
   // useEffect(async () => {
@@ -469,6 +476,9 @@ const useHomeScreen = () => {
     getUser: sendUpdatedAt,
     clearImage,
     getAll,
+    toggleAlert,
+    alert,
+    userData,
   };
 };
 

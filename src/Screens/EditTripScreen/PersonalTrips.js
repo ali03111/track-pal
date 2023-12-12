@@ -133,6 +133,11 @@ const PersonalTrips = ({navigation, route}) => {
         1: 'Active',
         2: 'Inactive',
       };
+      const pivotObj = item.users.find(user => user.id === userData.id);
+      const msgCount =
+        pivotObj.pivot.msg_count != null
+          ? pivotObj.pivot.msg_count + checkLenght(item.id)
+          : checkLenght(item.id);
       return (
         <View style={styles.activeCardMain(item?.status)}>
           <View style={styles.activeCardStyle}>
@@ -167,9 +172,11 @@ const PersonalTrips = ({navigation, route}) => {
                     text={item?.total_members + ' members'}
                     styles={styles.groupMember}
                   />
-                  {checkLenght(item.id) > 0 && (
+                  {msgCount > 0 && (
                     <TextComponent
-                      text={` ( ${checkLenght(item.id)} messages )`}
+                      text={` ( new messages )`}
+                      // text={` ( ${msgCount} messages )`}
+                      // text={` ( ${checkLenght(item.id)} messages )`}
                       // text={'Total members ' + item?.total_members}
                       styles={styles.messageNumber}
                     />
@@ -240,6 +247,7 @@ const PersonalTrips = ({navigation, route}) => {
           </View>
           {userData.id == item.user_id && (
             <TouchableOpacity
+              disabled={item?.owner_running_status == 1 ? false : true}
               onPress={() =>
                 item?.owner_running_status == 1 &&
                 navigation.navigate('MapAndChatScreen', {

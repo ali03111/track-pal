@@ -12,6 +12,8 @@ export const AlertDesign = ({
   onConfirm,
   onCancel,
   cancelText,
+  msgStyle,
+  confirmButtonColor,
 }) => {
   return (
     <AwesomeAlert
@@ -25,9 +27,9 @@ export const AlertDesign = ({
       showConfirmButton={true}
       cancelText={cancelText ?? 'Cancel'}
       confirmText={confirmText}
-      confirmButtonColor="rgba(234, 67, 53, 1)"
+      confirmButtonColor={confirmButtonColor ?? 'rgba(234, 67, 53, 1)'}
       titleStyle={styles.modalTitle}
-      messageStyle={styles.modalMsg}
+      messageStyle={{...styles.modalMsg, ...msgStyle}}
       cancelButtonStyle={styles.cancelBtnMain}
       confirmButtonStyle={styles.confirmBtnMain}
       cancelButtonTextStyle={styles.modalCancelBtnText}
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     marginBottom: hp('3'),
   },
   confirmBtnMain: {
-    backgroundColor: '#FF4949',
+    // backgroundColor: '#FF4949',
     width: wp('30'),
     height: hp('6'),
     alignItems: 'center',

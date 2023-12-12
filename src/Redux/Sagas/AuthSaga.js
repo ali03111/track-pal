@@ -19,6 +19,7 @@ import {
   logoutService,
   registerService,
   updateProfileServices,
+  verifyService,
 } from '../../Services/AuthServices';
 import DeviceInfo from 'react-native-device-info';
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
@@ -204,6 +205,23 @@ function* forgotUserSaga(action) {
   }
 }
 
+/* The `verifySage` function is a generator function that is used as a saga in a Redux-Saga middleware.
+It takes an action object as an argument, but it is not used in the function. The function performs
+a series of asynchronous operations using the `yield` keyword. In this case, it calls the
+`verifyService` function to verify the user's profile and updates the profile data if the
+verification is successful. */
+function* verifySage(action) {
+  try {
+    const {ok, data} = yield call(verifyService);
+    if (ok) yield put({type: types.UpdateProfile, payload: data});
+  } catch (error) {
+    errorMessage(error.message.split(' ').slice(1).join(' '));
+  } finally {
+    delay(1000);
+    yield put(loadingFalse());
+  }
+}
+
 /* This function is used to add the fcm token to the database. */
 function* fcmTokenSaga(action) {
   yield call(fcmRegService, action.payload);
@@ -216,6 +234,7 @@ function* authSaga() {
   yield takeLatest(types.UpdateUser, updateProfileSaga);
   yield takeLatest(types.fcmRegType, fcmTokenSaga);
   yield takeLatest(types.forgotPasswordType, forgotUserSaga);
+  yield takeLatest(types.VerifyType, verifySage);
 }
 
 export default authSaga;

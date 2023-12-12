@@ -253,12 +253,12 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
     if (isOwner) {
       updateModalsState({editTripData: trip});
       updateModalsState({infoModal: true});
-    } else errorMessage('Only owner can delete this trip!');
+    } else errorMessage('Only owner can edit this trip!');
   };
 
   const tripsCard = async () => {
     const {ok, data} = await API.get(tripsData);
-    console.log('sdsdsdsdsdsdsdds', ok, data);
+    console.log('sdsdsdsdsdsdsdds', ok, data?.invitation_trips[0]?.pivot);
     if (ok) {
       setTripCardData(data.my_trips);
       setInvitedTrip(data.invitation_trips);
