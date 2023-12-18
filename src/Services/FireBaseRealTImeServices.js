@@ -583,7 +583,7 @@ const notifyUser = async id => {
   const routeName = getNameFunc?.getCurrentRoute()?.name;
   const {ok, data} = await API.get(notifyToOwnerUrl + id);
   console.log('jadbfjkbadjbsjdbbsd', data);
-  if (ok && routeName == 'MapAndChatScreen') {
+  if (ok && routeName == 'Map') {
     store.dispatch(alertTrue());
   }
 };

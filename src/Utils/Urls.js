@@ -33,6 +33,11 @@ export const telematicsCreateUser =
 export const telematicsLoginUser =
   'https://user.telematicssdk.com/v1/Auth/Login';
 
+export const aboutUrl = 'https://trackpal.staginganideos.com/about_us';
+export const privacyUrl = 'https://trackpal.staginganideos.com/privacy_policy';
+export const termsUrl =
+  'https://trackpal.staginganideos.com/terms_and_conditions';
+
 export const firebaseDataBaseURL =
   'https://track-pal-e4e07-default-rtdb.firebaseio.com/';
 
@@ -67,3 +72,4 @@ export const logoutUrl = '/logout';
 export const terminateStatusUrl = '/change-terminate-status';
 export const ResetMsgCountUrl = '/reset-msg-count';
 export const VerifyUserUrl = '/verify';
+export const GetLastTripUrl = '/get-latest-trip';

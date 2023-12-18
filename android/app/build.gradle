@@ -161,6 +161,7 @@ dependencies {
     implementation('androidx.swiperefreshlayout:swiperefreshlayout:1.0.0')
     implementation project(':react-native-contacts')
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+      implementation project(':react-native-inappbrowser-reborn')
     // implementation 'com.telematicssdk:tracking: 1.0.4'
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {

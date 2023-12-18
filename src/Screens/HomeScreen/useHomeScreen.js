@@ -5,13 +5,19 @@ import Geolocation from 'react-native-geolocation-service';
 import {frequentTrips, tripsTypes} from '../../Utils/localDB';
 import {
   BackHandler,
+  Dimensions,
   Keyboard,
   PermissionsAndroid,
   Platform,
 } from 'react-native';
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import API, {formDataFunc} from '../../Utils/helperFunc';
-import {CreateTripUrl, createTripImage, getAllUser} from '../../Utils/Urls';
+import {
+  CreateTripUrl,
+  GetLastTripUrl,
+  createTripImage,
+  getAllUser,
+} from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 import {createTripObj} from '../../Services/FireBaseRealTImeServices';
@@ -34,10 +40,16 @@ import {
 } from '../../Services/ContactServices';
 
 const useHomeScreen = ({addListener}) => {
+  const {width, height} = Dimensions.get('window');
+  const ACPT_RATIO = width / height;
+  const latitudeDelta = Platform.OS == 'ios' ? 0.02 : 0.001;
+  const laongituteDalta = latitudeDelta * ACPT_RATIO;
+
   const {dispatch, getState} = useReduxStore();
   const {userData} = getState('Auth');
   const {contacts} = getState('contacts');
   const [alert, setAlert] = useState(false);
+  const [tripDate, setTripDate] = useState(null);
   const [homeStates, setHomeStates] = useState({
     selectTripType: tripsTypes[0].id,
     isModalVisible: false,
@@ -107,7 +119,7 @@ const useHomeScreen = ({addListener}) => {
 
   const toggleAlert = () => setAlert(!alert);
 
-  const locationFun = async stateName => {
+  const locationFun = async (stateName, mapTrue) => {
     console.log('first');
 
     // Request permission to access geolocation if needed
@@ -128,6 +140,17 @@ const useHomeScreen = ({addListener}) => {
           info.coords.latitude,
           info.coords.longitude,
         );
+        if (mapTrue) {
+          updateState({
+            [stateName]: {
+              coords: {
+                latitude: info.coords.latitude,
+                longitude: info.coords.longitude,
+              },
+              description: locationName,
+            },
+          });
+        }
         updateInputState({
           [stateName]: {
             coords: {
@@ -146,6 +169,17 @@ const useHomeScreen = ({addListener}) => {
           info.coords.latitude,
           info.coords.longitude,
         );
+        if (mapTrue) {
+          updateState({
+            [stateName]: {
+              coords: {
+                latitude: info.coords.latitude,
+                longitude: info.coords.longitude,
+              },
+              description: locationName,
+            },
+          });
+        }
         updateInputState({
           [stateName]: {
             coords: {
@@ -267,6 +301,7 @@ const useHomeScreen = ({addListener}) => {
       setTimeout(() => {
         updateState({isTripStarted: false});
       }, 1000);
+      GetLastTrip();
     } else {
       dispatch(loadingFalse());
       errorMessage('');
@@ -350,31 +385,27 @@ const useHomeScreen = ({addListener}) => {
     await getContactFromSql();
     console.log('contactscontactscontactscontactscontactscontacts', contacts);
     updateState({allUser: contacts});
-    // const {ok, data} = await API.get(getAllUser);
-    // if (ok) updateState({allUser: data});
   };
 
-  // const sendPhone = async () => {
-  //   await sendPhoneBookTOServer();
-  // };
+  const GetLastTrip = async () => {
+    const {ok, data} = await API.get(GetLastTripUrl);
+    console.log('okokokokokoi,', data);
+    if (ok && data?.created_at) setTripDate(data);
+    else setTripDate(null);
+  };
 
   const useEffectFuc = () => {
-    console.log('redawww');
-    // sendPhone();
-    // getUser();
+    // GetLastTrip()
     setTimeout(() => {
-      locationFun(currentLocation);
+      locationFun('currentLocation', true);
     }, 2000);
     const event = addListener('focus', () => {
+      GetLastTrip();
       getUser();
       sendUpdatedAt();
     });
     return event;
   };
-
-  // useEffect(async () => {
-  //   await sendPhoneBookTOServer();
-  // }, []);
 
   const addMembersToGroup = ids => {
     if (groupMembers.includes(ids)) {
@@ -479,6 +510,9 @@ const useHomeScreen = ({addListener}) => {
     toggleAlert,
     alert,
     userData,
+    laongituteDalta,
+    latitudeDelta,
+    tripDate,
   };
 };
 

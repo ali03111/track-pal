@@ -44,6 +44,8 @@ import TripTypeSelectModal from './TripTypeSelectModal';
 import GroupMemberSelectModal from './GroupMemberSelectModal';
 import {AlertDesign} from '../../Components/AlertDesign';
 import {Colors} from '../../Theme/Variables';
+import {imageUrl} from '../../Utils/Urls';
+import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 
 const HomeScreen = ({navigation}) => {
   const {
@@ -82,28 +84,51 @@ const HomeScreen = ({navigation}) => {
     toggleAlert,
     alert,
     userData,
+    laongituteDalta,
+    latitudeDelta,
+    tripDate,
   } = useHomeScreen(navigation);
   const [showTip, setTip] = useState(false);
 
-  const renderItem = useCallback(({item, index}) => {
-    return (
-      <Touchable
-        style={styles.trips}
-        //  onPress={() => navigation.navigate('EditPhoneNumberScreen')}
-      >
-        {/* <Image source={item?.image} /> */}
-        <CircleImage image={item?.image} />
-        <GradientText style={styles.heading} GradientAlignment={0.6}>
-          {item?.name}
-        </GradientText>
-      </Touchable>
-    );
-  });
+  const RenderMap = useCallback(
+    ({item, index}) => {
+      console.log(
+        'sjkdbjkfsbdfjkbsdjkfbjksdbfjksdbfkjbsdjkbfjksdbfjksd',
+        currentLocation.coords,
+      );
+      return (
+        <MapView
+          // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.staticMapImg}
+          followsUserLocation={true}
+          showsUserLocation={true}
+          zoomEnabled={true}
+          focusable={true}
+          moveOnMarkerPress
+          zoomTapEnabled
+          showsMyLocationButton
+          region={{
+            latitude: currentLocation?.coords?.latitude,
+            longitude: currentLocation?.coords?.longitude,
+            latitudeDelta: latitudeDelta,
+            longitudeDelta: laongituteDalta,
+          }}
+          // region={{
+          //   latitude: currentLocation?.coords?.latitude,
+          //   longitude: currentLocation?.coords?.longitude,
+          //   latitudeDelta: 0.015,
+          //   longitudeDelta: 0.0121,
+          // }}
+          rotateEnabled={true}></MapView>
+      );
+    },
+    [currentLocation.coords],
+  );
   return (
     <View style={styles.homeScreenStyle}>
       <Image source={logo1} style={styles.logo} />
       <View style={styles.mapArea}>
-        <View style={styles.groupInfoMain}>
+        <View style={styles.groupInfoMain(Boolean(tripDate?.created_at))}>
           {Platform.OS == 'ios' ? (
             <BlurView
               style={styles.absolute}
@@ -117,46 +142,33 @@ const HomeScreen = ({navigation}) => {
               blurRadius={0.5}
             />
           )}
-          <CircleImage image={DemoProfileImage1} style={styles.groupLogo} />
+          {tripDate?.image ? (
+            <View>
+              <CircleImage image={imageUrl(tripDate?.image)} uri={true} />
+            </View>
+          ) : (
+            <FirstCharacterComponent indexNumber={2} text={tripDate?.name} />
+          )}
 
           <View style={styles.groupDesc}>
-            <Text style={styles.groupName}>Business Meets</Text>
-            <Text style={styles.groupMember}>15 members</Text>
+            <Text style={styles.groupName}>{tripDate?.name}</Text>
+            <Text style={styles.groupMember}>
+              {tripDate?.users?.length} members
+            </Text>
           </View>
-          <Touchable style={styles.groupLink}>
+          <Touchable
+            disabled={Boolean(tripDate?.created_at) ? false : true}
+            style={styles.groupLink}
+            onPress={() =>
+              navigation.navigate('MapAndChatScreen', {
+                item: {...tripDate, owner: true},
+              })
+            }>
             <Image source={link} style={styles.externalLinks} />
           </Touchable>
         </View>
-        <MapView
-          // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-          style={styles.staticMapImg}
-          region={{
-            latitude: currentLocation?.coords?.latitude,
-            longitude: currentLocation?.coords?.longitude,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}></MapView>
-        {/* <Image source={staticMap} style={styles.staticMapImg} /> */}
+        <RenderMap />
       </View>
-      {/* <Tooltip
-        popover={<Text>Change here</Text>}
-        withOverlay={false}
-        skipAndroidStatusBar={true}>
-        <Text>asd</Text>
-      </Tooltip> */}
-      <TextComponent text={'Frequent Trips'} styles={styles.TripsHeading} />
-
-      <FlatList
-        refreshing={false}
-        data={frequentTrips}
-        renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        horizontal={true}
-        contentContainerStyle={{
-          paddingLeft: wp('4'),
-        }}
-      />
       <View style={styles.btn}>
         <ThemeButton
           title={'Create New Trip'}

@@ -88,7 +88,7 @@ const StartTripModal = ({
               onPress={onBackPress}
               color={Colors.gray}
             />
-            <View style={styles.groupInfoMain}>
+            <View style={styles.groupInfoMain(true)}>
               {tripImage ? (
                 <CircleImage
                   image={tripImage?.uri}

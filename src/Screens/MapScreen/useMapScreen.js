@@ -24,6 +24,7 @@ const useMapScreen = ({navigate}, {params}) => {
 
   const log = JSON.parse(item.end_destination);
   const kiloMeterRef = useRef(0.0);
+  const NotifyArrivedRef = useRef(false);
   const {width, height} = Dimensions.get('window');
   const ACPT_RATIO = width / height;
   const latitudeDelta = 0.02;
@@ -142,9 +143,14 @@ const useMapScreen = ({navigate}, {params}) => {
       kiloMeter,
     );
     kiloMeterRef.current = kiloMeter.toFixed(2);
-    Number(kiloMeterRef.current) <= Number('0.04') &&
+    if (
+      Number(kiloMeterRef.current) <= Number('0.04') &&
       !item.owner &&
+      !NotifyArrivedRef.current
+    ) {
       notifyUser(`${item.owner ? Number(item.user_id) : item.trip_owner.id}`);
+      NotifyArrivedRef.current = true;
+    }
   };
 
   const firebaseSnapOn = () => {

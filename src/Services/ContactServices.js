@@ -173,7 +173,10 @@ const checkContactToSql = async sqlContacts => {
       sqlContacts,
     );
     // Extract phone numbers into an array
-    const phoneNumbers = sqlContacts.map(item => item.phone);
+    const phoneNumbers =
+      sqlContacts != undefined && sqlContacts != null
+        ? sqlContacts.map(item => item.phone)
+        : [];
     const removeSpace = removeSpaceFromNumber(filterContact);
     const checkNewContact = [
       ...removeSpace.filter(value => !phoneNumbers.includes(value)),
@@ -192,6 +195,18 @@ const checkContactToSql = async sqlContacts => {
     perAlertBox();
   }
   return null;
+};
+
+const getLastNightDigit = async phoneNumbers => {
+  const result = phoneNumbers.map(phoneNumber => {
+    // Remove all non-digit characters
+    const digitsOnly = phoneNumber.replace(/\D/g, '');
+
+    // Take the last nine digits
+    return digitsOnly.slice(-9);
+  });
+
+  return result;
 };
 
 const updateDataAccourdingToId = updateData => {
@@ -230,9 +245,13 @@ const getContactFromSql = async () => {
         console.log('klsdnklnskdfnsdkfnksdn', len);
         for (let i = 0; i < len; i++) {
           const row = results.rows.item(i);
+          console.log(
+            'row.bookrow.bookrow.bookrow.bookrow.bookrow.bookrow.bookrow.book',
+            row.book,
+          );
           await store.dispatch({
             type: types.addContacts,
-            payload: JSON.parse(row.book),
+            payload: row?.book ? JSON.parse(row.book) : [],
           });
           // contacts.book = await JSON.parse(row.book);
           // contacts = await JSON.parse(row.book);
@@ -257,15 +276,25 @@ const sendUpdatedAt = () => {
         const len = results.rows.length;
         for (let i = 0; i < len; i++) {
           const row = results.rows.item(i);
+          const checkData = Boolean(
+            row?.book != null && row?.book != undefined && row?.book != '',
+          );
           console.log('rowrowrowrowrowrowrowrowrowrow', row);
           store.dispatch({
             type: types.addContacts,
-            payload: JSON.parse(row.book),
+            payload: checkData ? JSON.parse(row.book) : [],
           });
-          const newContacts = await checkContactToSql(JSON.parse(row.book));
+          const newContacts = await checkContactToSql(
+            checkData ? JSON.parse(row.book) : undefined,
+          );
+          const nightDigit = await getLastNightDigit(newContacts);
+          console.log(
+            'nightDigitnightDigitnightDigitnightDigitnightDigitnightDigit',
+            nightDigit,
+          );
           const {ok, data} = await API.post(sendUpdatedAtUrl, {
             updated_at: row.updated_at,
-            book: newContacts,
+            book: nightDigit,
           });
           console.log('data.bookdata.bookdata.book', data);
           if (ok) {
@@ -294,26 +323,29 @@ const sendPhoneBookTOServer = async () => {
   if (confirmPer) {
     const phoneBook = await contact.getAll();
     console.log(
-      'phoneBookphoneBookphoneBookphoneBook',
+      'phoneBookphoasdasdneBookphoneBookphoneBook',
       Platform.OS,
-      phoneBook,
+      phoneBook[1].phoneNumbers,
       filterNumberFromArry(phoneBook),
     );
     const removeSpace = removeSpaceFromNumber(filterNumberFromArry(phoneBook));
-
+    const nightDigit = await getLastNightDigit(removeSpace);
     console.log(
       'removeSpaceremoveSpaceremoveSpaceremoveSpaceremoveSpace',
-      removeSpace,
+      nightDigit,
     );
 
     const {ok, data} = await API.post(sendNumberToServerUrl, {
-      book: removeSpace,
+      book: nightDigit,
     });
-    console.log('sjkdnkfnsdknfsdklnflksdnfknsdlfnsdlnfsdklf', data);
+    console.log(
+      'sjkdnkfnsdknfsdklnflksdnfknsdlfnsdlnfsdklfsdfsdfsdfsdfsdfsdfds',
+      data,
+    );
     if (ok) {
       store.dispatch({
         type: types.addContacts,
-        payload: JSON.parse(data.book),
+        payload: data.book.length > 0 ? JSON.parse(data.book) : [],
       });
 
       // Create the phonebook table
@@ -327,7 +359,7 @@ const sendPhoneBookTOServer = async () => {
   `);
         // Example: Insert data into the phonebook table
         const userId = data.user_id;
-        const phonebookData = data.book; // JSON data as a string
+        const phonebookData = data.book.length > 0 ? data.book : undefined; // JSON data as a string
         const updatedAt = data.updated_at; // Current timestamp
 
         db.transaction(tx => {
@@ -387,4 +419,5 @@ export {
   checkSqlDataBase,
   sendUpdatedAt,
   getContactFromSql,
+  getLastNightDigit,
 };

@@ -19,8 +19,9 @@ import ProfileBtn from '../../Components/ProfileBtn';
 import {CircleImage} from '../../Components/CircleImage';
 import {AlertDesign} from '../../Components/AlertDesign';
 import {hp} from '../../Config/responsive';
-import {imageUrl} from '../../Utils/Urls';
+import {aboutUrl, imageUrl, privacyUrl, termsUrl} from '../../Utils/Urls';
 import BlurImage from '../../Components/BlurImage';
+import InAppBrowser from '../../Components/InAppBrowser';
 
 const ProfileScreen = ({navigation}) => {
   const {dynamicNav, alert, onCancel, onConfirm, userData, deleteAccount} =
@@ -59,9 +60,21 @@ const ProfileScreen = ({navigation}) => {
         title={'Edit Profile'}
         icon={userProfileIcon}
       />
-      <ProfileBtn title={'About TrackPal'} icon={aboutTrackpal} />
-      <ProfileBtn title={'Privacy Policy'} icon={privacyPolicy} />
-      <ProfileBtn title={'Terms and Conditions'} icon={TermsCondition} />
+      <ProfileBtn
+        onPress={() => InAppBrowser.open(aboutUrl)}
+        title={'About TrackPal'}
+        icon={aboutTrackpal}
+      />
+      <ProfileBtn
+        onPress={() => InAppBrowser.open(privacyUrl)}
+        title={'Privacy Policy'}
+        icon={privacyPolicy}
+      />
+      <ProfileBtn
+        onPress={() => InAppBrowser.open(termsUrl)}
+        title={'Terms and Conditions'}
+        icon={TermsCondition}
+      />
       <ProfileBtn
         title={'Delete Account'}
         icon={profileDelete}

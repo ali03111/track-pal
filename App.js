@@ -70,6 +70,9 @@ export const changeUserAppStatus = async status => {
   console.log('jksdbfjksdbfjkbsdjkfbsdjkfbjskdbfjksdbfbjsd', data, Platform.OS);
 };
 
+// PushNotification.configure({
+// })
+
 const App = () => {
   const [isVisible, setIsVisible] = useState(true);
   const Hide_Splash_Screen = () => {

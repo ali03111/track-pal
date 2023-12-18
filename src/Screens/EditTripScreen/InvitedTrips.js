@@ -133,7 +133,7 @@ const InvitedTrip = ({navigation, route}) => {
             item?.owner_running_status == 0 || item?.owner_running_status == 2
               ? true
               : item?.pivot.member_running_status == 1
-              ? fasle
+              ? false
               : true
           }
           onPress={() => {

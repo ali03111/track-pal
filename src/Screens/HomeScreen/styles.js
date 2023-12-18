@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: wp('4'),
   },
 
-  groupInfoMain: {
+  groupInfoMain: isTrip => ({
     marginTop: hp('0'),
     zIndex: 999,
     flexDirection: 'row',
@@ -43,11 +43,12 @@ export const styles = StyleSheet.create({
     paddingVertical: hp('1.5'),
     position: 'relative',
     overflow: 'hidden',
-  },
+    opacity: isTrip ? 1 : 0,
+  }),
 
   mapArea: {
     borderRadius: 20,
-    marginHorizontal: wp('4'),
+    // marginHorizontal: wp('4'),
     overflow: 'hidden',
   },
   groupInfo: {
@@ -97,9 +98,13 @@ export const styles = StyleSheet.create({
   },
   staticMapImg: {
     marginTop: hp('-10'),
-    zIndex: -2,
-    height: hp('37'),
-    width: wp('100'),
+    // zIndex: -2,
+    height: hp('57'),
+    width: wp('95'),
+    marginBottom: hp('5'),
+    borderRadius: 20,
+    alignSelf: 'center',
+    // overflow: 'hidden',
   },
   btn: {
     marginHorizontal: wp('4'),

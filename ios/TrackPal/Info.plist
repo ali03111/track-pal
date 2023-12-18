@@ -161,6 +161,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSContactsUsageDescription</key>
-	<string>Need this permission</string>
+	<string>Please, provide this permission to get your contact to the app</string>
 </dict>
 </plist>
