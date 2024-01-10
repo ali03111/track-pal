@@ -32,6 +32,11 @@ const isIOS = Boolean(Platform.OS == 'ios');
 const Tab = createBottomTabNavigator();
 function MybottomTabs() {
   const {getState} = useReduxStore();
+  const {inviNotify} = getState('inviNotify');
+  const {generalNotify} = getState('generalNotify');
+
+  const inviNotifyStatus = Boolean(inviNotify.length > 0);
+  const genNotifyStatus = Boolean(generalNotify.length > 0);
 
   const tabarComponent = (
     activeImage,
@@ -61,10 +66,8 @@ function MybottomTabs() {
             <Image
               style={{
                 ...styles.imgstyle,
-                // tintColor: focused ? Colors.themeRed : 'white',
                 ...ImageStyle,
               }}
-              tintColor={focused ? Colors.themeRed : 'white'}
               source={focused ? activeImage : unActiveImage}
             />
           )}
