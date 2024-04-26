@@ -15,6 +15,9 @@
 		7699B88040F8A987B510C191 /* libPods-TrackPal-TrackPalTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-TrackPal-TrackPalTests.a */; };
 		A6019B9C2A27A8C500936F22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6019B9B2A27A8C500936F22 /* LaunchScreen.storyboard */; };
 		A62A652B2AA23E4F0003207F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A62A652A2AA23E4F0003207F /* GoogleService-Info.plist */; };
+		A6BBB3632B5EAE280093BD22 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BBB3622B5EAE280093BD22 /* StoreKit.framework */; };
+		A6C69C3E2BA8D00500AD56FE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A6C69C3D2BA8D00500AD56FE /* PrivacyInfo.xcprivacy */; };
+		A6C69C3F2BA8D00500AD56FE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A6C69C3D2BA8D00500AD56FE /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,8 @@
 		A637A1EA2A5C816E00116B02 /* Proxima-Nova-Alt-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima-Nova-Alt-Thin.otf"; sourceTree = "<group>"; };
 		A637A1EB2A5C816E00116B02 /* Rubik-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-BoldItalic.ttf"; sourceTree = "<group>"; };
 		A67764032A2E47A100E4F066 /* TrackPal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = TrackPal.entitlements; path = TrackPal/TrackPal.entitlements; sourceTree = "<group>"; };
+		A6BBB3622B5EAE280093BD22 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		A6C69C3D2BA8D00500AD56FE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -108,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-TrackPal.a in Frameworks */,
+				A6BBB3632B5EAE280093BD22 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +154,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A6BBB3622B5EAE280093BD22 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-TrackPal.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-TrackPal-TrackPalTests.a */,
@@ -165,6 +172,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A6C69C3D2BA8D00500AD56FE /* PrivacyInfo.xcprivacy */,
 				A62A652A2AA23E4F0003207F /* GoogleService-Info.plist */,
 				A637A1BE2A5C816E00116B02 /* Resources */,
 				13B07FAE1A68108700A75B9A /* TrackPal */,
@@ -339,6 +347,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C69C3F2BA8D00500AD56FE /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +357,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				A6019B9C2A27A8C500936F22 /* LaunchScreen.storyboard in Resources */,
+				A6C69C3E2BA8D00500AD56FE /* PrivacyInfo.xcprivacy in Resources */,
 				A62A652B2AA23E4F0003207F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

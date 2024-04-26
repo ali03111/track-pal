@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StatusBar,
   Text,
+  ScrollView,
 } from 'react-native';
 
 import {
@@ -46,6 +47,7 @@ import {AlertDesign} from '../../Components/AlertDesign';
 import {Colors} from '../../Theme/Variables';
 import {imageUrl} from '../../Utils/Urls';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
+import {hasOneMonthPassed, isOneMonthOld} from '../../Utils/globalFunctions';
 
 const HomeScreen = ({navigation}) => {
   const {
@@ -90,6 +92,12 @@ const HomeScreen = ({navigation}) => {
   } = useHomeScreen(navigation);
   const [showTip, setTip] = useState(false);
 
+  console.log(
+    'hasOneMonthPassed(userData?.created_at)',
+    hasOneMonthPassed(userData?.created_at),
+    userData?.created_at,
+  );
+
   const RenderMap = useCallback(
     ({item, index}) => {
       console.log(
@@ -125,7 +133,9 @@ const HomeScreen = ({navigation}) => {
     [currentLocation.coords],
   );
   return (
-    <View style={styles.homeScreenStyle}>
+    <ScrollView
+      contentContainerStyle={styles.homeScreenStyle}
+      showsVerticalScrollIndicator={false}>
       <Image source={logo1} style={styles.logo} />
       <View style={styles.mapArea}>
         <View style={styles.groupInfoMain(Boolean(tripDate?.created_at))}>
@@ -172,9 +182,26 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.btn}>
         <ThemeButton
           title={'Create New Trip'}
+          // onPress={() => {
+          //   navigation.navigate('SubscriptionScreen');
+          // }}
           onPress={() => {
             if (userData.is_verified == 0) toggleAlert();
-            else updateState({isTripSelectModal: true});
+            else if (
+              hasOneMonthPassed(userData?.created_at) &&
+              userData?.subscription?.plan == null &&
+              userData?.subscription?.plan == undefined
+            ) {
+              navigation.navigate('SubscriptionScreen');
+            } else if (!hasOneMonthPassed(userData?.created_at)) {
+              updateState({isTripSelectModal: true});
+              // navigation.navigate('SubscriptionScreen');
+            } else if (
+              hasOneMonthPassed(userData?.created_at) &&
+              userData?.subscription?.plan != null &&
+              userData?.subscription?.plan != undefined
+            )
+              updateState({isTripSelectModal: true});
           }}
           style={styles.tripBtn}
         />
@@ -344,7 +371,7 @@ const HomeScreen = ({navigation}) => {
         confirmButtonColor={Colors.primaryColor}
         msgStyle={{textAlign: 'center'}}
       />
-    </View>
+    </ScrollView>
   );
 };
 

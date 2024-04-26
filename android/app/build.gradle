@@ -98,8 +98,9 @@ android {
         applicationId 'com.codment.trackpal'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 6
         versionName '1.1'
+        missingDimensionStrategy "store", "play"
     }
 
     splits {
@@ -161,6 +162,7 @@ dependencies {
     implementation('androidx.swiperefreshlayout:swiperefreshlayout:1.0.0')
     implementation project(':react-native-contacts')
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+    implementation project(':react-native-iap')
       implementation project(':react-native-inappbrowser-reborn')
     // implementation 'com.telematicssdk:tracking: 1.0.4'
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")

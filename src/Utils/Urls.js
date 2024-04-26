@@ -1,15 +1,15 @@
 const getCredentials = () => {
   if (__DEV__)
     return {
-      baseURL: 'https://virtualrealitycreators.com/trackpal/api/',
-      imageURL: 'https://virtualrealitycreators.com/trackpal/public/',
+      baseURL: 'https://trackpal.co/trackpal/api/',
+      imageURL: 'https://trackpal.co/trackpal/public/',
       twiloURL: 'https://verify.twilio.com/v2/Services',
     };
   else {
     console.log = () => {};
     return {
-      baseURL: 'https://virtualrealitycreators.com/trackpal/api/',
-      imageURL: 'https://virtualrealitycreators.com/trackpal/public/',
+      baseURL: 'https://trackpal.co/trackpal/api/',
+      imageURL: 'https://trackpal.co/trackpal/public/',
       twiloURL: 'https://verify.twilio.com/v2/Services',
     };
   }
@@ -33,10 +33,9 @@ export const telematicsCreateUser =
 export const telematicsLoginUser =
   'https://user.telematicssdk.com/v1/Auth/Login';
 
-export const aboutUrl = 'https://trackpal.staginganideos.com/about_us';
-export const privacyUrl = 'https://trackpal.staginganideos.com/privacy_policy';
-export const termsUrl =
-  'https://trackpal.staginganideos.com/terms_and_conditions';
+export const aboutUrl = 'https://trackpal.co/about_us';
+export const privacyUrl = 'https://trackpal.co/privacy_policy';
+export const termsUrl = 'https://trackpal.co/terms_and_conditions';
 
 export const firebaseDataBaseURL =
   'https://track-pal-e4e07-default-rtdb.firebaseio.com/';
@@ -73,3 +72,5 @@ export const terminateStatusUrl = '/change-terminate-status';
 export const ResetMsgCountUrl = '/reset-msg-count';
 export const VerifyUserUrl = '/verify';
 export const GetLastTripUrl = '/get-latest-trip';
+export const AfterSubProUrl = 'create-subscription-ios';
+export const AfterSubProAndroidUrl = '/create-subscription-android';

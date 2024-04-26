@@ -14,6 +14,7 @@ import useEditPhoneNumber from './useEditPhoneNumberScreen';
 import {Touchable} from '../../Components/Touchable';
 import {AlertDesign} from '../../Components/AlertDesign';
 import {Colors} from '../../Theme/Variables';
+import KeyBoardWrapper from '../../Components/KeyboardWrapper';
 
 const EditPhoneNumberScreen = ({navigation}) => {
   const {
@@ -28,7 +29,7 @@ const EditPhoneNumberScreen = ({navigation}) => {
   } = useEditPhoneNumber(navigation);
   const phoneInput = useRef(null);
   return (
-    <View style={styles.logInMain}>
+    <KeyBoardWrapper style={styles.logInMain}>
       <CustomHeader
         arrowBackIcon={arrowBack}
         backText={'Back'}
@@ -130,7 +131,7 @@ const EditPhoneNumberScreen = ({navigation}) => {
         msgStyle={{textAlign: 'center', lineHeight: hp('2.5')}}
         confirmButtonColor={Colors.primaryColor}
       />
-    </View>
+    </KeyBoardWrapper>
   );
 };
 

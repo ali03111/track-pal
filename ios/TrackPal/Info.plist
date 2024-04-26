@@ -33,11 +33,6 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>
-						com.googleusercontent.apps.1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6</string>
-			</array>
 		</dict>
 		<dict>
 			<key>CFBundleURLSchemes</key>
@@ -49,9 +44,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6</string>
-			</array>
+			<array/>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
@@ -78,17 +71,17 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Want this permission update profile picture</string>
+	<string>To add profile picture , you need to allow access to your photo gallery</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Please, provide permissions for this Demo</string>
+	<string>To track your location , you need to allow access to your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Please, provide permissions for this Demo</string>
+	<string>To track your location , you need to allow access to your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please, provide the location permission to track</string>
+	<string>To track your location , you need to allow access to your location</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Please, provide permissions for this Demo</string>
+	<string>To track your location , you need to allow access to your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Want this permission update profile picture</string>
+	<string>To add profile picture , you need to allow access to your photo gallery</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Quicksand-Bold.ttf</string>
@@ -161,6 +154,12 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSContactsUsageDescription</key>
-	<string>Please, provide this permission to get your contact to the app</string>
+	<string>Get connected with your friends and family! Our app needs access to your contacts. Contacts are securely uploaded for a you to see other users of the app.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>To add profile picture , you need to allow access to your photo gallery</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 </dict>
 </plist>

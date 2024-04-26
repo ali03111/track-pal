@@ -309,7 +309,7 @@ const sendUpdatedAt = () => {
 
 const filterNumberFromArry = phoneBook => {
   const phoneNumbersArray = phoneBook.map(
-    contact => contact.phoneNumbers[0]?.number,
+    contact => contact?.phoneNumbers[0]?.number,
   );
   const filteredPhoneNumbers = phoneNumbersArray.filter(
     number => number !== undefined,
@@ -325,7 +325,7 @@ const sendPhoneBookTOServer = async () => {
     console.log(
       'phoneBookphoasdasdneBookphoneBookphoneBook',
       Platform.OS,
-      phoneBook[1].phoneNumbers,
+      // phoneBook[1].phoneNumbers,
       filterNumberFromArry(phoneBook),
     );
     const removeSpace = removeSpaceFromNumber(filterNumberFromArry(phoneBook));

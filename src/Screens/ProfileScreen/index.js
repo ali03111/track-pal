@@ -22,10 +22,20 @@ import {hp} from '../../Config/responsive';
 import {aboutUrl, imageUrl, privacyUrl, termsUrl} from '../../Utils/Urls';
 import BlurImage from '../../Components/BlurImage';
 import InAppBrowser from '../../Components/InAppBrowser';
+import {Colors} from '../../Theme/Variables';
+import {hasOneMonthPassed} from '../../Utils/globalFunctions';
 
 const ProfileScreen = ({navigation}) => {
   const {dynamicNav, alert, onCancel, onConfirm, userData, deleteAccount} =
     useProfileScreen(navigation);
+
+  const planObj = {
+    monthly_18012024: 'Monthly',
+    yearly_18012024: 'Yearly',
+    undefined: 'Free Trail',
+    null: 'Free Trail',
+  };
+
   return (
     <ScrollView
       style={styles.profileMain}
@@ -54,6 +64,21 @@ const ProfileScreen = ({navigation}) => {
         <GradientText style={styles.userName} GradientAlignment={1}>
           {userData?.name}
         </GradientText>
+        <TextComponent
+          text={
+            userData?.subscription?.plan
+              ? userData?.subscription?.plan
+              : !hasOneMonthPassed(userData?.created_at)
+              ? 'One Month Free Trail'
+              : 'Free trail ended'
+          }
+          styles={styles.trailText}
+          onPress={() =>
+            (userData?.subscription?.plan == null ||
+              userData?.subscription?.plan == undefined) &&
+            dynamicNav('SubscriptionScreen')
+          }
+        />
       </View>
       <ProfileBtn
         onPress={() => dynamicNav('EditProfileScreen')}

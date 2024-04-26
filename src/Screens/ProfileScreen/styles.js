@@ -34,4 +34,14 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: hp('.5'),
   },
+  trailText: {
+    alignSelf: 'center',
+    marginBottom: hp('1'),
+    paddingVertical: hp('1'),
+    backgroundColor: Colors.primaryColor,
+    paddingHorizontal: hp('2'),
+    borderRadius: 10,
+    overflow: 'hidden',
+    color: 'white',
+  },
 });

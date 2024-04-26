@@ -6,8 +6,9 @@ import {white} from 'react-native-paper/lib/typescript/src/styles/themes/v2/colo
 export const styles = StyleSheet.create({
   homeScreenStyle: {
     // backgroundColor: Colors.white,
-    flex: 1,
+    // flex: 1,
     paddingTop: Platform.OS == 'ios' ? hp('3') : 0,
+    paddingBottom: hp('5'),
   },
   logo: {
     resizeMode: 'contain',
@@ -97,7 +98,7 @@ export const styles = StyleSheet.create({
     // opacity: 0.67,
   },
   staticMapImg: {
-    marginTop: hp('-10'),
+    marginTop: hp('-15'),
     // zIndex: -2,
     height: hp('57'),
     width: wp('95'),

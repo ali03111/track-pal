@@ -206,6 +206,18 @@ const MapScreen = ({route, navigation}) => {
           }}
           // showsUserLocation={tripData.owner ? false : true}
           focusable
+          onPoiClick={val =>
+            console.log(
+              'sldbvbsdjkvbsdiovbsdklvbklsdbvlksdbvklsdbvklsdbvklsdbvls',
+              val,
+            )
+          }
+          onCalloutPress={val =>
+            console.log(
+              'onCalloutPressonCalloutPressonCalloutPressonCalloutPressonCalloutPress',
+              val,
+            )
+          }
           followsUserLocation
           moveOnMarkerPress
           showsMyLocationButton

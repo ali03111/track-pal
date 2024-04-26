@@ -51,6 +51,10 @@ const StackNavigatior = () => {
             )} */}
             <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
             <Stack.Screen
+              name="SubscriptionScreen"
+              component={Screens.SubscriptionScreen}
+            />
+            <Stack.Screen
               name="EditPhoneNumberScreen"
               component={Screens.EditPhoneNumberScreen}
             />

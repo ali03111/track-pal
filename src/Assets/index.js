@@ -29,6 +29,9 @@ export {default as profile} from './Images/profile.png';
 export {default as dataNotFound1} from './Images/dataNotFound-1.png';
 export {default as dataNotFound2} from './Images/dataNotFound-2.png';
 export {default as greenCircle} from './Images/greenCircle.png';
+export {default as triangle} from './Images/triangle.png';
+export {default as monthlyPkStar} from './Images/monthlyPkStar.png';
+export {default as yearlyPkStar} from './Images/yearlyPkStar.png';
 
 // export {default as DemoProfileImage7} from './Images/profile7.png';
 
@@ -81,6 +84,7 @@ export {default as addUserCircle} from './Icons/addUser.png';
 export {default as userMinus} from './Icons/userMinus.png';
 export {default as profileDelete} from './Icons/profileDelete.png';
 export {default as verify} from './Icons/verify.png';
+export {default as tickSquare} from './Icons/tick-square.png';
 
 // Lotties files
 

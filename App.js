@@ -50,6 +50,8 @@ import {checkContactPermission} from './src/Services/ContactServices';
 import {notificationStatusFunc} from './src/Screens/ChatScreen/useChatScreen';
 import {tripsTypes} from './src/Utils/localDB';
 import {firebase} from '@react-native-firebase/messaging';
+import {withIAPContext} from 'react-native-iap';
+import Gallery from './testSreen';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -283,6 +285,7 @@ const App = () => {
       />
       {/* {enableLatestRenderer()} */}
       {isVisible === true ? Splash_Screen : <StackNavigatior />}
+      {/* {isVisible === true ? Splash_Screen : <Gallery />} */}
       {/* <StackNavigatior />; */}
     </>
   );
@@ -345,4 +348,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default withIAPContext(App);

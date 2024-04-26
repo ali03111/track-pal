@@ -25,12 +25,6 @@ function InfoModal({
 }) {
   const tripDatddda = userData.id;
   const {email} = userData;
-  console.log('asd  test', tripInfo);
-  console.log(
-    'asdasdasdasdasdasasdaasdasdassdasdasasdasdasdas dasddsaadsfasfasassadas',
-    tripInfo?.members?.filter(res => res.details.email == email),
-    userData.id,
-  );
   // console.log('asd ', tripData);
 
   const renderItem = useCallback(({item, index}) => {

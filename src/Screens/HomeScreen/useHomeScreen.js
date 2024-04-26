@@ -38,6 +38,7 @@ import {
   sendPhoneBookTOServer,
   sendUpdatedAt,
 } from '../../Services/ContactServices';
+import {verifyUser} from '../../Redux/Action/AuthAction';
 
 const useHomeScreen = ({addListener}) => {
   const {width, height} = Dimensions.get('window');
@@ -70,6 +71,8 @@ const useHomeScreen = ({addListener}) => {
     groupMembers: [],
     allUser: [],
   });
+
+  console.log('userDatauserDatauserDatauserData', userData);
 
   const [inputFeilds, setInputFeilds] = useState({
     destinationInput: {
@@ -403,6 +406,7 @@ const useHomeScreen = ({addListener}) => {
       GetLastTrip();
       getUser();
       sendUpdatedAt();
+      dispatch(verifyUser());
     });
     return event;
   };

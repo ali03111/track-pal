@@ -19,3 +19,4 @@ export {default as InvitationScreen} from './InvitationScreen';
 export {default as EditPhoneNumberScreen} from './EditPhoneNumberScreen';
 export {default as ForgotPasswordScreen} from './ForgotPasswordScreen';
 export {default as VerficationScreen} from './VerficationScreen';
+export {default as SubscriptionScreen} from './SubscriptionScreen';

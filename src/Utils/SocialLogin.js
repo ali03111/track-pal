@@ -69,6 +69,7 @@ export const appleIdlogin = async () => {
 };
 
 export const googleLogin = async () => {
+  console.log('isdvbjksdbj');
   const logOutWithGoogle = async () => {
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
@@ -81,11 +82,13 @@ export const googleLogin = async () => {
   if (!hasPlayService) throw new Error('play services not available');
   const isSignIn = await GoogleSignin.isSignedIn();
   if (isSignIn) await logOutWithGoogle();
+  console.log('isSIngIN ', isSignIn);
   const {idToken, user} = await GoogleSignin.signIn();
+  console.log('tpken', idToken, user);
   const token = auth.GoogleAuthProvider.credential(idToken);
   const {additionalUserInfo} = await auth().signInWithCredential(token);
 
-  return {...token, ...user, isNewUser: additionalUserInfo.isNewUser};
+  return {...token, ...user, isNewUser: additionalUserInfo?.isNewUser};
 };
 
 export const PhoneNumberLogin = async phoneNumber => {
