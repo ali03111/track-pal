@@ -24,11 +24,26 @@ const perSKU = Platform.select({
   ios: PERMISSIONS.IOS.CONTACTS,
 });
 
-const checkContactPermission = async () => {
+const checkContactPer = async () => {
   if (Platform.OS == 'ios') {
     const status = await check(perSKU);
     console.log('statusstatusstatusstatusstatus', status);
     if (status == 'granted') return true;
+    else return false;
+  } else if (Platform.OS == 'android') {
+    const granted = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+    );
+    console.log('grantedgrantedgrantedgrantedgranted', granted);
+    if (granted == PermissionsAndroid.RESULTS.GRANTED) return true;
+  } else return false;
+};
+
+const checkContactPermission = async () => {
+  if (Platform.OS == 'ios') {
+    const status = await checkContactPer();
+    console.log('statusstatusstatusstatusstatus', status);
+    if (status == true) return true;
     else {
       const req = await request(perSKU);
       if (req == 'granted') return true;
@@ -59,11 +74,8 @@ const checkContactPermission = async () => {
       }
     }
   } else if (Platform.OS == 'android') {
-    const granted = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-    );
-    console.log('grantedgrantedgrantedgrantedgranted', granted);
-    if (granted == PermissionsAndroid.RESULTS.GRANTED) return true;
+    const ch = await checkContactPer();
+    if (ch == true) return true;
     else {
       const req = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
@@ -414,10 +426,11 @@ const checkSqlDataBase = () => {
 };
 
 export {
-  // checkContactPermission,
+  checkContactPermission,
   sendPhoneBookTOServer,
   checkSqlDataBase,
   sendUpdatedAt,
   getContactFromSql,
   getLastNightDigit,
+  checkContactPer,
 };

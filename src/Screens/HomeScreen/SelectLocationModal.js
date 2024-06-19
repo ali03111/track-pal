@@ -96,6 +96,7 @@ const SelectLocationModal = ({
                 <Image source={from} style={styles.inputLeftImg} />
                 <AutoFillGoogleComp
                   handleButtonClick={e => {
+                    console.log('sbdjklbsdjklvbsdjklbvlksdbvlkbsdklvsd', e);
                     updateInputState({destinationInput: e});
                     destinationInputRef.current = e;
                   }}

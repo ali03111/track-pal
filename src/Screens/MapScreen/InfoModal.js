@@ -47,7 +47,7 @@ function InfoModal({
         <View style={styles.memberText}>
           <TextComponent text={item.details.name} styles={styles.creatorName} />
 
-          {item.details.id == tripInfo.tripCreator.id && (
+          {item.details.id == tripInfo?.tripCreator?.id && (
             <>
               <TextComponent text={'Creator'} styles={styles.creator} />
             </>
@@ -96,17 +96,17 @@ function InfoModal({
           </GradientText>
           <ScrollView>
             <View style={styles.creatorInfoMain}>
-              {tripInfo.tripCreator?.image ? (
+              {tripInfo?.tripCreator?.image ? (
                 <CircleImage
                   uri={true}
-                  image={imageUrl(tripInfo.tripCreator?.image)}
+                  image={imageUrl(tripInfo?.tripCreator?.image)}
                 />
               ) : (
-                <FirstCharacterComponent text={tripInfo.tripCreator?.name} />
+                <FirstCharacterComponent text={tripInfo?.tripCreator?.name} />
               )}
               <View style={styles.creatorInfo}>
                 <TextComponent
-                  text={tripInfo.tripCreator?.name}
+                  text={tripInfo?.tripCreator?.name}
                   styles={styles.creatorName}
                 />
                 <TextComponent
@@ -144,7 +144,7 @@ function InfoModal({
               <View style={styles.destinationArea}>
                 <Image source={from} style={styles.desImage} />
                 <TextComponent
-                  text={tripInfo.destination?.description}
+                  text={tripInfo?.destination?.description}
                   styles={styles.desText}
                 />
               </View>

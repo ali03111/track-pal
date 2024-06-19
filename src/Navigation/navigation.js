@@ -101,6 +101,10 @@ const StackNavigatior = () => {
               component={Screens.GeneralNotification}
             />
             <Stack.Screen name="SyncScreen" component={Screens.SyncScreen} />
+            <Stack.Screen
+              name="AllowContactPerScreen"
+              component={Screens.AllowContactPerScreen}
+            />
           </>
         )}
       </Stack.Navigator>

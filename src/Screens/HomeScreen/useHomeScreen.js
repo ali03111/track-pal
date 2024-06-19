@@ -33,6 +33,8 @@ import {
   openSettings,
 } from 'react-native-permissions';
 import {
+  checkContactPer,
+  checkContactPermission,
   getContactFromSql,
   // checkContactPermission,
   sendPhoneBookTOServer,
@@ -402,11 +404,14 @@ const useHomeScreen = ({addListener}) => {
     setTimeout(() => {
       locationFun('currentLocation', true);
     }, 2000);
-    const event = addListener('focus', () => {
+    const event = addListener('focus', async () => {
       GetLastTrip();
-      getUser();
-      sendUpdatedAt();
       dispatch(verifyUser());
+      const checkPer = await checkContactPer();
+      if (checkPer) {
+        getUser();
+        sendUpdatedAt();
+      }
     });
     return event;
   };

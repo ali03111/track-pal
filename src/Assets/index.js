@@ -32,6 +32,7 @@ export {default as greenCircle} from './Images/greenCircle.png';
 export {default as triangle} from './Images/triangle.png';
 export {default as monthlyPkStar} from './Images/monthlyPkStar.png';
 export {default as yearlyPkStar} from './Images/yearlyPkStar.png';
+export {default as dataBaseIMG} from './Images/dataBaseIMG.png';
 
 // export {default as DemoProfileImage7} from './Images/profile7.png';
 

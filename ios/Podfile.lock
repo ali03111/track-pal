@@ -1197,6 +1197,8 @@ PODS:
     - React
   - react-native-image-picker (5.6.0):
     - React-Core
+  - react-native-leaflet (0.1.2):
+    - React-Core
   - react-native-maps (1.7.1):
     - React-Core
   - react-native-pager-view (6.2.0):
@@ -1206,6 +1208,9 @@ PODS:
   - react-native-sms (1.11.0):
     - React
   - react-native-sqlite-storage (6.0.1):
+    - React-Core
+  - react-native-webview (13.10.2):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - React-perflogger (0.71.7)
   - React-RCTActionSheet (0.71.7):
@@ -1413,11 +1418,13 @@ DEPENDENCIES:
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-leaflet (from `../node_modules/react-native-leaflet-view`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sms (from `../node_modules/react-native-sms`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -1563,6 +1570,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-geolocation-service"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-leaflet:
+    :path: "../node_modules/react-native-leaflet-view"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-pager-view:
@@ -1573,6 +1582,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-sms"
   react-native-sqlite-storage:
     :path: "../node_modules/react-native-sqlite-storage"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -1713,11 +1724,13 @@ SPEC CHECKSUMS:
   react-native-geolocation: 0f7fe8a4c2de477e278b0365cce27d089a8c5903
   react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
   react-native-image-picker: db60857e03d63721f19b6f4027de20429ddd9cba
+  react-native-leaflet: cead07656af59e80164379f6ec9f11a012d7725c
   react-native-maps: 667f9b975549c6fa9b1631bf859440f68ebd3b8f
   react-native-pager-view: 0ccb8bf60e2ebd38b1f3669fa3650ecce81db2df
   react-native-safe-area-context: 9697629f7b2cda43cf52169bb7e0767d330648c2
   react-native-sms: 31fbb9d6ebb565ad32e409eaf9dc70329936a129
   react-native-sqlite-storage: f6d515e1c446d1e6d026aa5352908a25d4de3261
+  react-native-webview: c411cd2a9fbccf825b1c580a192914a9ce14b4ff
   React-perflogger: 2d505bbe298e3b7bacdd9e542b15535be07220f6
   React-RCTActionSheet: 0e96e4560bd733c9b37efbf68f5b1a47615892fb
   React-RCTAnimation: fd138e26f120371c87e406745a27535e2c8a04ef

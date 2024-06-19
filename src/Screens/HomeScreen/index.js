@@ -48,6 +48,10 @@ import {Colors} from '../../Theme/Variables';
 import {imageUrl} from '../../Utils/Urls';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {hasOneMonthPassed, isOneMonthOld} from '../../Utils/globalFunctions';
+import {
+  checkContactPer,
+  checkContactPermission,
+} from '../../Services/ContactServices';
 
 const HomeScreen = ({navigation}) => {
   const {
@@ -185,8 +189,11 @@ const HomeScreen = ({navigation}) => {
           // onPress={() => {
           //   navigation.navigate('SubscriptionScreen');
           // }}
-          onPress={() => {
+          onPress={async () => {
+            const checkPer = await checkContactPer();
             if (userData.is_verified == 0) toggleAlert();
+            else if (userData.is_verified == 1 && !checkPer)
+              navigation.navigate('AllowContactPerScreen');
             else if (
               hasOneMonthPassed(userData?.created_at) &&
               userData?.subscription?.plan == null &&
@@ -200,8 +207,9 @@ const HomeScreen = ({navigation}) => {
               hasOneMonthPassed(userData?.created_at) &&
               userData?.subscription?.plan != null &&
               userData?.subscription?.plan != undefined
-            )
+            ) {
               updateState({isTripSelectModal: true});
+            }
           }}
           style={styles.tripBtn}
         />

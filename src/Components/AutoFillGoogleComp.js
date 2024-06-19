@@ -22,7 +22,7 @@ export const AutoFillGoogleComp = ({
           onChangeText(text);
           // Update the state with the current input text
         },
-        defaultValue: defaultValue,
+        defaultValue,
       }}
       placeholder={inputPlaceHolder}
       returnKeyType="default"
@@ -95,6 +95,10 @@ export const AutoFillGoogleComp = ({
       //     />
       //   )}
       onPress={(data, details = null) => {
+        console.log(
+          'slkdjbcklbsdlkvbklsdbvlksdbvklsbdklvbsdklvbsdlvk',
+          JSON.parse(details),
+        );
         const {lat, lng} = details.geometry.location;
         handleButtonClick({
           ...data,

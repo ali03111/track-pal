@@ -1,6 +1,6 @@
 import React, {memo, useCallback} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import MapView, {Marker, Polyline} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 import {styles} from './styles';
 import {
   DemoProfileImage1,
@@ -212,15 +212,16 @@ const MapScreen = ({route, navigation}) => {
               val,
             )
           }
-          onCalloutPress={val =>
+          onLongPress={({val, currentTarget}) =>
             console.log(
               'onCalloutPressonCalloutPressonCalloutPressonCalloutPressonCalloutPress',
-              val,
+              currentTarget,
             )
           }
           followsUserLocation
           moveOnMarkerPress
           showsMyLocationButton
+          // provider={PROVIDER_GOOGLE}
           zoomEnabled>
           <Marker
             coordinate={{
@@ -295,3 +296,133 @@ const MapScreen = ({route, navigation}) => {
 };
 
 export default memo(MapScreen);
+
+// import React, {useEffect, useState} from 'react';
+// import {View, StyleSheet, Dimensions} from 'react-native';
+// import MapView, {
+//   Marker,
+//   PROVIDER_GOOGLE,
+//   TileOverlay,
+//   UrlTile,
+// } from 'react-native-maps';
+// import API from '../../Utils/helperFunc';
+// import {currentUserLottie} from '../../Assets';
+// import {hp, wp} from '../../Config/responsive';
+// import {LatLng, LeafletView} from 'react-native-leaflet-view';
+
+// const MapScreen = () => {
+//   const [crossings, setCrossings] = useState([]);
+
+//   useEffect(() => {
+//     // Fetch railway crossings in Brussels
+//     fetchRailwayCrossings();
+//   }, []);
+
+//   const fetchRailwayCrossings = async () => {
+//     try {
+//       const response = await fetch(
+//         'https://api.openrailwaymap.org/v2/facility?name=brussels&railway_crossing:movable=*',
+//       );
+
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
+
+//       const data = await response.json();
+//       console.log('Railway crossings in Brussels:', data);
+//       setCrossings(data);
+//     } catch (error) {
+//       console.error('Error fetching railway crossings in Brussels:', error);
+//     }
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <MapView
+//         apikey={'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U'}
+//         // provider={PROVIDER_GOOGLE} // Use Google Maps
+//         style={styles.map}
+//         initialRegion={{
+//           latitude: 50.8503,
+//           longitude: 4.3517,
+//           latitudeDelta: 0.0922,
+//           longitudeDelta: 0.0421,
+//         }}>
+//         {/* <LeafletView
+//           mapLayers={[
+//             {
+//               attribution:
+//                 '&copy; <Text href="https://www.openstreetmap.org/copyright">OpenStreetMap</Text> contributors &copy; <Text href="https://carto.com/attributions">CARTO</Text>',
+//               maxZoom: 19,
+//               url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+//             },
+//             {
+//               attribution:
+//                 '&copy; <Text href="https://www.openstreetmap.org/copyright">OpenStreetMap</Text> contributors &copy; <Text href="https://www.openrailwaymap.org/">OpenRailwayMap</Text>',
+//               maxZoom: 18,
+//               url: 'https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png',
+//             },
+//           ]}
+//           // The rest of your props, see the list below
+//         /> */}
+//         {/* <UrlTile
+//           urlTemplate="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+//           maximumZ={18}
+//           zIndex={1}
+//           // tileOverlay={{
+//           //   urlTemplate:
+//           //     'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+//           //   maximumZ: 18,
+//           //   zIndex: 1,
+//           //   attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+//           // }}
+//         />
+//         <UrlTile
+//           urlTemplate="https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png"
+//           maximumZ={19}
+//           zIndex={2}
+//           // tileOverlay={{
+//           //   urlTemplate:
+//           //     'https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png',
+//           //   maximumZ: 19,
+//           //   zIndex: 2,
+//           //   attribution:
+//           //     '&copy; OpenStreetMap contributors &copy; OpenRailwayMap',
+//           // }}
+//         /> */}
+//         {crossings.map((crossing, index) => (
+//           <Marker
+//             key={index}
+//             coordinate={{
+//               latitude: crossing.latitude,
+//               longitude: crossing.longitude,
+//             }}
+//             pinColor="red">
+//             <Lottie
+//               style={{height: hp('8'), width: wp('4')}}
+//               resizeMode="contain"
+//               source={currentUserLottie}
+//               autoPlay
+//               loop
+//             />
+//           </Marker>
+//         ))}
+//       </MapView>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     ...StyleSheet.absoluteFillObject,
+//     height: Dimensions.get('window').height,
+//     width: Dimensions.get('window').width,
+//     justifyContent: 'flex-end',
+//     alignItems: 'center',
+//   },
+//   map: {
+//     ...StyleSheet.absoluteFillObject,
+//   },
+// });
+
+// export default MapScreen;

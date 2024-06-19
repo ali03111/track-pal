@@ -154,7 +154,7 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSContactsUsageDescription</key>
-	<string>Get connected with your friends and family! Our app needs access to your contacts. Contacts are securely uploaded for a you to see other users of the app.</string>
+	<string>Get connected with your friends and family! Our app needs access to your contacts. Contacts are securely uploaded on our server for you to see other users of the app.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>To add profile picture , you need to allow access to your photo gallery</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>

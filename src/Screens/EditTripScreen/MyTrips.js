@@ -223,8 +223,8 @@ const MyTrips = ({navigation, route}) => {
     <View
       style={{
         marginTop: hp('3'),
-        height: '100%',
-        flex: 1,
+        // height: '100%',
+        flexGrow: 1,
         ...noData,
       }}>
       {infoModal && (
