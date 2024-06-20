@@ -69,8 +69,8 @@ const ProfileScreen = ({navigation}) => {
             userData?.subscription?.plan
               ? userData?.subscription?.plan
               : !hasOneMonthPassed(userData?.created_at)
-              ? 'One Month Free Trail'
-              : 'Free trail ended'
+              ? 'One Month Free Trial'
+              : 'Free trial ended'
           }
           styles={styles.trailText}
           onPress={() =>

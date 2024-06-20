@@ -32,6 +32,7 @@ function SubscriptionScreen({navigation}) {
         headerTitle={'Subscription Plan'}
         backText={'Back'}
         arrowBackIcon={arrowBack}
+        goBack={() => navigation.goBack()}
       />
       {products.length > 0 ? (
         <>
