@@ -49,6 +49,12 @@ const StackNavigatior = () => {
                 component={Screens.EditPhoneNumberScreen}
               />
             )} */}
+            {!userData?.trial_start_at && (
+              <Stack.Screen
+                name="SubscriptionScreenBeforeStart"
+                component={Screens.SubscriptionScreen}
+              />
+            )}
             <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
             <Stack.Screen
               name="SubscriptionScreen"

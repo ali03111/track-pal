@@ -18,8 +18,12 @@ import IAP, {
 } from 'react-native-iap';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import API from '../../Utils/helperFunc';
-import {AfterSubProAndroidUrl, AfterSubProUrl} from '../../Utils/Urls';
-import {successMessage} from '../../Config/NotificationMessage';
+import {
+  AfterSubProAndroidUrl,
+  AfterSubProUrl,
+  StartTrialUrl,
+} from '../../Utils/Urls';
+import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 import {types} from '../../Redux/types';
 
@@ -46,6 +50,22 @@ function useSubscriptionScreen({navigate, goBack}) {
   const {getState, dispatch} = useReduxStore();
 
   const {userData} = getState('Auth');
+
+  const startTrial = async () => {
+    // Get the current date and time
+    const currentDate = new Date();
+
+    // Format the date and time
+    const formattedDate = currentDate.toISOString().replace('Z', '.000000Z');
+
+    const {ok, data} = await API.post(StartTrialUrl, {
+      trial_start_at: formattedDate,
+    });
+    if (ok) {
+      dispatch({type: types.UpdateProfile, payload: data?.data});
+    } else errorMessage(data?.message);
+  };
+
   // console.log('userDatauserDatauserDatauserDatauserDatauserData', userData);
   const buySubscription = async (proId, offerToken) => {
     dispatch(loadingTrue());
@@ -113,29 +133,6 @@ function useSubscriptionScreen({navigate, goBack}) {
     } else dispatch(loadingFalse());
   };
 
-  // purchaseUpdatedListener(purchase => {
-  //   fetch('https://sandbox.itunes.apple.com/verifyReceipt', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       password: 'e1ef6023b4234a27a9f721751669dd64',
-  //       'receipt-data': purchase.transactionReceipt,
-  //       'exclude-old-transactions': false,
-  //     }),
-  //   })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       const receipt = data.receipt;
-  //       // Continue with your code here
-  //     })
-  //     .catch(error => {
-  //       console.error('Error:', error);
-  //     });
-  //   // ... rest of your code
-  // });
-
   const fetchData = async () => {
     dispatch(loadingTrue());
     const be = availablePurchases;
@@ -196,6 +193,6 @@ function useSubscriptionScreen({navigate, goBack}) {
     };
   }, []); // Empty dependency array means this effect runs once, similar to componentDidMount
 
-  return {products, buySubscription, fetchData};
+  return {products, buySubscription, fetchData, startTrial, userData};
 }
 export default useSubscriptionScreen;

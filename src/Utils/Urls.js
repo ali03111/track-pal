@@ -74,3 +74,4 @@ export const VerifyUserUrl = '/verify';
 export const GetLastTripUrl = '/get-latest-trip';
 export const AfterSubProUrl = 'create-subscription-ios';
 export const AfterSubProAndroidUrl = '/create-subscription-android';
+export const StartTrialUrl = '/trial-start';

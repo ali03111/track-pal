@@ -1,4 +1,5 @@
 import {hp, wp} from '../../Config/responsive';
+import {Colors} from '../../Theme/Variables';
 
 const {StyleSheet} = require('react-native');
 
@@ -51,5 +52,26 @@ export const styles = StyleSheet.create({
     marginBottom: hp('2'),
     width: wp('85'),
     alignSelf: 'center',
+  },
+  logInWith: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: hp('2.5'),
+    textAlign: 'center',
+    alignItems: 'center',
+  },
+  logInBorder: {
+    borderBottomWidth: 1,
+    height: 0,
+    flex: 0.1,
+    backgroundColor: 'black',
+  },
+  logInText: {
+    flex: 1,
+    fontSize: hp('2'),
+    color: Colors.black,
+    paddingHorizontal: wp('4'),
+    justifyContent: 'center',
+    textAlign: 'center',
   },
 });

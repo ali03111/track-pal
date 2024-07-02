@@ -189,8 +189,12 @@ const App = () => {
   const useEffectFun = () => {
     dispatch(verifyUser());
     GoogleSignin.configure({
+      iosClientId:
+        '1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com',
       webClientId:
-        '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com',
+        Platform.OS == 'ios'
+          ? '1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com'
+          : '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com',
     });
     LogBox.ignoreLogs([
       'VirtualizedLists should never be nested',
@@ -349,3 +353,5 @@ const styles = StyleSheet.create({
 });
 
 export default withIAPContext(App);
+
+// 1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com

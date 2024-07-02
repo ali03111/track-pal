@@ -24,7 +24,7 @@ const details = [
 ];
 
 function SubscriptionScreen({navigation}) {
-  const {products, buySubscription, fetchData} =
+  const {products, buySubscription, fetchData, startTrial, userData} =
     useSubscriptionScreen(navigation);
   return (
     <View style={{flex: 1}}>
@@ -39,7 +39,12 @@ function SubscriptionScreen({navigation}) {
           <GradientText style={styles.heading} GradientAlignment={0.6}>
             Choose your Plan
           </GradientText>
-          <ScrollView contentContainerStyle={{flex: 1, paddingTop: hp('2')}}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingTop: hp('2'),
+              paddingBottom: hp('5'),
+            }}>
             <View style={styles.subView}>
               <Image
                 source={triangle}
@@ -161,6 +166,22 @@ function SubscriptionScreen({navigation}) {
                 btnStyle={styles.chooseBtn}
               />
             </View>
+            {!userData?.trial_start_at && (
+              <>
+                <View style={styles.logInWith}>
+                  <Text style={styles.logInBorder}></Text>
+                  <Text style={styles.logInText}>
+                    or Want to start your one month free trial?
+                  </Text>
+                  <Text style={styles.logInBorder}></Text>
+                </View>
+                <ThemeButton
+                  title={'Start your free Trial'}
+                  onPress={() => startTrial()}
+                  btnStyle={styles.chooseBtn}
+                />
+              </>
+            )}
           </ScrollView>
         </>
       ) : (
