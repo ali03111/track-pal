@@ -30,6 +30,7 @@ const ForgotPasswordScreen = ({navigation}) => {
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
         goBack={goBack}
+        isBack
       />
       <GradientText style={styles.heading} GradientAlignment={0.6}>
         Forgot Password

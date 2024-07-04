@@ -18,21 +18,27 @@ const CustomHeader = ({
   backTextStyle,
   titleStyle,
   numberOfLines,
+  isBack,
 }) => {
   return (
     <View style={[styles.TopHeader, {...style}]}>
       <View style={styles.HeaderLeft}>
-        <Touchable onPress={goBack} style={styles.backMain}>
+        <Touchable onPress={goBack} style={styles.backMain} disabled={!isBack}>
           <Image
             source={arrowBackIcon}
             style={{
               resizeMode: 'contain',
+              display: isBack ? 'flex' : 'none',
               ...styles.arrowback,
             }}
           />
           <TextComponent
             text={backText}
-            styles={{...styles.backBtn, ...backTextStyle}}
+            styles={{
+              ...styles.backBtn,
+              display: isBack ? 'flex' : 'none',
+              ...backTextStyle,
+            }}
           />
         </Touchable>
       </View>

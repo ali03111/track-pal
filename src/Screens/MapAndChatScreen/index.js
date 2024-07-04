@@ -130,6 +130,7 @@ const MapAndChatScreen = ({navigation, route}) => {
         headerTitle={route?.params?.item?.name}
         goBack={navigation.goBack}
         numberOfLines={1}
+        isBack
       />
 
       <Tab.Navigator

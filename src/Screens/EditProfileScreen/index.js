@@ -51,6 +51,7 @@ const EditProfileScreen = ({navigation}) => {
           titleStyle={styles.hdTitle}
           backTextStyle={styles.back}
           goBack={goBack}
+          isBack
         />
       </ImageBackground>
       <View style={styles.userProfileImg}>

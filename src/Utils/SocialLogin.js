@@ -9,9 +9,9 @@ import {sha256} from 'react-native-sha256';
 import {Platform} from 'react-native';
 
 export const faceBookLogin = async () => {
-  if (Platform.OS === 'android') {
-    LoginManager.setLoginBehavior('web_only');
-  }
+  // if (Platform.OS === 'android') {
+  //   LoginManager.setLoginBehavior('web_only');
+  // }
 
   // Attempt login with permissions
   const result = await LoginManager.logInWithPermissions([

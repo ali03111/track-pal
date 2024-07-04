@@ -67,7 +67,7 @@ const AllowContactPerScreen = ({navigation}) => {
 
   return (
     <View style={{flexGrow: 1}}>
-      <CustomHeader headerTitle={'Ask Permission'} />
+      <CustomHeader headerTitle={'Ask Permission'} isBack />
       <View style={{flex: 1, alignItems: 'center', marginTop: hp('13')}}>
         {viewState == 0 ? <ViewA /> : <ViewB />}
       </View>

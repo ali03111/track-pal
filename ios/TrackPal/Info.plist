@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -25,14 +29,18 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.trackpal.codment</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1254157088825041</string>
+				<string>fb772275718444619</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
 		</dict>
 		<dict>
 			<key>CFBundleURLSchemes</key>
@@ -50,9 +58,9 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
-	<string>1254157088825041</string>
+	<string>772275718444619</string>
 	<key>FacebookClientToken</key>
-	<string>95216d298b45ac33d8cdb9f5a62b96b8</string>
+	<string>effeeb437e5c322a9531a1965e809808</string>
 	<key>FacebookDisplayName</key>
 	<string>Track Pal</string>
 	<key>GIDClientID</key>
@@ -70,8 +78,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>To add profile picture , you need to allow access to your photo gallery</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To add profile picture , you need to allow access to your photo gallery</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Get connected with your friends and family! Our app needs access to your contacts. Contacts are securely uploaded on our server for you to see other users of the app.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>To track your location , you need to allow access to your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -153,13 +165,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSContactsUsageDescription</key>
-	<string>Get connected with your friends and family! Our app needs access to your contacts. Contacts are securely uploaded on our server for you to see other users of the app.</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>To add profile picture , you need to allow access to your photo gallery</string>
-	<key>BGTaskSchedulerPermittedIdentifiers</key>
-	<array>
-		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	</array>
 </dict>
 </plist>

@@ -33,6 +33,7 @@ function SubscriptionScreen({navigation}) {
         backText={'Back'}
         arrowBackIcon={arrowBack}
         goBack={() => navigation.goBack()}
+        isBack={userData?.trial_start_at}
       />
       {products.length > 0 ? (
         <>

@@ -34,6 +34,7 @@ const ResetPasswordScreen = ({navigation}) => {
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
         goBack={goBack}
+        isBack
       />
       <InputComponent
         {...{
