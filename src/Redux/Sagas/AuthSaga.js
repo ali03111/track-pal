@@ -47,9 +47,7 @@ const loginSaga = function* ({payload: {datas, type}}) {
     console.log('jkdsbfjksdbfjkdsbfjkdbjfbsdjf', ok, data);
     if (ok) {
       const getLoginData = loginObject[type];
-      console.log('lkdjbvjklsdbvkljsdbvkjsdbjvsd;dlsnl;sdnl;');
       const resultData = yield call(getLoginData, datas);
-      console.log('lkdjbvjklsdbvkljsdbvkjsdbjvsd', resultData);
       const {socialData, status} = {socialData: resultData, status: true};
       if (status) {
         const idTokenResult = yield call(getFbResult);
@@ -92,7 +90,7 @@ const loginSaga = function* ({payload: {datas, type}}) {
       }
     } else errorMessage(data?.message);
   } catch (error) {
-    errorMessage(error?.message.split(' ').slice(1).join(' ') ?? error);
+    errorMessage(error?.message?.split(' ')?.slice(1)?.join(' ') ?? error);
     console.log('err', error);
   } finally {
     yield put(loadingFalse());
