@@ -5,7 +5,15 @@ import {Touchable} from './Touchable';
 import {hp, wp} from '../Config/responsive';
 import LinearGradient from 'react-native-linear-gradient';
 
-const ThemeButton = ({title, onPress, image, style, textStyle, btnStyle}) => {
+const ThemeButton = ({
+  title,
+  onPress,
+  image,
+  style,
+  textStyle,
+  btnStyle,
+  disabled,
+}) => {
   return (
     <LinearGradient
       colors={[Colors.themeColorLight, Colors.themeColorDark]}
@@ -13,6 +21,7 @@ const ThemeButton = ({title, onPress, image, style, textStyle, btnStyle}) => {
       <Touchable
         Opacity={0.7}
         onPress={onPress}
+        disabled={disabled}
         style={[styles.button, {justifyContent: 'center', ...style}]}>
         <Text style={[styles.text, {...textStyle}]}>{title}</Text>
       </Touchable>

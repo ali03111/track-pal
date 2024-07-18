@@ -53,7 +53,7 @@ const useVerificationScreen = (
 
   const sendVerfication = async num => {
     const {ok, data} = await API.get(SendVerficatioUrl + num);
-    if (ok) successMessage('OTP has been send your verification number.');
+    if (ok) successMessage('New OTP has been send your the number.');
     else errorMessage('Some error to send OTP!');
   };
 

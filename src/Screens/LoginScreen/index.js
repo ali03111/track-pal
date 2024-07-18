@@ -111,13 +111,6 @@ const LoginScreen = ({navigation}) => {
         image={apple}
         onPress={appleIdlogin}
       />
-      <ButtonWithIcon
-        title={'Continue with Facebook'}
-        style={styles.facebookBtn}
-        textStyle={styles.facebookBtnText}
-        image={facebook}
-        onPress={facebookLoginFunc}
-      />
       <View style={styles.signUpTextMain}>
         <TextComponent text={'Don’t have an account? '} />
         <Touchable onPress={onPress}>

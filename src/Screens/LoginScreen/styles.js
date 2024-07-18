@@ -42,6 +42,7 @@ export const styles = StyleSheet.create({
   googleBtn: {
     borderColor: Colors.themeRed,
     marginBottom: hp('2'),
+    marginTop: hp('5'),
   },
   googleBtnText: {
     color: Colors.themeRed,
@@ -64,6 +65,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingBottom: hp('3'),
     justifyContent: 'center',
+    marginTop: hp('5'),
   },
   signUpText: {
     marginLeft: wp('3'),

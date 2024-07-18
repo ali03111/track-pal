@@ -29,6 +29,8 @@ const VerficationScreen = ({route, navigation}) => {
     timerCallbackFunc,
     resendOTP,
   } = useVerificationScreen(navigation, route);
+  console.log('skdbvjklbsdlkvbklsdbvlksdbvlksbdv', value);
+
   return (
     <View style={{flex: 1}}>
       <CustomHeader
@@ -86,9 +88,11 @@ const VerficationScreen = ({route, navigation}) => {
           />
         )}
       </View>
-      <View style={styles.verificationBtn}>
-        <ThemeButton onPress={VerifyCode} title={'Verify'} />
-      </View>
+      {value.length == 6 && (
+        <View style={styles.verificationBtn}>
+          <ThemeButton onPress={VerifyCode} title={'Verify'} />
+        </View>
+      )}
     </View>
   );
 };

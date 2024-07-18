@@ -58,7 +58,7 @@ const InvitationTab = ({route, navigation}) => {
   return (
     <>
       <CustomHeader
-        headerTitle={'Invitaions'}
+        headerTitle={'Invitations'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
         backTextStyle={styles.back}

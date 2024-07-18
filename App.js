@@ -190,10 +190,10 @@ const App = () => {
     dispatch(verifyUser());
     GoogleSignin.configure({
       iosClientId:
-        '1005053076444-o39f1ubb1suj4uvm2suo3vfp4vmf8b6b.apps.googleusercontent.com',
+        '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com',
       webClientId:
         Platform.OS == 'ios'
-          ? '1005053076444-o39f1ubb1suj4uvm2suo3vfp4vmf8b6b.apps.googleusercontent.com'
+          ? '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com'
           : '1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com',
     });
     LogBox.ignoreLogs([
