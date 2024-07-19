@@ -35,7 +35,8 @@ const checkContactPer = async () => {
       PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
     );
     console.log('grantedgrantedgrantedgrantedgranted', granted);
-    if (granted == PermissionsAndroid.RESULTS.GRANTED) return true;
+    if (granted == PermissionsAndroid.RESULTS.GRANTED || granted == true)
+      return true;
   } else return false;
 };
 

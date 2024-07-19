@@ -73,7 +73,7 @@ const AllowContactPerScreen = ({navigation}) => {
       </View>
       <AlertDesign
         isVisible={alertState}
-        title={'Enable Location'}
+        title={'Enable Contact'}
         cancelText={'Not Now'}
         confirmText={'Enable'}
         onCancel={toggleAlert}

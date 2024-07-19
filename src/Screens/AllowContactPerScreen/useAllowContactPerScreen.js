@@ -18,7 +18,9 @@ const useAllowContactPerScreen = ({goBack}) => {
   const toggleAlert = () => setAlertState(!alertState);
 
   const onConfirm = async () => {
-    toggleAlert();
+    setTimeout(() => {
+      toggleAlert();
+    }, 1000);
     const checkPer = await checkContactPermission();
 
     if (checkPer) {
