@@ -52,7 +52,9 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>com.googleusercontent.apps.1005053076444-o39f1ubb1suj4uvm2suo3vfp4vmf8b6b</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
@@ -64,7 +66,7 @@
 	<key>FacebookDisplayName</key>
 	<string>Track Pal</string>
 	<key>GIDClientID</key>
-	<string>1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com</string>
+	<string>1005053076444-o39f1ubb1suj4uvm2suo3vfp4vmf8b6b.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

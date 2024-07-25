@@ -174,7 +174,9 @@ function useSubscriptionScreen({navigate, goBack}) {
       });
 
       purchaseErrorSubscription = purchaseErrorListener(error => {});
-    } catch (error) {}
+    } catch (error) {
+      dispatch(loadingFalse());
+    }
   };
   useEffect(() => {
     fetchData();

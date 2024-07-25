@@ -28,6 +28,7 @@ const VerficationScreen = ({route, navigation}) => {
     refTimer,
     timerCallbackFunc,
     resendOTP,
+    timerOnProgressFunc,
   } = useVerificationScreen(navigation, route);
   console.log('skdbvjklbsdlkvbklsdbvlksdbvlksbdv', value);
 
@@ -74,6 +75,7 @@ const VerficationScreen = ({route, navigation}) => {
           ref={refTimer}
           timestamp={120}
           timerCallback={timerCallbackFunc}
+          timerOnProgress={timerOnProgressFunc}
           containerStyle={{
             justifyContent: 'center',
             alignItems: 'center',

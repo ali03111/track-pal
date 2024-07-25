@@ -83,6 +83,10 @@ const loginSaga = function* ({payload: {datas, type}}) {
             //   yield call(checkSqlDataBase);
             //   yield call(getContactFromSql);
             // }
+            if (!data.user.isNewUser) {
+              yield call(checkSqlDataBase);
+              yield call(getContactFromSql);
+            }
           } else {
             errorMessage(data?.message);
           }
@@ -122,13 +126,10 @@ function* registerSaga({payload: {datas}}) {
             delay('100');
             yield call(NavigationService.navigate, 'EditPhoneNumberScreen');
           }
-          // if (data.user.isNewUser) {
-          //   yield call(sendPhoneBookTOServer);
-          //   yield call(getContactFromSql);
-          // } else {
-          //   yield call(checkSqlDataBase);
-          //   yield call(getContactFromSql);
-          // }
+          if (!data.user.isNewUser) {
+            yield call(checkSqlDataBase);
+            yield call(getContactFromSql);
+          }
         } else {
           errorMessage(data?.message);
         }

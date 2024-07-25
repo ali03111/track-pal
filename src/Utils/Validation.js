@@ -4,7 +4,7 @@ import * as yup from 'yup';
 const passwordSchema = {
   password: yup
     .string()
-    .required('Please Enter your password')
+    .required('Please enter your password')
     .max(25, 'Password must be less than 25 characters')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
@@ -16,36 +16,36 @@ const passwordSchema = {
     .oneOf([yup.ref('password'), null], 'Password must match'),
 };
 const number = yup.object().shape({
-  number: yup.string().required('Please Enter your number'),
-  // .typeError('Please Enter your number'),
+  number: yup.string().required('Please enter your number'),
+  // .typeError('Please enter your number'),
 });
 
 const signUpschema = yup.object().shape({
   email: yup
     .string()
     // .email('Email must be valid')
-    .required('Please Enter your email')
+    .required('Please enter your email')
     .min(3, 'Email must be valid')
     .max(50, 'Email must be valid'),
   // .matches(emailRegex, 'email is not Valid'),
   name: yup
     .string()
-    .required('Please Enter your fullname')
+    .required('Please enter your fullname')
     .max(100, 'Name must be less than 100 characters')
-    .matches(/^[A-Za-z ]*$/, 'Please Enter valid name')
+    .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
     .min(2, 'Name must be atleast 2 characters')
     .max(50, 'Name must be of 50 characters'),
-  // city: yup.string().required('Please Enter Your country'),
+  // city: yup.string().required('Please enter Your country'),
   // number: yup.string().required('Please enter your number'),
   // .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
   // phone: yup
   //   .number()
-  //   .required('Please Enter your number')
-  //   .typeError('Please Enter your number'),
+  //   .required('Please enter your number')
+  //   .typeError('Please enter your number'),
   // ...passwordSchema,
   // password: yup
   //   .string()
-  //   .required('Please Enter your password')
+  //   .required('Please enter your password')
   //   .max(25, 'Password must be less than 25 characters')
   //   .matches(
   //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
@@ -59,28 +59,28 @@ const logInUpschema = yup.object().shape({
     // .email('Email must be valid')
     .min(3, 'Email must be valid')
     .max(50, 'Email must be valid')
-    .required('Please Enter your email')
+    .required('Please enter your email')
     .matches(
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
       'Please enter valid email',
     ),
-  password: yup.string().required('Please Enter your password'),
+  password: yup.string().required('Please enter your password'),
 });
 const forgotSchema = yup.object().shape({
   email: yup
     .string()
     .email('Email must be valid')
-    .required('Please Enter your email'),
+    .required('Please enter your email'),
 });
 const verificationSchema = yup.object().shape({
   reset_code: yup
     .string()
-    .required('Please Enter your verification code')
+    .required('Please enter your verification code')
     .min(6, 'Verification code must be atleast 6 characters')
     .max(6, 'Verification code must be of 6 characters'),
 });
 const resetPasswordScheme = yup.object().shape({
-  password: yup.string().required('Please Enter your password'),
+  password: yup.string().required('Please enter your password'),
   // .max(25, 'Password must be less than 25 characters')
   // .matches(
   //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
@@ -89,7 +89,7 @@ const resetPasswordScheme = yup.object().shape({
 
   new_password: yup
     .string()
-    .required('Please Enter your new password')
+    .required('Please enter your new password')
     .max(25, 'Password must be less than 25 characters')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
@@ -114,23 +114,23 @@ const addUsernameScheme = yup.object().shape({
 const editProfileScheme = yup.object().shape({
   name: yup
     .string()
-    .required('Please Enter your fullname')
+    .required('Please enter your fullname')
     .max(100, 'Name must be less than 100 characters')
-    .matches(/^[A-Za-z ]*$/, 'Please Enter valid name')
+    .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
     .min(2, 'Name must be atleast 2 characters')
     .max(50, 'Name must be of 50 characters'),
   // phone: yup.string().required('Please enter your number'),
   email: yup
     .string()
     .email('Email must be valid')
-    .required('Please Enter your email'),
+    .required('Please enter your email'),
 });
 const addPostScheme = yup.object().shape({
   name: yup
     .string()
-    .required('Please Enter your fullname')
+    .required('Please enter your fullname')
     .max(200, 'Name must be less than 200 characters')
-    .matches(/^[A-Za-z ]*$/, 'Please Enter valid name')
+    .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
     .min(2, 'Name must be atleast 2 characters')
     .max(50, 'Name must be of 50 characters'),
   number: yup.string().required('Please enter your number'),

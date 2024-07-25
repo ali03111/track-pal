@@ -35,6 +35,9 @@ const useVerificationScreen = (
     value,
     setValue,
   });
+  const timerOnProgressFunc = remainingTimeInSecs => {
+    console.log('On Progress tracker :', remainingTimeInSecs);
+  };
 
   const VerifyCode = async () => {
     let url = verifyNumberUrl + params.item.phone + '/' + value;
@@ -47,6 +50,7 @@ const useVerificationScreen = (
       successMessage('Your number have been verified');
       popToTop();
     } else {
+      console.log('kjdbvjksdbvjksdbjvksdbvj', data);
       errorMessage(data?.message);
     }
   };
@@ -85,6 +89,7 @@ const useVerificationScreen = (
     refTimer,
     timerCallbackFunc,
     resendOTP,
+    timerOnProgressFunc,
   };
 };
 

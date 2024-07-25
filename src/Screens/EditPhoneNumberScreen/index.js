@@ -38,6 +38,7 @@ const EditPhoneNumberScreen = ({navigation}) => {
         titleStyle={styles.hdTitle}
         goBack={skipVerification}
         isBack
+        arrowback={{marginLeft: wp('5')}}
       />
       <GradientText style={styles.heading} GradientAlignment={0.6}>
         {edit ? 'Edit Your' : 'Confirm Your'} Number

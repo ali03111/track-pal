@@ -43,14 +43,16 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
 
   const sendVerficationCode = async () => {
     if (edit && number != null && number != '') {
-      const {ok, data} = await API.post(UpdateProfileUrl, {phone: number});
-      console.log('resresresresresresresresresresres', data);
-      if (ok) {
-        const {status, res} = await sendVerfication(number);
-        // if (status) successMessage('VerficationScreen');
-        if (status) navigate('VerficationScreen', {item: data.user});
-        else errorMessage(res?.message);
-      } else errorMessage(data?.message);
+      // const {ok, data} = await API.post(UpdateProfileUrl, {phone: number});
+      // console.log('resresresresresresresresresresres', data);
+      // if (ok) {
+      const {status, res} = await sendVerfication(number);
+      console.log('ljsdbvklsbdklvbsdlkvbsd', res);
+      // if (status) successMessage('VerficationScreen');
+      if (status) {
+        navigate('VerficationScreen', {item: {...userData, phone: number}});
+      } else errorMessage(res?.message);
+      // } else errorMessage(data?.message);
     } else if (!edit) {
       const {status, res} = await sendVerfication(userData.phone);
       // if (status) successMessage('VerficationScreen');

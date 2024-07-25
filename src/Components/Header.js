@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    alignSelf: 'center',
+    marginLeft: wp('2'),
+    // alignSelf: 'center',
   },
   HeaderCenter: {
     flex: 1,

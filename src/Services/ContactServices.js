@@ -13,11 +13,21 @@ const {
   request,
 } = require('react-native-permissions');
 
+function errorCB(err) {
+  console.log('SQL Error: ' + err);
+}
+
+function openCB() {
+  console.log('Database OPENED');
+}
+
 export let db = SQLite.openDatabase(
   'userContact.db',
   '1.0',
   'Contact Database',
   200000,
+  openCB,
+  errorCB,
 );
 
 const perSKU = Platform.select({
