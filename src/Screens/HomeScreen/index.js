@@ -190,26 +190,27 @@ const HomeScreen = ({navigation}) => {
           //   navigation.navigate('SubscriptionScreen');
           // }}
           onPress={async () => {
-            const checkPer = await checkContactPer();
-            if (userData.is_verified == 0) toggleAlert();
-            else if (userData.is_verified == 1 && !checkPer)
-              navigation.navigate('AllowContactPerScreen');
-            else if (
-              hasOneMonthPassed(userData?.created_at) &&
-              userData?.subscription?.plan == null &&
-              userData?.subscription?.plan == undefined
-            ) {
-              navigation.navigate('SubscriptionScreen');
-            } else if (!hasOneMonthPassed(userData?.created_at)) {
-              updateState({isTripSelectModal: true});
-              // navigation.navigate('SubscriptionScreen');
-            } else if (
-              hasOneMonthPassed(userData?.created_at) &&
-              userData?.subscription?.plan != null &&
-              userData?.subscription?.plan != undefined
-            ) {
-              updateState({isTripSelectModal: true});
-            }
+            updateState({isTripSelectModal: true});
+            // const checkPer = await checkContactPer();
+            // if (userData.is_verified == 0) toggleAlert();
+            // else if (userData.is_verified == 1 && !checkPer)
+            //   navigation.navigate('AllowContactPerScreen');
+            // else if (
+            //   hasOneMonthPassed(userData?.created_at) &&
+            //   userData?.subscription?.plan == null &&
+            //   userData?.subscription?.plan == undefined
+            // ) {
+            //   navigation.navigate('SubscriptionScreen');
+            // } else if (!hasOneMonthPassed(userData?.created_at)) {
+            //   updateState({isTripSelectModal: true});
+            //   // navigation.navigate('SubscriptionScreen');
+            // } else if (
+            //   hasOneMonthPassed(userData?.created_at) &&
+            //   userData?.subscription?.plan != null &&
+            //   userData?.subscription?.plan != undefined
+            // ) {
+            //   updateState({isTripSelectModal: true});
+            // }
           }}
           style={styles.tripBtn}
         />

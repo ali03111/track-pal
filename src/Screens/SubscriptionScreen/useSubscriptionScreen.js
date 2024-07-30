@@ -123,7 +123,11 @@ function useSubscriptionScreen({navigate, goBack}) {
           await flushFailedPurchasesCachedAsPendingAndroid();
         }
         if (Platform.OS == 'ios') clearTransactionIOS();
+      } else {
+        errorMessage(data?.message ?? data?.error ?? 'Some thing wrong');
       }
+
+      console.log('kjdsbvjksdbjvkbsdjvbkjsd', data?.message);
       dispatch(loadingFalse());
       purchaseUpdatedListener(purchase => {
         // console.log('purchaseUpdatedListenesdsdsdr', purchase);
@@ -164,6 +168,7 @@ function useSubscriptionScreen({navigate, goBack}) {
           'kdsgcusdckusdkcsdkjbckjsdbckjsdbkjcbsdj',
         );
       }
+      dispatch(loadingFalse());
       // await flushFailedPurchasesCachedAsPendingAndroid();
 
       // ... rest of your code
@@ -180,7 +185,7 @@ function useSubscriptionScreen({navigate, goBack}) {
   };
   useEffect(() => {
     fetchData();
-
+    dispatch(loadingFalse());
     // Cleanup function
     return () => {
       // if (purchaseUpdateSubscription) {

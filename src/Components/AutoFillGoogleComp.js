@@ -24,18 +24,20 @@ export const AutoFillGoogleComp = ({
         },
         defaultValue,
       }}
+      keyboardShouldPersistTaps="always"
       placeholder={inputPlaceHolder}
       returnKeyType="default"
       fetchDetails={true}
       key={key}
+      listViewDisplayed={false}
+      keepResultsAfterBlur={true}
       // currentLocation={true}
       //   listViewDisplayed
       // currentLocationLabel=" "
       isRowScrollable={true}
-      keepResultsAfterBlur={false}
       enablePoweredByContainer={false}
       predefinedPlacesAlwaysVisible
-      listViewDisplayed="auto"
+      // listViewDisplayed="auto"
       styles={{
         container: {
           ...inputContainerStyle,
@@ -97,7 +99,7 @@ export const AutoFillGoogleComp = ({
       onPress={(data, details = null) => {
         console.log(
           'slkdjbcklbsdlkvbklsdbvlksdbvklsbdklvbsdklvbsdlvk',
-          JSON.parse(details),
+          details,
         );
         const {lat, lng} = details.geometry.location;
         handleButtonClick({
@@ -109,8 +111,11 @@ export const AutoFillGoogleComp = ({
         });
         // handleButtonClick(data,{ lat, lng });
       }}
+      onFail={error =>
+        console.log('jskdbvklasdbvvlksdkvlbsdklvbdslkbvkldsbvlbdslvbsl', error)
+      }
       query={{
-        key: 'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U',
+        key: 'AIzaSyC6VSTz1py7rZiAUO6Hb9ilFCrX5SmaI2w',
         language: 'en',
         // components: 'country:us',
       }}

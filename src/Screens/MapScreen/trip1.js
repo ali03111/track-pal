@@ -116,7 +116,7 @@ const TripOne = ({route, navigation}) => {
               strokeWidth={4}
               strokeColors={['#92278F', '#EE2A7B']}
               // strokeColors={[Colors.themeColorDark, Colors.themeColorLight]}
-              apikey={'AIzaSyDrsOp8m31p4Ouy3S0pfXRNehExMJ-Mp2U'} // android
+              apikey={'AIzaSyC6VSTz1py7rZiAUO6Hb9ilFCrX5SmaI2w'} // android
               // apikey={'AIzaSyBlHyVz90xxc4lkp-1jGq68Ypmgnw4WCFE'}
               // strokeColors={['red']}
             />
