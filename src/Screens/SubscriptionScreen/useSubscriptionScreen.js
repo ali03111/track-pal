@@ -88,7 +88,11 @@ function useSubscriptionScreen({navigate, goBack}) {
         'purchaseDatapurchaseDatapurchaseDatapurchaseDatapurchaseDatapurchaseDatapurchaseDatapurchaseData',
         purchaseData,
       );
+      // Get the current date and time
+      const currentDate = new Date();
 
+      // Format the date and time
+      const formattedDate = currentDate.toISOString().replace('Z', '.000000Z');
       const {ok, data} = await API.post(
         Platform.OS == 'ios' ? AfterSubProUrl : AfterSubProAndroidUrl,
         {
@@ -104,14 +108,15 @@ function useSubscriptionScreen({navigate, goBack}) {
             Platform.OS == 'ios'
               ? purchaseData
               : JSON.parse(purchaseData[0]?.dataAndroid),
+          trial_start_at: !userData?.trial_start_at ? formattedDate : null,
         },
       );
       console.log('datadatadatadatadatadatadatadatadata', data);
       if (ok) {
         dispatch(loadingFalse());
         dispatch({type: types.UpdateProfile, payload: data});
-        successMessage('User Subscribe');
-        goBack();
+        successMessage('User subscribed successfully');
+        if (userData?.trial_start_at) goBack();
         if (Platform.OS == 'android') {
           await acknowledgePurchaseAndroid({
             token: offerToken,
