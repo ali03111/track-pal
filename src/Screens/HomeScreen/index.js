@@ -186,11 +186,7 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.btn}>
         <ThemeButton
           title={'Create New Trip'}
-          // onPress={() => {
-          //   navigation.navigate('SubscriptionScreen');
-          // }}
           onPress={async () => {
-            // updateState({isTripSelectModal: true});
             const checkPer = await checkContactPer();
             if (userData.is_verified == 0) toggleAlert();
             else if (userData.is_verified == 1 && !checkPer)
@@ -214,11 +210,6 @@ const HomeScreen = ({navigation}) => {
           }}
           style={styles.tripBtn}
         />
-        {/* <ThemeButton
-          title={'asd'}
-          onPress={CreateGroup}
-          style={styles.tripBtn}
-        /> */}
         <TripTypeSelectModal
           {...{
             isTripSelectModal,
@@ -284,18 +275,7 @@ const HomeScreen = ({navigation}) => {
           {...{
             iscreateModal,
             CreateGroup: () => {
-              openNextModal(
-                'iscreateModal',
-                'isTripModalVisible',
-                // {
-                //   openNextModal,
-                //   "isTripCreated",
-                //   "isTripModalVisible"
-                // }
-              );
-              // setTimeout(() => {
-              //   openNextModal('isTripCreated', 'isTripModalVisible');
-              // }, 1000);
+              openNextModal('iscreateModal', 'isTripModalVisible');
             },
             onBackPress: () => {
               openPrevModal('iscreateModal', 'isModalVisible');
@@ -311,21 +291,6 @@ const HomeScreen = ({navigation}) => {
             },
           }}
         />
-        {/* <TripCreatedModal
-          {...{
-            isTripCreated,
-            TripCreatedToggle: () => {
-              openNextModal('isTripCreated', 'isTripModalVisible');
-            },
-            onBackPress: () => {
-              openPrevModal('isTripCreated', 'iscreateModal');
-            },
-            extraData: {
-              selectTripType,
-              message: updateError,
-            },
-          }}
-        /> */}
         <StartTripModal
           {...{
             isTripModalVisible,
