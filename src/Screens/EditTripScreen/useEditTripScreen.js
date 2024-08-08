@@ -81,6 +81,10 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
 
   const checkLenght = id => {
     let givenID = JSON.stringify(id);
+    console.log(
+      'skjdbvkljsbdklvbsdklbvskldbvklsdbvklsdbvklsd',
+      chatNotify[givenID],
+    );
     return chatNotify[givenID] ? chatNotify[givenID].length : 0;
   };
   const updateState = async (status, id, index, ownerStatus) => {

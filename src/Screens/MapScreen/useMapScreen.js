@@ -138,10 +138,7 @@ const useMapScreen = ({navigate}, {params}) => {
       {latitude: log.latitude, longitude: log.longitude},
     );
     const kiloMeter = distance / 1000;
-    console.log(
-      'kiloMeterkiloMeterkiloMeterkiloMeterkiloMeterkiloMeter',
-      kiloMeter,
-    );
+
     kiloMeterRef.current = kiloMeter.toFixed(2);
     if (
       Number(kiloMeterRef.current) <= Number('0.04') &&

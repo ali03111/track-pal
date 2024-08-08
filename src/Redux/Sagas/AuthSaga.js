@@ -25,6 +25,7 @@ import DeviceInfo from 'react-native-device-info';
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import NavigationService from '../../Services/NavigationService';
 import {
+  checkContactPer,
   checkSqlDataBase,
   getContactFromSql,
   sendPhoneBookTOServer,
@@ -76,14 +77,11 @@ const loginSaga = function* ({payload: {datas, type}}) {
               delay('100');
               yield call(NavigationService.navigate, 'EditPhoneNumberScreen');
             }
-            // if (data.user.isNewUser) {
-            //   yield call(sendPhoneBookTOServer);
-            //   yield call(getContactFromSql);
-            // } else {
-            //   yield call(checkSqlDataBase);
-            //   yield call(getContactFromSql);
-            // }
-            if (!data.user.isNewUser) {
+            const isPermission = yield call(checkContactPer);
+            if (data.user.isNewUser && isPermission) {
+              yield call(sendPhoneBookTOServer, true);
+              yield call(getContactFromSql);
+            } else if (!data.user.isNewUser && isPermission) {
               yield call(checkSqlDataBase);
               yield call(getContactFromSql);
             }
@@ -126,10 +124,19 @@ function* registerSaga({payload: {datas}}) {
             delay('100');
             yield call(NavigationService.navigate, 'EditPhoneNumberScreen');
           }
-          if (!data.user.isNewUser) {
+
+          const isPermission = yield call(checkContactPer);
+          if (data.user.isNewUser && isPermission) {
+            yield call(sendPhoneBookTOServer, true);
+            yield call(getContactFromSql);
+          } else if (!data.user.isNewUser && isPermission) {
             yield call(checkSqlDataBase);
             yield call(getContactFromSql);
           }
+          // if (!data.user.isNewUser) {
+          //   yield call(checkSqlDataBase);
+          //   yield call(getContactFromSql);
+          // }
         } else {
           errorMessage(data?.message);
         }

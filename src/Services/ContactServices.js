@@ -340,8 +340,8 @@ const filterNumberFromArry = phoneBook => {
   return filteredPhoneNumbers;
 };
 
-const sendPhoneBookTOServer = async () => {
-  const confirmPer = await checkContactPermission();
+const sendPhoneBookTOServer = async isPerContact => {
+  const confirmPer = isPerContact ?? (await checkContactPermission());
   console.log('confirmPerconfirmPerconfirmPerconfirmPerconfirmPer', confirmPer);
   if (confirmPer) {
     const phoneBook = await contact.getAll();

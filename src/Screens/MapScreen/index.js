@@ -117,11 +117,6 @@ const MapScreen = ({route, navigation}) => {
 
   const isPersonalTripInvited = Boolean(tripData.type == tripsTypes[2].id);
 
-  console.log(
-    'checkCurrentUsercheckCurrentUsercheckCurrentUsercheckCurrentUser',
-    checkCurrentUser,
-  );
-
   const TripNameBottom = useCallback(() => {
     return tripData.image ? (
       <CircleImage

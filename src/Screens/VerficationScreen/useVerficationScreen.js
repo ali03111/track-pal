@@ -47,7 +47,7 @@ const useVerificationScreen = (
         type: types.UpdateProfile,
         payload: {...params.item, is_verified: 1},
       });
-      successMessage('Your number have been verified');
+      successMessage('Your number has been verified');
       popToTop();
     } else {
       console.log('kjdbvjksdbvjksdbjvksdbvj', data);
