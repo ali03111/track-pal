@@ -42,6 +42,7 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
   };
 
   const sendVerficationCode = async () => {
+    console.log('js,dbvklsbdlkbdslkbvlksdbklds', number);
     if (edit && number != null && number != '') {
       // const {ok, data} = await API.post(UpdateProfileUrl, {phone: number});
       // console.log('resresresresresresresresresresres', data);

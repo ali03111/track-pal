@@ -61,6 +61,7 @@ function useSubscriptionScreen({navigate, goBack}) {
     const {ok, data} = await API.post(StartTrialUrl, {
       trial_start_at: formattedDate,
     });
+    console.log('skjdbvjksdblkvbsdklvbklsdbvkbsdklvbklsd', data);
     if (ok) {
       dispatch({type: types.UpdateProfile, payload: data?.data});
     } else errorMessage(data?.message);
@@ -190,7 +191,6 @@ function useSubscriptionScreen({navigate, goBack}) {
   };
   useEffect(() => {
     fetchData();
-    dispatch(loadingFalse());
     // Cleanup function
     return () => {
       // if (purchaseUpdateSubscription) {

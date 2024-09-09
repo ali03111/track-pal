@@ -13,7 +13,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [FIRApp configure];
-  [GMSServices provideAPIKey:@"AIzaSyC6VSTz1py7rZiAUO6Hb9ilFCrX5SmaI2w"]; // add this line using the api key obtained from Google Console
+  [GMSServices provideAPIKey:@"AIzaSyCW5k2BbgF8tNGEi4uoKUsmAf3mEv3oI2g"]; // add this line using the api key obtained from Google Console
   self.moduleName = @"TrackPal";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.

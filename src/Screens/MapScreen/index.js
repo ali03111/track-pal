@@ -251,7 +251,7 @@ const MapScreen = ({route, navigation}) => {
                   mode="DRIVING"
                   strokeWidth={4}
                   strokeColors={['#92278F', '#EE2A7B']}
-                  apikey={'AIzaSyC6VSTz1py7rZiAUO6Hb9ilFCrX5SmaI2w'} // android
+                  apikey={'AIzaSyCW5k2BbgF8tNGEi4uoKUsmAf3mEv3oI2g'} // android
                   strokeColor={Colors.faceBookColor}
                 />
                 <Marker

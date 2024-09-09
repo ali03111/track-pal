@@ -137,7 +137,7 @@ const EditProfileScreen = ({navigation}) => {
           </Text>
           {isVerified && <Image style={styles.passIcon} source={verify} />}
         </Touchable>
-        {console.log('userData?.phone ', userData?.phone)}
+        {console.log('userData?.phone ', userData)}
         <ThemeButton
           onPress={handleSubmit(updateProfileFunction)}
           title={'Save'}

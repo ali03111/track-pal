@@ -321,7 +321,7 @@ const useHomeScreen = ({addListener}) => {
   const getLocationName = async (latitude, longitude) => {
     console.log('third');
 
-    const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyC6VSTz1py7rZiAUO6Hb9ilFCrX5SmaI2w`;
+    const geocodingAPI = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCW5k2BbgF8tNGEi4uoKUsmAf3mEv3oI2g`;
 
     // Replace "YOUR_API_KEY" with your actual Google Maps Geocoding API key
 
