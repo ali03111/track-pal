@@ -578,10 +578,12 @@ const getFirebaseAllData = async data => {
   }
 };
 
-const notifyUser = async id => {
+const notifyUser = async (id, tripId) => {
   const getNameFunc = NavigationService.getCurrentRoute();
   const routeName = getNameFunc?.getCurrentRoute()?.name;
-  const {ok, data} = await API.get(notifyToOwnerUrl + id);
+  const {ok, data} = await API.get(
+    notifyToOwnerUrl + id + '&trip_id=' + tripId,
+  );
   console.log('jadbfjkbadjbsjdbbsd', data);
   if (ok && routeName == 'Map') {
     store.dispatch(alertTrue());

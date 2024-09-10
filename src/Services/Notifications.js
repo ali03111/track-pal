@@ -9,10 +9,21 @@ import {useNavigation} from '@react-navigation/native';
 import {store} from '../Redux/Reducer';
 import {types} from '../Redux/types';
 import NavigationService from './NavigationService';
+
 // import NavigationService from './NavigationService';
 // import useRouteName from '@/hooks/useRouteName';
 
 // notifee.registerForegroundService(() => {});
+
+// Function to subscribe to a topic
+export const subscribeToTopic = async topic => {
+  try {
+    await messaging().subscribeToTopic(topic.toString());
+    console.log(`Subscribed to topic: ${topic}`);
+  } catch (error) {
+    console.error('Error subscribing to topic:', error, topic);
+  }
+};
 
 const sound = Platform.select({ios: 'interval.wav', android: 'interval.mp3'});
 const onNotificationNotiFee = async (data, appState) => {

@@ -310,7 +310,8 @@ const MyTrips = ({navigation, route}) => {
             onRefresh={tripsCard}
             ListEmptyComponent={<EmptyViewComp onRefresh={tripsCard} />}
             showsVerticalScrollIndicator={false}
-            style={{height: '100%'}}
+            // style={{flexGrow: 1}}
+            contentContainerStyle={{flexGrow: 1, paddingBottom: hp('110')}}
           />
           <TripCreatedModal
             title={'Trip started'}

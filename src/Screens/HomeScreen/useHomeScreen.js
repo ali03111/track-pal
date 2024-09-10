@@ -41,6 +41,7 @@ import {
   sendUpdatedAt,
 } from '../../Services/ContactServices';
 import {verifyUser} from '../../Redux/Action/AuthAction';
+import {subscribeToTopic} from '../../Services/Notifications';
 
 const useHomeScreen = ({addListener}) => {
   const {width, height} = Dimensions.get('window');
@@ -267,50 +268,54 @@ const useHomeScreen = ({addListener}) => {
     const body = bodyKey[selectTripType];
     console.log('asd', body.profileData);
     const {ok, data, originalError} = await API.post(CreateTripUrl, body);
-    if (tripImage != null) {
-      var {status, res} = await updateTripImage(data);
-      console.log('resresresresresresresresresssssss', res);
-    }
-    // const {ok, data} = await formDataFunc(CreateTripUrl, body, 'image');
-    if ((tripImage != null && status) || (tripImage == null && ok)) {
-      createTripObj({
-        ...firebaseDataType[selectTripType],
-        tripId: data.trip_id,
-        members: data.users,
-        image: res?.image ?? null,
-      });
-      openNextModal('isTripModalVisible', 'isTripStarted');
-      updateInputState({
-        destinationInput: {
-          description: '',
-          coords: {
-            latitude: 37.78825,
-            longitude: -122.4324,
+    if (ok) {
+      console.log('kjsdbvjksdbkjvsbdlkvnlksdbnvksdbvlksdnbvlkds', data);
+      subscribeToTopic(data?.trip_id);
+      if (tripImage != null) {
+        var {status, res} = await updateTripImage(data);
+        console.log('resresresresresresresresresssssss', res);
+      }
+      // const {ok, data} = await formDataFunc(CreateTripUrl, body, 'image');
+      if ((tripImage != null && status) || (tripImage == null && ok)) {
+        createTripObj({
+          ...firebaseDataType[selectTripType],
+          tripId: data.trip_id,
+          members: data.users,
+          image: res?.image ?? null,
+        });
+        openNextModal('isTripModalVisible', 'isTripStarted');
+        updateInputState({
+          destinationInput: {
+            description: '',
+            coords: {
+              latitude: 37.78825,
+              longitude: -122.4324,
+            },
           },
-        },
-        locationInput: {
-          description: '',
-          coords: {
-            latitude: 37.78825,
-            longitude: -122.4324,
+          locationInput: {
+            description: '',
+            coords: {
+              latitude: 37.78825,
+              longitude: -122.4324,
+            },
           },
-        },
-        GroupInput: '',
-      });
-      updateState({
-        groupMembers: [],
-        selectTripType: tripsTypes[0].id,
-      });
-      setTripImage(null);
-      dispatch(loadingFalse());
-      setTimeout(() => {
-        updateState({isTripStarted: false});
-      }, 1000);
-      GetLastTrip();
-    } else {
-      dispatch(loadingFalse());
-      errorMessage('');
-    }
+          GroupInput: '',
+        });
+        updateState({
+          groupMembers: [],
+          selectTripType: tripsTypes[0].id,
+        });
+        setTripImage(null);
+        dispatch(loadingFalse());
+        setTimeout(() => {
+          updateState({isTripStarted: false});
+        }, 1000);
+        GetLastTrip();
+      } else {
+        dispatch(loadingFalse());
+        errorMessage('');
+      }
+    } else updateError('Error while creating trip!');
     // console.log('erororororororororororo', originalError);
 
     console.log('asdasdasdurl', CreateTripUrl);

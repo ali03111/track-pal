@@ -145,7 +145,10 @@ const useMapScreen = ({navigate}, {params}) => {
       !item.owner &&
       !NotifyArrivedRef.current
     ) {
-      notifyUser(`${item.owner ? Number(item.user_id) : item.trip_owner.id}`);
+      notifyUser(
+        `${item.owner ? Number(item.user_id) : item.trip_owner.id}`,
+        item.id,
+      );
       NotifyArrivedRef.current = true;
     }
   };
