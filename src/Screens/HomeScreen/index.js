@@ -259,9 +259,6 @@ const HomeScreen = ({navigation}) => {
             },
             extraData: {
               selectTripType,
-            },
-            extraData: {
-              selectTripType,
               locationInput,
               destinationInput,
               getlocation,

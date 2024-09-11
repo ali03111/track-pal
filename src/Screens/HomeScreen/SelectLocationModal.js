@@ -10,6 +10,7 @@ import {hp} from '../../Config/responsive';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {AutoFillGoogleComp} from '../../Components/AutoFillGoogleComp';
 import {Colors} from '../../Theme/Variables';
+import {TextComponent} from '../../Components/TextComponent';
 
 const SelectLocationModal = ({
   isModalVisible,
@@ -24,6 +25,7 @@ const SelectLocationModal = ({
     updateInputState,
     getlocation,
     destinationInputRef,
+    message,
   } = extraData;
   return (
     <View
@@ -125,6 +127,12 @@ const SelectLocationModal = ({
                   </Touchable>
                 )}
               </View>
+              {message != '' && (
+                <TextComponent
+                  text={message}
+                  styles={{color: 'red', textAlign: 'center'}}
+                />
+              )}
               <ThemeButton
                 title={'Get Current Location'}
                 onPress={getlocation}
