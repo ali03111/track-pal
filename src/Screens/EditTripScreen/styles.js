@@ -99,8 +99,8 @@ export const styles = StyleSheet.create({
     height: hp('5'),
     justifyContent: 'center',
     marginHorizontal: wp('3'),
-    marginBottom: hp('-1.5'),
-    marginTop: hp('-1.2'),
+    marginBottom: Platform.OS == 'ios' ? hp('-2.8') : hp('-1.5'),
+    marginTop: Platform.OS == 'ios' ? hp('-2') : hp('-1.2'),
   },
   TripBtnText: {
     fontWeight: '400',

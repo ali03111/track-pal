@@ -14,7 +14,7 @@ import API, {formDataFunc} from '../../Utils/helperFunc';
 import {UpdateProfileUrl} from '../../Utils/Urls';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {types} from '../../Redux/types';
-import {updateUser} from '../../Redux/Action/AuthAction';
+import {updateUser, verifyUser} from '../../Redux/Action/AuthAction';
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import {Platform} from 'react-native';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
@@ -69,6 +69,7 @@ const useEditProfile = ({navigate, goBack}) => {
         dispatch(loadingFalse());
         successMessage(data.message);
         dispatch({type: types.UpdateProfile, payload: data.user});
+        dispatch(verifyUser());
       } else {
         dispatch(loadingFalse());
         errorMessage(data?.message);

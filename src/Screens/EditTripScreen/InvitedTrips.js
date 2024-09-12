@@ -211,7 +211,8 @@ const InvitedTrip = ({navigation, route}) => {
           refreshing={false}
           onRefresh={tripsCard}
           showsVerticalScrollIndicator={false}
-          style={{height: '100%'}}
+          // style={{flexGrow: 1}}
+          contentContainerStyle={{flexGrow: 1, paddingBottom: hp('110')}}
           extraData={keyExtractor}
         />
       ) : (

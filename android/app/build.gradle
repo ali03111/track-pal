@@ -163,6 +163,7 @@ dependencies {
     implementation project(':react-native-contacts')
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
     implementation project(':react-native-iap')
+      implementation project(':react-native-push-notification')
       implementation project(':react-native-inappbrowser-reborn')
     // implementation 'com.telematicssdk:tracking: 1.0.4'
     // implementation 'com.facebook.android:facebook-android-sdk:latest.release'

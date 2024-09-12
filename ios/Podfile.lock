@@ -1299,6 +1299,8 @@ PODS:
     - React-Core
   - RNCMaskedView (0.2.9):
     - React-Core
+  - RNCPushNotificationIOS (1.11.0):
+    - React-Core
   - RNDeviceInfo (10.8.0):
     - React-Core
   - RNFastImage (8.6.3):
@@ -1442,6 +1444,7 @@ DEPENDENCIES:
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
@@ -1617,6 +1620,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFastImage:
@@ -1748,6 +1753,7 @@ SPEC CHECKSUMS:
   RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNCAsyncStorage: f47fe18526970a69c34b548883e1aeceb115e3e1
   RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
+  RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBApp: 0d8bf86673bbad0524d1ceac3944d71ccf48a0e4

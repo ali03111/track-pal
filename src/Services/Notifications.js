@@ -40,11 +40,17 @@ const onNotificationNotiFee = async (data, appState) => {
     android: {
       channelId,
       ...data.notification.android,
+      autoCancel: true,
       pressAction: {
         id: 'default',
-        launchActivity: 'default',
+        launchActivity: 'com.codment.trackpal',
         launchActivityFlags: [AndroidLaunchActivityFlag.SINGLE_TOP],
       },
+      // pressAction: {
+      //   id: 'default',
+      //   launchActivity: 'default',
+      //   launchActivityFlags: [AndroidLaunchActivityFlag.SINGLE_TOP],
+      // },
       // sound,
     },
     ios: {sound},
@@ -198,13 +204,62 @@ class FCMService {
     // Triggered  when a particular  notification  has been recevied in foreground
     this.notificationListener = messaging().onMessage(notification => {
       console.log('yyyyyyyyytytytytytytytytytytytt', notification);
+      let searchTerm = /invitation/;
+      let findWord = Boolean(searchTerm.test(notification.body));
+      const getNameFunc = NavigationService.getCurrentRoute();
+      const routeName = getNameFunc?.getCurrentRoute()?.name;
+
+      const storeObj = {
+        InvitationScreen: types.addNotiInvitation,
+        GeneralScreen: types.addNotification,
+        MapAndChatScreen: types.addChatNoification,
+      };
+
+      // isRoute &&
+      //   routeName != 'InvitationScreen' &&
+      //   store.dispatch({
+      //     type: storeObj[notificationData.route],
+      //     payload: notificationData,
+      //   });
+      findWord &&
+        routeName != 'InvitationScreen' &&
+        store.dispatch({
+          type: findWord ? types.addNotiInvitation : types.addNotification,
+          payload: notification,
+        });
+
       onNotification(notification);
     });
 
     // Triggered  when a particular  notification  has been recevied in foreground
     this.notificationListener = messaging().onMessage(
-      data => onNotificationNotiFee(data, appState),
-      console.log('notifynotifynotifynotifynotifynotify'),
+      data => {
+        onNotificationNotiFee(data, appState);
+        let searchTerm = /invitation/;
+        let findWord = Boolean(searchTerm.test(data.body));
+        const getNameFunc = NavigationService.getCurrentRoute();
+        const routeName = getNameFunc?.getCurrentRoute()?.name;
+
+        const storeObj = {
+          InvitationScreen: types.addNotiInvitation,
+          GeneralScreen: types.addNotification,
+          MapAndChatScreen: types.addChatNoification,
+        };
+
+        // isRoute &&
+        //   routeName != 'InvitationScreen' &&
+        //   store.dispatch({
+        //     type: storeObj[notificationData.route],
+        //     payload: notificationData,
+        //   });
+        findWord &&
+          routeName != 'InvitationScreen' &&
+          store.dispatch({
+            type: findWord ? types.addNotiInvitation : types.addNotification,
+            payload: data,
+          });
+      },
+
       // {
       //   if (NavigationService.ref && appState == 'active') {
       //     NavigationService.navigate(
@@ -244,9 +299,33 @@ class FCMService {
       async ({type, detail}) => {
         const {notification} = detail;
         console.log(
-          'notificationnotificationnotificationnotificatioasdasdasdasdasdasnnotificationnotification',
+          'notificationnotificationnotificatisdsdsonnoassdfsdfsdfsddasdastificationnotificationnotification',
           notification,
+          routeName,
         );
+        let searchTerm = /invitation/;
+        let findWord = Boolean(searchTerm.test(notification.body));
+        const getNameFunc = NavigationService.getCurrentRoute();
+        const routeName = getNameFunc?.getCurrentRoute()?.name;
+
+        const storeObj = {
+          InvitationScreen: types.addNotiInvitation,
+          GeneralScreen: types.addNotification,
+          MapAndChatScreen: types.addChatNoification,
+        };
+
+        // isRoute &&
+        //   routeName != 'InvitationScreen' &&
+        //   store.dispatch({
+        //     type: storeObj[notificationData.route],
+        //     payload: notificationData,
+        //   });
+        findWord &&
+          routeName != 'InvitationScreen' &&
+          store.dispatch({
+            type: findWord ? types.addNotiInvitation : types.addNotification,
+            payload: notification,
+          });
 
         const isPressed = Boolean(
           type === EventType.ACTION_PRESS || type == EventType.PRESS,

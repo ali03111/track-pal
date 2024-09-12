@@ -29,4 +29,24 @@ function hasOneMonthPassed(createdDate) {
   return differenceInMilliseconds >= millisecondsInOneMonth;
 }
 
-export {getSingleCharacter, hasOneMonthPassed};
+// Function to get object by ID
+function getObjectByIdFromNotificationData(data, val) {
+  const foundObject = data.find(obj => obj.title === val);
+  return foundObject ? foundObject : undefined;
+}
+
+function removeKeysAndReturnArray(obj) {
+  return Object.values(obj).flat();
+}
+
+function removeUndefined(arr) {
+  return arr.filter(item => item != undefined);
+}
+
+export {
+  getSingleCharacter,
+  hasOneMonthPassed,
+  getObjectByIdFromNotificationData,
+  removeKeysAndReturnArray,
+  removeUndefined,
+};

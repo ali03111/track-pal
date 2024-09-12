@@ -63,9 +63,9 @@ const useNotificationScreen = ({params}, {navigate, addListener}) => {
     [tripsTypes[2].id]: 'Invited Trips',
   };
 
-  const toggleButton = () => {
+  const toggleButton = isStart => {
     setShowAlert(!showAlert);
-    if (showAlert) {
+    if (showAlert && isStart) {
       navigate('EditTripScreen', {
         item: tripNotification[currentIndex],
         sendTo: screenName[tripNotification[currentIndex].type],

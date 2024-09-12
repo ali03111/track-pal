@@ -4,6 +4,7 @@ import Geolocationios from '@react-native-community/geolocation';
 import Geolocation from 'react-native-geolocation-service';
 import {frequentTrips, tripsTypes} from '../../Utils/localDB';
 import {
+  AppState,
   BackHandler,
   Dimensions,
   Keyboard,
@@ -40,18 +41,31 @@ import {
   sendPhoneBookTOServer,
   sendUpdatedAt,
 } from '../../Services/ContactServices';
-import {verifyUser} from '../../Redux/Action/AuthAction';
-import {subscribeToTopic} from '../../Services/Notifications';
+import {fcmRegister, verifyUser} from '../../Redux/Action/AuthAction';
+import {fcmService, subscribeToTopic} from '../../Services/Notifications';
+import Listener from '../../Services/Listener';
+import NavigationService from '../../Services/NavigationService';
+import {notificationStatusFunc} from '../ChatScreen/useChatScreen';
+import {changeUserAppStatus} from '../../../App';
+import {
+  getObjectByIdFromNotificationData,
+  removeKeysAndReturnArray,
+  removeUndefined,
+} from '../../Utils/globalFunctions';
 
-const useHomeScreen = ({addListener}) => {
+const useHomeScreen = ({addListener, navigate}) => {
   const {width, height} = Dimensions.get('window');
   const ACPT_RATIO = width / height;
   const latitudeDelta = Platform.OS == 'ios' ? 0.02 : 0.001;
   const laongituteDalta = latitudeDelta * ACPT_RATIO;
 
   const {dispatch, getState} = useReduxStore();
-  const {userData} = getState('Auth');
+  const {isLogin, userData} = getState('Auth');
   const {contacts} = getState('contacts');
+  const {inviNotify} = getState('inviNotify');
+  const {generalNotify} = getState('generalNotify');
+  const {chatNotify} = getState('chatNotify');
+
   const [alert, setAlert] = useState(false);
   const [tripDate, setTripDate] = useState(null);
   const [homeStates, setHomeStates] = useState({
@@ -466,7 +480,109 @@ const useHomeScreen = ({addListener}) => {
     };
   }, []);
 
+  useEffect(() => {
+    Listener(navigate);
+  }, []);
+
   useEffect(useEffectFuc, []);
+
+  /////////////////////      NOtification Functions      //////////////////////
+
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    /* It's a function that registers the device to receive push notifications. */
+    if (isLogin) {
+      setTimeout(() => {
+        fcmService.register(
+          onRegister,
+          onOpenNotification,
+          appState.current,
+          () => {},
+        );
+      }, 5000);
+    }
+    return () => {
+      /* It's a function that unregisters the device from receiving push notifications. */
+      if (isLogin) {
+        fcmService.unRegister();
+      }
+    };
+  }, [isLogin]);
+  const onRegister = fcm_token => {
+    console.log('fcm_token', Platform.OS, fcm_token);
+    dispatch(fcmRegister(fcm_token));
+  };
+
+  const onOpenNotification = notify => {
+    console.log(
+      'notify.data.payloadnotify.data.payloadnotify.data.payloadnotify.data.payload',
+      notify,
+    );
+    if (notify?.data?.payload) {
+      console.log('notify.data.payload', JSON.parse(notify.data.payload));
+      const screenRoute = JSON.parse(notify.data.payload);
+      const tripData = Boolean(screenRoute.tripData);
+      if (tripData) {
+        var checkOwner = Boolean(
+          screenRoute.tripData[0].type == tripsTypes[0].id &&
+            screenRoute.tripData[0].user_id == userData.id,
+        );
+      }
+      navigate(
+        screenRoute.route,
+        tripData && {
+          item: {...screenRoute.tripData[0], isRoute: true, owner: checkOwner},
+        },
+      );
+      if (tripData) {
+        setTimeout(() => {
+          navigate('Chat', {
+            item: screenRoute.tripData[0],
+          });
+        }, 1000);
+      }
+    } else {
+      const findIdInArry = [
+        getObjectByIdFromNotificationData(generalNotify, notify.title),
+        getObjectByIdFromNotificationData(inviNotify, notify.title),
+        getObjectByIdFromNotificationData(
+          removeKeysAndReturnArray(chatNotify),
+          notify.title,
+        ),
+      ];
+      const filterData = removeUndefined(findIdInArry) ?? [];
+      console.log('klsdbvklsdbklvsbdlkvbnsdlkvblksdvklsd', filterData);
+      if (filterData.length > 0) {
+        const getSingleObj = filterData[0];
+        if (getSingleObj.tripData) {
+          var checkOwner = Boolean(
+            getSingleObj.tripData[0].type == tripsTypes[0].id &&
+              getSingleObj.tripData[0].user_id == userData.id,
+          );
+        }
+        navigate(
+          getSingleObj.route,
+          getSingleObj.tripData && {
+            item: {
+              ...getSingleObj.tripData[0],
+              isRoute: true,
+              owner: checkOwner,
+            },
+          },
+        );
+        if (getSingleObj.tripData) {
+          setTimeout(() => {
+            navigate('Chat', {
+              item: getSingleObj.tripData[0],
+            });
+          }, 1000);
+        }
+      }
+    }
+  };
+
+  /////////////////////////////////////////////////////
 
   const uploadFromGalary = () => {
     launchImageLibrary(

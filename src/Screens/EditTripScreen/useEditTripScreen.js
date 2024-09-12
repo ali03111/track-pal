@@ -116,7 +116,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
         setTimeout(() => {
           setIsTripCreated(true);
           setTimeout(() => {
-            dispatch(loadingFalse());
+            // dispatch(loadingFalse());
             setIsTripCreated(false);
             navigate('MapAndChatScreen', {
               item: {...y, owner: !ownerStatus ? true : false},
@@ -173,7 +173,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
           setTimeout(() => {
             setIsTripCreated(true);
             setTimeout(() => {
-              dispatch(loadingFalse());
+              // dispatch(loadingFalse());
               setIsTripCreated(false);
               navigate('MapAndChatScreen', {item: invitedTrips[index]});
             }, 1000);
@@ -208,7 +208,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
     });
     dispatch(loadingTrue());
     if (ok) {
-      tripsCard();
+      await tripsCard();
       if (status == 1) {
         if (tripOnnwerID == userData.id) {
           await updateDataFirebase({tripId: id, tripOnnwerID});
@@ -216,15 +216,15 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
         await updateLocationONfire({tripId: id, tripOnnwerID});
         setTimeout(() => {
           setIsTripCreated(true);
-          dispatch(loadingFalse());
+          // dispatch(loadingFalse());
           setTimeout(() => {
             setIsTripCreated(false);
             navigate('MapAndChatScreen', {item: groupTrips[index]});
           }, 1000);
         }, 2000);
-        dispatch(loadingFalse());
+        // dispatch(loadingFalse());
       } else if (status == 2) {
-        onEndTrip({tripId: id, tripOnnwerID, userData});
+        await onEndTrip({tripId: id, tripOnnwerID, userData});
         dispatch(loadingFalse());
       }
     } else {
@@ -384,7 +384,7 @@ const useEditTripScreen = ({addListener, navigate}, {params}) => {
             remove_users: data.remove_users,
             new_users: data.new_users,
           });
-          dispatch(loadingFalse());
+          // dispatch(loadingFalse());
           onCloseModal();
           tripsCard();
           console.log('okokokokokok', ok);

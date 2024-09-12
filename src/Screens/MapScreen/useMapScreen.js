@@ -16,6 +16,7 @@ import {AnimatedRegion} from 'react-native-maps';
 import {SOSToMembers} from '../../Utils/Urls';
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import API from '../../Utils/helperFunc';
+import {loadingFalse} from '../../Redux/Action/isloadingAction';
 
 const useMapScreen = ({navigate}, {params}) => {
   const {item} = params.params;
@@ -45,7 +46,7 @@ const useMapScreen = ({navigate}, {params}) => {
       longitude: 0,
     }),
   );
-  const {getState} = useReduxStore();
+  const {dispatch, getState} = useReduxStore();
   const {userData} = getState('Auth');
 
   const getMembers = async () => {
@@ -104,6 +105,7 @@ const useMapScreen = ({navigate}, {params}) => {
   };
 
   const useEffectFunc = () => {
+    dispatch(loadingFalse());
     getMembers();
     getAllData();
     firebaseSnapOn();

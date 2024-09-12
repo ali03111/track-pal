@@ -3,6 +3,9 @@ import {
   NotificationStatus,
   VerifyUserUrl,
   baseURL,
+  changeMemberStatusUrl,
+  changeOwnerStatusUrl,
+  changeUserTripStatus,
   fcmToken,
   getAllUser,
   notifyUserUrl,
@@ -29,6 +32,11 @@ const hideLoaderAPIs = [
   sendChatNotification,
   VerifyUserUrl,
 ];
+const showLoaderAPIs = [
+  changeOwnerStatusUrl,
+  changeMemberStatusUrl,
+  changeUserTripStatus,
+];
 // const hideLoaderAPIs = ['/playcount', '/playlist', '/home-content'];
 
 API.addRequestTransform(config => {
@@ -41,9 +49,16 @@ API.addRequestTransform(config => {
 });
 
 API.addResponseTransform(response => {
-  setTimeout(() => store.dispatch(loadingFalse()), 500);
+  if (!showLoaderAPIs.includes(response.config.url)) {
+    setTimeout(() => store.dispatch(loadingFalse()), 500);
+  }
   const {Auth} = store.getState();
-  console.log('token111', Auth.token, response?.originalError?.message);
+  console.log(
+    'token111',
+    Auth.token,
+    response?.originalError?.message,
+    response,
+  );
   if (
     response?.originalError?.message == 'Request failed with status code 401' &&
     Auth.token != ''

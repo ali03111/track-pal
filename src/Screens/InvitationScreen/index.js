@@ -69,7 +69,7 @@ const InvitationTab = ({route, navigation}) => {
         confirmText={'Start Trip'}
         cancelText={'Not Now!'}
         onCancel={toggleButton}
-        onConfirm={toggleButton}
+        onConfirm={() => toggleButton(true)}
       />
       <View style={{...noData}}>
         {tripNotification == null && (

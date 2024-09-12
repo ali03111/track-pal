@@ -303,6 +303,7 @@ const GroupTrips = ({navigation, route}) => {
           refreshing={false}
           onRefresh={tripsCard}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{flexGrow: 1, paddingBottom: hp('120')}}
         />
       ) : (
         groupTrips != null &&

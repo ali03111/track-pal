@@ -49,9 +49,16 @@ import {TextComponent} from './src/Components/TextComponent';
 import {checkContactPermission} from './src/Services/ContactServices';
 import {notificationStatusFunc} from './src/Screens/ChatScreen/useChatScreen';
 import {tripsTypes} from './src/Utils/localDB';
-import {firebase} from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import {withIAPContext} from 'react-native-iap';
 import Gallery from './testSreen';
+import notifee, {EventType} from '@notifee/react-native';
+import {
+  getObjectById,
+  getObjectByIdFromNotificationData,
+  removeKeysAndReturnArray,
+  removeUndefined,
+} from './src/Utils/globalFunctions';
 
 const PlatformPer = Platform.select({
   ios: [
@@ -85,6 +92,9 @@ const App = () => {
   const {isAlert} = getState('isAlert');
   const {tripId, tripOwnerID} = getState('islocationShare');
   const {isLogin, userData} = getState('Auth');
+  const {inviNotify} = getState('inviNotify');
+  const {generalNotify} = getState('generalNotify');
+  const {chatNotify} = getState('chatNotify');
 
   const appState = useRef(AppState.currentState);
 
@@ -123,60 +133,183 @@ const App = () => {
     };
   }, [appState.current]);
 
-  useEffect(() => {
-    /* It's a function that registers the device to receive push notifications. */
-    if (isLogin) {
-      setTimeout(() => {
-        fcmService.register(
-          onRegister,
-          onOpenNotification,
-          appState.current,
-          onNotification,
-        );
-      }, 5000);
-    }
-    return () => {
-      /* It's a function that unregisters the device from receiving push notifications. */
-      if (isLogin) {
-        fcmService.unRegister();
-      }
-    };
-  }, [isLogin]);
-  const onRegister = fcm_token => {
-    console.log('fcm_token', Platform.OS, fcm_token);
-    dispatch(fcmRegister(fcm_token));
-  };
+  // useEffect(() => {
+  //   /* It's a function that registers the device to receive push notifications. */
+  //   if (isLogin) {
+  //     setTimeout(() => {
+  //       fcmService.register(
+  //         onRegister,
+  //         onOpenNotification,
+  //         appState.current,
+  //         onNotification,
+  //       );
+  //     }, 5000);
+  //   }
+  //   return () => {
+  //     /* It's a function that unregisters the device from receiving push notifications. */
+  //     if (isLogin) {
+  //       fcmService.unRegister();
+  //     }
+  //   };
+  // }, [isLogin]);
+  // const onRegister = fcm_token => {
+  //   console.log('fcm_token', Platform.OS, fcm_token);
+  //   dispatch(fcmRegister(fcm_token));
+  // };
 
-  const onOpenNotification = notify => {
-    console.log(
-      'notify.data.payloadnotify.data.payloadnotify.data.payloadnotify.data.payload',
-      notify,
-    );
-    if (notify?.data?.payload) {
-      console.log('notify.data.payload', JSON.parse(notify.data.payload));
-      const screenRoute = JSON.parse(notify.data.payload);
-      const tripData = Boolean(screenRoute.tripData);
-      if (tripData) {
-        var checkOwner = Boolean(
-          screenRoute.tripData[0].type == tripsTypes[0].id &&
-            screenRoute.tripData[0].user_id == userData.id,
-        );
+  // const onOpenNotification = notify => {
+  //   console.log(
+  //     'notify.data.payloadnotify.data.payloadnotify.data.payloadnotify.data.payload',
+  //     notify,
+  //   );
+  //   if (notify?.data?.payload) {
+  //     console.log('notify.data.payload', JSON.parse(notify.data.payload));
+  //     const screenRoute = JSON.parse(notify.data.payload);
+  //     const tripData = Boolean(screenRoute.tripData);
+  //     if (tripData) {
+  //       var checkOwner = Boolean(
+  //         screenRoute.tripData[0].type == tripsTypes[0].id &&
+  //           screenRoute.tripData[0].user_id == userData.id,
+  //       );
+  //     }
+  //     NavigationService.navigate(
+  //       screenRoute.route,
+  //       tripData && {
+  //         item: {...screenRoute.tripData[0], isRoute: true, owner: checkOwner},
+  //       },
+  //     );
+  //     if (tripData) {
+  //       setTimeout(() => {
+  //         NavigationService.navigate('Chat', {
+  //           item: screenRoute.tripData[0],
+  //         });
+  //       }, 1000);
+  //     }
+  //   } else {
+  //     console.log(
+  //       'jksdbvjklsbdklvbsdkljvbklsdbvklsdb;klbsdkl;bsdl;kvs',
+  //       generalNotify,
+  //       inviNotify,
+  //       JSON.stringify(chatNotify),
+  //     );
+
+  //     console.log(
+  //       'sklbdvklsbdlkvbsdklvbklsdbvklsdbvklsd',
+  //       removeKeysAndReturnArray(chatNotify),
+  //     );
+  //     const findIdInArry = [
+  //       getObjectByIdFromNotificationData(generalNotify, notify.title),
+  //       getObjectByIdFromNotificationData(inviNotify, notify.title),
+  //       getObjectByIdFromNotificationData(
+  //         removeKeysAndReturnArray(chatNotify),
+  //         notify.title,
+  //       ),
+  //     ];
+  //     const filterData = removeUndefined(findIdInArry) ?? [];
+  //     console.log(
+  //       'lsdbnvlksbdlkvbsdklbviosdbvklsdbiklvsbdklvbsdkl',
+  //       filterData,
+  //     );
+  //     if (filterData.length > 0) {
+  //       const getSingleObj = filterData[0];
+  //       if (getSingleObj.tripData) {
+  //         var checkOwner = Boolean(
+  //           getSingleObj.tripData[0].type == tripsTypes[0].id &&
+  //             getSingleObj.tripData[0].user_id == userData.id,
+  //         );
+  //       }
+  //       NavigationService.navigate(
+  //         getSingleObj.route,
+  //         getSingleObj.tripData && {
+  //           item: {
+  //             ...getSingleObj.tripData[0],
+  //             isRoute: true,
+  //             owner: checkOwner,
+  //           },
+  //         },
+  //       );
+  //       if (getSingleObj.tripData) {
+  //         setTimeout(() => {
+  //           NavigationService.navigate('Chat', {
+  //             item: getSingleObj.tripData[0],
+  //           });
+  //         }, 1000);
+  //       }
+  //     }
+  //   }
+  // };
+
+  useEffect(() => {
+    return notifee.onForegroundEvent(({type, detail}) => {
+      switch (type) {
+        case EventType.DISMISSED:
+          console.log('User dismissed notification', detail.notification);
+          break;
+        case EventType.PRESS:
+          console.log(
+            'User pressed notification onForegroundEvent',
+            detail.notification,
+          );
+          break;
       }
-      NavigationService.navigate(
-        screenRoute.route,
-        tripData && {
-          item: {...screenRoute.tripData[0], isRoute: true, owner: checkOwner},
-        },
-      );
-      if (tripData) {
-        setTimeout(() => {
-          NavigationService.navigate('Chat', {
-            item: screenRoute.tripData[0],
-          });
-        }, 1000);
+    });
+  }, []);
+  useEffect(() => {
+    return notifee.onBackgroundEvent(({type, detail}) => {
+      switch (type) {
+        case EventType.DISMISSED:
+          console.log('User dismissed notification', detail.notification);
+          break;
+        case EventType.PRESS:
+          console.log(
+            'User pressed notification onBackgroundEvent',
+            detail.notification,
+          );
+          break;
       }
-    }
-  };
+    });
+  }, []);
+
+  messaging()
+    .getInitialNotification()
+    .then(async remoteMessage => {
+      if (remoteMessage) {
+        if (remoteMessage?.data?.payload) {
+          console.log(
+            'notify.data.payload',
+            JSON.parse(remoteMessage.data.payload),
+          );
+          const screenRoute = JSON.parse(remoteMessage.data.payload);
+          const tripData = Boolean(screenRoute.tripData);
+          if (tripData) {
+            var checkOwner = Boolean(
+              screenRoute.tripData[0].type == tripsTypes[0].id &&
+                screenRoute.tripData[0].user_id == userData.id,
+            );
+          }
+          setTimeout(() => {
+            NavigationService.navigate(
+              screenRoute.route,
+              tripData && {
+                item: {
+                  ...screenRoute.tripData[0],
+                  isRoute: true,
+                  owner: checkOwner,
+                },
+              },
+            );
+            if (tripData) {
+              setTimeout(() => {
+                NavigationService.navigate('Chat', {
+                  item: screenRoute.tripData[0],
+                });
+              }, 1000);
+            }
+          }, 4000);
+        }
+      }
+    })
+    .catch(() => {});
 
   const onNotification = notify => {
     console.log('onNotification: ', notify);

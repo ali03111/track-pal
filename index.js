@@ -64,29 +64,43 @@ const TrackPal = () => (
 // });
 
 message().setBackgroundMessageHandler(async remoteMessage => {
-  console.log('Message handled in the background!', remoteMessage);
+  console.log('Message handled in the baddddckground!', remoteMessage);
 
-  const notificationData = JSON.parse(remoteMessage.data.payload);
+  // On notification open when app is in background
+  message().onNotificationOpenedApp(async remoteNoti => {
+    console.log(remoteMessage, 'slsklsjdlkfjlskdssssssjf');
 
-  const isRoute = Boolean(notificationData.is_route);
+    const notificationData = JSON.parse(remoteMessage.data.payload);
 
-  const isInvitation = Boolean(notificationData.route == 'InvitationScreen');
+    const isRoute = Boolean(notificationData.is_route);
 
-  const getNameFunc = NavigationService.getCurrentRoute();
-  const routeName = getNameFunc?.getCurrentRoute()?.name;
+    const isInvitation = Boolean(notificationData.route == 'InvitationScreen');
 
-  const storeObj = {
-    InvitationScreen: types.addNotiInvitation,
-    GeneralScreen: types.addNotification,
-    MapAndChatScreen: types.addChatNoification,
-  };
+    const getNameFunc = NavigationService.getCurrentRoute();
+    const routeName = getNameFunc?.getCurrentRoute()?.name;
 
-  isRoute &&
-    routeName != 'InvitationScreen' &&
-    store.dispatch({
-      type: storeObj[notificationData.route],
-      payload: notificationData,
-    });
+    const storeObj = {
+      InvitationScreen: types.addNotiInvitation,
+      GeneralScreen: types.addNotification,
+      MapAndChatScreen: types.addChatNoification,
+    };
+
+    isRoute &&
+      routeName != 'InvitationScreen' &&
+      store.dispatch({
+        type: storeObj[notificationData.route],
+        payload: notificationData,
+      });
+
+    const clickAction = remoteMessage.notification?.android?.clickAction;
+
+    // if (clickAction === 'NotificationScreen') {
+    //   navigation.navigate('NotificationScreen', {
+    //     jobTitle: remoteMessage.notification?.body,
+    //     jobRequestTitle: remoteMessage.notification?.title,
+    //   });
+    // }
+  });
 
   // store.dispatch(setNotificationLength(remoteMessage));
 });
