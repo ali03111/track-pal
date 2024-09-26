@@ -104,7 +104,7 @@ const SelectLocationModal = ({
                   }}
                   key={1}
                   inputContainerStyle={styles.input}
-                  inputPlaceHolder="Choose End Location"
+                  inputPlaceHolder="Enter Destination"
                   inputVal={destinationInput.description}
                   defaultValue={destinationInput.description}
                   onChangeText={text => {

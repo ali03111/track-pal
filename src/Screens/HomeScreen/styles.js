@@ -435,4 +435,7 @@ export const styles = StyleSheet.create({
     fontSize: hp('1.5'),
     marginLeft: wp('1'),
   },
+  inviteText: {
+    fontSize: hp('1.5'),
+  },
 });

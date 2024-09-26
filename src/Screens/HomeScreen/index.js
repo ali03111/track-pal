@@ -245,6 +245,7 @@ const HomeScreen = ({navigation}) => {
               groupMembers,
               message: updateError,
               getUser,
+              userData,
             },
           }}
         />

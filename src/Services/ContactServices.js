@@ -192,13 +192,14 @@ const checkContactToSql = async sqlContacts => {
     );
     const filterContact = filterNumberFromArry(phoneBookContact);
     console.log(
-      'sqlContactssqlContactssqlContactssqlContactssqlContactssqlContacts',
+      'sqlContactssqlContactssqlContasdfctssqlContactssqlContactssqlContacts',
       sqlContacts,
+      filterContact,
     );
     // Extract phone numbers into an array
     const phoneNumbers =
       sqlContacts != undefined && sqlContacts != null
-        ? sqlContacts.map(item => item.phone)
+        ? [...sqlContacts].map(item => item.phone)
         : [];
     const removeSpace = removeSpaceFromNumber(filterContact);
     const checkNewContact = [
@@ -241,6 +242,11 @@ const updateDataAccourdingToId = updateData => {
     const phonebookData = updateData.book; // JSON data as a string
     const updatedAt = updateData.updated_at; // Current timestamp
 
+    console.log(
+      'lksdvklsdbklvbsdklvbsdlkbvlksdbvlsbdlvbsdlkvbsdk',
+      phonebookData,
+    );
+
     tx.executeSql(
       'UPDATE phonebook SET book = ?, updated_at = ? WHERE user_id = ?',
       [phonebookData, updatedAt, userId],
@@ -270,7 +276,7 @@ const getContactFromSql = async () => {
           const row = results.rows.item(i);
           console.log(
             'row.bookrow.bookrow.bookrow.bookrow.bookrow.bookrow.bookrow.book',
-            row.book,
+            JSON.parse(row.book),
           );
           await store.dispatch({
             type: types.addContacts,
@@ -287,7 +293,7 @@ const getContactFromSql = async () => {
   });
 };
 
-const sendUpdatedAt = () => {
+const sendUpdatedAt = async () => {
   const {
     Auth: {userData},
   } = store.getState('Auth');
@@ -319,9 +325,22 @@ const sendUpdatedAt = () => {
             updated_at: row.updated_at,
             book: nightDigit,
           });
+
+          const phoneBook = await contact.getAll();
+
           console.log('data.bookdata.bookdata.book', data);
+          const afterGetAllNumber = await removeDuplicatesNumberFromArry(
+            data.book.length > 0 ? JSON.parse(data.book) : [],
+            filterNumberAndNameFromArry(phoneBook),
+          );
+
           if (ok) {
-            if (data?.book?.length > 0) updateDataAccourdingToId(data);
+            if (data?.book?.length > 0) {
+              updateDataAccourdingToId({
+                ...data,
+                book: convertToFormattedString(afterGetAllNumber),
+              });
+            }
           }
           console.log(`Oget by userID   User ID: ${newContacts}`);
         }
@@ -339,18 +358,67 @@ const filterNumberFromArry = phoneBook => {
   );
   return filteredPhoneNumbers;
 };
+const filterNumberAndNameFromArry = phoneBook => {
+  const phoneNumbersArray = phoneBook.map(contact => ({
+    name: contact?.givenName,
+    phone: contact?.phoneNumbers[0]?.number,
+    id: contact?.recordID,
+  }));
+  const filteredPhoneNumbers = phoneNumbersArray.filter(
+    obj => obj?.phone !== undefined,
+  );
+  return filteredPhoneNumbers;
+};
+
+function addInAppKeyToArray(arr) {
+  return arr.map(item => {
+    return {
+      ...item,
+      inApp: true, // Add the new key `inApp` with a value, here set as `true`
+    };
+  });
+}
+
+function convertToFormattedString(arr) {
+  // Map the existing array to match the desired format
+  const formattedArray = arr.map((item, index) => {
+    return item;
+  });
+
+  // Convert the array to a JSON string format
+  return JSON.stringify(formattedArray);
+}
+
+const removeDuplicatesNumberFromArry = async (arry1, arry2) => {
+  // Parse the first array since it's a JSON string
+
+  // Combine both arrays
+  const combinedArray = [...addInAppKeyToArray(arry1), ...arry2];
+
+  // Create an object to store unique entries by 'number'
+  const uniqueItems = {};
+
+  // Loop through the combined array and add unique values based on 'number'
+  combinedArray.map(item => {
+    // Normalize the 'number' by removing non-digit characters (for consistent comparison)
+    const normalizedNumber = item?.inApp
+      ? item.phone.replace(/\D/g, '')
+      : item.phone;
+
+    // Only add the item if the 'number' hasn't been added yet
+    if (!uniqueItems[normalizedNumber]) {
+      uniqueItems[normalizedNumber] = item;
+    }
+  });
+
+  // Return the unique items as an array
+  return Object.values(uniqueItems);
+};
 
 const sendPhoneBookTOServer = async isPerContact => {
   const confirmPer = isPerContact ?? (await checkContactPermission());
-  console.log('confirmPerconfirmPerconfirmPerconfirmPerconfirmPer', confirmPer);
   if (confirmPer) {
     const phoneBook = await contact.getAll();
-    console.log(
-      'phoneBookphoasdasdneBookphoneBookphoneBook',
-      Platform.OS,
-      // phoneBook[1].phoneNumbers,
-      filterNumberFromArry(phoneBook),
-    );
     const removeSpace = removeSpaceFromNumber(filterNumberFromArry(phoneBook));
     const nightDigit = await getLastNightDigit(removeSpace);
     console.log(
@@ -365,10 +433,22 @@ const sendPhoneBookTOServer = async isPerContact => {
       'sjkdnkfnsdknfsdklnflksdnfknsdlfnsdlnfsdklfsdfsdfsdfsdfsdfsdfds',
       data,
     );
+
     if (ok) {
+      const afterGetAllNumber = await removeDuplicatesNumberFromArry(
+        data.book.length > 0 ? JSON.parse(data.book) : [],
+        filterNumberAndNameFromArry(phoneBook),
+      );
+
+      console.log(
+        'kjbkjbjkbsjkbdjkbfksdbfbsdjbsdjkfbsdkbfbdsbfjsdbjkasdasdasdasdasbjksd',
+        convertToFormattedString(afterGetAllNumber),
+        JSON.stringify(convertToFormattedString(afterGetAllNumber)),
+      );
+
       store.dispatch({
         type: types.addContacts,
-        payload: data.book.length > 0 ? JSON.parse(data.book) : [],
+        payload: afterGetAllNumber,
       });
 
       // Create the phonebook table
@@ -382,8 +462,16 @@ const sendPhoneBookTOServer = async isPerContact => {
   `);
         // Example: Insert data into the phonebook table
         const userId = data.user_id;
-        const phonebookData = data.book.length > 0 ? data.book : undefined; // JSON data as a string
+        const phonebookData =
+          afterGetAllNumber.length > 0
+            ? convertToFormattedString(afterGetAllNumber)
+            : undefined; // JSON data as a string
         const updatedAt = data.updated_at; // Current timestamp
+
+        console.log(
+          'phonebookDataphonebookDataphonebookDataphonebookDataphonebookDataphonebookDataphonebookData',
+          phonebookData,
+        );
 
         db.transaction(tx => {
           tx.executeSql(

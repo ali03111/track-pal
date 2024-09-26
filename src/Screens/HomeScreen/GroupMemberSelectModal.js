@@ -35,6 +35,9 @@ import {errorMessage} from '../../Config/NotificationMessage';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {imageUrl} from '../../Utils/Urls';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
+import SendSMS from 'react-native-sms';
+import {store} from '../../Redux/Reducer';
+import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 
 const GroupMemberSelectModal = ({
   isGroupMemberSelectModal,
@@ -50,6 +53,7 @@ const GroupMemberSelectModal = ({
     message,
     ErrorMessageHandler,
     getUser,
+    userData,
   } = extraData;
   const [text, setText] = useState('');
   const [filterData, setFilterData] = useState([]);
@@ -73,6 +77,59 @@ const GroupMemberSelectModal = ({
       setText(text);
     }
   }
+
+  console.log(
+    'filterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterDatafilterData',
+    filterData,
+    cloneUser,
+  );
+
+  function prioritizeInAppContacts(contacts) {
+    // Filter out contacts with the inApp key and those without it
+    const inAppContacts = contacts.filter(contact => contact.inApp);
+    const otherContacts = contacts.filter(contact => !contact.inApp);
+
+    // Concatenate the two arrays, putting inApp contacts first
+    return [...inAppContacts, ...otherContacts];
+  }
+
+  function fixData(data) {
+    // Join the array into a string and parse it as JSON
+    const jsonString = data.join('');
+    try {
+      const jsonData = JSON.parse(jsonString);
+      return jsonData;
+    } catch (error) {
+      console.error('Failed to parse JSON:', error);
+      return [null];
+    }
+  }
+
+  const sendMessage = (number, name) => {
+    console.log('kjsdbvjksdbvkbsdkjvbsdkbvkjsdbvlksdbvbklds', number);
+    store.dispatch(loadingTrue());
+    SendSMS.send(
+      {
+        body: `Hi ! ${userData?.name} has invited you to join TrackPal, an amazing platform where you can easily share and track locations with friends and family! Stay connected and safe. Download now: https://trackpal.co/home`,
+        recipients: [number],
+        successTypes: ['sent', 'queued'],
+        allowAndroidSendWithoutReadPermission: true,
+      },
+      (completed, cancelled, error) => {
+        store.dispatch(loadingFalse());
+
+        console.log(
+          'SMS Callback: completed: ' +
+            completed +
+            ' cancelled: ' +
+            cancelled +
+            'error: ' +
+            error,
+        );
+      },
+    );
+  };
+
   // useCallback(() => {
   //   errorMessage(message);
   // }, [message]);
@@ -88,7 +145,10 @@ const GroupMemberSelectModal = ({
         <View style={styles.radioMain}>
           <Touchable
             style={styles.rememberInner}
-            onPress={() => addMembersToGroup(item.id)}>
+            onPress={() => {
+              if (item?.inApp) addMembersToGroup(item.id);
+              else sendMessage(item?.phone, item?.name);
+            }}>
             <View style={styles.radio}>
               <View style={styles.groupMembers}>
                 {item.profile_image ? (
@@ -106,12 +166,22 @@ const GroupMemberSelectModal = ({
                 )}
 
                 <TextComponent text={item?.name} styles={styles.groupTitle} />
-                <Image
-                  source={
-                    groupMembers.includes(item.id) ? rememberImg : rememberEmpty
-                  }
-                  style={styles.tickIcon}
-                />
+                {item?.inApp ? (
+                  <Image
+                    source={
+                      groupMembers.includes(item.id)
+                        ? rememberImg
+                        : rememberEmpty
+                    }
+                    style={styles.tickIcon}
+                  />
+                ) : (
+                  <GradientText
+                    GradientAlignment={0.8}
+                    style={styles.inviteText}>
+                    {'Invite'}
+                  </GradientText>
+                )}
               </View>
             </View>
           </Touchable>
@@ -171,8 +241,8 @@ const GroupMemberSelectModal = ({
                   data={
                     // filterData
                     filterData.length >= 0 && text != ''
-                      ? filterData
-                      : cloneUser
+                      ? prioritizeInAppContacts(filterData)
+                      : prioritizeInAppContacts(cloneUser)
                   }
                   renderItem={renderItem}
                   onRefresh={() => {
