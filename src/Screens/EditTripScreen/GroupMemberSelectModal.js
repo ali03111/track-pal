@@ -14,6 +14,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FirstCharacterComponent} from '../../Components/FirstCharacterComponent';
 import {imageUrl} from '../../Utils/Urls';
 import {EmptyViewComp} from '../../Components/EmptyViewComp';
+import {store} from '../../Redux/Reducer';
+import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
+import SendSMS from 'react-native-sms';
+import useReduxStore from '../../Hooks/UseReduxStore';
 
 const GroupMemberSelectModal = ({
   isGroupMemberSelectModal,
@@ -23,6 +27,9 @@ const GroupMemberSelectModal = ({
 }) => {
   const {keyboardStatus, allUser, addMembersToGroup, groupMembers, getUser} =
     extraData;
+
+  const {getState} = useReduxStore();
+  const {userData} = getState('Auth');
 
   console.log('tripMemeberstripMemeberstripMemebers', groupMembers);
 
@@ -48,6 +55,41 @@ const GroupMemberSelectModal = ({
       setText(text);
     }
   }
+
+  function prioritizeInAppContacts(contacts) {
+    // Filter out contacts with the inApp key and those without it
+    const inAppContacts = contacts.filter(contact => contact.inApp);
+    const otherContacts = contacts.filter(contact => !contact.inApp);
+
+    // Concatenate the two arrays, putting inApp contacts first
+    return [...inAppContacts, ...otherContacts];
+  }
+
+  const sendMessage = (number, name) => {
+    console.log('kjsdbvjksdbvkbsdkjvbsdkbvkjsdbvlksdbvbklds', number);
+    store.dispatch(loadingTrue());
+    SendSMS.send(
+      {
+        body: `Hi ! ${userData?.name} has invited you to join TrackPal, an amazing platform where you can easily share and track locations with friends and family! Stay connected and safe. Download now: https://trackpal.co/home`,
+        recipients: [number],
+        successTypes: ['sent', 'queued'],
+        allowAndroidSendWithoutReadPermission: true,
+      },
+      (completed, cancelled, error) => {
+        store.dispatch(loadingFalse());
+
+        console.log(
+          'SMS Callback: completed: ' +
+            completed +
+            ' cancelled: ' +
+            cancelled +
+            'error: ' +
+            error,
+        );
+      },
+    );
+  };
+
   // useCallback(() => {
   //   errorMessage(message);
   // }, [message]);
@@ -71,7 +113,8 @@ const GroupMemberSelectModal = ({
                 'User cannot be removed as the trip is currently running!',
               );
             } else {
-              addMembersToGroup(item);
+              if (item?.inApp) addMembersToGroup(item);
+              else sendMessage(item?.phone, item?.name);
             }
           }}>
           <View style={styles.radio}>
@@ -100,14 +143,28 @@ const GroupMemberSelectModal = ({
                 'mdsbjkfbsdjkbfjksdbfkjbsdjfbsjdbf',
                 groupMembers.find(res => res.id == item.id),
               )}
-              <Image
+              {item?.inApp ? (
+                <Image
+                  source={
+                    Boolean(groupMembers.find(res => res.id == item.id))
+                      ? rememberImg
+                      : rememberEmpty
+                  }
+                  style={styles.tickIcon}
+                />
+              ) : (
+                <GradientText GradientAlignment={0.8} style={styles.inviteText}>
+                  {'Invite'}
+                </GradientText>
+              )}
+              {/* <Image
                 source={
                   Boolean(groupMembers.find(res => res.id == item.id))
                     ? rememberImg
                     : rememberEmpty
                 }
                 style={styles.tickIcon}
-              />
+              /> */}
             </View>
           </View>
         </Touchable>
@@ -164,7 +221,9 @@ const GroupMemberSelectModal = ({
                   refreshing={false}
                   data={
                     // filterData
-                    filterData.length >= 0 && text != '' ? filterData : allUser
+                    filterData.length >= 0 && text != ''
+                      ? prioritizeInAppContacts(filterData)
+                      : prioritizeInAppContacts(allUser)
                   }
                   renderItem={renderItem}
                   onRefresh={() => {
