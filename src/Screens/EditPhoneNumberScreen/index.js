@@ -26,6 +26,7 @@ const EditPhoneNumberScreen = ({navigation}) => {
     phoneNumber,
     skipVerification,
     alert,
+    isVerified,
   } = useEditPhoneNumber(navigation);
   const phoneInput = useRef(null);
   return (
@@ -36,15 +37,21 @@ const EditPhoneNumberScreen = ({navigation}) => {
         headerTitle={'Number Confirmation'}
         style={styles.headerStyle}
         titleStyle={styles.hdTitle}
-        goBack={skipVerification}
+        goBack={() => {
+          if (!isVerified) {
+            skipVerification();
+          } else navigation.goBack();
+        }}
         isBack
         arrowback={{marginLeft: wp('5')}}
       />
       <GradientText style={styles.heading} GradientAlignment={0.6}>
-        {edit ? 'Edit Your' : 'Confirm Your'} Number
+        {/* {'Verify Your'} Number */}
+        {edit ? 'Enter Your' : 'Confirm Your'} Number
       </GradientText>
       <TextComponent
-        text={`Please ${edit ? 'enter' : 'confirm'} your number to verify you.`}
+        text={`Please enter you phone number for verfication purposes.`}
+        // text={`Please ${edit ? 'enter' : 'confirm'} your number to verify you.`}
         styles={styles.createAcc}
       />
       {!edit && (
@@ -109,7 +116,7 @@ const EditPhoneNumberScreen = ({navigation}) => {
           onPress={sendVerficationCode}
           title={'Send'}
         />
-        {edit && (
+        {edit && !isVerified && (
           <Touchable onPress={skipVerification}>
             <GradientText style={styles.bottomText} GradientAlignment={0.6}>
               Skip Verification

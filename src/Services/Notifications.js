@@ -43,7 +43,10 @@ const onNotificationNotiFee = async (data, appState) => {
       autoCancel: true,
       pressAction: {
         id: 'default',
-        launchActivity: 'com.codment.trackpal',
+        launchActivity:
+          Platform.OS == 'ios'
+            ? 'com.codment.trackpal'
+            : 'com.codment.trackpal.app',
         launchActivityFlags: [AndroidLaunchActivityFlag.SINGLE_TOP],
       },
       // pressAction: {

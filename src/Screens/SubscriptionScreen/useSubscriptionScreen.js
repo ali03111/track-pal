@@ -144,7 +144,7 @@ function useSubscriptionScreen({navigate, goBack}) {
   };
 
   const fetchData = async () => {
-    dispatch(loadingTrue());
+    // dispatch(loadingTrue());
     const be = availablePurchases;
 
     const purchases = await getAvailablePurchases({

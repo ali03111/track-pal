@@ -1,8 +1,9 @@
 {
   "project_info": {
     "project_number": "1005053076444",
+    "firebase_url": "https://track-pal-e4e07-default-rtdb.firebaseio.com",
     "project_id": "track-pal-e4e07",
-    "storage_bucket": "track-pal-e4e07.appspot.com"
+    "storage_bucket": "track-pal-e4e07.firebasestorage.app"
   },
   "client": [
     {
@@ -14,7 +15,39 @@
       },
       "oauth_client": [
         {
-          "client_id": "1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com",
+          "client_id": "1005053076444-78i3aufnqf8pdeb8pb4joikn45irfp1o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codment.trackpal",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1005053076444-mtfvrb27jrpalf182rk9npku9u3gat7j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codment.trackpal",
+            "certificate_hash": "8517343728bf361202fb7f9b513826cc6522c697"
+          }
+        },
+        {
+          "client_id": "1005053076444-sm43gio3huvt60o5pjkqq0hng6a2q1jc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codment.trackpal",
+            "certificate_hash": "e5f85d70b608a75fa5963b389b45b5b4f6dffc2e"
+          }
+        },
+        {
+          "client_id": "1005053076444-u8n4bfn64p10ggichj7kga97l24j71hn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codment.trackpal",
+            "certificate_hash": "25a3f07bf034db2dde1c8377d13342dd652419b4"
+          }
+        },
+        {
+          "client_id": "1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +60,51 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1005053076444-mgrhj94e5bcv1a937pc07914jmevu2gv.apps.googleusercontent.com",
+              "client_id": "1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codment.trackpal.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005053076444:android:f81ce5cba74631454be519",
+        "android_client_info": {
+          "package_name": "com.codment.trackpal.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAcz82vHbvvAhs8ik8UkI6cNNXv86INNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005053076444-09fhvret0tqnuk5mdjo869vlma8h3g3v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1005053076444-9ms5isn26q873e00b0ljdtcojdbgdpk6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codment.trackpal.app"
+              }
             }
           ]
         }

@@ -20,6 +20,7 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
   const {dispatch, getState} = useReduxStore();
 
   const {userData} = getState('Auth');
+  const isVerified = Boolean(userData?.is_verified == 1);
 
   const isNumber = Boolean(userData.phone == null || userData.phone == '');
   console.log('userDatauserDatauserDatauserData', userData);
@@ -68,7 +69,9 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
 
   useEffect(() => {
     return () => {
-      skipVerification();
+      if (!isVerified) {
+        skipVerification();
+      }
     };
   }, []);
 
@@ -82,6 +85,7 @@ const useEditPhoneNumber = ({navigate, goBack}) => {
     phoneNumber: userData?.phone,
     skipVerification,
     alert,
+    isVerified,
   };
 };
 

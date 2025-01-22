@@ -332,9 +332,9 @@ const HomeScreen = ({navigation}) => {
         cancelText={'Cancel'}
         confirmText={'Verify'}
         message={
-          'You must verify your number first before creating the a trip.'
+          'You must verify your number first before creating a new trip.'
         }
-        title={'Warning Alert'}
+        title={'Warning'}
         onCancel={toggleAlert}
         onConfirm={() => {
           toggleAlert();

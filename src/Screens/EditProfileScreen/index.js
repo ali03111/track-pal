@@ -120,7 +120,7 @@ const EditProfileScreen = ({navigation}) => {
             placeholder: 'Email',
             // defaultValue: 'jhondoe@gmail.com',
             defaultValue: userData?.email,
-            textStyle: styles.inputStyle,
+            textStyle: {...styles.inputStyle, color: 'rgb(118, 118, 118)'},
             viewStyle: styles.mainStyle,
             editable: false,
           }}

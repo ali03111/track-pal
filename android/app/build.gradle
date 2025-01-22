@@ -93,13 +93,13 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.codment.trackpal'
+    namespace 'com.codment.trackpal.app'
     defaultConfig {
-        applicationId 'com.codment.trackpal'
+        applicationId 'com.codment.trackpal.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
-        versionName '1.3'
+        versionCode 1
+        versionName '1.0'
         missingDimensionStrategy "store", "play"
     }
 
@@ -133,7 +133,7 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
 
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

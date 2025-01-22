@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, Platform} from 'react-native';
 import {TextComponent} from '../../Components/TextComponent';
 import {styles} from './styles';
 import {globalHeading} from '../../Config/globalStyles';
@@ -92,11 +92,11 @@ const LoginScreen = ({navigation}) => {
         />
       </View>
       <ThemeButton onPress={handleSubmit(loginUser)} title={'Log In'} />
-      <View style={styles.logInWith}>
+      {/* <View style={styles.logInWith}>
         <Text style={styles.logInBorder}></Text>
         <Text style={styles.logInText}>or Log In With</Text>
         <Text style={styles.logInBorder}></Text>
-      </View>
+      </View> */}
       <ButtonWithIcon
         title={'Continue with Google'}
         style={styles.googleBtn}
@@ -104,13 +104,15 @@ const LoginScreen = ({navigation}) => {
         image={google}
         onPress={googleLoginFunc}
       />
-      <ButtonWithIcon
-        title={'Continue with Apple'}
-        style={styles.appleBtn}
-        textStyle={styles.appleBtnText}
-        image={apple}
-        onPress={appleIdlogin}
-      />
+      {Platform.OS != 'android' && (
+        <ButtonWithIcon
+          title={'Continue with Apple'}
+          style={styles.appleBtn}
+          textStyle={styles.appleBtnText}
+          image={apple}
+          onPress={appleIdlogin}
+        />
+      )}
       <View style={styles.signUpTextMain}>
         <TextComponent text={'Don’t have an account? '} />
         <Touchable onPress={onPress}>
