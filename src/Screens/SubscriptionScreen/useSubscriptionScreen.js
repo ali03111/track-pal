@@ -26,11 +26,12 @@ import {
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import {loadingFalse, loadingTrue} from '../../Redux/Action/isloadingAction';
 import {types} from '../../Redux/types';
+import NavigationService from '../../Services/NavigationService';
 
 // const SKU = ['21436209'];
 // const SKU = ['monthly_18012024'];
 const SKU = Platform.select({
-  android: ['monthly_18012024', 'yearly_18012024'],
+  android: ['110202025monthly', '110202025yearly'],
   ios: ['monthly_18012024', 'yearly_18012024'],
 });
 
@@ -63,7 +64,10 @@ function useSubscriptionScreen({navigate, goBack}) {
     });
     console.log('skjdbvjksdblkvbsdklvbklsdbvkbsdklvbklsd', data);
     if (ok) {
+      const getNameFunc = NavigationService.getCurrentRoute();
+      const routeName = getNameFunc?.getCurrentRoute()?.name;
       dispatch({type: types.UpdateProfile, payload: data?.data});
+      // if()
     } else errorMessage(data?.message);
   };
 

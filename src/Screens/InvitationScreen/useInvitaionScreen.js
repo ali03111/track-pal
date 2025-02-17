@@ -26,7 +26,7 @@ const useNotificationScreen = ({params}, {navigate, addListener}) => {
     if (ok) {
       console.log('datadatadatadatadata', data);
       setTripNotification(data);
-    } else errorMessage('an error occured');
+    } else errorMessage('Please check your internet connection!');
   };
 
   const tripStatus = async (status, id, tripOnnwerID, indexNumber) => {

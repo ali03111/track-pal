@@ -24,7 +24,7 @@ const useNotificationScreen = ({params}, {navigate, addListener}) => {
     const {ok, data} = await API.get(notificationUrl);
     if (ok) {
       setNotification(data);
-    } else errorMessage('an error occured');
+    } else errorMessage('Please check your internet connection!');
   };
 
   const tripStatus = async (status, id, tripOnnwerID) => {

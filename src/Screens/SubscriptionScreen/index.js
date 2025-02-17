@@ -183,25 +183,24 @@ function SubscriptionScreen({navigation}) {
                 />
               </>
             )}
+            {/* <>
+              <View style={styles.logInWith}>
+                <Text style={styles.logInBorder}></Text>
+                <Text style={styles.logInText}>
+                  or Want to start your one month free trial?
+                </Text>
+                <Text style={styles.logInBorder}></Text>
+              </View>
+              <ThemeButton
+                title={'Start your free Trial'}
+                onPress={() => startTrial()}
+                btnStyle={styles.chooseBtn}
+              />
+            </> */}
           </ScrollView>
         </>
       ) : (
-        <>
-          <EmptyViewComp onRefresh={fetchData} />
-
-          <View style={styles.logInWith}>
-            <Text style={styles.logInBorder}></Text>
-            <Text style={styles.logInText}>
-              or Want to start your one month free trial?
-            </Text>
-            <Text style={styles.logInBorder}></Text>
-          </View>
-          <ThemeButton
-            title={'Start your free Trial'}
-            onPress={() => startTrial()}
-            btnStyle={styles.chooseBtn}
-          />
-        </>
+        <EmptyViewComp onRefresh={fetchData} />
       )}
     </View>
   );
