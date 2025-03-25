@@ -1,4 +1,4 @@
-package com.codment.trackpal.app;
+package com.codment.trackpalapp;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

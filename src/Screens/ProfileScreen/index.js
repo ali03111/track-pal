@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, Switch} from 'react-native';
 import {TextComponent} from '../../Components/TextComponent';
 import {styles} from './styles';
 import {
@@ -10,6 +10,7 @@ import {
   privacyPolicy,
   profileDelete,
   profleImg,
+  syncContact,
   userProfileIcon,
 } from '../../Assets';
 import useProfileScreen from './useProfileScreen';
@@ -26,8 +27,16 @@ import {Colors} from '../../Theme/Variables';
 import {hasOneMonthPassed} from '../../Utils/globalFunctions';
 
 const ProfileScreen = ({navigation}) => {
-  const {dynamicNav, alert, onCancel, onConfirm, userData, deleteAccount} =
-    useProfileScreen(navigation);
+  const {
+    dynamicNav,
+    alert,
+    onCancel,
+    onConfirm,
+    userData,
+    deleteAccount,
+    isContact,
+    onValueChange,
+  } = useProfileScreen(navigation);
 
   const planObj = {
     monthly_18012024: 'Monthly',
@@ -84,6 +93,23 @@ const ProfileScreen = ({navigation}) => {
         onPress={() => dynamicNav('EditProfileScreen')}
         title={'Edit Profile'}
         icon={userProfileIcon}
+      />
+      <ProfileBtn
+        onPress={() => dynamicNav('EditProfileScreen')}
+        title={'Sync Contact'}
+        icon={syncContact}
+        isWriteIcon={
+          <Switch
+            trackColor={{
+              false: Colors.grayBorder,
+              true: Colors.grayBorder,
+            }}
+            thumbColor={isContact ? Colors.primaryColor : '#EAF6ED'}
+            ios_backgroundColor="#EAF6ED"
+            onValueChange={onValueChange}
+            value={isContact}
+          />
+        }
       />
       <ProfileBtn
         onPress={() => InAppBrowser.open(aboutUrl)}

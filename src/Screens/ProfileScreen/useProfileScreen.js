@@ -5,11 +5,13 @@ import API from '../../Utils/helperFunc';
 import {deleteAccUrl} from '../../Utils/Urls';
 import {errorMessage, successMessage} from '../../Config/NotificationMessage';
 import {logoutService} from '../../Services/AuthServices';
+import {contactFalse} from '../../Redux/Action/isContactAction';
 
 const useProfileScreen = ({navigate, addListener}) => {
   const dynamicNav = path => navigate(path);
   const [alert, setAlert] = useState(false);
   const {dispatch, getState} = useReduxStore();
+  const {isContact} = getState('isContact');
   const {userData} = getState('Auth');
   const onCancel = () => {
     setAlert(!alert);
@@ -17,7 +19,7 @@ const useProfileScreen = ({navigate, addListener}) => {
 
   console.log(
     'userDatauserDatauserDatauserDatauserDatauserDatauserData',
-    userData?.subscription?.plan,
+    isContact,
   );
 
   const deleteAccount = async () => {
@@ -44,7 +46,21 @@ const useProfileScreen = ({navigate, addListener}) => {
     }, 900);
   };
 
-  return {dynamicNav, alert, onCancel, onConfirm, userData, deleteAccount};
+  const onValueChange = () => {
+    if (isContact) dispatch(contactFalse());
+    else navigate('AllowContactPerScreen');
+  };
+
+  return {
+    dynamicNav,
+    alert,
+    onCancel,
+    onConfirm,
+    userData,
+    deleteAccount,
+    isContact,
+    onValueChange,
+  };
 };
 
 export default useProfileScreen;

@@ -93,12 +93,12 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.codment.trackpal.app'
+    namespace 'com.codment.trackpalapp'
     defaultConfig {
-        applicationId 'com.codment.trackpal.app'
+        applicationId 'com.codment.trackpalapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
+        versionCode 4
         versionName '1.0'
         missingDimensionStrategy "store", "play"
     }

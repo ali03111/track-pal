@@ -46,7 +46,7 @@ const onNotificationNotiFee = async (data, appState) => {
         launchActivity:
           Platform.OS == 'ios'
             ? 'com.codment.trackpal'
-            : 'com.codment.trackpal.app',
+            : 'com.codment.trackpalapp',
         launchActivityFlags: [AndroidLaunchActivityFlag.SINGLE_TOP],
       },
       // pressAction: {

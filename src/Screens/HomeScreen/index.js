@@ -93,6 +93,7 @@ const HomeScreen = ({navigation}) => {
     laongituteDalta,
     latitudeDelta,
     tripDate,
+    isContact,
   } = useHomeScreen(navigation);
   const [showTip, setTip] = useState(false);
 
@@ -191,12 +192,15 @@ const HomeScreen = ({navigation}) => {
             if (userData.is_verified == 0) toggleAlert();
             else if (userData.is_verified == 1 && !checkPer)
               navigation.navigate('AllowContactPerScreen');
-            else if (
+            else if (!isContact) {
+              navigation.navigate('AllowContactPerScreen');
+            } else if (
               hasOneMonthPassed(userData?.created_at) &&
               userData?.subscription?.plan == null &&
               userData?.subscription?.plan == undefined
             ) {
-              navigation.navigate('SubscriptionScreen');
+              updateState({isTripSelectModal: true});
+              // navigation.navigate('SubscriptionScreen');
             } else if (!hasOneMonthPassed(userData?.created_at)) {
               updateState({isTripSelectModal: true});
               // navigation.navigate('SubscriptionScreen');

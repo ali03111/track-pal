@@ -14,6 +14,7 @@ import GeneralNotReducer from './GeneralNotReducer';
 import ChatNotifyReducer from './ChatNotifyReducer';
 import ContactsReducer from './ContactsReducer';
 import TimeZoneReducer from './TimeZoneReducer';
+import IsContactAllow from './IsContactAllow';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -59,6 +60,12 @@ const TimeZoneConfig = {
   whitelist: 'timeZone',
 };
 
+const ContactPerConfig = {
+  key: 'isContact',
+  storage: AsyncStorage,
+  whitelist: 'isContact',
+};
+
 const reducers = {
   onboarding: persistReducer(onBoardPersistConfig, onboardingReducer),
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
@@ -70,6 +77,7 @@ const reducers = {
   generalNotify: persistReducer(generalNotifyPersistConfig, GeneralNotReducer),
   chatNotify: persistReducer(chatNotifyPersistConfig, ChatNotifyReducer),
   timeZone: persistReducer(TimeZoneConfig, TimeZoneReducer),
+  isContact: persistReducer(ContactPerConfig, IsContactAllow),
   isloading: loadingReducer,
   contacts: ContactsReducer,
   isAlert: AlertReucer,

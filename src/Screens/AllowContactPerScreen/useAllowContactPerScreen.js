@@ -6,9 +6,10 @@ import {
   sendPhoneBookTOServer,
 } from '../../Services/ContactServices';
 import useReduxStore from '../../Hooks/UseReduxStore';
+import {contactTrue} from '../../Redux/Action/isContactAction';
 
 const useAllowContactPerScreen = ({goBack}) => {
-  const {getState} = useReduxStore();
+  const {getState, dispatch} = useReduxStore();
 
   const {userData} = getState('Auth');
 
@@ -28,12 +29,14 @@ const useAllowContactPerScreen = ({goBack}) => {
       if (userData.isNewUser) {
         await sendPhoneBookTOServer();
         await getContactFromSql();
+        dispatch(contactTrue());
         setTimeout(() => {
           goBack();
         }, 1500);
       } else {
         checkSqlDataBase();
         await getContactFromSql();
+        dispatch(contactTrue());
         setTimeout(() => {
           goBack();
         }, 1500);

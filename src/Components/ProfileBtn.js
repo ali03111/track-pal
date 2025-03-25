@@ -5,12 +5,24 @@ import {Touchable} from './Touchable';
 import {hp, wp} from '../Config/responsive';
 import {arrowRightIcon, userProfileIcon} from '../Assets';
 
-const ProfileBtn = ({title, onPress, icon, style, textStyle, imageStyle}) => {
+const ProfileBtn = ({
+  title,
+  onPress,
+  icon,
+  style,
+  textStyle,
+  imageStyle,
+  isWriteIcon,
+}) => {
   return (
     <Touchable Opacity={0.7} onPress={onPress} style={styles.button}>
       <Image source={icon} style={styles.iconStyle} />
       <Text style={styles.text}>{title}</Text>
-      <Image source={arrowRightIcon} style={styles.arrowStyle} />
+      {isWriteIcon ? (
+        isWriteIcon
+      ) : (
+        <Image source={arrowRightIcon} style={styles.arrowStyle} />
+      )}
     </Touchable>
   );
 };

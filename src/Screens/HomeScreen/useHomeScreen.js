@@ -4,6 +4,7 @@ import Geolocationios from '@react-native-community/geolocation';
 import Geolocation from 'react-native-geolocation-service';
 import {frequentTrips, tripsTypes} from '../../Utils/localDB';
 import {
+  Alert,
   AppState,
   BackHandler,
   Dimensions,
@@ -65,6 +66,7 @@ const useHomeScreen = ({addListener, navigate}) => {
   const {inviNotify} = getState('inviNotify');
   const {generalNotify} = getState('generalNotify');
   const {chatNotify} = getState('chatNotify');
+  const {isContact} = getState('isContact');
 
   const [alert, setAlert] = useState(false);
   const [tripDate, setTripDate] = useState(null);
@@ -418,10 +420,37 @@ const useHomeScreen = ({addListener, navigate}) => {
     else setTripDate(null);
   };
 
-  const useEffectFuc = () => {
+  const useEffectFuc = async () => {
     // GetLastTrip()
+    const granted = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    );
+    console.log('grantedgrantedgrantedgrantedgranted', granted);
     setTimeout(() => {
-      locationFun('currentLocation', true);
+      if (Platform.OS == 'android' && !granted) {
+        Alert.alert(
+          'Permission Request',
+          `Track Pal needs background location access for real-time trip tracking and sharing your live location with friends and family.`,
+          [
+            {
+              text: 'Deny',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {
+              text: 'Allow',
+              onPress: () => {
+                locationFun('currentLocation', true);
+              },
+            },
+          ],
+          {
+            userInterfaceStyle: 'light',
+          },
+        );
+      } else {
+        locationFun('currentLocation', true);
+      }
     }, 2000);
     const event = addListener('focus', async () => {
       GetLastTrip();
@@ -643,6 +672,7 @@ const useHomeScreen = ({addListener, navigate}) => {
     laongituteDalta,
     latitudeDelta,
     tripDate,
+    isContact,
   };
 };
 

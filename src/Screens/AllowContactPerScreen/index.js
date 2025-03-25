@@ -12,7 +12,7 @@ import {TextComponent} from '../../Components/TextComponent';
 const AllowContactPerScreen = ({navigation}) => {
   const {alertState, onConfirm, toggleAlert, viewState} =
     useAllowContactPerScreen(navigation);
-
+  // Track Pal can sync your contacts to show friends who are already using the app
   const ViewA = () => {
     return (
       <>
@@ -29,8 +29,9 @@ const AllowContactPerScreen = ({navigation}) => {
             textAlign: 'center',
             fontSize: hp('2'),
           }}>
-          This app needs access to your contacts. This will allow you to share
-          trips with your family, friends, and other contacts.
+          Track Pal can sync your contacts to display friends who are already
+          using the app. Granting access to your contacts will enable you to
+          share trips with your family, friends, and other connections.
         </GradientText>
         <ThemeButton
           textStyle={{
@@ -73,7 +74,10 @@ const AllowContactPerScreen = ({navigation}) => {
       </View>
       <AlertDesign
         isVisible={alertState}
-        title={'Enable Contact'}
+        title={'Enable Contacts'}
+        message={
+          'Track Pal needs access to your contacts to help you find and connect with friends who are already using the app. We only use this data to enhance your experience and do not share it with third parties.'
+        }
         cancelText={'Not Now'}
         confirmText={'Enable'}
         onCancel={toggleAlert}

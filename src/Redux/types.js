@@ -35,4 +35,6 @@ export const types = {
   setTimeZone: 'setTimeZone',
   RemoveTimeZone: 'RemoveTimeZone',
   VerifyType: 'VerifyType',
+  isContactFalse: 'isContactFalse',
+  isContactTrue: 'isContactTrue',
 };

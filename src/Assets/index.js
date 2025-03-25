@@ -86,6 +86,7 @@ export {default as userMinus} from './Icons/userMinus.png';
 export {default as profileDelete} from './Icons/profileDelete.png';
 export {default as verify} from './Icons/verify.png';
 export {default as tickSquare} from './Icons/tick-square.png';
+export {default as syncContact} from './Icons/syncContact.png';
 
 // Lotties files
 
