@@ -31,7 +31,7 @@ import NavigationService from '../../Services/NavigationService';
 // const SKU = ['21436209'];
 // const SKU = ['monthly_18012024'];
 const SKU = Platform.select({
-  android: ['110202025monthly', '110202025yearly'],
+  android: ['monthly_03042025', 'yearly_03042025'],
   ios: ['monthly_18012024', 'yearly_18012024'],
 });
 

@@ -98,7 +98,7 @@ android {
         applicationId 'com.codment.trackpalapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
+        versionCode 7
         versionName '1.0'
         missingDimensionStrategy "store", "play"
     }

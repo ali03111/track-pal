@@ -14,16 +14,17 @@ const useAllowContactPerScreen = ({goBack}) => {
   const {userData} = getState('Auth');
 
   const [alertState, setAlertState] = useState(false);
+  const [uploadState, setUploadState] = useState(false);
   const [viewState, setViewState] = useState(0);
 
   const toggleAlert = () => setAlertState(!alertState);
+  const toggleUpload = () => setUploadState(!uploadState);
 
-  const onConfirm = async () => {
+  const onConfirmUpload = async () => {
     setTimeout(() => {
-      toggleAlert();
+      toggleUpload();
     }, 1000);
     const checkPer = await checkContactPermission();
-
     if (checkPer) {
       setViewState(1);
       if (userData.isNewUser) {
@@ -44,6 +45,22 @@ const useAllowContactPerScreen = ({goBack}) => {
     }
   };
 
-  return {toggleAlert, alertState, onConfirm, viewState};
+  const onConfirm = async () => {
+    setTimeout(() => {
+      toggleAlert();
+    }, 1000);
+    await checkContactPermission();
+    toggleUpload();
+  };
+
+  return {
+    toggleAlert,
+    alertState,
+    onConfirm,
+    viewState,
+    toggleUpload,
+    uploadState,
+    onConfirmUpload,
+  };
 };
 export default useAllowContactPerScreen;

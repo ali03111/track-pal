@@ -10,8 +10,15 @@ import useAllowContactPerScreen from './useAllowContactPerScreen';
 import {TextComponent} from '../../Components/TextComponent';
 
 const AllowContactPerScreen = ({navigation}) => {
-  const {alertState, onConfirm, toggleAlert, viewState} =
-    useAllowContactPerScreen(navigation);
+  const {
+    alertState,
+    onConfirm,
+    toggleAlert,
+    viewState,
+    onConfirmUpload,
+    toggleUpload,
+    uploadState,
+  } = useAllowContactPerScreen(navigation);
   // Track Pal can sync your contacts to show friends who are already using the app
   const ViewA = () => {
     return (
@@ -74,14 +81,27 @@ const AllowContactPerScreen = ({navigation}) => {
       </View>
       <AlertDesign
         isVisible={alertState}
-        title={'Enable Contacts'}
+        title={'Track Pal needs access to your contacts'}
         message={
-          'Track Pal needs access to your contacts to help you find and connect with friends who are already using the app. We only use this data to enhance your experience and do not share it with third parties.'
+          'We use your contact list to help you find and connect with friends who already use Track Pal. Your contact information may be uploaded securely to our servers for this purpose.\nThis data is never shared with third parties and you can manage or disable contact access anytime in Settings'
         }
-        cancelText={'Not Now'}
-        confirmText={'Enable'}
+        cancelText={'Don’t Allow '}
+        confirmText={'Allow Access'}
         onCancel={toggleAlert}
         onConfirm={onConfirm}
+        // msgStyle={{textAlign: 'center'}}
+      />
+      <AlertDesign
+        isVisible={uploadState}
+        title={'Sync Your Contacts?'}
+        message={
+          "Track Pal can upload your contact list to help you find friends who are already using the app. This data is stored securely and never shared with anyone.\nYou can skip this and still use the app but won't be able to create trips. You can also turn contact syncing on or off anytime from Settings."
+        }
+        cancelText={'Maybe Later'}
+        confirmText={'Sync Now'}
+        onCancel={toggleUpload}
+        onConfirm={onConfirmUpload}
+        // msgStyle={{textAlign: 'center'}}
       />
     </View>
   );
